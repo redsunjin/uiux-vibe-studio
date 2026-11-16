@@ -470,6 +470,49 @@
       }
 
       if (item.catKey === 'nav' || item.catKey === 'menu_icon') {
+        const iconSvgMap = {
+          ico_01: '<svg viewBox="0 0 20 20" class="w-4 h-4 stroke-slate-800" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M3 10h14M3 15h14"/></svg>',
+          ico_02: '<svg viewBox="0 0 20 20" class="w-4 h-4 fill-slate-800"><circle cx="10" cy="4" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="10" cy="16" r="1.6"/></svg>',
+          ico_03: '<svg viewBox="0 0 20 20" class="w-4 h-4 fill-slate-800"><circle cx="4" cy="10" r="1.6"/><circle cx="10" cy="10" r="1.6"/><circle cx="16" cy="10" r="1.6"/></svg>',
+          ico_04: '<svg viewBox="0 0 20 20" class="w-4 h-4 fill-slate-800"><circle cx="5" cy="5" r="1.4"/><circle cx="10" cy="5" r="1.4"/><circle cx="15" cy="5" r="1.4"/><circle cx="5" cy="10" r="1.4"/><circle cx="10" cy="10" r="1.4"/><circle cx="15" cy="10" r="1.4"/><circle cx="5" cy="15" r="1.4"/><circle cx="10" cy="15" r="1.4"/><circle cx="15" cy="15" r="1.4"/></svg>',
+          ico_05: '<svg viewBox="0 0 20 20" class="w-4 h-4 fill-slate-800"><rect x="3.5" y="3.5" width="3.2" height="3.2" rx="0.6"/><rect x="8.4" y="3.5" width="3.2" height="3.2" rx="0.6"/><rect x="13.3" y="3.5" width="3.2" height="3.2" rx="0.6"/><rect x="3.5" y="8.4" width="3.2" height="3.2" rx="0.6"/><rect x="8.4" y="8.4" width="3.2" height="3.2" rx="0.6"/><rect x="13.3" y="8.4" width="3.2" height="3.2" rx="0.6"/><rect x="3.5" y="13.3" width="3.2" height="3.2" rx="0.6"/><rect x="8.4" y="13.3" width="3.2" height="3.2" rx="0.6"/><rect x="13.3" y="13.3" width="3.2" height="3.2" rx="0.6"/></svg>',
+          ico_06: '<svg viewBox="0 0 20 20" class="w-4 h-4 stroke-slate-800" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 5h14M5.5 10h9M8 15h4"/></svg>',
+          ico_07: '<svg viewBox="0 0 20 20" class="w-4 h-4 stroke-slate-800" fill="none" stroke-width="2.2" stroke-linecap="round"><path d="M4 7.5h12M4 12.5h12"/></svg>',
+          ico_08: '<svg viewBox="0 0 20 20" class="w-4 h-4 stroke-slate-800" fill="none" stroke-width="2" stroke-linecap="round"><path d="M3 5h10M6 10h11M9 15h8"/></svg>',
+          ico_09: '<svg viewBox="0 0 20 20" class="w-4 h-4 stroke-slate-800" fill="none" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h14M3 14h14"/><circle cx="7" cy="6" r="2" fill="#2563eb" stroke="#2563eb"/><circle cx="13" cy="14" r="2" fill="#2563eb" stroke="#2563eb"/></svg>'
+        };
+        if (iconSvgMap[item.id]) {
+          return `
+            <div class="bg-white border border-slate-200 rounded-xl px-3 py-1.5 flex items-center justify-between text-[10px] shadow-2xs">
+              <div class="flex items-center gap-2">
+                <span class="w-7 h-7 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0">${iconSvgMap[item.id]}</span>
+                <div><div class="font-bold text-slate-800">${item.code}</div><div class="text-[8px] text-slate-400">${item.meta}</div></div>
+              </div>
+              <span class="text-[9px] px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 font-bold shrink-0">${item.eng}</span>
+            </div>`;
+        }
+        if (item.id === 'ico_10') {
+          return `
+            <div class="bg-white border border-slate-200 rounded-xl px-3 py-1.5 flex items-center justify-between text-[9px]">
+              <span class="font-bold text-slate-700">${item.code}</span>
+              <div class="flex items-center gap-1">
+                <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-[9px]">📷</span>
+                <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-[9px]">🎙</span>
+                <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-[9px]">📄</span>
+                <span class="w-6 h-6 rounded-full bg-blue-600 text-white font-extrabold flex items-center justify-center shadow-xs">✕</span>
+              </div>
+            </div>`;
+        }
+        if (item.id === 'ico_11') {
+          return `
+            <div class="bg-white border border-slate-200 rounded-xl px-3 py-1.5 flex items-center justify-between text-[9px]">
+              <span class="font-bold text-slate-700">${item.code}</span>
+              <div class="inline-flex rounded-lg overflow-hidden border border-blue-700 font-bold text-white">
+                <span class="bg-blue-600 px-2.5 py-1">바로 전송</span>
+                <span class="bg-blue-700 px-1.5 py-1 border-l border-blue-500">▾</span>
+              </div>
+            </div>`;
+        }
         if (item.id === 'nav_01') {
           return `
             <div class="bg-white border border-slate-200 rounded-xl px-3 py-1.5 flex justify-around text-[9px] font-bold shadow-2xs">
@@ -487,11 +530,56 @@
               <span class="text-slate-400 pb-1">팔로잉</span>
             </div>`;
         }
+        if (item.id === 'nav_04') {
+          return `
+            <div class="bg-white border border-slate-200 rounded-xl px-3 py-1.5 flex items-center gap-1.5 text-[9px] font-semibold text-slate-500">
+              <span>홈</span><span>›</span><span>카테고리</span><span>›</span><span class="text-blue-600 font-extrabold">상세 페이지</span>
+            </div>`;
+        }
+        if (item.id === 'nav_06') {
+          return `
+            <div class="bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 flex items-center justify-between text-[9px]">
+              <span class="text-slate-500 font-semibold">우측 하단 최우선 핵심 CTA</span>
+              <span class="w-7 h-7 rounded-full bg-blue-600 text-white font-extrabold flex items-center justify-center shadow-md text-xs">+</span>
+            </div>`;
+        }
+        if (item.id === 'nav_07') {
+          return `
+            <div class="bg-white border border-slate-200 rounded-xl px-3 py-1.5 flex items-center justify-center gap-1 text-[9px] font-bold">
+              <span class="px-1.5 py-0.5 text-slate-400">‹</span>
+              <span class="w-5 h-5 rounded bg-blue-600 text-white flex items-center justify-center">1</span>
+              <span class="w-5 h-5 rounded text-slate-600 flex items-center justify-center">2</span>
+              <span class="w-5 h-5 rounded text-slate-600 flex items-center justify-center">3</span>
+              <span class="px-1.5 py-0.5 text-slate-500">›</span>
+            </div>`;
+        }
+        if (item.id === 'nav_09') {
+          return `
+            <div class="bg-white border border-slate-200 rounded-xl px-3 py-1.5 flex items-center gap-2 text-[10px]">
+              <span class="w-6 h-6 rounded-lg bg-slate-100 flex items-center justify-center font-extrabold text-slate-700">←</span>
+              <span class="font-bold text-slate-800">이전 화면으로 복귀</span>
+            </div>`;
+        }
         if (item.id === 'nav_10') {
           return `
             <div class="bg-slate-900 text-white rounded-xl px-3 py-2 flex items-center justify-between text-[10px] shadow-md">
               <span class="text-slate-300">⚡ 이동할 페이지나 실행할 명령을 입력하세요...</span>
               <kbd class="px-1.5 py-0.5 rounded bg-slate-800 text-blue-300 border border-slate-700 font-mono text-[9px]">⌘K</kbd>
+            </div>`;
+        }
+        if (item.id === 'nav_11') {
+          return `
+            <div class="bg-white border border-slate-200 rounded-xl p-2 text-[8px] space-y-1">
+              <div class="flex gap-3 font-bold text-slate-700 border-b border-slate-100 pb-1"><span class="text-blue-600">제품 ▾</span><span>솔루션</span><span>가격</span></div>
+              <div class="grid grid-cols-3 gap-1 text-slate-500"><span class="bg-slate-50 p-1 rounded">• 대분류 A</span><span class="bg-slate-50 p-1 rounded">• 중분류 B</span><span class="bg-blue-50 text-blue-600 p-1 rounded font-bold">★ 추천 배너</span></div>
+            </div>`;
+        }
+        if (item.id === 'nav_12') {
+          return `
+            <div class="bg-white border border-slate-200 rounded-xl p-2 text-[8px] space-y-1">
+              <div class="font-bold text-slate-400">ON THIS PAGE</div>
+              <div class="border-l-2 border-blue-600 pl-2 font-bold text-blue-600">2. 핵심 아키텍처 (현재)</div>
+              <div class="border-l-2 border-slate-200 pl-2 text-slate-500">3. 성능 최적화</div>
             </div>`;
         }
         return `
@@ -596,6 +684,75 @@
       }
 
       if (item.catKey === 'datetime') {
+        if (item.id === 'dt_02') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 grid grid-cols-3 gap-1 text-center text-[9px]">
+              <div class="text-slate-400">2025년</div><div class="text-slate-400">10월</div><div class="text-slate-400">15일</div>
+              <div class="bg-blue-50 text-blue-700 font-extrabold rounded py-0.5">2026년</div><div class="bg-blue-50 text-blue-700 font-extrabold rounded py-0.5">11월</div><div class="bg-blue-50 text-blue-700 font-extrabold rounded py-0.5">16일</div>
+            </div>`;
+        }
+        if (item.id === 'dt_04') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center gap-1.5 text-[9px] font-bold">
+              <span class="px-2 py-0.5 rounded-full bg-blue-600 text-white">오늘</span>
+              <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">내일</span>
+              <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">이번 주말</span>
+            </div>`;
+        }
+        if (item.id === 'dt_05') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 grid grid-cols-4 gap-1 text-center text-[9px] font-bold">
+              <span class="py-1 rounded bg-slate-100 text-slate-700">10:00</span>
+              <span class="py-1 rounded bg-blue-600 text-white">11:00</span>
+              <span class="py-1 rounded bg-slate-50 text-slate-300 line-through">12:00</span>
+              <span class="py-1 rounded bg-slate-100 text-slate-700">14:00</span>
+            </div>`;
+        }
+        if (item.id === 'dt_06') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 grid grid-cols-4 gap-1 text-center text-[9px] font-bold">
+              <span class="py-1 rounded bg-slate-50 text-slate-600">9월</span>
+              <span class="py-1 rounded bg-slate-50 text-slate-600">10월</span>
+              <span class="py-1 rounded bg-blue-600 text-white">11월</span>
+              <span class="py-1 rounded bg-slate-50 text-slate-600">12월</span>
+            </div>`;
+        }
+        if (item.id === 'dt_07') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+              <span class="font-bold text-slate-600">생년월일</span>
+              <span class="font-mono font-extrabold text-slate-900 bg-slate-100 px-2 py-0.5 rounded">1996 . 05 . 21</span>
+            </div>`;
+        }
+        if (item.id === 'dt_08') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+              <div><div class="text-[8px] text-slate-400">체크인</div><div class="font-extrabold text-slate-800">11.14 (금)</div></div>
+              <span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 font-extrabold">3박 4일</span>
+              <div class="text-right"><div class="text-[8px] text-slate-400">체크아웃</div><div class="font-extrabold text-slate-800">11.17 (월)</div></div>
+            </div>`;
+        }
+        if (item.id === 'dt_09') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px] font-bold">
+              <span class="text-slate-600">반복 주기</span>
+              <div class="flex gap-1"><span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">매일</span><span class="px-1.5 py-0.5 rounded bg-blue-600 text-white">매주</span><span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">매월</span></div>
+            </div>`;
+        }
+        if (item.id === 'dt_10') {
+          return `
+            <div class="bg-slate-900 text-white p-2 rounded-xl flex items-center justify-between text-[9px]">
+              <span class="font-bold text-slate-300">⏰ 마감 임박</span>
+              <span class="font-mono font-extrabold text-amber-300">D-2 04:12:59</span>
+            </div>`;
+        }
+        if (item.id === 'dt_11') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+              <span class="font-bold text-slate-700">🌐 기준 시간대</span>
+              <span class="font-mono font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">Asia/Seoul (GMT+9)</span>
+            </div>`;
+        }
         return `
           <div class="bg-white p-2 rounded-xl border border-slate-200 text-[9px] space-y-1.5">
             <div class="flex items-center justify-between"><span class="font-extrabold text-slate-800">📅 ${item.code}</span><span class="text-blue-600 font-bold">2026.11.14 ~ 11.17</span></div>
@@ -642,6 +799,28 @@
               <span>안전하게 제출 처리 중... (중복 클릭 방지)</span>
             </div>`;
         }
+        if (item.id === 'ind_02') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px] font-bold">
+              <span class="text-emerald-600">✓ 1.정보</span><span class="h-0.5 flex-1 mx-1.5 bg-blue-600"></span>
+              <span class="text-blue-600">● 2.결제</span><span class="h-0.5 flex-1 mx-1.5 bg-slate-200"></span>
+              <span class="text-slate-400">○ 3.완료</span>
+            </div>`;
+        }
+        if (item.id === 'ind_04') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+              <span class="font-bold text-slate-600">페이지 인디케이터</span>
+              <div class="flex items-center gap-1"><span class="w-3 h-1.5 rounded-full bg-blue-600"></span><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span><span class="w-1.5 h-1.5 rounded-full bg-slate-300"></span></div>
+            </div>`;
+        }
+        if (item.id === 'ind_09') {
+          return `
+            <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 flex flex-col items-center gap-1 text-[8px] text-slate-400">
+              <span>Safe Area Home Indicator</span>
+              <span class="w-20 h-1 rounded-full bg-slate-800"></span>
+            </div>`;
+        }
         return `
           <div class="bg-white p-2 rounded-xl border border-slate-200 text-[9px] space-y-1">
             <div class="flex justify-between font-bold text-slate-700"><span>${item.code}</span><span class="text-blue-600">78% 완료</span></div>
@@ -650,6 +829,32 @@
       }
 
       if (item.catKey === 'ai') {
+        if (item.id === 'ai_01') {
+          return `
+            <div class="bg-indigo-50/70 p-2 rounded-xl border border-indigo-200 flex items-center justify-between text-[9px]">
+              <span class="font-bold text-indigo-700">AI가 문맥을 추론하고 있습니다</span>
+              <div class="flex gap-1"><span class="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-bounce"></span><span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span><span class="w-1.5 h-1.5 rounded-full bg-indigo-300"></span></div>
+            </div>`;
+        }
+        if (item.id === 'ai_02') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-indigo-200 text-[9px] text-slate-700">
+              <span class="font-bold text-indigo-600">AI:</span> 요청하신 반응형 코드를 토큰 단위로 생성 중입니다<span class="inline-block w-1.5 h-3 bg-indigo-600 ml-0.5 align-middle"></span>
+            </div>`;
+        }
+        if (item.id === 'ai_05') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-indigo-200 text-[9px] text-slate-700">
+              <span>권장 대비율은 4.5:1 이상입니다</span>
+              <span class="inline-flex items-center px-1 py-0.2 rounded bg-indigo-100 text-indigo-700 font-bold text-[8px] ml-1">[1] WCAG</span>
+            </div>`;
+        }
+        if (item.id === 'ai_09') {
+          return `
+            <div class="bg-slate-900 text-white p-2 rounded-xl text-[8px] flex items-center justify-between font-bold">
+              <span class="text-emerald-400">✓ 1. 파싱</span><span>→</span><span class="text-emerald-400">✓ 2. 대조</span><span>→</span><span class="text-blue-300">⟳ 3. 생성</span>
+            </div>`;
+        }
         if (item.id === 'ai_10') {
           return `
             <div class="grid grid-cols-12 gap-1.5 bg-slate-900 text-white p-2 rounded-xl text-[9px]">
@@ -658,13 +863,51 @@
             </div>`;
         }
         return `
-          <div class="bg-gradient-to-r from-indigo-50/80 to-blue-50/80 p-2.5 rounded-xl border border-indigo-200/80 text-[9px] space-y-1">
+          <div class="bg-gradient-to-r from-indigo-50/80 to-blue-50/80 p-2 rounded-xl border border-indigo-200/80 text-[9px] space-y-1">
             <div class="flex items-center justify-between"><span class="font-extrabold text-indigo-700">✨ ${item.code}</span><span class="text-[8px] bg-white px-1.5 py-0.5 rounded text-indigo-600 font-bold">${item.eng}</span></div>
-            <div class="text-slate-700">${item.desc}</div>
+            <div class="text-slate-700 truncate">${item.meta}</div>
           </div>`;
       }
 
       if (item.catKey === 'chart') {
+        if (item.id === 'cht_01') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+              <div><div class="text-slate-400 font-semibold">주간 추이</div><div class="font-extrabold text-slate-900">1,284 <span class="text-emerald-600">+18%</span></div></div>
+              <svg viewBox="0 0 80 24" class="w-20 h-6 stroke-blue-600 fill-none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,20 18,15 32,17 48,8 64,11 78,3"/></svg>
+            </div>`;
+        }
+        if (item.id === 'cht_02') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+              <div class="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style="background: conic-gradient(#2563eb 0% 58%, #6366f1 58% 85%, #e2e8f0 85% 100%)"><span class="w-5 h-5 rounded-full bg-white text-[7px] font-extrabold flex items-center justify-center">58%</span></div>
+              <div class="text-right"><div class="font-extrabold text-slate-800">${item.code}</div><div class="text-[8px] text-slate-400">모바일 58% · PC 27%</div></div>
+            </div>`;
+        }
+        if (item.id === 'cht_04') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 space-y-1 text-[8px]">
+              <div class="flex justify-between font-bold text-slate-700"><span>활동 밀도 히트맵</span><span class="text-emerald-600">연속 14일</span></div>
+              <div class="grid grid-cols-10 gap-1">
+                <span class="h-2.5 rounded-xs bg-emerald-100"></span><span class="h-2.5 rounded-xs bg-emerald-300"></span><span class="h-2.5 rounded-xs bg-emerald-500"></span><span class="h-2.5 rounded-xs bg-emerald-200"></span><span class="h-2.5 rounded-xs bg-emerald-600"></span><span class="h-2.5 rounded-xs bg-emerald-400"></span><span class="h-2.5 rounded-xs bg-slate-100"></span><span class="h-2.5 rounded-xs bg-emerald-300"></span><span class="h-2.5 rounded-xs bg-emerald-500"></span><span class="h-2.5 rounded-xs bg-emerald-600"></span>
+              </div>
+            </div>`;
+        }
+        if (item.id === 'cht_05') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 space-y-1 text-[8px] font-bold text-white text-center">
+              <div class="bg-blue-600 rounded py-0.5 w-full">방문 100%</div>
+              <div class="bg-blue-500 rounded py-0.5 w-3/4 mx-auto">장바구니 42%</div>
+              <div class="bg-indigo-600 rounded py-0.5 w-1/2 mx-auto">결제 18%</div>
+            </div>`;
+        }
+        if (item.id === 'cht_06') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+              <svg viewBox="0 0 40 40" class="w-9 h-9 shrink-0"><polygon points="20,4 35,15 29,34 11,34 5,15" fill="none" stroke="#cbd5e1" stroke-width="1.5"/><polygon points="20,9 30,17 26,30 14,28 10,16" fill="rgba(37,99,235,0.25)" stroke="#2563eb" stroke-width="1.5"/></svg>
+              <div class="text-right"><div class="font-extrabold text-slate-800">${item.code}</div><div class="text-[8px] text-slate-400">5축 역량 밸런스</div></div>
+            </div>`;
+        }
         return `
           <div class="bg-white p-2.5 rounded-xl border border-slate-200 text-[9px] space-y-1.5">
             <div class="flex items-center justify-between"><span class="font-extrabold text-slate-800">📊 ${item.code}</span><span class="text-emerald-600 font-bold">▲ +24.8%</span></div>
@@ -687,6 +930,27 @@
               <div class="bg-white p-1.5 rounded-lg border border-slate-200"><div class="font-bold">Team</div><div class="text-slate-400">₩49,000</div></div>
             </div>`;
         }
+        if (item.id === 'com_04') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center gap-3 text-[9px]">
+              <div class="font-extrabold text-slate-900">★ 4.8</div>
+              <div class="flex-1 space-y-1"><div class="h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="w-4/5 h-full bg-amber-400"></div></div><div class="h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="w-1/4 h-full bg-amber-300"></div></div></div>
+            </div>`;
+        }
+        if (item.id === 'com_05') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between gap-2 text-[9px]">
+              <span class="font-mono font-bold text-slate-700 bg-slate-100 px-2 py-0.5 rounded">WELCOME20</span>
+              <span class="text-emerald-600 font-extrabold">-₩5,000 적용됨</span>
+            </div>`;
+        }
+        if (item.id === 'com_06') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 space-y-0.5 text-[9px]">
+              <div class="flex justify-between text-slate-500"><span>상품 ₩49,000 - 할인 ₩5,000</span><span>배송비 ₩0</span></div>
+              <div class="flex justify-between font-extrabold text-blue-600 border-t border-slate-100 pt-0.5"><span>최종 결제액</span><span>₩44,000</span></div>
+            </div>`;
+        }
         return `
           <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
             <div><span class="font-extrabold text-slate-900">🛍️ ${item.code}</span><div class="text-[8px] text-slate-400">${item.meta}</div></div>
@@ -695,6 +959,27 @@
       }
 
       if (item.catKey === 'auth') {
+        if (item.id === 'aut_01') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+              <div class="flex -space-x-1.5"><span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold ring-2 ring-white">K</span><span class="w-5 h-5 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold ring-2 ring-white">L</span><span class="w-5 h-5 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center font-bold ring-2 ring-white">+4</span></div>
+              <span class="px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-bold">+ 멤버 초대</span>
+            </div>`;
+        }
+        if (item.id === 'aut_03') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+              <span class="font-mono font-bold text-slate-700">sk-live-••••••••9a4f</span>
+              <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-bold">복사</span>
+            </div>`;
+        }
+        if (item.id === 'aut_04') {
+          return `
+            <div class="bg-rose-50/70 p-2 rounded-xl border border-rose-300 flex items-center justify-between text-[9px]">
+              <span class="font-extrabold text-rose-700">⚠️ Danger Zone</span>
+              <span class="px-2 py-0.5 rounded bg-rose-600 text-white font-bold">영구 삭제</span>
+            </div>`;
+        }
         return `
           <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
             <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold">🔐</span><div><div class="font-bold text-slate-800">${item.code}</div><div class="text-[8px] text-slate-400">${item.meta}</div></div></div>
@@ -702,10 +987,58 @@
           </div>`;
       }
 
+      if (item.catKey === 'media_collab') {
+        if (item.id === 'med_02') {
+          return `
+            <div class="bg-white p-1.5 rounded-xl border border-slate-200 grid grid-cols-2 overflow-hidden text-[8px] font-extrabold text-center relative">
+              <div class="bg-slate-200 text-slate-600 py-2 rounded-l-lg">BEFORE</div>
+              <div class="bg-blue-600 text-white py-2 rounded-r-lg">AFTER</div>
+            </div>`;
+        }
+        if (item.id === 'med_03') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center gap-2 text-[9px]">
+              <span class="w-5 h-5 rounded-full bg-blue-600 text-white flex items-center justify-center text-[8px]">▶</span>
+              <div class="flex items-center gap-0.5 flex-1 h-4"><span class="w-1 h-2 bg-blue-600 rounded"></span><span class="w-1 h-4 bg-blue-600 rounded"></span><span class="w-1 h-3 bg-blue-600 rounded"></span><span class="w-1 h-4 bg-slate-300 rounded"></span><span class="w-1 h-2 bg-slate-300 rounded"></span><span class="w-1 h-3 bg-slate-300 rounded"></span></div>
+              <span class="font-mono text-[8px] text-slate-500">01:24</span>
+            </div>`;
+        }
+        if (item.id === 'med_04') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+              <span class="font-bold text-slate-700">💬 대댓글 스레드 (3)</span>
+              <div class="flex gap-1 text-[8px] font-bold"><span class="px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-700">👍 12</span><span class="px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-700">🎉 4</span></div>
+            </div>`;
+        }
+      }
+
+      if (item.catKey === 'visual_style') {
+        if (item.id === 'sty_13') {
+          return `<div class="bg-amber-300 border-2 border-black shadow-[3px_3px_0_#000] p-2 rounded-lg flex items-center justify-between text-[9px] font-black text-black"><span>${item.code}</span><span>2px + Hard Shadow</span></div>`;
+        }
+        if (item.id === 'sty_21') {
+          return `<div class="bg-gradient-to-r from-sky-100 to-indigo-100 p-2 rounded-xl border border-white/80 backdrop-blur-md flex items-center justify-between text-[9px] font-bold text-slate-800"><span>${item.code}</span><span class="px-1.5 py-0.5 rounded bg-white/70 border border-white">Glass Blur</span></div>`;
+        }
+        if (item.id === 'sty_11' || item.id === 'sty_20') {
+          return `<div class="bg-slate-950 border border-emerald-500/50 text-emerald-400 p-2 rounded-xl font-mono flex items-center justify-between text-[9px]"><span>> ${item.code}</span><span>[ACTIVE]</span></div>`;
+        }
+        if (item.id === 'sty_02' || item.id === 'sty_19') {
+          return `<div class="bg-gradient-to-r from-pink-200 via-indigo-200 to-cyan-200 p-2 rounded-xl border border-white flex items-center justify-between text-[9px] font-extrabold text-slate-900"><span>${item.code}</span><span>Spectrum</span></div>`;
+        }
+      }
+
+      if (item.catKey === 'text_anim' && item.id === 'txt_04') {
+        return `<div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[10px]"><span class="font-bold text-slate-700">${item.code}</span><span class="font-mono font-extrabold text-blue-600">0 → 1,280명</span></div>`;
+      }
+      if (item.catKey === 'text_anim' && item.id === 'txt_07') {
+        return `<div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]"><span class="font-bold text-slate-700">${item.code}</span><span class="bg-amber-200/80 px-1.5 py-0.5 rounded font-extrabold text-slate-900">핵심 키워드 강조</span></div>`;
+      }
+
+      const catBadgeMap = { gesture: '👆', motion: '⚡', text_anim: 'Aa', visual_style: '🎨', media_collab: '🎬' };
       return `
         <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
-          <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-lg bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center">✦</span><div><div class="font-bold text-slate-800">${item.code}</div><div class="text-[8px] text-slate-400">${item.meta}</div></div></div>
-          <span class="text-[8px] font-mono text-slate-400">${item.eng}</span>
+          <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-lg bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center shrink-0">${catBadgeMap[item.catKey] || '✦'}</span><div><div class="font-bold text-slate-800">${item.code}</div><div class="text-[8px] text-slate-400">${item.meta}</div></div></div>
+          <span class="text-[8px] font-mono text-slate-400 shrink-0">${item.eng}</span>
         </div>`;
     }
 
