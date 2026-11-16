@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 인터페이스 9가지 인터랙티브 가이드</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    }
+
+    /* 생각 중 점 애니메이션 */
+    @keyframes bounceDot {
+      0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+    .dot-bounce-1 { animation: bounceDot 1.4s infinite ease-in-out both; animation-delay: -0.32s; }
+    .dot-bounce-2 { animation: bounceDot 1.4s infinite ease-in-out both; animation-delay: -0.16s; }
+    .dot-bounce-3 { animation: bounceDot 1.4s infinite ease-in-out both; }
+
+    /* 타자기 커서 깜빡임 */
+    @keyframes blinkCursor {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .cursor-blink {
+      animation: blinkCursor 0.8s infinite;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen antialiased flex flex-col">
+
+  <!-- 헤더 -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 mb-1">
+          <i data-lucide="bot" class="w-3.5 h-3.5"></i> AI 화면 9가지
+        </span>
+        <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+          매일 쓰는 <span class="text-blue-600">챗GPT 화면</span>에도 이름이 있어요
+        </h1>
+      </div>
+      <p class="text-sm text-slate-500 max-w-sm sm:text-right">
+        생성형 AI 대화창의 핵심 UI 패턴을 직접 <span class="text-blue-600 font-semibold">클릭 & 시뮬레이션</span>하여 확인해 보세요.
+      </p>
+    </div>
+  </header>
+
+  <!-- 메인 그리드 9종 컴포넌트 -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- 01. 생각 중 표시 (Thinking indicator) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">01 생각 중 표시</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">추론 대기 인디케이터</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-center items-center overflow-hidden">
+            <div class="bg-white px-4 py-3 rounded-2xl border border-slate-200 shadow-xs flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-600 dot-bounce-1"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-600 dot-bounce-2"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-blue-600 dot-bounce-3"></span>
+            </div>
+            <p id="thinkingStatusText" class="text-xs text-slate-500 font-medium mt-3 text-center">
+              답변을 고민하고 있어요
+            </p>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            모델이 프롬프트를 분석하고 복잡한 추론(Reasoning) 과정을 거칠 때, 멈추지 않고 작업 중임을 3개의 점이나 문구로 안내합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">추론 중 피드백</span>
+          <button onclick="toggleThinkingDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 추론 시뮬레이션
+          </button>
+        </div>
+      </div>
+
+      <!-- 02. 스트리밍 답변 (Streaming response) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">02 스트리밍 답변</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">체감 반응 극대화</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-between overflow-hidden">
+            <!-- User Prompt -->
+            <div class="flex justify-end">
+              <span class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded-xl rounded-br-xs font-medium shadow-xs">
+                제주 여행 일정 짜줘
+              </span>
+            </div>
+            <!-- AI Response Box -->
+            <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-xs max-w-[90%] text-xs text-slate-800 leading-relaxed min-h-[58px]">
+              <span id="streamingTextOutput">성산 일출봉과 협재 해수욕장을 추천해요!</span>
+              <span id="streamingCursorBar" class="inline-block w-1.5 h-3.5 bg-blue-600 ml-0.5 cursor-blink align-middle"></span>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            전체 텍스트 생성이 완료될 때까지 기다리지 않고, 단어(토큰) 단위가 생성되는 즉시 화면에 타자기처럼 실시간 스트리밍합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">토큰 실시간 출력</span>
+          <button onclick="triggerStreamingResponseDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 스트리밍 재생
+          </button>
+        </div>
+      </div>
+
+      <!-- 03. 추천 질문 칩 (Suggested prompts) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">03 추천 질문 칩</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-amber-50 text-amber-600 font-medium">프롬프트 탐색 가이드</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center items-center overflow-hidden">
+            <p class="text-[11px] text-slate-400 font-medium mb-2.5">이렇게 물어볼 수 있어요</p>
+            <div class="flex flex-wrap gap-1.5 justify-center max-w-[240px]">
+              <button onclick="clickPromptChip('맛집 추천해줘')" class="prompt-chip bg-white border border-slate-200 hover:border-blue-500 hover:bg-blue-50 text-slate-700 hover:text-blue-600 px-2.5 py-1.5 rounded-full text-[11px] font-medium shadow-xs transition flex items-center gap-1">
+                <span>맛집 추천해줘</span>
+                <i data-lucide="arrow-up-right" class="w-3 h-3 text-slate-400"></i>
+              </button>
+              <button onclick="clickPromptChip('이력서 피드백')" class="prompt-chip bg-white border border-slate-200 hover:border-blue-500 hover:bg-blue-50 text-slate-700 hover:text-blue-600 px-2.5 py-1.5 rounded-full text-[11px] font-medium shadow-xs transition flex items-center gap-1">
+                <span>이력서 피드백</span>
+                <i data-lucide="arrow-up-right" class="w-3 h-3 text-slate-400"></i>
+              </button>
+            </div>
+            <p id="promptChipSelectedHint" class="text-[10px] text-blue-600 font-semibold mt-2.5 hidden animate-fade-in">
+              선택된 프롬프트가 입력창에 채워졌어요!
+            </p>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            무엇을 질문해야 할지 막막한 사용자에게 맥락에 맞는 질문 후보를 칩(Chip) 버튼으로 제안하여 대화 시작 장벽을 낮춥니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">온보딩 / 넥스트 액션</span>
+          <button onclick="clickPromptChip('맛집 추천해줘')" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="sparkle" class="w-3 h-3"></i> 칩 클릭 체험
+          </button>
+        </div>
+      </div>
+
+      <!-- 04. 다시 생성 (Regenerate) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">04 다시 생성</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-slate-100 text-slate-600 font-medium">버전 분기 및 재생성</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs space-y-2">
+              <p id="regenerateText" class="text-xs text-slate-800 leading-relaxed">
+                첫날은 동쪽, 둘째 날은 서쪽으로 가보세요.
+              </p>
+              <div class="flex items-center justify-between pt-1 border-t border-slate-100">
+                <button onclick="triggerRegenerateAction()" id="regenerateBtn" class="inline-flex items-center gap-1 text-[11px] font-semibold text-slate-600 hover:text-blue-600 transition">
+                  <i data-lucide="refresh-cw" class="w-3 h-3" id="regenerateIcon"></i>
+                  <span>다시 생성</span>
+                </button>
+                <div class="flex items-center gap-1 text-[11px] font-semibold text-slate-400">
+                  <button onclick="prevRegenVersion()" class="hover:text-slate-700">&lt;</button>
+                  <span id="versionIndicator">1 / 2</span>
+                  <button onclick="nextRegenVersion()" class="hover:text-slate-700">&gt;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            답변이 만족스럽지 않을 때 다른 톤앤매너나 관점으로 다시 작성하도록 요청하며, 이전 버전과 최신 버전을 비교 탐색할 수 있습니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">버전 비교 인디케이터</span>
+          <button onclick="triggerRegenerateAction()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="rotate-ccw" class="w-3 h-3"></i> 다시 생성하기
+          </button>
+        </div>
+      </div>
+
+      <!-- 05. 출처 표시 (Citations / Grounding) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">05 출처 표시</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">할루시네이션 완화</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs space-y-2">
+              <p class="text-xs text-slate-800 leading-relaxed">
+                성산 일출봉은 아침 7시 전이 한산해요
+                <button onclick="showCitationPopover(1)" class="inline-flex items-center justify-center w-4 h-4 bg-blue-100 text-blue-700 text-[10px] font-bold rounded-full hover:bg-blue-200 transition ml-0.5">1</button>
+              </p>
+              <p class="text-xs text-slate-800 leading-relaxed">
+                근처 해장국집도 들러 보세요
+                <button onclick="showCitationPopover(2)" class="inline-flex items-center justify-center w-4 h-4 bg-blue-100 text-blue-700 text-[10px] font-bold rounded-full hover:bg-blue-200 transition ml-0.5">2</button>
+              </p>
+            </div>
+            <!-- Citation Bubble Overlay -->
+            <div id="citationBubble" class="hidden absolute bottom-2 inset-x-2 bg-slate-900 text-white text-[10px] p-2 rounded-lg shadow-lg flex items-center justify-between">
+              <span id="citationText">출처 1: 제주관광공사 공식 가이드</span>
+              <button onclick="hideCitationPopover()" class="text-slate-300 hover:text-white ml-2">닫기</button>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            웹 검색이나 문서 검색(RAG) 기반의 응답에서 어떤 출처(도메인, 기사)를 참고했는지 각주나 링크 칩으로 표시하여 신뢰도를 부여합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">참고 문헌 / RAG 검증</span>
+          <button onclick="showCitationPopover(1)" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="link" class="w-3 h-3"></i> 출처 확인
+          </button>
+        </div>
+      </div>
+
+      <!-- 06. 답변 피드백 (Feedback buttons) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">06 답변 피드백</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-purple-50 text-purple-600 font-medium">RLHF 데이터 수집</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs space-y-2.5">
+              <p class="text-xs text-slate-800 leading-relaxed">
+                3일 일정을 하루씩 나눠 드릴게요
+              </p>
+              <div class="flex items-center justify-between pt-1 border-t border-slate-100">
+                <div class="flex items-center gap-1.5">
+                  <button id="thumbUpBtn" onclick="toggleFeedback('up')" class="p-1 rounded hover:bg-slate-100 text-slate-400 hover:text-blue-600 transition">
+                    <i data-lucide="thumbs-up" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button id="thumbDownBtn" onclick="toggleFeedback('down')" class="p-1 rounded hover:bg-slate-100 text-slate-400 hover:text-rose-600 transition">
+                    <i data-lucide="thumbs-down" class="w-3.5 h-3.5"></i>
+                  </button>
+                  <button onclick="copyResponseDemo()" class="p-1 rounded hover:bg-slate-100 text-slate-400 hover:text-slate-700 transition">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                  </button>
+                </div>
+                <span id="feedbackResultLabel" class="text-[10px] text-slate-400">평가를 남겨보세요</span>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            좋아요(Thumbs up)/싫어요(Thumbs down) 버튼을 제공하여 답변 품질을 평가받고, 인간 피드백 기반 강화학습(RLHF) 데이터로 활용합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">좋아요 / 싫어요 평가</span>
+          <button onclick="toggleFeedback('up')" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="thumbs-up" class="w-3 h-3"></i> 좋아요 누르기
+          </button>
+        </div>
+      </div>
+
+      <!-- 07. 고쳐 묻기 (Edit and resend) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">07 고쳐 묻기</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">대화 분기점 수정</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center items-end overflow-hidden">
+            <!-- Normal User Message View -->
+            <div id="userMsgViewMode" class="flex items-center gap-1.5 group">
+              <button onclick="enterPromptEditMode()" class="p-1 text-slate-400 hover:text-slate-700 rounded transition opacity-80 hover:opacity-100" title="질문 수정">
+                <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+              </button>
+              <div class="bg-blue-600 text-white text-xs px-3 py-2 rounded-xl rounded-br-xs font-medium shadow-xs">
+                <span id="userPromptText">일정 짜줘</span>
+              </div>
+            </div>
+
+            <!-- Edit User Message View -->
+            <div id="userMsgEditMode" class="hidden w-full max-w-[210px] space-y-1.5">
+              <input id="promptEditInput" type="text" value="3박 4일 일정 짜줘" class="w-full text-xs px-2.5 py-1.5 rounded-lg border-2 border-blue-500 bg-white text-slate-800 focus:outline-none shadow-xs" />
+              <div class="flex justify-end gap-1 text-[11px]">
+                <button onclick="cancelPromptEdit()" class="px-2 py-0.5 bg-slate-200 text-slate-700 rounded hover:bg-slate-300 font-medium">취소</button>
+                <button onclick="savePromptEdit()" class="px-2 py-0.5 bg-blue-600 text-white rounded hover:bg-blue-700 font-bold">저장 및 전송</button>
+              </div>
+            </div>
+            <p id="editHelperText" class="text-[10px] text-slate-400 mt-2">연필 아이콘을 눌러 프롬프트를 고쳐보세요</p>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            이미 보낸 이전 질문을 편집하여 새로운 대화 분기(Branch)를 생성합니다. 오타를 고치거나 조건을 덧붙여 다시 물어볼 때 필수적입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">과거 질문 재편집</span>
+          <button onclick="togglePromptEditToggle()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="pencil" class="w-3 h-3"></i> 질문 수정하기
+          </button>
+        </div>
+      </div>
+
+      <!-- 08. 파일 첨부 (File attachment) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">08 파일 첨부</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">멀티모달 입력창</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-end overflow-hidden">
+            <!-- Attached File Chip Preview -->
+            <div id="attachedFilePill" class="hidden mb-2 bg-white px-2.5 py-1.5 rounded-lg border border-slate-200 shadow-xs flex items-center justify-between text-xs max-w-[200px] animate-fade-in">
+              <div class="flex items-center gap-1.5 truncate">
+                <i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i>
+                <span class="text-slate-800 font-medium truncate">여행경비.xlsx</span>
+              </div>
+              <button onclick="removeAttachedFile()" class="text-slate-400 hover:text-slate-600 ml-1">
+                <i data-lucide="x" class="w-3 h-3"></i>
+              </button>
+            </div>
+
+            <!-- Simulated Input Box -->
+            <div class="bg-white rounded-2xl border border-slate-200 p-1.5 pl-3 flex items-center justify-between shadow-xs">
+              <div class="flex items-center gap-2 flex-1">
+                <button onclick="attachSampleFile()" class="text-slate-400 hover:text-blue-600 transition p-1" title="파일 첨부">
+                  <i data-lucide="paperclip" class="w-4 h-4"></i>
+                </button>
+                <input type="text" placeholder="메시지 입력..." class="w-full text-xs text-slate-800 focus:outline-none bg-transparent" />
+              </div>
+              <button class="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 hover:bg-blue-700">
+                <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            클립 아이콘이나 드래그앤드롭으로 PDF, 이미지, 스프레드시트를 첨부하여 멀티모달(Multimodal) 분석을 수행하도록 지원합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">문서 / 이미지 업로드</span>
+          <button onclick="attachSampleFile()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="paperclip" class="w-3 h-3"></i> 파일 첨부하기
+          </button>
+        </div>
+      </div>
+
+      <!-- 09. 에이전트 단계 (Agent steps) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">09 에이전트 단계</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 font-medium">자율 액션 파이프라인</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs space-y-2">
+              <!-- Step 1 -->
+              <div id="agentStep1" class="flex items-center gap-2 text-xs font-semibold text-slate-800">
+                <i data-lucide="loader-2" class="w-3.5 h-3.5 text-blue-600 animate-spin" id="agentStepIcon1"></i>
+                <span id="agentStepLabel1">항공권 읽기</span>
+              </div>
+              <!-- Step 2 -->
+              <div id="agentStep2" class="flex items-center gap-2 text-xs font-medium text-slate-400">
+                <span class="w-3.5 h-3.5 rounded-full border-2 border-slate-300 inline-block" id="agentStepIcon2"></span>
+                <span>숙소와 비교하기</span>
+              </div>
+              <!-- Step 3 -->
+              <div id="agentStep3" class="flex items-center gap-2 text-xs font-medium text-slate-400">
+                <span class="w-3.5 h-3.5 rounded-full border-2 border-slate-300 inline-block" id="agentStepIcon3"></span>
+                <span>일정 정리하기</span>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            AI 에이전트가 단독 답변 대신 도구(Tool) 호출과 다단계 행동을 수행할 때, 현재 어떤 작업을 수행하고 있는지 실시간 진행 단계를 투명하게 공유합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">도구 실행 과정 시각화</span>
+          <button onclick="advanceAgentDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 다음 단계 진행
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    AI & 챗GPT 화면 9가지 인터랙션 가이드 &copy; 2026
+  </footer>
+
+  <script>
+    // Lucide Icons 초기화
+    lucide.createIcons();
+
+    // 01. 생각 중 표시
+    let thinkingIndex = 0;
+    const thinkingMessages = [
+      "답변을 고민하고 있어요",
+      "여행 일정을 계산하고 있어요...",
+      "최적의 동선을 계획하고 있어요!"
+    ];
+    function toggleThinkingDemo() {
+      thinkingIndex = (thinkingIndex + 1) % thinkingMessages.length;
+      document.getElementById('thinkingStatusText').innerText = thinkingMessages[thinkingIndex];
+    }
+
+    // 02. 스트리밍 답변
+    const streamSentence = "첫날은 성산 일출봉을 보고, 둘째 날은 협재 해수욕장의 카페 거리를 거닐어 보세요!";
+    let streamTimer;
+    function triggerStreamingResponseDemo() {
+      clearTimeout(streamTimer);
+      const textEl = document.getElementById('streamingTextOutput');
+      const cursor = document.getElementById('streamingCursorBar');
+      textEl.innerText = "";
+      cursor.classList.remove('hidden');
+
+      let idx = 0;
+      function nextChar() {
+        if (idx < streamSentence.length) {
+          textEl.innerText += streamSentence.charAt(idx);
+          idx++;
+          streamTimer = setTimeout(nextChar, 40 + Math.random() * 30);
+        } else {
+          cursor.classList.add('hidden');
+        }
+      }
+      nextChar();
+    }
+
+    // 03. 추천 질문 칩
+    function clickPromptChip(query) {
+      const hint = document.getElementById('promptChipSelectedHint');
+      hint.innerText = `‘${query}’ 프롬프트가 대화창에 설정되었습니다!`;
+      hint.classList.remove('hidden');
+      setTimeout(() => {
+        hint.classList.add('hidden');
+      }, 2500);
+    }
+
+    // 04. 다시 생성
+    let currentRegenVer = 1;
+    const regenAnswers = [
+      "첫날은 동쪽, 둘째 날은 서쪽으로 가보세요.",
+      "1일 차에는 제주시내 맛집 투어, 2일 차에는 서귀포 폭포 탐방을 추천합니다!"
+    ];
+
+    function updateRegenUI() {
+      document.getElementById('regenerateText').innerText = regenAnswers[currentRegenVer - 1];
+      document.getElementById('versionIndicator').innerText = `${currentRegenVer} / 2`;
+    }
+
+    function triggerRegenerateAction() {
+      const icon = document.getElementById('regenerateIcon');
+      icon.classList.add('animate-spin');
+      setTimeout(() => {
+        icon.classList.remove('animate-spin');
+        currentRegenVer = currentRegenVer === 1 ? 2 : 1;
+        updateRegenUI();
+      }, 700);
+    }
+
+    function prevRegenVersion() {
+      currentRegenVer = 1;
+      updateRegenUI();
+    }
+
+    function nextRegenVersion() {
+      currentRegenVer = 2;
+      updateRegenUI();
+    }
+
+    // 05. 출처 표시
+    const citationData = {
+      1: "출처 1: 제주관광공사 공식 가이드 (visitjeju.net)",
+      2: "출처 2: 지역 주민 맛집 리뷰 모음 (2026 최신)"
+    };
+    function showCitationPopover(num) {
+      const bubble = document.getElementById('citationBubble');
+      const text = document.getElementById('citationText');
+      text.innerText = citationData[num];
+      bubble.classList.remove('hidden');
+    }
+    function hideCitationPopover() {
+      document.getElementById('citationBubble').classList.add('hidden');
+    }
+
+    // 06. 답변 피드백
+    let userFeedback = null;
+    function toggleFeedback(type) {
+      const up = document.getElementById('thumbUpBtn');
+      const down = document.getElementById('thumbDownBtn');
+      const label = document.getElementById('feedbackResultLabel');
+
+      if (userFeedback === type) {
+        userFeedback = null;
+        up.className = "p-1 rounded hover:bg-slate-100 text-slate-400 hover:text-blue-600 transition";
+        down.className = "p-1 rounded hover:bg-slate-100 text-slate-400 hover:text-rose-600 transition";
+        label.innerText = "평가를 남겨보세요";
+      } else {
+        userFeedback = type;
+        if (type === 'up') {
+          up.className = "p-1 rounded bg-blue-50 text-blue-600 font-bold transition";
+          down.className = "p-1 rounded text-slate-400 hover:text-rose-600 transition";
+          label.innerText = "도움이 되었어요! (RLHF 반영)";
+        } else {
+          down.className = "p-1 rounded bg-rose-50 text-rose-600 font-bold transition";
+          up.className = "p-1 rounded text-slate-400 hover:text-blue-600 transition";
+          label.innerText = "피드백이 개발팀에 전달되었습니다.";
+        }
+      }
+    }
+
+    function copyResponseDemo() {
+      const label = document.getElementById('feedbackResultLabel');
+      label.innerText = "답변이 복사되었습니다!";
+      setTimeout(() => {
+        if (!userFeedback) label.innerText = "평가를 남겨보세요";
+      }, 1800);
+    }
+
+    // 07. 고쳐 묻기
+    let isEditingPrompt = false;
+    function enterPromptEditMode() {
+      document.getElementById('userMsgViewMode').classList.add('hidden');
+      document.getElementById('userMsgEditMode').classList.remove('hidden');
+      document.getElementById('editHelperText').innerText = "내용을 변경하고 [저장 및 전송]을 누르세요";
+    }
+
+    function cancelPromptEdit() {
+      document.getElementById('userMsgViewMode').classList.remove('hidden');
+      document.getElementById('userMsgEditMode').classList.add('hidden');
+      document.getElementById('editHelperText').innerText = "연필 아이콘을 눌러 프롬프트를 고쳐보세요";
+    }
+
+    function savePromptEdit() {
+      const val = document.getElementById('promptEditInput').value;
+      document.getElementById('userPromptText').innerText = val;
+      cancelPromptEdit();
+      // 스트리밍 답변 재호출
+      triggerStreamingResponseDemo();
+    }
+
+    function togglePromptEditToggle() {
+      if (document.getElementById('userMsgEditMode').classList.contains('hidden')) {
+        enterPromptEditMode();
+      } else {
+        cancelPromptEdit();
+      }
+    }
+
+    // 08. 파일 첨부
+    let isFileAttached = false;
+    function attachSampleFile() {
+      const pill = document.getElementById('attachedFilePill');
+      isFileAttached = !isFileAttached;
+      if (isFileAttached) {
+        pill.classList.remove('hidden');
+      } else {
+        pill.classList.add('hidden');
+      }
+    }
+
+    function removeAttachedFile() {
+      isFileAttached = false;
+      document.getElementById('attachedFilePill').classList.add('hidden');
+    }
+
+    // 09. 에이전트 단계
+    let agentCurrentStep = 1;
+    function advanceAgentDemo() {
+      agentCurrentStep = (agentCurrentStep % 3) + 1;
+      const step1 = document.getElementById('agentStep1');
+      const step2 = document.getElementById('agentStep2');
+      const step3 = document.getElementById('agentStep3');
+
+      if (agentCurrentStep === 1) {
+        step1.className = "flex items-center gap-2 text-xs font-semibold text-slate-800";
+        step1.innerHTML = `<i data-lucide="loader-2" class="w-3.5 h-3.5 text-blue-600 animate-spin"></i><span>항공권 읽기</span>`;
+        step2.className = "flex items-center gap-2 text-xs font-medium text-slate-400";
+        step2.innerHTML = `<span class="w-3.5 h-3.5 rounded-full border-2 border-slate-300 inline-block"></span><span>숙소와 비교하기</span>`;
+        step3.className = "flex items-center gap-2 text-xs font-medium text-slate-400";
+        step3.innerHTML = `<span class="w-3.5 h-3.5 rounded-full border-2 border-slate-300 inline-block"></span><span>일정 정리하기</span>`;
+      } else if (agentCurrentStep === 2) {
+        step1.className = "flex items-center gap-2 text-xs font-medium text-emerald-600";
+        step1.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i><span>항공권 읽기 완료</span>`;
+        step2.className = "flex items-center gap-2 text-xs font-semibold text-slate-800";
+        step2.innerHTML = `<i data-lucide="loader-2" class="w-3.5 h-3.5 text-blue-600 animate-spin"></i><span>숙소와 비교하기</span>`;
+        step3.className = "flex items-center gap-2 text-xs font-medium text-slate-400";
+        step3.innerHTML = `<span class="w-3.5 h-3.5 rounded-full border-2 border-slate-300 inline-block"></span><span>일정 정리하기</span>`;
+      } else if (agentCurrentStep === 3) {
+        step1.className = "flex items-center gap-2 text-xs font-medium text-emerald-600";
+        step1.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i><span>항공권 읽기 완료</span>`;
+        step2.className = "flex items-center gap-2 text-xs font-medium text-emerald-600";
+        step2.innerHTML = `<i data-lucide="check" class="w-3.5 h-3.5 text-emerald-500"></i><span>숙소 비교 완료</span>`;
+        step3.className = "flex items-center gap-2 text-xs font-semibold text-emerald-600";
+        step3.innerHTML = `<i data-lucide="check-check" class="w-3.5 h-3.5 text-emerald-500"></i><span>일정 정리 완료!</span>`;
+      }
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1995 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UX Pattern Dictionary & Vibe Coding Studio</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    }
+    @keyframes springIn {
+      0% { transform: scale(0.96); opacity: 0; }
+      70% { transform: scale(1.01); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    .animate-spring {
+      animation: springIn 0.22s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    /* Native modal dialog scroll containment & backdrop styling */
+    dialog:modal {
+      overscroll-behavior: contain;
+    }
+    dialog[open] {
+      display: flex;
+    }
+    dialog::backdrop {
+      overflow: hidden;
+      overscroll-behavior: contain;
+      background-color: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(4px);
+    }
+  </style>
+</head>
+<body class="bg-slate-100 text-slate-900 min-h-screen flex flex-col antialiased">
+
+  <!-- 상단 글로벌 헤더 -->
+  <header class="bg-slate-900 text-white border-b border-slate-800 px-4 py-2.5 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-[1680px] mx-auto flex flex-col xl:flex-row xl:items-center xl:justify-between gap-3">
+      <!-- 브랜드 & 통합 모드 스위처 -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center shadow-inner shrink-0">
+            <i data-lucide="layers" class="w-5 h-5 text-white" aria-hidden="true"></i>
+          </div>
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <h1 class="text-sm font-extrabold tracking-tight">UI/UX 백과사전 & 바이브 코딩 스튜디오</h1>
+              <span id="totalPatternBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-semibold border border-blue-400/30">
+                20대 도감 카테고리 · 212종 패턴 완전체
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-400">
+              UI 용어 사전을 인터랙티브하게 탐색하고, 블록을 조립해 Claude · Gemini · Cursor용 고밀도 프롬프트를 생성하세요
+            </p>
+          </div>
+        </div>
+
+        <!-- 메인 워크스페이스 모드 전환 탭 (사전 vs 빌더) -->
+        <nav aria-label="워크스페이스 모드 전환" class="flex items-center bg-slate-800 p-1 rounded-xl border border-slate-700 text-xs">
+          <button type="button" id="modeBtn_composer" data-action="switch-workspace-mode" data-mode="composer" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold flex items-center gap-1.5 shadow-xs transition">
+            <i data-lucide="layout-dashboard" class="w-3.5 h-3.5" aria-hidden="true"></i>
+            <span>🧩 바이브 코딩 화면 조립기</span>
+            <span id="headerBadgeCount" class="ml-1 px-1.5 py-0.2 rounded-full bg-white/20 text-[10px]">0</span>
+          </button>
+          <button type="button" id="modeBtn_dictionary" data-action="switch-workspace-mode" data-mode="dictionary" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white font-semibold flex items-center gap-1.5 transition">
+            <i data-lucide="book-open" class="w-3.5 h-3.5" aria-hidden="true"></i>
+            <span>📖 UI/UX 인터랙티브 도감 사전</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- 우측: 빠른 템플릿 프리셋 & 저장/검수 액션 바 -->
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="flex flex-wrap items-center bg-slate-800 rounded-xl p-1 border border-slate-700 text-[11px]">
+          <span class="px-2 text-slate-400 font-semibold">실전 프리셋:</span>
+          <button type="button" data-action="load-preset" data-preset="apply" class="px-2 py-1 rounded-lg hover:bg-slate-700 text-slate-200 font-semibold transition">채용 지원</button>
+          <button type="button" data-action="load-preset" data-preset="ai_chat" class="px-2 py-1 rounded-lg hover:bg-slate-700 text-slate-200 font-semibold transition">AI 에이전트</button>
+          <button type="button" data-action="load-preset" data-preset="search_shop" class="px-2 py-1 rounded-lg hover:bg-slate-700 text-slate-200 font-semibold transition">검색·커머스</button>
+          <button type="button" data-action="load-preset" data-preset="booking" class="px-2 py-1 rounded-lg hover:bg-slate-700 text-slate-200 font-semibold transition">숙박·예약 달력</button>
+          <button type="button" data-action="load-preset" data-preset="onboarding" class="px-2 py-1 rounded-lg hover:bg-slate-700 text-slate-200 font-semibold transition">앱 첫화면·온보딩</button>
+          <button type="button" data-action="load-preset" data-preset="saas_dash" class="px-2 py-1 rounded-lg hover:bg-slate-700 text-slate-200 font-semibold transition">SaaS 대시보드</button>
+        </div>
+
+        <button type="button" data-action="save-local" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1 transition" title="현재 조립 상태를 브라우저에 임시 저장">
+          <i data-lucide="save" class="w-3.5 h-3.5 text-emerald-400" aria-hidden="true"></i>
+          <span>저장</span>
+        </button>
+
+        <button type="button" data-action="run-audit" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5" aria-hidden="true"></i>
+          <span>AI 휴리스틱 검수</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 메인 워크스페이스 컨테이너 -->
+  <main class="max-w-[1680px] w-full mx-auto flex-1 flex flex-col p-3.5">
+
+    <!-- ========================================== -->
+    <!-- VIEW 1: 바이브 코딩 화면 조립기 (Composer) -->
+    <!-- ========================================== -->
+    <div id="viewComposer" class="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1">
+
+      <!-- 좌측 패널 (3 cols): 16개 카테고리 쇼케이스 팔레트 & 검색 -->
+      <section aria-labelledby="paletteHeading" class="lg:col-span-3 bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden">
+        <div class="p-3 border-b border-slate-100 space-y-2">
+          <div class="flex items-center justify-between">
+            <h2 id="paletteHeading" class="text-xs font-extrabold text-slate-800 flex items-center gap-1.5">
+              <i data-lucide="library" class="w-3.5 h-3.5 text-blue-600" aria-hidden="true"></i>
+              <span>컴포넌트 사전 팔레트</span>
+            </h2>
+            <button type="button" data-action="open-current-showcase" class="text-[10px] font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-2 py-0.5 rounded-md flex items-center gap-1 transition">
+              <i data-lucide="external-link" class="w-3 h-3" aria-hidden="true"></i>
+              <span>이 카테고리 원본 쇼케이스 열기</span>
+            </button>
+          </div>
+
+          <!-- 통합 검색바 (<search> 시맨틱 태그 적용) -->
+          <search>
+            <div class="relative flex items-center">
+              <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400 absolute left-2.5 pointer-events-none" aria-hidden="true"></i>
+              <input
+                id="paletteSearchInput"
+                type="search"
+                aria-label="전체 UI 패턴 검색"
+                placeholder="전체 212개 패턴 검색 (예: 검색창, 달력, 칸반, 차트...)"
+                class="w-full pl-8 pr-7 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-blue-500 focus:bg-white transition"
+              />
+              <button type="button" id="paletteSearchClear" data-action="clear-palette-search" aria-label="검색어 지우기" class="hidden absolute right-2 text-slate-400 hover:text-slate-600">
+                <i data-lucide="x-circle" class="w-3.5 h-3.5" aria-hidden="true"></i>
+              </button>
+            </div>
+          </search>
+
+          <!-- 16개 카테고리 그리드 탭 -->
+          <div id="categoryTabsContainer" class="grid grid-cols-3 gap-1 bg-slate-100 p-1 rounded-xl text-[10px] font-semibold max-h-[152px] overflow-y-auto custom-scroll"></div>
+        </div>
+
+        <!-- 팔레트 아이템 리스트 -->
+        <div id="paletteListContainer" class="flex-1 overflow-y-auto p-2.5 space-y-2 custom-scroll"></div>
+      </section>
+
+      <!-- 중앙 패널: 반응형 디바이스 스테이지 (기본 6 cols, 와이드 확장 시 9 cols) -->
+      <section id="composerCanvasCol" aria-labelledby="canvasHeading" class="lg:col-span-6 bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden transition-all duration-300">
+        <!-- 캔버스 상단 컨트롤 바 -->
+        <div class="p-3 border-b border-slate-100 flex flex-col gap-2">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <h2 id="canvasHeading" class="sr-only">화면 구성 와이어프레임 캔버스</h2>
+            <!-- 화면 제목 입력 -->
+            <div class="flex items-center gap-1.5 flex-1 min-w-[160px]">
+              <label for="screenTitleInput" class="text-[11px] font-bold text-slate-400 shrink-0">화면명:</label>
+              <input
+                id="screenTitleInput"
+                type="text"
+                value="채용 포트폴리오 제출 및 실시간 검증 화면"
+                class="w-full text-xs font-bold text-slate-800 bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 focus:outline-none focus:border-blue-500"
+              />
+            </div>
+
+            <!-- 뷰포트 디바이스 스위처 (모바일 9:19 / 태블릿 4:3 / PC 16:10) -->
+            <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-[11px]">
+              <button type="button" id="vpBtn_mobile" data-action="set-viewport" data-viewport="mobile" class="px-2.5 py-1 rounded-lg bg-white text-blue-600 shadow-xs flex items-center gap-1 transition font-bold">
+                <i data-lucide="smartphone" class="w-3.5 h-3.5" aria-hidden="true"></i>
+                <span>모바일 (9:19)</span>
+              </button>
+              <button type="button" id="vpBtn_tablet" data-action="set-viewport" data-viewport="tablet" class="px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 flex items-center gap-1 transition font-medium">
+                <i data-lucide="tablet" class="w-3.5 h-3.5" aria-hidden="true"></i>
+                <span>태블릿 (4:3 레일)</span>
+              </button>
+              <button type="button" id="vpBtn_desktop" data-action="set-viewport" data-viewport="desktop" class="px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 flex items-center gap-1 transition font-medium">
+                <i data-lucide="monitor" class="w-3.5 h-3.5" aria-hidden="true"></i>
+                <span>PC 웹 (16:10 와이드)</span>
+              </button>
+            </div>
+
+            <!-- 클린 실화면 뷰 vs 블록 편집 뷰 토글 & 와이드 확장 -->
+            <div class="flex items-center gap-1">
+              <div class="flex bg-slate-100 p-0.5 rounded-lg text-[10px] font-bold">
+                <button type="button" id="viewMode_clean" data-action="set-canvas-view-mode" data-viewmode="clean" class="px-2 py-1 rounded-md bg-blue-600 text-white shadow-2xs transition" title="조작 버튼을 숨기고 실제 앱/웹 화면처럼 직관적으로 미리봅니다">
+                  ✨ 실화면 뷰
+                </button>
+                <button type="button" id="viewMode_blueprint" data-action="set-canvas-view-mode" data-viewmode="blueprint" class="px-2 py-1 rounded-md text-slate-600 hover:text-slate-900 transition" title="블록 코드명과 슬롯 경계선을 모두 펼쳐 편집합니다">
+                  🛠️ 블록 편집 뷰
+                </button>
+              </div>
+
+              <button type="button" id="wideStageBtn" data-action="toggle-wide-stage" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[10px] font-bold flex items-center gap-1 transition" title="태블릿·PC 화면을 넓게 보도록 캔버스 영역을 확장합니다">
+                <i data-lucide="maximize-2" class="w-3 h-3" aria-hidden="true"></i>
+                <span id="wideStageLabel">넓게 보기</span>
+              </button>
+
+              <button type="button" data-action="clear-canvas" aria-label="캔버스 전체 비우기" class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition" title="캔버스 전체 비우기">
+                <i data-lucide="trash-2" class="w-4 h-4" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- 화면 단/격자(Column/Grid) 아키텍처 & 비주얼 무드 선택 바 -->
+          <div class="w-full pt-2 border-t border-slate-100 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+            <div class="flex flex-wrap items-center gap-1">
+              <span class="font-bold text-slate-600 flex items-center gap-1 mr-1">
+                <i data-lucide="layout-template" class="w-3.5 h-3.5 text-blue-600" aria-hidden="true"></i> 화면 골격(Shell):
+              </span>
+              <button type="button" id="gridBtn_stack" data-action="set-grid" data-grid="stack" class="px-2 py-0.5 rounded bg-blue-600 text-white font-bold shadow-xs transition">수직 1단 (모바일 기본)</button>
+              <button type="button" id="gridBtn_grid2" data-action="set-grid" data-grid="grid2" class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition">좌우 2단 분할 (Split/2열)</button>
+              <button type="button" id="gridBtn_sidebar" data-action="set-grid" data-grid="sidebar" class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition">사이드바 + 다단 본문</button>
+              <button type="button" id="gridBtn_bento3" data-action="set-grid" data-grid="bento3" class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition">3단 벤토 / 홀리그레일</button>
+            </div>
+
+            <!-- 글로벌 비주얼 테마 -->
+            <div class="flex items-center gap-1">
+              <label for="visualThemeSelect" class="text-[10px] font-bold text-purple-600">비주얼 테마:</label>
+              <select id="visualThemeSelect" class="text-[10px] font-semibold bg-purple-50 text-purple-800 border border-purple-200 rounded-md px-1.5 py-0.5 focus:outline-none">
+                <option value="clean">기본 클린 SaaS (Pretendard)</option>
+                <option value="Claymorphism (클레이모피즘)">#03 클레이모피즘 (토스풍 3D)</option>
+                <option value="Glassmorphism (글래스모피즘)">#21 글래스모피즘 (반투명 블러)</option>
+                <option value="Holographic (홀로그래픽)">#02 홀로그래픽 (프리즘 광택)</option>
+                <option value="Liquid Motion (리퀴드 모션)">#01 리퀴드 모션 (유기적 곡선)</option>
+                <option value="Neubrutalism (뉴브루탈리즘)">#13 뉴브루탈리즘 (블랙 보더+원색)</option>
+                <option value="Bauhaus (바우하우스)">#12 바우하우스 (기하학 모던)</option>
+                <option value="Grainy Gradient (그레이니 그라디언트)">#19 그레이니 그라디언트 (감성 노이즈)</option>
+                <option value="Isometric (아이소메트릭)">#05 아이소메트릭 (30도 입체 격자)</option>
+                <option value="Kinetic Typography (키네틱 타이포)">#06 키네틱 타이포그래피 (모션 문자)</option>
+                <option value="Y2K Chrome (Y2K 크롬)">#07 Y2K 크롬 (메탈릭 사이버)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- 중앙 디바이스 위지윅 뷰포트 스테이지 -->
+        <div class="flex-1 bg-slate-200/70 p-4 overflow-y-auto flex flex-col items-center justify-between custom-scroll">
+
+          <!-- AI 휴리스틱 검수 결과 알림창 -->
+          <div id="auditResultBanner" class="hidden w-full mb-3 bg-indigo-950 text-white rounded-xl p-3 border border-indigo-700 shadow-md animate-spring">
+            <div class="flex items-start justify-between gap-2">
+              <div class="flex items-center gap-1.5 text-xs font-bold text-indigo-300">
+                <i data-lucide="bot" class="w-4 h-4" aria-hidden="true"></i>
+                <span>AI 에이전트 UX 휴리스틱 검수 리포트</span>
+              </div>
+              <button type="button" data-action="close-audit" class="text-indigo-300 hover:text-white text-xs">닫기 ✕</button>
+            </div>
+            <ul id="auditList" class="mt-2 space-y-1 text-[11px] text-indigo-100 list-disc list-inside"></ul>
+          </div>
+
+          <!-- 기기별 상태 안내 바 (현재 뷰포트의 반응형 문법 설명) -->
+          <div class="w-full max-w-[960px] mb-2.5 flex flex-wrap items-center justify-between gap-2 px-3 py-1.5 rounded-xl bg-white/90 border border-slate-200/80 shadow-2xs text-[11px]">
+            <div class="flex items-center gap-2">
+              <span id="viewportSizeBadge" class="px-2 py-0.5 rounded-md bg-blue-600 text-white font-extrabold text-[10px]">📱 Mobile 375×812 · 9:19 세로형</span>
+              <span id="viewportGrammarHint" class="text-slate-600 font-medium">상단 앱바 + 단일 세로 스크롤 + 하단 고정 탭바/시트 구조</span>
+            </div>
+            <span class="text-[10px] text-slate-400">위젯에 마우스를 올리면 순서(▲▼)·폭·메모 편집 바가 나타납니다</span>
+          </div>
+
+          <!-- 디바이스 외곽 물리 프레임 (Mobile 9:19 vs Tablet 4:3 vs PC 16:10) -->
+          <div id="deviceFrameContainer" class="w-[356px] min-h-[590px] bg-white rounded-[38px] border-[7px] border-slate-800 shadow-2xl flex flex-col justify-between overflow-hidden relative my-auto transition-all duration-300">
+
+            <!-- 기기 상단 상태바 / 브라우저 주소창 -->
+            <div id="deviceTopChrome" class="bg-slate-900 text-white px-4 py-1.5 text-[10px] font-semibold flex items-center justify-between shrink-0"></div>
+
+            <!-- PC 웹 전용: 모바일 하단 탭바가 있을 때 상단 GNB로 자동 승격 표시되는 바 -->
+            <div id="desktopPromotedGnb" class="hidden bg-white border-b border-slate-200 px-4 py-2 items-center justify-between shrink-0">
+              <div class="flex items-center gap-4">
+                <span class="text-xs font-extrabold text-blue-600 flex items-center gap-1">
+                  <span class="w-4 h-4 rounded bg-blue-600 text-white text-[9px] flex items-center justify-center">U</span>
+                  <span>UX Studio Web</span>
+                </span>
+                <div class="flex items-center gap-3 text-[11px] font-bold text-slate-600">
+                  <span class="text-blue-600 border-b-2 border-blue-600 pb-0.5">대시보드 홈</span>
+                  <span>탐색·검색</span>
+                  <span>데이터 분석</span>
+                  <span>마이페이지</span>
+                </div>
+              </div>
+              <span class="text-[9px] px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-bold">
+                ↻ 모바일 하단 탭바 ➔ PC 상단 GNB 자동 변환됨
+              </span>
+            </div>
+
+            <!-- 슬롯 1: 상단 헤더 / 검색 / 배너 영역 -->
+            <div id="slotHeaderWrapper" class="bg-white border-b border-slate-100 p-2.5 shrink-0">
+              <div id="slotHeaderLabel" class="hidden text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 flex justify-between items-center">
+                <span>Header / Top Slot (상단 탐색·메뉴아이콘·검색·인디케이터)</span>
+                <span>상단 고정 영역</span>
+              </div>
+              <div id="slot_header" class="space-y-2"></div>
+            </div>
+
+            <!-- 슬롯 2: 메인 바디 (태블릿 좌측 레일 / PC 좌측 사이드바 / 본문 다단 격자 / PC 우측 TOC 3단 지원) -->
+            <div id="mainBodySplitWrapper" class="flex-1 flex overflow-hidden bg-slate-50/40">
+
+              <!-- 태블릿(iPadOS) 전용: 좌측 아이콘 네비게이션 레일 (Navigation Rail) -->
+              <aside id="tabletLeftRail" aria-label="태블릿 좌측 네비게이션 레일" class="hidden w-12 bg-slate-900 text-slate-400 py-3 flex-col items-center justify-between shrink-0 border-r border-slate-800">
+                <div class="flex flex-col items-center gap-3">
+                  <div class="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center font-extrabold text-[10px] shadow-xs">UX</div>
+                  <div class="w-7 h-7 rounded-lg bg-slate-800 text-blue-400 flex items-center justify-center" title="홈"><i data-lucide="home" class="w-3.5 h-3.5"></i></div>
+                  <div class="w-7 h-7 rounded-lg hover:bg-slate-800 flex items-center justify-center" title="검색"><i data-lucide="search" class="w-3.5 h-3.5"></i></div>
+                  <div class="w-7 h-7 rounded-lg hover:bg-slate-800 flex items-center justify-center" title="분석"><i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i></div>
+                  <div class="w-7 h-7 rounded-lg hover:bg-slate-800 flex items-center justify-center" title="설정"><i data-lucide="settings" class="w-3.5 h-3.5"></i></div>
+                </div>
+                <span class="text-[8px] text-slate-500 font-bold [writing-mode:vertical-rl]">Rail</span>
+              </aside>
+
+              <!-- PC/태블릿 '사이드바+본문' 또는 '3단 홀리그레일'일 때 노출되는 좌측 고정 사이드바 -->
+              <aside id="optionalLeftSidebar" aria-label="좌측 고정 사이드바" class="hidden w-40 bg-white border-r border-slate-200 p-2.5 flex-col justify-between shrink-0">
+                <div class="space-y-1.5">
+                  <div class="flex items-center justify-between text-[9px] font-extrabold text-slate-400 uppercase px-1">
+                    <span>Workspace Menu</span>
+                    <span>⇤</span>
+                  </div>
+                  <div class="bg-blue-50 text-blue-700 border border-blue-200 text-[10px] font-bold px-2.5 py-1.5 rounded-lg flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span> 대시보드 홈
+                  </div>
+                  <div class="text-slate-600 hover:bg-slate-50 text-[10px] font-medium px-2.5 py-1.5 rounded-lg flex items-center justify-between">
+                    <span>채용 공고 관리</span><span class="text-[8px] bg-slate-100 px-1 rounded">24</span>
+                  </div>
+                  <div class="text-slate-600 hover:bg-slate-50 text-[10px] font-medium px-2.5 py-1.5 rounded-lg">지원자 퍼널 통계</div>
+                  <div class="text-slate-600 hover:bg-slate-50 text-[10px] font-medium px-2.5 py-1.5 rounded-lg">AI 프롬프트 워크플로우</div>
+                  <div class="text-slate-600 hover:bg-slate-50 text-[10px] font-medium px-2.5 py-1.5 rounded-lg">팀 권한 및 보안 설정</div>
+                </div>
+                <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 text-[9px] text-slate-500">
+                  <div class="font-bold text-slate-700">Pro Workspace</div>
+                  <div class="w-full h-1 bg-slate-200 rounded-full mt-1 overflow-hidden"><div class="w-3/4 h-full bg-blue-600"></div></div>
+                </div>
+              </aside>
+
+              <!-- 실제 본문 격자 슬롯 -->
+              <div class="flex-1 p-3 overflow-y-auto custom-scroll">
+                <div id="slotMainLabel" class="hidden text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 flex justify-between items-center">
+                  <span>Main Content & Layout Grid (레이아웃·콘텐츠·폼·날짜·차트·AI)</span>
+                  <span class="text-blue-600 font-semibold">[▲▼] 순서 · [폭↔] 단 너비 · 클릭 시 메모</span>
+                </div>
+                <div id="slot_main" class="grid grid-cols-1 gap-2.5"></div>
+              </div>
+
+              <!-- PC '홀리 그레일 3단' 또는 '우측 인스펙터/TOC' 포함 시 노출되는 우측 보조 패널 -->
+              <aside id="optionalRightInspector" aria-label="우측 보조 목차 및 인스펙터" class="hidden w-36 bg-white border-l border-slate-200 p-2.5 flex-col justify-between shrink-0 text-[9px]">
+                <div class="space-y-1.5">
+                  <div class="font-extrabold text-slate-400 uppercase">On This Page / Inspector</div>
+                  <div class="border-l-2 border-blue-600 pl-2 font-bold text-blue-600">1. 핵심 요약 지표</div>
+                  <div class="border-l-2 border-slate-200 pl-2 text-slate-500">2. 상세 데이터 비교</div>
+                  <div class="border-l-2 border-slate-200 pl-2 text-slate-500">3. 실시간 에이전트 로그</div>
+                </div>
+                <div class="p-1.5 rounded bg-indigo-50 text-indigo-700 font-semibold">
+                  우측 3단 보조 슬롯 활성
+                </div>
+              </aside>
+            </div>
+
+            <!-- 슬롯 3: 하단 탭바 / 플로팅 버튼 / 오버레이 피드백 영역 -->
+            <div id="slotBottomWrapper" class="bg-white border-t border-slate-200 p-2 shrink-0">
+              <div id="slotBottomLabel" class="hidden text-[9px] font-bold text-slate-400 uppercase tracking-wider mb-1 flex justify-between">
+                <span>Bottom / Overlay Slot (하단바 · 모달 · 바텀시트 · 토스트)</span>
+                <span>최하단 고정</span>
+              </div>
+              <div id="slot_bottom" class="space-y-1.5"></div>
+              <!-- 모바일 전용: 하단 홈 인디케이터 바 (Safe Area) -->
+              <div id="mobileHomeBar" class="pt-2 pb-0.5 flex justify-center">
+                <div class="w-24 h-1 bg-slate-900/80 rounded-full"></div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 기기 프레임 외부 하단 독(Dock): 적용된 제스처 · 물리 모션 · 타이포 효과 · 비주얼 테마 -->
+          <div class="w-full max-w-[960px] mt-3 bg-white rounded-xl border border-indigo-200/80 p-2.5 shadow-2xs">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="text-[10px] font-extrabold text-indigo-700 flex items-center gap-1">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600" aria-hidden="true"></i>
+                <span>적용된 인터랙션 · 물리 모션 · 타이포 · 아트 테마 규칙 (화면 외곽 데코레이터)</span>
+              </span>
+              <span class="text-[10px] text-slate-400">기기 화면을 가리지 않고 프롬프트에 행동 규칙으로 주입됩니다</span>
+            </div>
+            <div id="slot_behavior" class="flex flex-wrap gap-1.5 min-h-[26px] items-center"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 우측 패널 (기본 3 cols): Claude / Gemini 협업 프롬프트 & MCP JSON 컴파일러 -->
+      <section id="composerOutputCol" aria-labelledby="outputHeading" class="lg:col-span-3 bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden transition-all duration-300">
+        <div class="p-3 border-b border-slate-100 flex items-center justify-between gap-1">
+          <div>
+            <h2 id="outputHeading" class="text-xs font-extrabold text-slate-800 flex items-center gap-1.5">
+              <i data-lucide="terminal" class="w-3.5 h-3.5 text-blue-600" aria-hidden="true"></i>
+              <span>AI 프롬프트 & 스키마</span>
+            </h2>
+            <p class="text-[10px] text-slate-400 mt-0.5">Claude, Gemini, Cursor에 붙여넣기</p>
+          </div>
+
+          <!-- 출력 모드 탭 -->
+          <div class="flex bg-slate-100 p-1 rounded-xl text-[10px] font-bold shrink-0">
+            <button type="button" id="outTab_prompt" data-action="switch-output-tab" data-tab="prompt" class="px-2 py-1 rounded-lg bg-white text-blue-600 shadow-xs transition">
+              프롬프트
+            </button>
+            <button type="button" id="outTab_json" data-action="switch-output-tab" data-tab="json" class="px-2 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition">
+              JSON
+            </button>
+          </div>
+        </div>
+
+        <!-- 에이전트 제약 조건 체크 옵션 -->
+        <div class="px-3 py-2 bg-slate-50 border-b border-slate-100 flex flex-wrap items-center gap-3 text-[11px]">
+          <label class="flex items-center gap-1.5 cursor-pointer font-medium text-slate-700">
+            <input type="checkbox" id="optTailwind" checked class="rounded text-blue-600 accent-blue-600">
+            <span>Tailwind + Pretendard</span>
+          </label>
+          <label class="flex items-center gap-1.5 cursor-pointer font-medium text-slate-700">
+            <input type="checkbox" id="optA11y" checked class="rounded text-blue-600 accent-blue-600">
+            <span>반응형 & 접근성(A11y) 방어</span>
+          </label>
+          <label class="flex items-center gap-1.5 cursor-pointer font-medium text-slate-700">
+            <input type="checkbox" id="optCodeHint" checked class="rounded text-blue-600 accent-blue-600">
+            <span>쇼케이스 구현 디테일 주입</span>
+          </label>
+        </div>
+
+        <!-- 실시간 컴파일 코드 뷰어 (<pre><code> 접근성 준수) -->
+        <div class="flex-1 bg-slate-950 text-slate-100 font-mono text-[11px] leading-relaxed overflow-hidden flex flex-col">
+          <pre id="compiledOutputPre" role="region" aria-labelledby="outputHeading" tabindex="0" class="flex-1 p-3.5 overflow-y-auto custom-scroll whitespace-pre-wrap break-words select-all"><code id="compiledOutputArea"></code></pre>
+        </div>
+
+        <!-- 하단 복사 & 다운로드 & 실시간 프로토타입 실행 액션 바 -->
+        <div class="p-3 border-t border-slate-200 bg-white flex flex-col gap-2">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span id="copyStatusText" class="text-[11px] text-slate-500 font-medium">
+              총 <strong id="activeCountLabel" class="text-blue-600">0</strong>개의 표준 UX 블록 조합됨
+            </span>
+            <button type="button" data-action="open-live-prototype" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-extrabold flex items-center gap-1.5 shadow-xs transition active:scale-95" title="현재 캔버스에 조립한 블록·순서·테마·메모로 즉시 작동하는 풀사이즈 화면을 합성하거나 AI API로 생성합니다">
+              <i data-lucide="play" class="w-3.5 h-3.5" aria-hidden="true"></i>
+              <span>🚀 실시간 프로토타입 실행 & AI 생성</span>
+            </button>
+          </div>
+          <div class="flex items-center justify-end gap-1.5">
+            <button type="button" data-action="download-spec" class="px-2.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1 transition" title="명세서 파일(.md/.json) 다운로드">
+              <i data-lucide="download" class="w-3.5 h-3.5" aria-hidden="true"></i>
+              <span>명세서 저장</span>
+            </button>
+            <button type="button" data-action="copy-output" class="flex-1 justify-center px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition active:scale-95">
+              <i data-lucide="copy" class="w-3.5 h-3.5" aria-hidden="true"></i>
+              <span>프롬프트 복사하기</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ========================================== -->
+    <!-- VIEW 2: UI/UX 인터랙티브 백과사전 (Dictionary) -->
+    <!-- ========================================== -->
+    <div id="viewDictionary" class="hidden flex-1 flex-col gap-4">
+
+      <!-- 사전 상단 컨트롤 & 통합 검색 바 -->
+      <section aria-label="백과사전 검색 및 뷰 전환" class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-600">UI/UX Interactive Dictionary</span>
+            <h2 class="text-base font-extrabold text-slate-900">통합 UI/UX 쇼케이스 도감 & 패턴 백과사전</h2>
+          </div>
+          <p class="text-xs text-slate-500 mt-0.5">
+            모든 패턴의 정확한 이름과 작동 방식을 사전처럼 찾아보고, <strong class="text-blue-600">[+ 조립기에 담기]</strong>를 눌러 바이브 코딩 화면 구성에 즉시 추가하세요.
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <!-- 사전 검색창 -->
+          <search>
+            <div class="relative flex items-center min-w-[260px]">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 pointer-events-none" aria-hidden="true"></i>
+              <input
+                id="dictSearchInput"
+                type="search"
+                aria-label="사전 내 패턴 검색"
+                placeholder="용어/영문명/상황 검색 (예: 케밥, 바텀시트, 칸반, 차트...)"
+                class="w-full pl-9 pr-8 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-800 focus:outline-none focus:border-blue-500 focus:bg-white"
+              />
+            </div>
+          </search>
+
+          <!-- 사전 보기 방식 전환 (통합 카드 도감 vs 원본 쇼케이스 라이브 뷰어) -->
+          <div class="flex bg-slate-100 p-1 rounded-xl text-xs font-bold">
+            <button type="button" id="dictSubBtn_cards" data-action="switch-dict-subview" data-subview="cards" class="px-3 py-1.5 rounded-lg bg-white text-blue-600 shadow-xs transition">
+              🗂️ 통합 카드 도감
+            </button>
+            <button type="button" id="dictSubBtn_live" data-action="switch-dict-subview" data-subview="live" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition">
+              🖥️ 원본 쇼케이스 실행기
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 사전 본문: 좌측 쇼케이스 책갈피 + 우측 콘텐츠 -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 min-h-[640px]">
+
+        <!-- 좌측: 쇼케이스 도감 목차 -->
+        <aside aria-label="쇼케이스 카테고리 목차" class="lg:col-span-3 bg-white rounded-2xl border border-slate-200 p-3 shadow-xs flex flex-col h-[calc(100vh-190px)] min-h-[580px]">
+          <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-100">
+            <span class="text-xs font-extrabold text-slate-800">📚 쇼케이스 도감 목차</span>
+            <button type="button" data-action="select-dict-cat" data-cat="all" id="dictCatAllBtn" class="text-[11px] font-bold text-blue-600 hover:underline">전체 보기</button>
+          </div>
+          <div id="dictBookList" class="flex-1 overflow-y-auto space-y-1.5 pr-1 custom-scroll"></div>
+        </aside>
+
+        <!-- 우측 서브뷰 A: 통합 카드 그리드 -->
+        <section id="dictCardsSection" aria-label="패턴 카드 목록" class="lg:col-span-9 bg-white rounded-2xl border border-slate-200 p-4 shadow-xs flex flex-col h-[calc(100vh-190px)] min-h-[580px]">
+          <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
+            <div class="flex items-center gap-2">
+              <h3 id="dictCurrentCatTitle" class="text-sm font-extrabold text-slate-900">전체 UI/UX 패턴 도감</h3>
+              <span id="dictFilteredCount" class="text-xs px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 font-bold">212종</span>
+            </div>
+            <button type="button" id="dictOpenLiveBtn" data-action="open-selected-cat-showcase" class="px-3 py-1.5 rounded-xl bg-slate-900 hover:bg-blue-600 text-white text-xs font-bold flex items-center gap-1.5 transition">
+              <i data-lucide="play" class="w-3.5 h-3.5" aria-hidden="true"></i>
+              <span>현재 쇼케이스 원본 페이지 열기</span>
+            </button>
+          </div>
+          <div id="dictCardsGrid" class="flex-1 overflow-y-auto grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3 pr-1 custom-scroll content-start"></div>
+        </section>
+
+        <!-- 우측 서브뷰 B: 원본 HTML 쇼케이스 라이브 실행기 + 빠른 블록 담기 바 -->
+        <section id="dictLiveSection" aria-label="원본 쇼케이스 라이브 실행기" class="hidden lg:col-span-9 bg-white rounded-2xl border border-slate-200 shadow-xs flex-col h-[calc(100vh-190px)] min-h-[580px] overflow-hidden">
+          <!-- 상단 빠른 담기 바 -->
+          <div class="p-3 bg-slate-900 text-white flex flex-col gap-2 shrink-0">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[10px] font-bold border border-blue-400/30">LIVE SHOWCASE</span>
+                <h3 id="liveShowcaseTitle" class="text-xs font-extrabold">검색 & 필터링 인터랙티브 가이드</h3>
+                <a id="liveShowcaseNewTabLink" href="검색패턴9.html" target="_blank" rel="noopener" class="text-[11px] text-slate-300 hover:text-white underline flex items-center gap-1 ml-2">
+                  <span>새 탭으로 크게 열기</span>
+                  <i data-lucide="external-link" class="w-3 h-3" aria-hidden="true"></i>
+                </a>
+              </div>
+              <span class="text-[11px] text-slate-300">아래 버튼을 클릭하면 <strong>바이브 코딩 조립기</strong>에 즉시 추가/제거됩니다 👇</span>
+            </div>
+            <!-- 현재 쇼케이스에 속한 블록 빠른 토글 칩 -->
+            <div id="liveQuickAddChips" class="flex flex-wrap gap-1.5 pt-1"></div>
+          </div>
+
+          <!-- 원본 HTML Iframe -->
+          <iframe id="liveShowcaseIframe" src="검색패턴9.html" title="인터랙티브 쇼케이스 라이브 프리뷰" class="w-full flex-1 border-0 bg-slate-50"></iframe>
+        </section>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ========================================== -->
+  <!-- MODAL DIALOG: 원본 쇼케이스 인터랙티브 팝업 뷰어 -->
+  <!-- ========================================== -->
+  <dialog id="showcaseModal" closedby="any" aria-labelledby="showcaseModalTitle" class="m-auto w-[95vw] max-w-6xl h-[88vh] rounded-2xl border border-slate-700 bg-slate-900 text-white shadow-2xl p-0 flex-col overflow-hidden">
+    <div class="px-4 py-3 bg-slate-950 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 shrink-0">
+      <div class="flex items-center gap-2.5">
+        <span class="px-2 py-0.5 rounded bg-blue-600 text-[10px] font-bold">INTERACTIVE SHOWCASE</span>
+        <h2 id="showcaseModalTitle" class="text-sm font-bold text-white">쇼케이스 인터랙티브 프리뷰</h2>
+        <a id="modalNewTabLink" href="#" target="_blank" rel="noopener" class="text-xs text-blue-400 hover:text-blue-300 underline flex items-center gap-1 ml-2">
+          <span>새 창에서 열기</span>
+          <i data-lucide="external-link" class="w-3 h-3" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="text-[11px] text-slate-400 hidden sm:inline">모달 안에서 직접 클릭·조작하며 테스트하고 조립기에 담아보세요</span>
+        <form method="dialog">
+          <button type="submit" value="close" autofocus class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold transition">
+            닫기 (Esc) ✕
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- 모달 내 빠른 컴포넌트 추가 바 -->
+    <div class="px-4 py-2 bg-slate-900 border-b border-slate-800 flex flex-wrap items-center gap-1.5 shrink-0">
+      <span class="text-[10px] font-bold text-slate-400 mr-1">조립기에 바로 담기:</span>
+      <div id="modalQuickChips" class="flex flex-wrap gap-1.5"></div>
+    </div>
+
+    <!-- 쇼케이스 원본 iframe -->
+    <iframe id="modalShowcaseIframe" src="about:blank" title="쇼케이스 인터랙티브 모달 프리뷰" class="w-full flex-1 border-0 bg-white"></iframe>
+  </dialog>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL DIALOG 2: 실시간 동적 프로토타입 합성기(방식 A) & AI API 생성기(방식 B) -->
+  <!-- ===================================================================== -->
+  <dialog id="liveProtoModal" closedby="any" aria-labelledby="liveProtoModalTitle" class="m-auto w-[96vw] max-w-[1520px] h-[90vh] rounded-2xl border border-slate-700 bg-slate-900 text-white shadow-2xl p-0 flex-col overflow-hidden">
+    <!-- 상단 컨트롤 헤더 -->
+    <div class="px-4 py-2.5 bg-slate-950 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2 shrink-0">
+      <div class="flex flex-wrap items-center gap-2">
+        <span id="protoEngineBadge" class="px-2 py-0.5 rounded bg-emerald-600 text-[10px] font-extrabold">방식 A · 0.1초 실시간 동적 합성됨</span>
+        <h2 id="liveProtoModalTitle" class="text-sm font-extrabold text-white">실시간 프로토타입 시뮬레이터</h2>
+
+        <!-- 반응형 뷰포트 폭 테스트 버튼 -->
+        <div class="flex items-center bg-slate-900 border border-slate-800 rounded-lg p-0.5 text-[11px] ml-2">
+          <button type="button" data-action="resize-proto-frame" data-width="375px" class="px-2 py-0.5 rounded text-slate-300 hover:text-white font-semibold">📱 375px</button>
+          <button type="button" data-action="resize-proto-frame" data-width="768px" class="px-2 py-0.5 rounded text-slate-300 hover:text-white font-semibold">📟 768px</button>
+          <button type="button" data-action="resize-proto-frame" data-width="100%" class="px-2 py-0.5 rounded bg-blue-600 text-white font-bold">🖥️ 100% 전체폭</button>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-1.5">
+        <button type="button" data-action="rerun-dynamic-proto" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 text-xs font-bold flex items-center gap-1 transition" title="현재 캔버스 블록으로 즉시 다시 합성">
+          <i data-lucide="refresh-cw" class="w-3 h-3" aria-hidden="true"></i>
+          <span>현재 블록으로 재합성</span>
+        </button>
+        <button type="button" data-action="open-static-benchmark" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition" title="고정 레퍼런스 샘플(검증테스트_결과화면.html) 열기">
+          📄 채용허브 샘플
+        </button>
+        <button type="button" data-action="toggle-ai-api-bar" class="px-2.5 py-1 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1 transition">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5" aria-hidden="true"></i>
+          <span>🤖 AI API 설정 (방식 B) ▾</span>
+        </button>
+        <button type="button" data-action="download-proto-html" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold flex items-center gap-1 transition">
+          <i data-lucide="download" class="w-3.5 h-3.5" aria-hidden="true"></i>
+          <span>HTML 다운로드</span>
+        </button>
+        <button type="button" data-action="open-proto-newtab" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-blue-300 text-xs font-bold flex items-center gap-1 transition">
+          <span>↗ 새 탭</span>
+        </button>
+        <form method="dialog">
+          <button type="submit" value="close" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-rose-600 text-slate-200 hover:text-white text-xs font-bold transition">
+            닫기 ✕
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- 방식 B 옵션: AI API 키 입력 및 실시간 LLM 생성 컨트롤 바 (토글 가능) -->
+    <div id="aiApiConfigBar" class="hidden px-4 py-2.5 bg-indigo-950/90 border-b border-indigo-800 flex-wrap items-center justify-between gap-2 text-xs shrink-0">
+      <div class="flex flex-wrap items-center gap-2 flex-1">
+        <span class="font-extrabold text-indigo-300">🤖 방식 B (AI API 직접 호출):</span>
+        <select id="aiApiProvider" class="bg-slate-900 border border-indigo-700 rounded-lg px-2 py-1 text-white font-semibold">
+          <option value="gemini">Google Gemini API</option>
+          <option value="openai">OpenAI Compatible API</option>
+        </select>
+        <select id="aiApiModel" class="bg-slate-900 border border-indigo-700 rounded-lg px-2 py-1 text-white font-mono text-[11px]">
+          <option value="gemini-2.5-flash">gemini-2.5-flash (빠름·추천)</option>
+          <option value="gemini-2.5-pro">gemini-2.5-pro (고성능)</option>
+          <option value="gpt-4o-mini">gpt-4o-mini (OpenAI)</option>
+          <option value="gpt-4o">gpt-4o (OpenAI)</option>
+        </select>
+        <input
+          id="aiApiKeyInput"
+          type="password"
+          placeholder="API Key 입력 (브라우저 세션에만 임시 보관되며 외부로 유출되지 않습니다)"
+          class="flex-1 min-w-[240px] bg-slate-900 border border-indigo-700 rounded-lg px-3 py-1 text-white focus:outline-none focus:border-blue-400"
+        />
+      </div>
+      <div class="flex items-center gap-2">
+        <span id="aiApiStatusText" class="text-[11px] text-indigo-200">우측 프롬프트 명세를 AI 모델에 전송해 코드를 생성합니다</span>
+        <button type="button" id="runAiApiGenerateBtn" data-action="run-ai-api-generate" class="px-3.5 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold flex items-center gap-1.5 shadow-sm transition">
+          <span>✨ AI API로 코드 생성 실행</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 프로토타입 렌더링 스테이지 -->
+    <div class="flex-1 bg-slate-800 flex justify-center overflow-auto p-2">
+      <iframe id="liveProtoIframe" title="실시간 합성 프로토타입 뷰어" class="w-full h-full bg-white rounded-xl shadow-2xl border-0 transition-all duration-300"></iframe>
+    </div>
+  </dialog>
+
+  <!-- 마스터 UI/UX 도감 데이터베이스 & 레시피 & 동적 프로토타입 컴파일러 로드 -->
+  <script src="data/ux-taxonomy-db.js"></script>
+  <script src="data/prototype-compiler.js"></script>
+  <script>
+    // =========================================================================
+    // 2. 애플리케이션 상태 변수
+    // =========================================================================
+    let activeComponents = [];
+    let currentWorkspaceMode = 'composer'; // 'composer' | 'dictionary'
+    let currentCategory = 'layout';
+    let currentOutputTab = 'prompt';
+    let currentViewport = 'mobile';        // 'mobile' | 'tablet' | 'desktop'
+    let currentGridArch = 'stack';         // 'stack' | 'grid2' | 'sidebar' | 'bento3'
+    let canvasViewMode = 'clean';          // 'clean' (실화면 프리뷰) | 'blueprint' (블록 편집 뷰)
+    let isWideStage = false;               // 중앙 캔버스 와이드 확장 여부
+    let selectedBlockId = null;
+
+    // 사전(Dictionary) 전용 상태
+    let dictSubView = 'cards';             // 'cards' | 'live'
+    let dictSelectedCat = 'all';           // 'all' or catKey
+    let dictActiveLiveCat = 'search';      // 라이브 뷰에서 열려있는 카테고리
+
+        // =========================================================================
+    // 4. 워크스페이스 모드 전환 & 와이드 스테이지 / 실화면 뷰 토글
+    // =========================================================================
+    function setCanvasViewMode(mode) {
+      canvasViewMode = mode;
+      document.getElementById('viewMode_clean').className = mode === 'clean'
+        ? "px-2 py-1 rounded-md bg-blue-600 text-white shadow-2xs transition"
+        : "px-2 py-1 rounded-md text-slate-600 hover:text-slate-900 transition";
+      document.getElementById('viewMode_blueprint').className = mode === 'blueprint'
+        ? "px-2 py-1 rounded-md bg-blue-600 text-white shadow-2xs transition"
+        : "px-2 py-1 rounded-md text-slate-600 hover:text-slate-900 transition";
+
+      // 블록 편집 뷰(blueprint)일 때만 슬롯 영문 가이드 헤더 노출
+      ['slotHeaderLabel', 'slotMainLabel', 'slotBottomLabel'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('hidden', mode === 'clean');
+      });
+
+      renderCanvasSlots();
+    }
+
+    function toggleWideStage(forceState) {
+      isWideStage = typeof forceState === 'boolean' ? forceState : !isWideStage;
+      const canvasCol = document.getElementById('composerCanvasCol');
+      const outputCol = document.getElementById('composerOutputCol');
+      const label = document.getElementById('wideStageLabel');
+
+      if (isWideStage) {
+        canvasCol.className = "lg:col-span-9 bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden transition-all duration-300";
+        outputCol.className = "lg:col-span-12 bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col min-h-[360px] overflow-hidden transition-all duration-300";
+        if (label) label.innerText = "기본 폭 복귀";
+      } else {
+        canvasCol.className = "lg:col-span-6 bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden transition-all duration-300";
+        outputCol.className = "lg:col-span-3 bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden transition-all duration-300";
+        if (label) label.innerText = "넓게 보기";
+      }
+      lucide.createIcons();
+    }
+
+    function switchWorkspaceMode(mode) {
+      currentWorkspaceMode = mode;
+      const compView = document.getElementById('viewComposer');
+      const dictView = document.getElementById('viewDictionary');
+      const btnComp = document.getElementById('modeBtn_composer');
+      const btnDict = document.getElementById('modeBtn_dictionary');
+
+      if (mode === 'composer') {
+        compView.classList.remove('hidden');
+        dictView.classList.add('hidden');
+        dictView.classList.remove('flex');
+        btnComp.className = "px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold flex items-center gap-1.5 shadow-xs transition";
+        btnDict.className = "px-3 py-1.5 rounded-lg text-slate-300 hover:text-white font-semibold flex items-center gap-1.5 transition";
+        renderPalette();
+        renderCanvasSlots();
+        updateOutput();
+      } else {
+        compView.classList.add('hidden');
+        dictView.classList.remove('hidden');
+        dictView.classList.add('flex');
+        btnDict.className = "px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold flex items-center gap-1.5 shadow-xs transition";
+        btnComp.className = "px-3 py-1.5 rounded-lg text-slate-300 hover:text-white font-semibold flex items-center gap-1.5 transition";
+        renderDictionaryView();
+      }
+      lucide.createIcons();
+    }
+
+    // =========================================================================
+    // 5. 좌측 카테고리 탭 & 팔레트 렌더링 (통합 검색 지원)
+    // =========================================================================
+    function renderCategoryTabs() {
+      const container = document.getElementById('categoryTabsContainer');
+      container.innerHTML = '';
+
+      SHOWCASE_BOOKS.forEach(book => {
+        const isCurrent = currentCategory === book.key;
+        const addedInCat = activeComponents.filter(x => x.catKey === book.key).length;
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.dataset.action = 'switch-category';
+        btn.dataset.cat = book.key;
+        btn.className = `px-2 py-1.5 rounded-lg text-left transition flex items-center justify-between gap-1 ${
+          isCurrent ? 'bg-white text-blue-600 shadow-xs font-extrabold' : 'text-slate-600 hover:text-slate-900 font-medium'
+        }`;
+        btn.innerHTML = `
+          <span class="truncate">${book.short}</span>
+          ${addedInCat > 0 ? `<span class="px-1 rounded-full bg-blue-100 text-blue-700 text-[9px] font-extrabold">${addedInCat}</span>` : ''}
+        `;
+        container.appendChild(btn);
+      });
+    }
+
+    function renderPalette() {
+      renderCategoryTabs();
+      const query = document.getElementById('paletteSearchInput').value.trim().toLowerCase();
+      const clearBtn = document.getElementById('paletteSearchClear');
+      clearBtn.classList.toggle('hidden', query.length === 0);
+
+      const container = document.getElementById('paletteListContainer');
+      container.innerHTML = '';
+
+      const items = query.length > 0
+        ? ALL_PATTERNS.filter(item =>
+            item.code.toLowerCase().includes(query) ||
+            item.eng.toLowerCase().includes(query) ||
+            item.desc.toLowerCase().includes(query) ||
+            item.meta.toLowerCase().includes(query) ||
+            item.catShort.toLowerCase().includes(query)
+          )
+        : (PATTERN_DB[currentCategory] || []);
+
+      if (items.length === 0) {
+        container.innerHTML = `
+          <div class="p-6 text-center text-xs text-slate-400">
+            일치하는 UI 패턴이 없습니다. 다른 키워드로 검색해 보세요.
+          </div>`;
+        return;
+      }
+
+      items.forEach(item => {
+        const isAdded = activeComponents.some(x => x.id === item.id);
+        const card = document.createElement('div');
+        card.className = `p-2.5 rounded-xl border transition flex flex-col gap-1.5 ${
+          isAdded ? 'bg-blue-50/70 border-blue-400' : 'bg-white border-slate-200 hover:border-blue-400 hover:shadow-xs'
+        }`;
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-2">
+            <div class="space-y-1 flex-1 cursor-pointer" data-action="toggle-component" data-id="${item.id}">
+              <div class="flex flex-wrap items-center gap-1">
+                ${query.length > 0 ? `<span class="text-[9px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-bold">${item.catShort}</span>` : ''}
+                <span class="text-xs font-bold text-slate-900">${item.code}</span>
+                <span class="text-[9px] px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-600 font-semibold">${item.meta}</span>
+              </div>
+              <p class="text-[11px] text-slate-500 leading-snug">${item.desc}</p>
+            </div>
+            <div class="flex flex-col gap-1 shrink-0">
+              <button type="button" data-action="toggle-component" data-id="${item.id}" aria-label="${item.code} 캔버스 추가/제거" class="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-bold transition ${
+                isAdded ? 'bg-blue-600 text-white' : 'bg-slate-100 hover:bg-blue-100 text-slate-700'
+              }">
+                ${isAdded ? '✓' : '+'}
+              </button>
+              <button type="button" data-action="preview-item-showcase" data-id="${item.id}" title="원본 쇼케이스 인터랙티브 데모 보기" aria-label="${item.code} 쇼케이스 미리보기" class="w-6 h-6 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition">
+                <i data-lucide="eye" class="w-3 h-3" aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+      lucide.createIcons();
+    }
+
+    // =========================================================================
+    // 6. 캔버스 블록 조립, 골격(Shell) 자동 연동, 순서 이동(▲/▼), 기획 메모 제어
+    // =========================================================================
+    function toggleComponentById(id) {
+      const baseItem = ALL_PATTERNS.find(x => x.id === id);
+      if (!baseItem) return;
+
+      const idx = activeComponents.findIndex(x => x.id === id);
+      if (idx > -1) {
+        activeComponents.splice(idx, 1);
+        if (selectedBlockId === id) selectedBlockId = null;
+      } else {
+        activeComponents.push({ ...baseItem, note: '' });
+        // 레이아웃 골격(Shell) 패턴을 추가할 경우 기기 뷰포트 및 격자 골격을 직관적으로 자동 연동!
+        if (id === 'lay_05') {
+          if (currentViewport === 'mobile') setViewportDevice('desktop');
+          setGridArchitecture('sidebar');
+        } else if (id === 'lay_02' || id === 'lay_12') {
+          if (currentViewport === 'mobile') setViewportDevice('desktop');
+          setGridArchitecture('bento3');
+        } else if (id === 'lay_03' || id === 'cnt_04') {
+          if (currentViewport === 'mobile') setViewportDevice('tablet');
+          setGridArchitecture('grid2');
+        }
+      }
+      syncAllViews();
+    }
+
+    function moveComponentOrder(id, direction) {
+      const target = activeComponents.find(x => x.id === id);
+      if (!target) return;
+      const sameSlotIndices = activeComponents
+        .map((item, idx) => (item.slot === target.slot ? idx : -1))
+        .filter(idx => idx !== -1);
+
+      const posInSlot = sameSlotIndices.indexOf(activeComponents.indexOf(target));
+      const swapPosInSlot = posInSlot + direction;
+      if (swapPosInSlot < 0 || swapPosInSlot >= sameSlotIndices.length) return;
+
+      const idxA = sameSlotIndices[posInSlot];
+      const idxB = sameSlotIndices[swapPosInSlot];
+      const temp = activeComponents[idxA];
+      activeComponents[idxA] = activeComponents[idxB];
+      activeComponents[idxB] = temp;
+
+      renderCanvasSlots();
+      updateOutput();
+    }
+
+    function updateBlockNote(id, value) {
+      const target = activeComponents.find(x => x.id === id);
+      if (target) {
+        target.note = value;
+        updateOutput();
+      }
+    }
+
+    function toggleBlockSpan(id) {
+      const target = activeComponents.find(x => x.id === id);
+      if (target) {
+        target.span = target.span === 'full' ? 'half' : 'full';
+        renderCanvasSlots();
+        updateOutput();
+      }
+    }
+
+    function renderCanvasSlots() {
+      const slots = {
+        header: document.getElementById('slot_header'),
+        main: document.getElementById('slot_main'),
+        behavior: document.getElementById('slot_behavior'),
+        bottom: document.getElementById('slot_bottom')
+      };
+
+      Object.values(slots).forEach(el => { el.innerHTML = ''; });
+
+      // 기기별 고유 문법 처리:
+      // 1) PC 웹일 때 모바일 하단 탭바(nav_01)가 있으면 상단 GNB(desktopPromotedGnb)로 자동 승격하고 하단에선 숨김
+      const hasBottomTab = activeComponents.some(x => x.id === 'nav_01');
+      const desktopGnb = document.getElementById('desktopPromotedGnb');
+      if (desktopGnb) {
+        if (currentViewport === 'desktop' && hasBottomTab) {
+          desktopGnb.classList.remove('hidden');
+          desktopGnb.classList.add('flex');
+        } else {
+          desktopGnb.classList.add('hidden');
+          desktopGnb.classList.remove('flex');
+        }
+      }
+
+      // 2) 우측 3단 보조 패널(TOC/인스펙터)은 PC에서 bento3이거나 lay_12, cnt_12, nav_12가 있을 때 노출
+      const rightInspector = document.getElementById('optionalRightInspector');
+      const hasRightPanelItem = activeComponents.some(x => ['lay_12', 'cnt_12', 'nav_12'].includes(x.id));
+      if (rightInspector) {
+        if (currentViewport === 'desktop' && (currentGridArch === 'bento3' || hasRightPanelItem)) {
+          rightInspector.classList.remove('hidden');
+          rightInspector.classList.add('flex');
+        } else {
+          rightInspector.classList.add('hidden');
+          rightInspector.classList.remove('flex');
+        }
+      }
+
+      activeComponents.forEach(item => {
+        // PC나 태블릿에서 모바일 전용 홈 인디케이터(ind_09)나 PC에서 승격된 하단 탭바(nav_01)는 기기 하단 슬롯에서 자동 생략
+        if (currentViewport !== 'mobile' && item.id === 'ind_09') return;
+        if (currentViewport === 'desktop' && item.id === 'nav_01') return;
+
+        const isSelected = selectedBlockId === item.id;
+        const el = document.createElement('div');
+
+        if (item.slot === 'behavior') {
+          el.className = `animate-spring inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold border shadow-2xs cursor-pointer transition ${
+            isSelected ? 'bg-indigo-600 text-white border-indigo-700' : 'bg-indigo-50/70 text-indigo-800 border-indigo-200 hover:bg-indigo-100'
+          }`;
+          el.innerHTML = `
+            <span data-action="select-block" data-id="${item.id}">⚡ ${item.code}</span>
+            <button type="button" data-action="preview-item-showcase" data-id="${item.id}" class="ml-0.5 opacity-70 hover:opacity-100" title="원본 쇼케이스 열기">
+              <i data-lucide="eye" class="w-3 h-3" aria-hidden="true"></i>
+            </button>
+            <button type="button" data-action="remove-component" data-id="${item.id}" class="ml-0.5 px-1 rounded bg-rose-500/10 hover:bg-rose-500 text-rose-600 hover:text-white text-[9px] font-extrabold transition" title="제거">
+              ×
+            </button>
+          `;
+        } else {
+          const isFullWidth = item.span === 'full';
+          const spanClass = (currentViewport !== 'mobile' && currentGridArch !== 'stack' && isFullWidth)
+            ? (currentGridArch === 'bento3' ? 'col-span-3' : 'col-span-2')
+            : 'col-span-1';
+
+          const showSpanToggle = item.slot === 'main' && currentViewport !== 'mobile' && currentGridArch !== 'stack';
+
+          if (canvasViewMode === 'clean') {
+            // ✨ 클린 실화면 뷰: 라벨 헤더를 숨기고 실제 UI 그래픽만 매끄럽게 노출 + 마우스 호버 시 플로팅 툴바 표시
+            el.className = `group relative animate-spring rounded-xl transition ${spanClass} ${
+              isSelected ? 'ring-2 ring-blue-500 bg-blue-50/20 p-1' : 'hover:ring-1 hover:ring-blue-300'
+            }`;
+            el.innerHTML = `
+              <!-- 호버 시 우측 상단에 뜨는 플로팅 컨트롤 바 -->
+              <div class="opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity absolute -top-2 right-1 z-20 flex items-center gap-0.5 bg-slate-900/95 text-white px-2 py-0.5 rounded-full shadow-md text-[9px]">
+                <span class="font-bold text-blue-300 mr-1">${item.code}</span>
+                <button type="button" data-action="move-up" data-id="${item.id}" class="px-1 hover:text-blue-300" title="위로 이동">▲</button>
+                <button type="button" data-action="move-down" data-id="${item.id}" class="px-1 hover:text-blue-300" title="아래로 이동">▼</button>
+                ${showSpanToggle ? `
+                  <button type="button" data-action="toggle-span" data-id="${item.id}" class="px-1 text-amber-300 font-bold" title="단 너비 전환">
+                    ${isFullWidth ? '전체폭↔' : '1단폭↔'}
+                  </button>
+                ` : ''}
+                <button type="button" data-action="preview-item-showcase" data-id="${item.id}" class="px-1 hover:text-emerald-300" title="쇼케이스 데모 열기">사전</button>
+                <button type="button" data-action="remove-component" data-id="${item.id}" class="px-1 text-rose-400 font-extrabold" title="삭제">×</button>
+              </div>
+              <div class="cursor-pointer" data-action="select-block" data-id="${item.id}" title="클릭하여 이 블록의 기획 메모 입력">
+                ${getVisualWireframeHTML(item)}
+              </div>
+              ${(isSelected || item.note) ? `
+                <div class="mt-1 px-2 py-1 bg-blue-50 border border-blue-200 rounded-lg flex items-center gap-1.5">
+                  <span class="text-[9px] font-extrabold text-blue-600 shrink-0">📌 메모:</span>
+                  <input
+                    type="text"
+                    data-note-id="${item.id}"
+                    value="${(item.note || '').replace(/"/g, '&quot;')}"
+                    placeholder="구체적 문구/동작 지시 입력 (우측 프롬프트에 즉시 반영)"
+                    class="w-full text-[10px] bg-transparent text-slate-800 focus:outline-none font-medium"
+                  />
+                </div>
+              ` : ''}
+            `;
+          } else {
+            // 🛠️ 블록 편집 뷰 (Blueprint Mode)
+            el.className = `animate-spring bg-white border rounded-xl p-2 shadow-xs transition ${spanClass} ${
+              isSelected ? 'border-blue-500 ring-2 ring-blue-100' : 'border-slate-200 hover:border-blue-300'
+            }`;
+            el.innerHTML = `
+              <div class="flex items-center justify-between gap-1 mb-1.5">
+                <div class="flex flex-wrap items-center gap-1 cursor-pointer flex-1" data-action="select-block" data-id="${item.id}">
+                  <span class="text-[11px] font-bold text-slate-800">${item.code}</span>
+                  <span class="text-[9px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-600 font-semibold">${item.meta}</span>
+                </div>
+                <div class="flex items-center gap-0.5 shrink-0">
+                  <button type="button" data-action="move-up" data-id="${item.id}" class="px-1 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 text-[9px] font-bold">▲</button>
+                  <button type="button" data-action="move-down" data-id="${item.id}" class="px-1 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 text-[9px] font-bold">▼</button>
+                  ${showSpanToggle ? `
+                    <button type="button" data-action="toggle-span" data-id="${item.id}" class="px-1.5 py-0.5 rounded bg-indigo-50 hover:bg-indigo-100 text-indigo-600 text-[9px] font-bold transition">
+                      ${isFullWidth ? '전체폭↔' : '1단폭↔'}
+                    </button>
+                  ` : ''}
+                  <button type="button" data-action="preview-item-showcase" data-id="${item.id}" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-blue-50 text-slate-600 hover:text-blue-600 text-[9px] font-bold transition">사전</button>
+                  <button type="button" data-action="remove-component" data-id="${item.id}" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-rose-50 text-slate-500 hover:text-rose-600 text-[9px] font-bold transition">×</button>
+                </div>
+              </div>
+              <div class="cursor-pointer" data-action="select-block" data-id="${item.id}">
+                ${getVisualWireframeHTML(item)}
+              </div>
+              ${(isSelected || item.note) ? `
+                <div class="mt-1.5 pt-1.5 border-t border-slate-100 flex items-center gap-1.5">
+                  <span class="text-[9px] font-bold text-blue-600 shrink-0">기획 메모:</span>
+                  <input
+                    type="text"
+                    data-note-id="${item.id}"
+                    value="${(item.note || '').replace(/"/g, '&quot;')}"
+                    placeholder="이 컴포넌트에 들어갈 구체적 문구/동작 지시"
+                    class="w-full text-[10px] bg-blue-50/50 border border-blue-200 rounded px-2 py-0.5 text-slate-800 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+              ` : ''}
+            `;
+          }
+        }
+        if (slots[item.slot]) {
+          slots[item.slot].appendChild(el);
+        }
+      });
+
+      // 빈 슬롯 자동 숨김 처리 (실화면 뷰일 때 상/하단 슬롯이 비어 있으면 여백 제거)
+      const headerWrap = document.getElementById('slotHeaderWrapper');
+      const bottomWrap = document.getElementById('slotBottomWrapper');
+      if (headerWrap) {
+        headerWrap.classList.toggle('hidden', canvasViewMode === 'clean' && slots.header.children.length === 0);
+      }
+      if (bottomWrap) {
+        bottomWrap.classList.toggle('hidden', canvasViewMode === 'clean' && slots.bottom.children.length === 0 && currentViewport !== 'mobile');
+      }
+
+      if (slots.behavior.children.length === 0) {
+        slots.behavior.innerHTML = `<span class="text-[10px] text-slate-400">좌측 팔레트에서 제스처·움직임·글자효과·비주얼 테마를 클릭하면 여기에 스펙 칩으로 추가됩니다.</span>`;
+      }
+
+      document.getElementById('activeCountLabel').innerText = activeComponents.length;
+      document.getElementById('headerBadgeCount').innerText = activeComponents.length;
+      lucide.createIcons();
+    }
+
+    // =========================================================================
+    // 7. 뷰포트(모바일 9:19 / 태블릿 4:3 레일 / PC 16:10 와이드) & 격자 아키텍처 전환
+    // =========================================================================
+    function setGridArchitecture(archMode) {
+      currentGridArch = archMode;
+      const mainSlot = document.getElementById('slot_main');
+      const leftSidebar = document.getElementById('optionalLeftSidebar');
+      const tabletRail = document.getElementById('tabletLeftRail');
+      const badge = document.getElementById('viewportSizeBadge');
+      const grammarHint = document.getElementById('viewportGrammarHint');
+
+      ['stack', 'grid2', 'sidebar', 'bento3'].forEach(m => {
+        const btn = document.getElementById(`gridBtn_${m}`);
+        if (!btn) return;
+        btn.className = m === archMode
+          ? "px-2 py-0.5 rounded bg-blue-600 text-white font-bold shadow-xs transition"
+          : "px-2 py-0.5 rounded bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition";
+      });
+
+      // 태블릿일 때는 좌측 아이콘 레일(Navigation Rail) 기본 활성화
+      if (tabletRail) {
+        if (currentViewport === 'tablet') {
+          tabletRail.classList.remove('hidden');
+          tabletRail.classList.add('flex');
+        } else {
+          tabletRail.classList.add('hidden');
+          tabletRail.classList.remove('flex');
+        }
+      }
+
+      // PC 웹에서 sidebar 또는 bento3 모드이거나, 태블릿에서 sidebar를 명시적으로 고른 경우 좌측 사이드바 표시
+      if ((archMode === 'sidebar' || archMode === 'bento3') && currentViewport === 'desktop') {
+        leftSidebar.classList.remove('hidden');
+        leftSidebar.classList.add('flex');
+      } else if (archMode === 'sidebar' && currentViewport === 'tablet') {
+        leftSidebar.classList.remove('hidden');
+        leftSidebar.classList.add('flex');
+      } else {
+        leftSidebar.classList.add('hidden');
+        leftSidebar.classList.remove('flex');
+      }
+
+      if (archMode === 'stack' || currentViewport === 'mobile') {
+        mainSlot.className = "grid grid-cols-1 gap-2.5";
+      } else if (archMode === 'grid2' || archMode === 'sidebar') {
+        mainSlot.className = "grid grid-cols-2 gap-2.5 items-start";
+      } else if (archMode === 'bento3') {
+        mainSlot.className = "grid grid-cols-3 gap-2.5 items-start";
+      }
+
+      const vpName = currentViewport === 'mobile' ? '📱 Mobile 375×812 (9:19 세로형)' : currentViewport === 'tablet' ? '📟 Tablet 1024×768 (4:3 레일+분할)' : '🖥️ PC Web 1440×900 (16:10 와이드)';
+      const archLabel = archMode === 'stack' ? '수직 1단 스택' : archMode === 'grid2' ? '좌우 2단 분할 격자' : archMode === 'sidebar' ? '고정 사이드바 + 2단 본문' : '3단 벤토 / 홀리 그레일';
+      badge.innerText = `${vpName} · ${archLabel}`;
+
+      if (grammarHint) {
+        if (currentViewport === 'mobile') {
+          grammarHint.innerText = "엄지 영역(Thumb Zone) 최적화를 위해 단일 세로열과 하단 탭바·바텀시트 중심으로 작동합니다.";
+        } else if (currentViewport === 'tablet') {
+          grammarHint.innerText = "하단 탭바 대신 좌측 아이콘 레일(Navigation Rail)과 좌우 2단 분할(Master-Detail)이 적용됩니다.";
+        } else {
+          grammarHint.innerText = "16:10 와이드 모니터 비율로 상단 GNB·좌측 사이드바·다단 벤토 격자·우측 인스펙터가 한눈에 펼쳐집니다.";
+        }
+      }
+
+      renderCanvasSlots();
+      updateOutput();
+    }
+
+    function setViewportDevice(mode) {
+      currentViewport = mode;
+      const frame = document.getElementById('deviceFrameContainer');
+      const chrome = document.getElementById('deviceTopChrome');
+      const homeBar = document.getElementById('mobileHomeBar');
+
+      ['mobile', 'tablet', 'desktop'].forEach(m => {
+        const btn = document.getElementById(`vpBtn_${m}`);
+        if (!btn) return;
+        btn.className = m === mode
+          ? "px-2.5 py-1 rounded-lg bg-white text-blue-600 shadow-xs flex items-center gap-1 transition font-bold"
+          : "px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 flex items-center gap-1 transition font-medium";
+      });
+
+      if (mode === 'mobile') {
+        frame.className = "w-[356px] min-h-[590px] bg-white rounded-[40px] border-[8px] border-slate-900 shadow-2xl flex flex-col justify-between overflow-hidden relative my-auto transition-all duration-300";
+        chrome.className = "bg-slate-900 text-white px-5 py-2 text-[10px] font-semibold flex items-center justify-between shrink-0";
+        chrome.innerHTML = `<span>9:41</span><div class="w-20 h-4 bg-black rounded-full border border-slate-800"></div><div class="flex items-center gap-1"><i data-lucide="wifi" class="w-3 h-3"></i><i data-lucide="battery-full" class="w-3.5 h-3.5"></i></div>`;
+        if (homeBar) homeBar.classList.remove('hidden');
+        setGridArchitecture('stack');
+      } else if (mode === 'tablet') {
+        frame.className = "w-[680px] max-w-full min-h-[490px] bg-white rounded-[26px] border-[8px] border-slate-800 shadow-2xl flex flex-col justify-between overflow-hidden relative my-auto transition-all duration-300";
+        chrome.className = "bg-slate-900 text-white px-4 py-1.5 text-[10px] font-semibold flex items-center justify-between shrink-0";
+        chrome.innerHTML = `<span>9:41 iPadOS Pro</span><div class="flex items-center gap-1 text-slate-400 font-bold tracking-widest">•••</div><div class="flex items-center gap-1.5"><span class="text-[9px] text-blue-300">Split View</span><i data-lucide="wifi" class="w-3 h-3"></i><span>100%</span></div>`;
+        if (homeBar) homeBar.classList.add('hidden');
+        setGridArchitecture('grid2');
+      } else if (mode === 'desktop') {
+        frame.className = "w-full max-w-[960px] min-h-[530px] bg-white rounded-xl border-2 border-slate-300 shadow-2xl flex flex-col justify-between overflow-hidden relative my-auto transition-all duration-300";
+        chrome.className = "bg-slate-900 text-white px-3.5 py-2 text-[10px] font-semibold flex items-center justify-between shrink-0";
+        chrome.innerHTML = `
+          <div class="flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-rose-400"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+          </div>
+          <div class="bg-slate-800 border border-slate-700 rounded-md px-4 py-0.5 text-[10px] text-slate-300 font-normal w-72 text-center truncate">
+            🔒 https://app.uxstudio.ai/workspace
+          </div>
+          <div class="text-[10px] text-blue-300 font-bold">1440×900 Widescreen</div>`;
+        if (homeBar) homeBar.classList.add('hidden');
+        setGridArchitecture('sidebar');
+      }
+      lucide.createIcons();
+    }
+
+    // =========================================================================
+    // 8. 6대 실전 프리셋 템플릿 로더
+    // =========================================================================
+    function loadPreset(type) {
+      const pick = (ids) => ids.map(id => {
+        const found = ALL_PATTERNS.find(x => x.id === id);
+        return found ? { ...found, note: '' } : null;
+      }).filter(Boolean);
+
+      const titleEl = document.getElementById('screenTitleInput');
+      const themeEl = document.getElementById('visualThemeSelect');
+
+      if (type === 'apply') {
+        titleEl.value = "채용 포트폴리오 제출 및 실시간 검증 화면";
+        themeEl.value = "clean";
+        activeComponents = pick(['nav_05', 'fb_03', 'cnt_08', 'form_01', 'fb_06', 'dt_06', 'ld_03', 'ld_09', 'fb_02', 'mo_02', 'mo_03']);
+      } else if (type === 'ai_chat') {
+        titleEl.value = "RAG 기반 AI 에이전트 멀티모달 워크스페이스";
+        themeEl.value = "Grainy Gradient (그레이니 그라디언트)";
+        activeComponents = pick(['nav_02', 'cnt_04', 'ai_03', 'ai_09', 'ai_02', 'ai_05', 'ai_07', 'ai_08', 'mo_05', 'txt_01']);
+      } else if (type === 'search_shop') {
+        titleEl.value = "커머스 통합 검색 및 다중 필터·정렬 탐색 화면";
+        themeEl.value = "clean";
+        activeComponents = pick(['src_01', 'src_02', 'src_09', 'src_05', 'src_06', 'src_03', 'src_04', 'lay_04', 'src_07', 'ld_07', 'nav_01']);
+      } else if (type === 'booking') {
+        titleEl.value = "숙박·항공 여정 날짜 및 타임슬롯 예약 플로우";
+        themeEl.value = "Claymorphism (클레이모피즘)";
+        activeComponents = pick(['nav_09', 'ind_02', 'dt_08', 'dt_03', 'dt_04', 'dt_05', 'form_08', 'fb_05', 'ld_09', 'mo_03']);
+      } else if (type === 'onboarding') {
+        titleEl.value = "신규 유저 앱 첫 진입 온보딩 및 3초 간편 가입";
+        themeEl.value = "Liquid Motion (리퀴드 모션)";
+        activeComponents = pick(['onb_01', 'ind_04', 'onb_02', 'onb_05', 'onb_06', 'onb_09', 'ind_09', 'txt_02', 'mo_03']);
+      } else if (type === 'saas_dash') {
+        titleEl.value = "B2B 엔터프라이즈 분석 대시보드 & 벤토 그리드";
+        themeEl.value = "Isometric (아이소메트릭)";
+        setViewportDevice('desktop');
+        activeComponents = pick(['ico_04', 'src_01', 'ico_06', 'lay_07', 'lay_02', 'cnt_07', 'ico_03', 'dt_03', 'txt_04']);
+      }
+
+      syncAllViews();
+    }
+
+    // =========================================================================
+    // 9. 고해상도 바이브 코딩 프롬프트 & MCP JSON 컴파일러 (DOM 트리 + 레시피 + 상태 바인딩)
+    // =========================================================================
+    function buildDomGridTree(bySlot) {
+      const headers = bySlot('header');
+      const mains = bySlot('main');
+      const bottoms = bySlot('bottom');
+      const hasRightPanel = activeComponents.some(x => ['lay_12', 'cnt_12', 'nav_12'].includes(x.id)) || (currentViewport === 'desktop' && currentGridArch === 'bento3');
+      const hasBottomTab = bottoms.some(x => x.id === 'nav_01');
+
+      const mainGridClass = currentGridArch === 'stack'
+        ? 'grid grid-cols-1 gap-4'
+        : currentGridArch === 'bento3'
+        ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'
+        : 'grid grid-cols-1 md:grid-cols-2 gap-4';
+
+      let tree = `<div class="min-h-screen flex flex-col bg-slate-50">\n`;
+      if (hasBottomTab) {
+        tree += `  <!-- 반응형 GNB: 모바일에서는 숨기고(hidden lg:flex), PC에서는 상단 글로벌 내비게이션 바로 노출 -->\n`;
+        tree += `  <header class="hidden lg:flex items-center justify-between px-6 py-3 bg-white border-b border-slate-200 sticky top-0 z-30">...</header>\n`;
+      }
+      if (headers.length > 0) {
+        tree += `  <!-- 상단 Header / Search / Filter 슬롯 -->\n`;
+        tree += `  <header class="sticky top-0 z-20 bg-white/95 backdrop-blur border-b border-slate-200 px-4 py-3 space-y-2">\n`;
+        headers.forEach(h => {
+          tree += `    <!-- [${h.code}] (${h.eng})${h.note ? ` : ${h.note}` : ''} -->\n`;
+        });
+        tree += `  </header>\n`;
+      }
+
+      tree += `  <!-- 메인 바디 래퍼 (태블릿 Rail / PC Sidebar + 본문 Grid + 우측 Inspector) -->\n`;
+      tree += `  <div class="flex-1 max-w-7xl w-full mx-auto flex">\n`;
+      if (currentViewport === 'tablet' || hasBottomTab) {
+        tree += `    <!-- 태블릿 전용 좌측 아이콘 레일 (md:flex lg:hidden w-16) -->\n`;
+        tree += `    <aside class="hidden md:flex lg:hidden w-16 flex-col items-center py-4 bg-slate-900 text-white shrink-0">...</aside>\n`;
+      }
+      if (currentGridArch === 'sidebar' || currentGridArch === 'bento3' || currentViewport === 'desktop') {
+        tree += `    <!-- PC 고정 좌측 사이드바 (hidden lg:flex w-60) -->\n`;
+        tree += `    <aside class="hidden lg:flex w-60 flex-col justify-between p-4 bg-white border-r border-slate-200 shrink-0">...</aside>\n`;
+      }
+
+      tree += `    <!-- 중앙 메인 콘텐츠 격자 (${mainGridClass}) -->\n`;
+      tree += `    <main class="flex-1 p-4 sm:p-6 ${mainGridClass}">\n`;
+      mains.forEach(m => {
+        const spanCls = m.span === 'full'
+          ? (currentGridArch === 'bento3' ? 'col-span-1 md:col-span-2 lg:col-span-3' : 'col-span-1 md:col-span-2')
+          : 'col-span-1';
+        tree += `      <section class="${spanCls}"> <!-- [${m.code}] (${m.eng})${m.note ? ` | 지시: ${m.note}` : ''} --> </section>\n`;
+      });
+      tree += `    </main>\n`;
+
+      if (hasRightPanel) {
+        tree += `    <!-- 우측 보조 인스펙터 / 목차 패널 (hidden xl:flex w-72) -->\n`;
+        tree += `    <aside class="hidden xl:flex w-72 flex-col p-4 bg-white border-l border-slate-200 shrink-0">...</aside>\n`;
+      }
+      tree += `  </div>\n`;
+
+      if (bottoms.length > 0) {
+        tree += `  <!-- 하단 고정 바 & 오버레이 피드백 레이어 (Modal / Bottom Sheet / Toast / Loading CTA) -->\n`;
+        tree += `  <footer class="sticky bottom-0 z-30 bg-white border-t border-slate-200 p-3">\n`;
+        bottoms.forEach(b => {
+          tree += `    <!-- [${b.code}] (${b.eng})${b.note ? ` : ${b.note}` : ''} -->\n`;
+        });
+        tree += `  </footer>\n`;
+      }
+      tree += `</div>`;
+      return tree;
+    }
+
+    function buildSharedStateSpec() {
+      const ids = activeComponents.map(x => x.id);
+      const states = [];
+      if (ids.some(id => id.startsWith('src_'))) {
+        states.push(`- \`searchState\`: 검색창 입력어(\`query\`), 활성 필터 조건(\`activeFilters\`), 정렬 기준(\`sortBy\`)이 변경될 때마다 본문 카드/테이블 목록이 실시간으로 필터링·재정렬되어야 합니다.`);
+      }
+      if (ids.some(id => id.startsWith('dt_'))) {
+        states.push(`- \`dateBookingState\`: 선택한 날짜/기간(\`startDate\`, \`endDate\`) 또는 타임슬롯이 변경되면 숙박일수(N박)나 예약 요약 텍스트가 즉시 동기화되어야 합니다.`);
+      }
+      if (ids.some(id => id.startsWith('form_'))) {
+        states.push(`- \`formValidationState\`: 입력 필드 타이핑 및 포커스 이동 시 실시간 유효성 검증을 수행하고, 조건 미달 시 인라인 오류 문구를 표시하며 통과 시 제출 버튼을 활성화합니다.`);
+      }
+      if (ids.some(id => id.startsWith('ld_') || id.startsWith('fb_'))) {
+        states.push(`- \`asyncFeedbackFlow\`: 주요 CTA/제출 버튼 클릭 시 [로딩 상태(스피너/프로그레스바, 중복 클릭 방지)] ➔ [완료 피드백(토스트/스낵바 노출 및 2.5초 후 자동 소멸 또는 실행 취소)] 시나리오가 끊김 없이 이어져야 합니다.`);
+      }
+      if (ids.some(id => id.startsWith('ai_'))) {
+        states.push(`- \`aiAgentStreamState\`: 추천 질문 칩 클릭 또는 프롬프트 전송 시 [생각 중 바운스 도트] ➔ [단계별 도구 실행 체크] ➔ [실시간 타자기 토큰 스트리밍 + 출처 각주 팝오버] 순서로 시뮬레이션이 작동해야 합니다.`);
+      }
+      return states.length > 0
+        ? states.join('\n')
+        : `- 모든 버튼과 탭, 입력 컨트롤은 정적 더미가 아니라 클릭 시 활성 클래스(Active State)와 화면 데이터가 실제로 전환되도록 JavaScript 상태를 연결하세요.`;
+    }
+
+    function updateOutput() {
+      const screenTitle = document.getElementById('screenTitleInput').value || "신규 화면";
+      const useTailwind = document.getElementById('optTailwind').checked;
+      const useA11y = document.getElementById('optA11y').checked;
+      const useCodeHint = document.getElementById('optCodeHint').checked;
+      const visualTheme = document.getElementById('visualThemeSelect').value;
+      const outputEl = document.getElementById('compiledOutputArea');
+
+      const viewportLabel = currentViewport === 'mobile'
+        ? 'Mobile First (375×812 세로형 9:19 기준 + 태블릿/PC 반응형 확장)'
+        : currentViewport === 'tablet'
+        ? 'Tablet Split/Rail (1024×768 4:3 기준 · 좌측 네비게이션 레일 + 2단 격자)'
+        : 'Desktop Widescreen (1440×900 16:10 기준 · 상단 GNB/좌측 고정 사이드바 + 다단 벤토 격자)';
+      const archDesc = currentGridArch === 'stack'
+        ? 'Single Column Vertical Stack (모바일 1단 수직 흐름)'
+        : currentGridArch === 'grid2'
+        ? '2-Column Responsive Split/Grid (태블릿·PC 2단 균등/분할 격자)'
+        : currentGridArch === 'sidebar'
+        ? 'Left Fixed Sidebar + 2-Column Main Grid (좌측 고정 사이드바 + 우측 2단 격자 본문)'
+        : '3-Column Bento / Holy Grail Grid (좌측 사이드바 + 중앙 3열 벤토 그리드 + 우측 인스펙터/목차)';
+
+      const bySlot = (s) => activeComponents.filter(x => x.slot === s);
+      const formatItemLine = (x, includeSpan = false) => {
+        const spanInfo = includeSpan ? ` | 격자폭: ${x.span === 'full' ? '전체폭(Full Span)' : '1단(1-Col)'}` : '';
+        const recipe = useCodeHint ? `\n  └ 🛠️ **[구현 레시피]**: ${getImplementationRecipe(x)}` : '';
+        const customNote = x.note ? `\n  └ 📌 **[기획자 커스텀 지시]**: ${x.note}` : '';
+        return `- **[${x.code} (${x.eng})]** [특성: ${x.meta}${spanInfo}] — ${x.desc}${recipe}${customNote}`;
+      };
+
+      if (currentOutputTab === 'prompt') {
+        const headerList = bySlot('header').map(x => formatItemLine(x)).join('\n') || '- (지정된 상단 요소 없음)';
+        const mainList = bySlot('main').map(x => formatItemLine(x, true)).join('\n') || '- (지정된 본문 요소 없음)';
+        const bottomList = bySlot('bottom').map(x => formatItemLine(x)).join('\n') || '- (지정된 하단/오버레이 요소 없음)';
+        const behaviorList = bySlot('behavior').map(x => formatItemLine(x)).join('\n') || '- 기본 브라우저 스무스 트랜지션 적용';
+
+        let prompt = `# 역할: 수석 프로덕트 디자이너 & 시니어 프론트엔드 엔지니어
+아래의 **[공간 그리드 DOM 트리]**, **[컴포넌트별 쇼케이스 구현 레시피]**, **[반응형 상태 연동 명세]**를 100% 준수하여 **'${screenTitle}'**의 즉시 실행 가능한 단일 HTML 프로토타입을 작성해 주세요.
+
+## 0. 화면 아키텍처 & 비주얼 테마 기준
+- **중심 타깃 뷰포트**: ${viewportLabel}
+- **레이아웃 골격(Shell Architecture)**: ${archDesc}
+- **비주얼 테마 & CSS 토큰**: ${getVisualThemeCssGuide(visualTheme)}
+
+## 1. 명시적 DOM & Tailwind 그리드 배치 구조도 (Structural Skeleton)
+AI가 임의로 1열 나열하지 않도록 반드시 아래의 반응형 컨테이너 계층과 \`col-span\` 비율에 맞춰 컴포넌트를 배치하세요:
+\`\`\`html
+${buildDomGridTree(bySlot)}
+\`\`\`
+
+## 2. 슬롯별 컴포넌트 상세 명세 & 쇼케이스 구현 레시피
+### [A. 상단 Header / Search / Indicator 슬롯]
+${headerList}
+
+### [B. 중앙 Main Content / Layout / Form / Chart / AI 격자 슬롯]
+${mainList}
+
+### [C. 하단 Bottom Bar / Overlay / Feedback 슬롯]
+${bottomList}
+
+### [D. 화면 외곽 데코레이터: 제스처 · 물리 모션 · 타이포 효과]
+${behaviorList}
+
+## 3. 컴포넌트 간 반응형 상태 연동 (Shared Reactive State)
+화면 안의 블록들이 서로 단절된 정적 목업이 되지 않도록 다음 상태 흐름을 JavaScript로 연결하세요:
+${buildSharedStateSpec()}
+- **전체 시나리오 체인**: ${activeComponents.map((c, i) => `${i + 1}. [${c.code}]${c.note ? `(${c.note})` : ''}`).join(' ➔ ') || '컴포넌트를 선택해 주세요'}
+`;
+
+        if (useTailwind) {
+          prompt += `\n## 4. 기술 스택 및 완료 자가 검증 체크리스트 (Self-Verification)\n- Tailwind CSS CDN + Lucide Icons CDN + Pretendard 폰트를 포함한 단일 HTML 파일로 작성할 것.\n- 코드 출력 전 위 명세의 **총 ${activeComponents.length}개 UI/UX 블록**이 단 하나도 누락 없이 화면에 렌더링되고 클릭/입력 이벤트가 작동하는지 스스로 검증할 것.`;
+        }
+        if (useA11y) {
+          prompt += `\n- 모달은 네이티브 \`<dialog closedby="any">\`와 \`showModal()\`을 사용하고, 검색 영역은 \`<search>\` 시맨틱 태그를 적용할 것. 모바일(1단) ↔ 태블릿(좌측 레일+2단) ↔ PC(상단 GNB/사이드바+다단) 반응형 전환을 보장할 것.`;
+        }
+
+        outputEl.textContent = prompt;
+      } else {
+        const schema = {
+          schemaVersion: "2026.12-ux-high-precision-vibe-bridge",
+          screenTitle,
+          targetViewport: currentViewport,
+          gridArchitecture: currentGridArch,
+          visualTheme,
+          visualThemeCssGuide: getVisualThemeCssGuide(visualTheme),
+          domSkeletonHint: buildDomGridTree(bySlot),
+          layoutSlots: {
+            header: bySlot('header').map(x => ({ id: x.id, name: x.code, eng: x.eng, meta: x.meta, recipe: getImplementationRecipe(x), customNote: x.note || undefined })),
+            main: bySlot('main').map(x => ({ id: x.id, name: x.code, eng: x.eng, gridSpan: x.span, meta: x.meta, recipe: getImplementationRecipe(x), customNote: x.note || undefined })),
+            bottom: bySlot('bottom').map(x => ({ id: x.id, name: x.code, eng: x.eng, meta: x.meta, recipe: getImplementationRecipe(x), customNote: x.note || undefined }))
+          },
+          interactionAndStyleDecorators: bySlot('behavior').map(x => ({ id: x.id, name: x.code, eng: x.eng, meta: x.meta, recipe: getImplementationRecipe(x), customNote: x.note || undefined })),
+          sharedReactiveStateRules: buildSharedStateSpec(),
+          agentConstraints: {
+            framework: useTailwind ? "TailwindCSS" : "VanillaCSS",
+            enforceModernWebSemantics: useA11y,
+            includeShowcaseImplementationDetails: useCodeHint
+          }
+        };
+        outputEl.textContent = JSON.stringify(schema, null, 2);
+      }
+    }
+
+    // =========================================================================
+    // 10. UI/UX 인터랙티브 백과사전 (Dictionary View) 렌더링
+    // =========================================================================
+    function renderDictionaryView() {
+      // 1) 좌측 16개 쇼케이스 책갈피 렌더링
+      const bookListEl = document.getElementById('dictBookList');
+      bookListEl.innerHTML = '';
+
+      SHOWCASE_BOOKS.forEach(book => {
+        const countInBook = (PATTERN_DB[book.key] || []).length;
+        const addedCount = activeComponents.filter(x => x.catKey === book.key).length;
+        const isSelected = (dictSubView === 'cards' && dictSelectedCat === book.key) || (dictSubView === 'live' && dictActiveLiveCat === book.key);
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.dataset.action = 'select-dict-cat';
+        btn.dataset.cat = book.key;
+        btn.className = `w-full p-2.5 rounded-xl border text-left transition flex items-center justify-between gap-2 ${
+          isSelected ? 'bg-blue-600 text-white border-blue-600 shadow-xs' : 'bg-slate-50/70 hover:bg-white border-slate-200 text-slate-800'
+        }`;
+        btn.innerHTML = `
+          <div class="min-w-0">
+            <div class="text-xs font-bold truncate">${book.title}</div>
+            <div class="text-[10px] ${isSelected ? 'text-blue-100' : 'text-slate-400'} truncate">${book.file}</div>
+          </div>
+          <div class="flex items-center gap-1 shrink-0">
+            ${addedCount > 0 ? `<span class="px-1.5 py-0.5 rounded-full text-[9px] font-extrabold ${isSelected ? 'bg-white text-blue-600' : 'bg-blue-100 text-blue-700'}">담김 ${addedCount}</span>` : ''}
+            <span class="text-[10px] font-semibold ${isSelected ? 'text-blue-200' : 'text-slate-400'}">${countInBook}종</span>
+          </div>
+        `;
+        bookListEl.appendChild(btn);
+      });
+
+      // 2) 서브뷰 전환 버튼 상태
+      document.getElementById('dictSubBtn_cards').className = dictSubView === 'cards'
+        ? "px-3 py-1.5 rounded-lg bg-white text-blue-600 shadow-xs transition"
+        : "px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition";
+      document.getElementById('dictSubBtn_live').className = dictSubView === 'live'
+        ? "px-3 py-1.5 rounded-lg bg-white text-blue-600 shadow-xs transition"
+        : "px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition";
+
+      const cardsSec = document.getElementById('dictCardsSection');
+      const liveSec = document.getElementById('dictLiveSection');
+
+      if (dictSubView === 'cards') {
+        cardsSec.classList.remove('hidden');
+        cardsSec.classList.add('flex');
+        liveSec.classList.add('hidden');
+        liveSec.classList.remove('flex');
+        renderDictCardsGrid();
+      } else {
+        cardsSec.classList.add('hidden');
+        cardsSec.classList.remove('flex');
+        liveSec.classList.remove('hidden');
+        liveSec.classList.add('flex');
+        renderDictLiveShowcase();
+      }
+      lucide.createIcons();
+    }
+
+    function renderDictCardsGrid() {
+      const query = document.getElementById('dictSearchInput').value.trim().toLowerCase();
+      const grid = document.getElementById('dictCardsGrid');
+      grid.innerHTML = '';
+
+      let list = dictSelectedCat === 'all' ? ALL_PATTERNS : (PATTERN_DB[dictSelectedCat] || []);
+      if (query.length > 0) {
+        list = list.filter(x =>
+          x.code.toLowerCase().includes(query) ||
+          x.eng.toLowerCase().includes(query) ||
+          x.desc.toLowerCase().includes(query) ||
+          x.meta.toLowerCase().includes(query) ||
+          x.catTitle.toLowerCase().includes(query)
+        );
+      }
+
+      const bookObj = SHOWCASE_BOOKS.find(b => b.key === dictSelectedCat);
+      document.getElementById('dictCurrentCatTitle').innerText = bookObj ? bookObj.title : '전체 UI/UX 패턴 통합 도감';
+      document.getElementById('dictFilteredCount').innerText = `${list.length}종`;
+
+      list.forEach(item => {
+        const isAdded = activeComponents.some(x => x.id === item.id);
+        const card = document.createElement('article');
+        card.className = `rounded-2xl border p-3.5 flex flex-col justify-between gap-3 transition ${
+          isAdded ? 'bg-blue-50/50 border-blue-400 shadow-xs' : 'bg-white border-slate-200 hover:border-blue-300 hover:shadow-sm'
+        }`;
+        card.innerHTML = `
+          <div class="space-y-2">
+            <div class="flex items-center justify-between gap-1">
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-600">${item.catShort}</span>
+              <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-indigo-50 text-indigo-600">${item.meta}</span>
+            </div>
+            <div>
+              <h4 class="text-sm font-extrabold text-slate-900">${item.code}</h4>
+              <p class="text-[11px] font-mono text-blue-600">${item.eng}</p>
+            </div>
+            <div class="py-1">
+              ${getVisualWireframeHTML(item)}
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">${item.desc}</p>
+          </div>
+
+          <div class="pt-2.5 border-t border-slate-100 flex items-center justify-between gap-2">
+            <button type="button" data-action="preview-item-showcase" data-id="${item.id}" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold flex items-center gap-1 transition">
+              <i data-lucide="play" class="w-3 h-3" aria-hidden="true"></i>
+              <span>원본 데모 열기</span>
+            </button>
+            <button type="button" data-action="toggle-component" data-id="${item.id}" class="px-3 py-1.5 rounded-lg text-[11px] font-bold flex items-center gap-1 transition ${
+              isAdded ? 'bg-blue-600 text-white' : 'bg-slate-900 hover:bg-blue-600 text-white'
+            }">
+              <span>${isAdded ? '✓ 조립기에 담김' : '+ 조립기에 담기'}</span>
+            </button>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function renderDictLiveShowcase() {
+      const book = SHOWCASE_BOOKS.find(b => b.key === dictActiveLiveCat) || SHOWCASE_BOOKS[0];
+      document.getElementById('liveShowcaseTitle').innerText = `${book.title} (${book.file})`;
+      document.getElementById('liveShowcaseNewTabLink').href = book.file;
+
+      const iframe = document.getElementById('liveShowcaseIframe');
+      if (iframe.dataset.loadedFile !== book.file) {
+        iframe.src = book.file;
+        iframe.dataset.loadedFile = book.file;
+      }
+
+      const chipsBox = document.getElementById('liveQuickAddChips');
+      chipsBox.innerHTML = '';
+      (PATTERN_DB[book.key] || []).forEach(item => {
+        const isAdded = activeComponents.some(x => x.id === item.id);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.dataset.action = 'toggle-component';
+        btn.dataset.id = item.id;
+        btn.className = `px-2.5 py-1 rounded-full text-[11px] font-bold transition flex items-center gap-1 ${
+          isAdded ? 'bg-blue-500 text-white shadow-xs' : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
+        }`;
+        btn.innerHTML = `<span>${isAdded ? '✓' : '+'} ${item.code}</span>`;
+        chipsBox.appendChild(btn);
+      });
+    }
+
+    // =========================================================================
+    // 11. 네이티브 <dialog> 모달 쇼케이스 프리뷰어 (Modern Web Guidance 준수)
+    // =========================================================================
+    const showcaseModal = document.getElementById('showcaseModal');
+    let currentModalCatKey = 'layout';
+
+    function openShowcaseModalByCat(catKey) {
+      const book = SHOWCASE_BOOKS.find(b => b.key === catKey) || SHOWCASE_BOOKS[0];
+      currentModalCatKey = book.key;
+      document.getElementById('showcaseModalTitle').innerText = `${book.title} — 원본 인터랙티브 쇼케이스`;
+      document.getElementById('modalNewTabLink').href = book.file;
+
+      const iframe = document.getElementById('modalShowcaseIframe');
+      if (iframe.dataset.loadedFile !== book.file) {
+        iframe.src = book.file;
+        iframe.dataset.loadedFile = book.file;
+      }
+
+      renderModalQuickChips();
+      if (!showcaseModal.open) {
+        showcaseModal.showModal();
+      }
+    }
+
+    function renderModalQuickChips() {
+      const container = document.getElementById('modalQuickChips');
+      container.innerHTML = '';
+      (PATTERN_DB[currentModalCatKey] || []).forEach(item => {
+        const isAdded = activeComponents.some(x => x.id === item.id);
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.dataset.action = 'toggle-component';
+        btn.dataset.id = item.id;
+        btn.className = `px-2.5 py-1 rounded-full text-[11px] font-bold transition ${
+          isAdded ? 'bg-blue-600 text-white' : 'bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700'
+        }`;
+        btn.textContent = `${isAdded ? '✓ ' : '+ '}${item.code}`;
+        container.appendChild(btn);
+      });
+    }
+
+    // Dialog close listener (returnValue 초기화 규칙 준수)
+    showcaseModal.addEventListener('close', () => {
+      showcaseModal.returnValue = '';
+    });
+
+    // closedby="any" 미지원 브라우저(Safari 등)를 위한 Light-dismiss 폴백
+    if (!('closedBy' in HTMLDialogElement.prototype)) {
+      let pressedOutside = false;
+      const isOutside = (e, dlg) => {
+        const r = dlg.getBoundingClientRect();
+        return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+      };
+      showcaseModal.addEventListener('pointerdown', (e) => {
+        pressedOutside = isOutside(e, showcaseModal);
+      });
+      showcaseModal.addEventListener('pointerup', (e) => {
+        if (pressedOutside && isOutside(e, showcaseModal)) {
+          showcaseModal.close();
+        }
+      });
+    }
+
+    // =========================================================================
+    // 12. AI UX 휴리스틱 검수 & 로컬 저장/다운로드
+    // =========================================================================
+    function runAiHeuristicAudit() {
+      const banner = document.getElementById('auditResultBanner');
+      const list = document.getElementById('auditList');
+      list.innerHTML = '';
+
+      const ids = activeComponents.map(x => x.id);
+      const tips = [];
+
+      if (ids.includes('form_01') && !ids.includes('fb_06')) {
+        tips.push("⚠️ [입력 검증 누락]: '입력폼 01 텍스트 필드'가 있으나 '피드백 06 인라인 오류'가 없습니다. 실시간 오타 검증을 위해 추가를 권장합니다.");
+      }
+      if (ids.includes('src_01') && !ids.includes('src_08')) {
+        tips.push("💡 [검색 엣지케이스 보완]: '검색 01 검색창' 사용 시 검색 결과가 0건일 때 이탈을 막는 '검색 08 검색 결과 없음(No results)' 패턴을 함께 넣으면 완성도가 높아집니다.");
+      }
+      if (ids.includes('fb_04') && ids.includes('fb_05')) {
+        tips.push("⚠️ [레이어 충돌 주의]: '04 모달'과 '05 바텀시트'가 동시에 쓰이면 피로도가 높습니다. 가벼운 알림은 '01 토스트'로 대체하세요.");
+      }
+      if (currentViewport !== 'mobile' && currentGridArch === 'stack') {
+        tips.push("💡 [태블릿/PC 공간 활용 제안]: 현재 태블릿/PC 뷰포트에서 수직 1단만 사용 중입니다. 상단에서 '2단 격자'나 '사이드바+본문', '3단 벤토'를 활성화해 보세요.");
+      }
+      if (!ids.some(id => id.startsWith('cnt_') || id.startsWith('lay_'))) {
+        tips.push("💡 [본문 골격 보완]: 내비게이션/폼 외에 본문 중심을 잡아줄 '화면 레이아웃' 또는 '콘텐츠 구조' 블록을 추가해 보세요.");
+      }
+      if (tips.length === 0) {
+        tips.push("✅ [UX 휴리스틱 통과]: 현재 화면의 단/격자 구조와 탐색-입력-로딩-피드백 밸런스가 매우 우수합니다!");
+      }
+
+      tips.forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = t;
+        list.appendChild(li);
+      });
+
+      banner.classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function saveStateToLocal() {
+      const payload = {
+        screenTitle: document.getElementById('screenTitleInput').value,
+        currentViewport,
+        currentGridArch,
+        visualTheme: document.getElementById('visualThemeSelect').value,
+        activeItems: activeComponents.map(x => ({ id: x.id, span: x.span, note: x.note || '' }))
+      };
+      localStorage.setItem('ux_vibe_studio_saved', JSON.stringify(payload));
+      const status = document.getElementById('copyStatusText');
+      const orig = status.innerHTML;
+      status.innerHTML = `<span class="text-emerald-600 font-bold">✓ 현재 조립 구성이 브라우저에 저장되었습니다!</span>`;
+      setTimeout(() => { status.innerHTML = orig; }, 2200);
+    }
+
+    function loadStateFromLocal() {
+      try {
+        const raw = localStorage.getItem('ux_vibe_studio_saved');
+        if (!raw) return false;
+        const data = JSON.parse(raw);
+        if (!data || !Array.isArray(data.activeItems)) return false;
+
+        document.getElementById('screenTitleInput').value = data.screenTitle || '복원된 화면';
+        if (data.visualTheme) document.getElementById('visualThemeSelect').value = data.visualTheme;
+        activeComponents = data.activeItems.map(saved => {
+          const base = ALL_PATTERNS.find(x => x.id === saved.id);
+          return base ? { ...base, span: saved.span || base.span, note: saved.note || '' } : null;
+        }).filter(Boolean);
+        setViewportDevice(data.currentViewport || 'mobile');
+        setGridArchitecture(data.currentGridArch || 'stack');
+        return true;
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function downloadCompiledSpec() {
+      const text = document.getElementById('compiledOutputArea').textContent;
+      const ext = currentOutputTab === 'prompt' ? 'md' : 'json';
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ux-vibe-spec.${ext}`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function copyCompiledOutput() {
+      const text = document.getElementById('compiledOutputArea').textContent;
+      navigator.clipboard.writeText(text).then(() => {
+        const status = document.getElementById('copyStatusText');
+        const orig = status.innerHTML;
+        status.innerHTML = `<span class="text-emerald-600 font-bold">✓ 클립보드에 복사되었습니다! Claude나 Gemini에 붙여넣으세요.</span>`;
+        setTimeout(() => { status.innerHTML = orig; }, 2500);
+      });
+    }
+
+    function syncAllViews() {
+      renderPalette();
+      renderCanvasSlots();
+      updateOutput();
+      if (currentWorkspaceMode === 'dictionary') {
+        renderDictionaryView();
+      }
+      if (showcaseModal.open) {
+        renderModalQuickChips();
+      }
+    }
+
+    // =========================================================================
+    // 13. 이벤트 위임(Event Delegation) 및 리스너 바인딩
+    // =========================================================================
+    document.addEventListener('click', (e) => {
+      const target = e.target.closest('[data-action]');
+      if (!target) return;
+
+      const action = target.dataset.action;
+      if (action === 'switch-workspace-mode') {
+        switchWorkspaceMode(target.dataset.mode);
+      } else if (action === 'switch-category') {
+        currentCategory = target.dataset.cat;
+        document.getElementById('paletteSearchInput').value = '';
+        renderPalette();
+      } else if (action === 'clear-palette-search') {
+        document.getElementById('paletteSearchInput').value = '';
+        renderPalette();
+      } else if (action === 'toggle-component') {
+        toggleComponentById(target.dataset.id);
+      } else if (action === 'remove-component') {
+        e.stopPropagation();
+        toggleComponentById(target.dataset.id);
+      } else if (action === 'select-block') {
+        const id = target.dataset.id;
+        selectedBlockId = selectedBlockId === id ? null : id;
+        renderCanvasSlots();
+      } else if (action === 'move-up') {
+        e.stopPropagation();
+        moveComponentOrder(target.dataset.id, -1);
+      } else if (action === 'move-down') {
+        e.stopPropagation();
+        moveComponentOrder(target.dataset.id, 1);
+      } else if (action === 'toggle-span') {
+        e.stopPropagation();
+        toggleBlockSpan(target.dataset.id);
+      } else if (action === 'preview-item-showcase') {
+        e.stopPropagation();
+        const item = ALL_PATTERNS.find(x => x.id === target.dataset.id);
+        if (item) openShowcaseModalByCat(item.catKey);
+      } else if (action === 'open-current-showcase') {
+        openShowcaseModalByCat(currentCategory);
+      } else if (action === 'set-viewport') {
+        setViewportDevice(target.dataset.viewport);
+      } else if (action === 'set-grid') {
+        setGridArchitecture(target.dataset.grid);
+      } else if (action === 'set-canvas-view-mode') {
+        setCanvasViewMode(target.dataset.viewmode);
+      } else if (action === 'toggle-wide-stage') {
+        toggleWideStage();
+      } else if (action === 'clear-canvas') {
+        activeComponents = [];
+        selectedBlockId = null;
+        syncAllViews();
+      } else if (action === 'load-preset') {
+        loadPreset(target.dataset.preset);
+      } else if (action === 'run-audit') {
+        if (currentWorkspaceMode !== 'composer') switchWorkspaceMode('composer');
+        runAiHeuristicAudit();
+      } else if (action === 'close-audit') {
+        document.getElementById('auditResultBanner').classList.add('hidden');
+      } else if (action === 'switch-output-tab') {
+        currentOutputTab = target.dataset.tab;
+        document.getElementById('outTab_prompt').className = currentOutputTab === 'prompt'
+          ? "px-2.5 py-1 rounded-lg bg-white text-blue-600 shadow-xs transition"
+          : "px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition";
+        document.getElementById('outTab_json').className = currentOutputTab === 'json'
+          ? "px-2.5 py-1 rounded-lg bg-white text-blue-600 shadow-xs transition"
+          : "px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition";
+        updateOutput();
+      } else if (action === 'copy-output') {
+        copyCompiledOutput();
+      } else if (action === 'download-spec') {
+        downloadCompiledSpec();
+      } else if (action === 'save-local') {
+        saveStateToLocal();
+      } else if (action === 'switch-dict-subview') {
+        dictSubView = target.dataset.subview;
+        renderDictionaryView();
+      } else if (action === 'select-dict-cat') {
+        const cat = target.dataset.cat;
+        if (cat === 'all') {
+          dictSelectedCat = 'all';
+          dictSubView = 'cards';
+        } else {
+          dictSelectedCat = cat;
+          dictActiveLiveCat = cat;
+        }
+        renderDictionaryView();
+      } else if (action === 'open-selected-cat-showcase') {
+        dictSubView = 'live';
+        if (dictSelectedCat !== 'all') dictActiveLiveCat = dictSelectedCat;
+        renderDictionaryView();
+      } else if (action === 'open-live-prototype' || action === 'rerun-dynamic-proto') {
+        openDynamicPrototypeModal();
+      } else if (action === 'open-static-benchmark') {
+        const iframe = document.getElementById('liveProtoIframe');
+        iframe.removeAttribute('srcdoc');
+        iframe.src = "검증테스트_결과화면.html";
+        document.getElementById('protoEngineBadge').textContent = "레퍼런스 샘플 · 검증테스트_결과화면.html";
+        document.getElementById('protoEngineBadge').className = "px-2 py-0.5 rounded bg-blue-600 text-[10px] font-extrabold";
+      } else if (action === 'resize-proto-frame') {
+        const iframe = document.getElementById('liveProtoIframe');
+        iframe.style.width = target.dataset.width;
+      } else if (action === 'toggle-ai-api-bar') {
+        const bar = document.getElementById('aiApiConfigBar');
+        bar.classList.toggle('hidden');
+        bar.classList.toggle('flex');
+      } else if (action === 'download-proto-html') {
+        downloadCompiledPrototypeHTML();
+      } else if (action === 'open-proto-newtab') {
+        openCompiledPrototypeInNewTab();
+      } else if (action === 'run-ai-api-generate') {
+        triggerAiApiPrototypeGeneration();
+      }
+    });
+
+    // =========================================================================
+    // 14. 실시간 동적 프로토타입 합성(방식 A) & AI API 생성(방식 B) 컨트롤러
+    // =========================================================================
+    const liveProtoModal = document.getElementById('liveProtoModal');
+    let lastCompiledPrototypeHtml = '';
+
+    function openDynamicPrototypeModal() {
+      const screenTitle = document.getElementById('screenTitleInput').value || '바이브 코딩 실시간 프로토타입';
+      const visualTheme = document.getElementById('visualThemeSelect').value;
+
+      lastCompiledPrototypeHtml = window.UX_PROTOTYPE_COMPILER.compileDynamicPrototypeHTML({
+        screenTitle,
+        viewport: currentViewport,
+        gridArch: currentGridArch,
+        visualTheme,
+        activeComponents
+      });
+
+      document.getElementById('liveProtoModalTitle').textContent = `${screenTitle} (${activeComponents.length}개 블록 실시간 작동 뷰)`;
+      document.getElementById('protoEngineBadge').textContent = "방식 A · 0.1초 실시간 동적 합성됨";
+      document.getElementById('protoEngineBadge').className = "px-2 py-0.5 rounded bg-emerald-600 text-[10px] font-extrabold";
+
+      const iframe = document.getElementById('liveProtoIframe');
+      iframe.style.width = '100%';
+      iframe.srcdoc = lastCompiledPrototypeHtml;
+
+      const savedKey = sessionStorage.getItem('ux_studio_ai_api_key');
+      if (savedKey) document.getElementById('aiApiKeyInput').value = savedKey;
+
+      if (!liveProtoModal.open) {
+        liveProtoModal.showModal();
+      }
+      lucide.createIcons();
+    }
+
+    function downloadCompiledPrototypeHTML() {
+      if (!lastCompiledPrototypeHtml) openDynamicPrototypeModal();
+      const blob = new Blob([lastCompiledPrototypeHtml], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `vibe-prototype-${Date.now()}.html`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function openCompiledPrototypeInNewTab() {
+      if (!lastCompiledPrototypeHtml) openDynamicPrototypeModal();
+      const blob = new Blob([lastCompiledPrototypeHtml], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank', 'noopener');
+    }
+
+    async function triggerAiApiPrototypeGeneration() {
+      const provider = document.getElementById('aiApiProvider').value;
+      const model = document.getElementById('aiApiModel').value;
+      const apiKey = document.getElementById('aiApiKeyInput').value.trim();
+      const statusEl = document.getElementById('aiApiStatusText');
+      const btn = document.getElementById('runAiApiGenerateBtn');
+
+      if (!apiKey) {
+        statusEl.innerHTML = `<span class="text-rose-400 font-bold">⚠️ API Key를 먼저 입력해 주세요! (키가 없으면 좌측 '현재 블록으로 재합성' 방식 A를 사용하세요)</span>`;
+        return;
+      }
+
+      sessionStorage.setItem('ux_studio_ai_api_key', apiKey);
+      // 프롬프트 탭 내용 확보
+      const prevTab = currentOutputTab;
+      currentOutputTab = 'prompt';
+      updateOutput();
+      const promptText = document.getElementById('compiledOutputArea').textContent;
+      currentOutputTab = prevTab;
+      updateOutput();
+
+      btn.disabled = true;
+      btn.innerHTML = `<span class="w-3.5 h-3.5 rounded-full border-2 border-slate-900 border-t-transparent animate-spin"></span><span>AI 생성 중...</span>`;
+      statusEl.innerHTML = `<span class="text-amber-300 font-bold">⏳ ${model} 모델이 프롬프트 명세를 기반으로 HTML 프로토타입을 코딩하고 있습니다...</span>`;
+
+      try {
+        const htmlResult = await window.UX_PROTOTYPE_COMPILER.generatePrototypeViaAiApi({
+          provider,
+          apiKey,
+          model,
+          promptText
+        });
+        lastCompiledPrototypeHtml = htmlResult;
+        const iframe = document.getElementById('liveProtoIframe');
+        iframe.srcdoc = htmlResult;
+        document.getElementById('protoEngineBadge').textContent = `방식 B · ${model} 생성 완료`;
+        document.getElementById('protoEngineBadge').className = "px-2 py-0.5 rounded bg-indigo-600 text-[10px] font-extrabold";
+        statusEl.innerHTML = `<span class="text-emerald-300 font-bold">✓ AI API 코드 생성이 완료되어 아래 화면에 렌더링되었습니다!</span>`;
+      } catch (err) {
+        statusEl.innerHTML = `<span class="text-rose-400 font-bold">❌ ${err.message}</span>`;
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span>✨ AI API로 코드 생성 실행</span>`;
+      }
+    }
+
+    liveProtoModal.addEventListener('close', () => {
+      liveProtoModal.returnValue = '';
+    });
+
+    // 입력 이벤트 리스너 바인딩
+    document.getElementById('paletteSearchInput').addEventListener('input', () => renderPalette());
+    document.getElementById('dictSearchInput').addEventListener('input', () => {
+      if (dictSubView !== 'cards') dictSubView = 'cards';
+      renderDictionaryView();
+    });
+    document.getElementById('screenTitleInput').addEventListener('input', () => updateOutput());
+    document.getElementById('visualThemeSelect').addEventListener('change', () => updateOutput());
+    document.getElementById('optTailwind').addEventListener('change', () => updateOutput());
+    document.getElementById('optA11y').addEventListener('change', () => updateOutput());
+    document.getElementById('optCodeHint').addEventListener('change', () => updateOutput());
+
+    // 블록별 커스텀 기획 메모 실시간 반영
+    document.addEventListener('input', (e) => {
+      if (e.target.matches('[data-note-id]')) {
+        updateBlockNote(e.target.dataset.noteId, e.target.value);
+      }
+    });
+
+    // 초기화
+    window.addEventListener('DOMContentLoaded', () => {
+      if (!loadStateFromLocal()) {
+        setViewportDevice('mobile');
+        loadPreset('apply');
+      } else {
+        syncAllViews();
+      }
+    });
+  </script>
+</body>
+</html>

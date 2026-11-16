@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>[프롬프트 검증 결과물] 채용 포트폴리오 검증 & AI 에이전트 통합 워크스페이스</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    }
+    /* 모션 03 스프링 & 모션 02 이즈 아웃 & 모션 05 순차 등장 (쇼케이스 레시피 반영) */
+    @keyframes springOvershoot {
+      0% { transform: scale(0.94) translateY(8px); opacity: 0; }
+      70% { transform: scale(1.015) translateY(-2px); opacity: 1; }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .anim-spring {
+      animation: springOvershoot 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    /* AI 01 생각 중 3구 바운스 도트 */
+    @keyframes bounceDot {
+      0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+    .dot-1 { animation: bounceDot 1.4s infinite ease-in-out both; animation-delay: -0.32s; }
+    .dot-2 { animation: bounceDot 1.4s infinite ease-in-out both; animation-delay: -0.16s; }
+    .dot-3 { animation: bounceDot 1.4s infinite ease-in-out both; }
+
+    /* 네이티브 <dialog> 스크롤 격리 (Modern Web Guidance) */
+    dialog:modal { overscroll-behavior: contain; }
+    dialog[open] { display: flex; }
+    dialog::backdrop {
+      overflow: hidden;
+      overscroll-behavior: contain;
+      background-color: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased pb-16 lg:pb-0">
+
+  <!-- [피드백 03 상단 배너] + [날짜 10 마감 디데이 카운트다운] -->
+  <div id="topDdayBanner" class="bg-gradient-to-r from-indigo-900 via-blue-900 to-slate-900 text-white px-4 py-2 text-xs flex items-center justify-between">
+    <div class="flex flex-wrap items-center gap-2 mx-auto">
+      <span class="px-2 py-0.5 rounded-full bg-blue-500/30 border border-blue-400/40 text-blue-200 font-bold text-[10px]">
+        🧪 프롬프트 컴파일 검증 화면
+      </span>
+      <span class="font-semibold">2026 상반기 프로덕트 디자이너 & AI 엔지니어 공개채용 서류 마감까지</span>
+      <span id="countdownTimer" class="font-mono font-extrabold text-amber-300 bg-black/30 px-2 py-0.5 rounded">D-2 04:12:59</span>
+    </div>
+    <button type="button" id="closeBannerBtn" aria-label="배너 닫기" class="text-slate-300 hover:text-white text-xs px-2">✕</button>
+  </div>
+
+  <!-- [탐색 05 고정 헤더] + [반응형 PC GNB 승격] + [메뉴버튼 04 와플 런처] + [계정 01 아바타 스택] -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200 px-4 lg:px-6 py-3">
+    <div class="max-w-[1600px] mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <!-- [메뉴버튼 04 와플 아이콘] -->
+        <div class="relative">
+          <button type="button" id="waffleBtn" aria-label="워크스페이스 앱 런처 열기" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 border border-slate-200 flex items-center justify-center transition">
+            <div class="grid grid-cols-3 gap-0.5">
+              <span class="w-1 h-1 bg-current rounded-full"></span><span class="w-1 h-1 bg-current rounded-full"></span><span class="w-1 h-1 bg-current rounded-full"></span>
+              <span class="w-1 h-1 bg-current rounded-full"></span><span class="w-1 h-1 bg-current rounded-full"></span><span class="w-1 h-1 bg-current rounded-full"></span>
+              <span class="w-1 h-1 bg-current rounded-full"></span><span class="w-1 h-1 bg-current rounded-full"></span><span class="w-1 h-1 bg-current rounded-full"></span>
+            </div>
+          </button>
+          <!-- 와플 팝오버 -->
+          <div id="wafflePopover" class="hidden absolute left-0 mt-2 w-56 bg-white rounded-2xl border border-slate-200 shadow-xl p-3 z-40 anim-spring">
+            <div class="text-[10px] font-extrabold text-slate-400 uppercase mb-2">Workspace App Switcher</div>
+            <div class="grid grid-cols-3 gap-2 text-center text-[11px] font-bold">
+              <div class="p-2 rounded-xl bg-blue-50 text-blue-600 cursor-pointer">채용홈</div>
+              <div class="p-2 rounded-xl bg-emerald-50 text-emerald-600 cursor-pointer">코테평가</div>
+              <div class="p-2 rounded-xl bg-purple-50 text-purple-600 cursor-pointer">AI검증</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-sm sm:text-base font-extrabold text-slate-900">UX Studio Talent & AI Evaluation Hub</h1>
+            <!-- [인디케이터 10 실시간 상태 펄스 점] -->
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-bold border border-emerald-200">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+              <span>실시간 검증 엔진 가동 중</span>
+            </span>
+          </div>
+          <p class="text-[11px] text-slate-400 hidden sm:block">브라우저 창 크기를 줄이거나 늘려보세요: 모바일(1단+하단탭) ↔ 태블릿(좌측 레일+2단) ↔ PC(사이드바+3단 벤토+우측 AI)로 자동 전환됩니다</p>
+        </div>
+      </div>
+
+      <!-- [검색 01 검색창 + 지우기(X)] & [검색 02 자동완성] -->
+      <search class="relative flex-1 max-w-md min-w-[240px]">
+        <div class="relative flex items-center">
+          <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 pointer-events-none" aria-hidden="true"></i>
+          <input
+            id="candidateSearchInput"
+            type="search"
+            aria-label="지원자 또는 기술 스택 검색"
+            placeholder="지원자 이름, 직무, 스택 검색 (예: 우디, React, Figma...)"
+            class="w-full pl-9 pr-8 py-2 bg-slate-100 focus:bg-white border-2 border-transparent focus:border-blue-600 rounded-xl text-xs font-medium text-slate-800 focus:outline-none transition"
+          />
+          <button type="button" id="searchClearBtn" aria-label="검색어 지우기" class="hidden absolute right-2.5 text-slate-400 hover:text-slate-600">
+            <i data-lucide="x-circle" class="w-4 h-4" aria-hidden="true"></i>
+          </button>
+        </div>
+        <!-- 자동완성 드롭다운 -->
+        <div id="autocompleteBox" class="hidden absolute inset-x-0 top-full mt-1.5 bg-white rounded-xl border border-slate-200 shadow-lg p-2 z-40 text-xs space-y-1"></div>
+      </search>
+
+      <!-- 우측: [계정 01 아바타 스택] + [피드백 09 알림 뱃지] + [피드백 04 모달 호출 버튼] -->
+      <div class="flex items-center gap-3">
+        <div class="hidden sm:flex items-center -space-x-2">
+          <span class="w-7 h-7 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white">김</span>
+          <span class="w-7 h-7 rounded-full bg-indigo-600 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white">이</span>
+          <span class="w-7 h-7 rounded-full bg-emerald-600 text-white text-[10px] font-bold flex items-center justify-center ring-2 ring-white">박</span>
+          <span class="w-7 h-7 rounded-full bg-slate-100 text-slate-600 text-[10px] font-extrabold flex items-center justify-center ring-2 ring-white">+4</span>
+        </div>
+
+        <button type="button" id="openConfirmModalBtn" class="px-3 py-2 rounded-xl bg-slate-900 hover:bg-blue-600 text-white text-xs font-bold flex items-center gap-1.5 shadow-xs transition">
+          <i data-lucide="send" class="w-3.5 h-3.5" aria-hidden="true"></i>
+          <span>최종 평가 확정</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =================================================================== -->
+  <!-- 메인 바디 래퍼: 태블릿 좌측 레일 + PC 좌측 사이드바 + 중앙 3단 벤토 + 우측 AI 패널 -->
+  <!-- =================================================================== -->
+  <div class="flex-1 max-w-[1600px] w-full mx-auto flex">
+
+    <!-- 1) 태블릿 전용 좌측 아이콘 레일 (md:flex lg:hidden) -->
+    <aside aria-label="태블릿 네비게이션 레일" class="hidden md:flex lg:hidden w-16 flex-col items-center justify-between py-4 bg-slate-900 text-slate-400 shrink-0">
+      <div class="flex flex-col items-center gap-4">
+        <div class="w-9 h-9 rounded-xl bg-blue-600 text-white flex items-center justify-center font-extrabold text-xs">UX</div>
+        <button type="button" aria-label="대시보드" class="w-9 h-9 rounded-xl bg-slate-800 text-blue-400 flex items-center justify-center"><i data-lucide="layout-grid" class="w-4 h-4"></i></button>
+        <button type="button" aria-label="지원자 목록" class="w-9 h-9 rounded-xl hover:bg-slate-800 flex items-center justify-center"><i data-lucide="users" class="w-4 h-4"></i></button>
+        <button type="button" aria-label="일정 예약" class="w-9 h-9 rounded-xl hover:bg-slate-800 flex items-center justify-center"><i data-lucide="calendar" class="w-4 h-4"></i></button>
+      </div>
+      <span class="text-[9px] font-mono text-slate-500">Tablet</span>
+    </aside>
+
+    <!-- 2) PC 웹 전용 좌측 고정 사이드바 (hidden lg:flex w-60) -->
+    <aside aria-label="데스크톱 고정 사이드바" class="hidden lg:flex w-60 flex-col justify-between p-4 bg-white border-r border-slate-200 shrink-0">
+      <div class="space-y-4">
+        <div>
+          <div class="text-[10px] font-extrabold text-slate-400 uppercase px-2 mb-1.5">Main Navigation</div>
+          <nav class="space-y-1 text-xs font-bold">
+            <a href="#kpiSection" class="flex items-center justify-between px-3 py-2 rounded-xl bg-blue-50 text-blue-600">
+              <span class="flex items-center gap-2"><i data-lucide="bar-chart-3" class="w-4 h-4"></i> 대시보드 & KPI</span>
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+            </a>
+            <a href="#tableSection" class="flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50">
+              <span class="flex items-center gap-2"><i data-lucide="table" class="w-4 h-4"></i> 지원자 데이터 테이블</span>
+              <span id="sidebarTotalBadge" class="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-100 text-slate-700">6명</span>
+            </a>
+            <a href="#formSection" class="flex items-center justify-between px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50">
+              <span class="flex items-center gap-2"><i data-lucide="file-up" class="w-4 h-4"></i> 포트폴리오 제출·검증</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- [인디케이터 02 스텝 인디케이터] -->
+        <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex items-center justify-between text-[11px] font-bold">
+            <span class="text-slate-700">채용 전형 단계</span>
+            <span class="text-blue-600">2 / 3 단계</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span class="flex-1 h-1.5 rounded-full bg-blue-600"></span>
+            <span class="flex-1 h-1.5 rounded-full bg-blue-600"></span>
+            <span class="flex-1 h-1.5 rounded-full bg-slate-200"></span>
+          </div>
+          <p class="text-[10px] text-slate-500">현재: AI 포트폴리오 역량 검증 및 면접 타임슬롯 배정</p>
+        </div>
+      </div>
+
+      <div class="p-3 rounded-2xl bg-slate-900 text-white text-xs space-y-1">
+        <div class="font-bold text-blue-300">Prompt Verified ✓</div>
+        <p class="text-[10px] text-slate-300 leading-relaxed">이 화면은 ai_ui_ux.html이 생성한 프롬프트 명세서로 구현되었습니다.</p>
+      </div>
+    </aside>
+
+    <!-- 3) 중앙 메인 콘텐츠 3단 벤토 격자 (Bento Grid) -->
+    <main class="flex-1 p-4 sm:p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 content-start">
+
+      <!-- [콘텐츠 08 KPI 요약 카드] + [글자효과 04 숫자 카운트 업] + [차트 01 스파크라인] -->
+      <section id="kpiSection" class="bg-white rounded-2xl border border-slate-200 p-4 shadow-2xs flex flex-col justify-between anim-spring" style="animation-delay: 0ms;">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-500">서류 통과 전환율 (KPI)</span>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600">▲ +14.2%</span>
+        </div>
+        <div class="my-2 flex items-baseline justify-between">
+          <div>
+            <span id="kpiCountUp" class="text-2xl font-extrabold text-slate-900 tabular-nums">74.8</span>
+            <span class="text-sm font-bold text-slate-600">%</span>
+          </div>
+          <!-- 미니 스파크라인 바 -->
+          <div class="flex items-end gap-1 h-8">
+            <span class="w-2 bg-blue-200 h-3 rounded-t"></span>
+            <span class="w-2 bg-blue-300 h-4 rounded-t"></span>
+            <span class="w-2 bg-blue-400 h-6 rounded-t"></span>
+            <span class="w-2 bg-blue-600 h-8 rounded-t"></span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between text-[11px] text-slate-400 pt-2 border-t border-slate-100">
+          <span>AI 사전 스크리닝 정확도 98.2%</span>
+          <button type="button" id="replayCountBtn" class="text-blue-600 font-bold hover:underline">숫자 롤링 ↻</button>
+        </div>
+      </section>
+
+      <!-- [차트 03 막대 비교 차트] (직무별 지원자 분포) -->
+      <section class="bg-white rounded-2xl border border-slate-200 p-4 shadow-2xs flex flex-col justify-between anim-spring" style="animation-delay: 60ms;">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold text-slate-700">직무별 지원자 & 합격 비중</span>
+          <span class="text-[10px] text-blue-600 font-bold">실시간 집계</span>
+        </div>
+        <div class="space-y-2 text-[11px]">
+          <div>
+            <div class="flex justify-between font-semibold mb-0.5"><span>Product Designer</span><span class="text-blue-600 font-bold">48%</span></div>
+            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden"><div class="w-[48%] h-full bg-blue-600 rounded-full"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between font-semibold mb-0.5"><span>Frontend Engineer</span><span class="text-indigo-600 font-bold">35%</span></div>
+            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden"><div class="w-[35%] h-full bg-indigo-600 rounded-full"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between font-semibold mb-0.5"><span>AI Researcher</span><span class="text-emerald-600 font-bold">17%</span></div>
+            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden"><div class="w-[17%] h-full bg-emerald-500 rounded-full"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- [날짜 08 체크인·체크아웃 분할 응용: 면접 일정 범위 & 타임슬롯 선택] -->
+      <section class="bg-white rounded-2xl border border-slate-200 p-4 shadow-2xs flex flex-col justify-between anim-spring" style="animation-delay: 120ms;">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs font-bold text-slate-800">📅 면접 일정 & 타임슬롯 배정</span>
+          <span id="selectedSlotBadge" class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">11.18 (수) 14:00</span>
+        </div>
+        <div class="grid grid-cols-3 gap-1.5 text-[11px] font-semibold">
+          <button type="button" data-slot="10:00" class="slot-btn py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">10:00</button>
+          <button type="button" disabled class="py-1.5 rounded-lg bg-slate-100 text-slate-300 line-through cursor-not-allowed">11:00 마감</button>
+          <button type="button" data-slot="14:00" class="slot-btn py-1.5 rounded-lg bg-blue-600 text-white font-bold shadow-xs transition">14:00</button>
+          <button type="button" data-slot="15:30" class="slot-btn py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">15:30</button>
+          <button type="button" data-slot="16:30" class="slot-btn py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">16:30</button>
+          <button type="button" data-slot="17:30" class="slot-btn py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition">17:30</button>
+        </div>
+        <!-- [입력폼 08 수량 스테퍼: 면접관 인원] -->
+        <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+          <span class="text-slate-500 font-medium">참석 면접관 인원</span>
+          <div class="flex items-center gap-2 bg-slate-100 px-2 py-0.5 rounded-lg font-extrabold">
+            <button type="button" id="stepperMinus" class="px-1 text-slate-600 hover:text-slate-900">-</button>
+            <span id="stepperValue" class="text-blue-600">3명</span>
+            <button type="button" id="stepperPlus" class="px-1 text-slate-600 hover:text-slate-900">+</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- [검색 03 최근 검색어] + [검색 05 필터] + [검색 06 정렬] + [콘텐츠 07 데이터 테이블] (전체폭 col-span-full) -->
+      <section id="tableSection" class="col-span-1 md:col-span-2 lg:col-span-3 bg-white rounded-2xl border border-slate-200 p-4 shadow-2xs space-y-3 anim-spring" style="animation-delay: 180ms;">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <h2 class="text-sm font-extrabold text-slate-900">지원자 실시간 평가 테이블</h2>
+            <!-- 직무 필터 칩 -->
+            <div class="flex items-center gap-1 text-xs">
+              <button type="button" data-role-filter="all" class="role-chip px-2.5 py-1 rounded-full bg-blue-600 text-white font-bold transition">전체</button>
+              <button type="button" data-role-filter="Design" class="role-chip px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">Design</button>
+              <button type="button" data-role-filter="Frontend" class="role-chip px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">Frontend</button>
+              <button type="button" data-role-filter="AI" class="role-chip px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition">AI</button>
+            </div>
+          </div>
+
+          <!-- 정렬 드롭다운 & 스켈레톤 테스트 버튼 -->
+          <div class="flex items-center gap-2 text-xs">
+            <button type="button" id="triggerSkeletonBtn" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold flex items-center gap-1 transition">
+              <i data-lucide="loader" class="w-3.5 h-3.5"></i>
+              <span>스켈레톤 로딩 시연</span>
+            </button>
+            <label for="sortSelect" class="text-slate-400 font-bold">정렬:</label>
+            <select id="sortSelect" class="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 font-bold text-slate-700 focus:outline-none">
+              <option value="score_desc">AI 매칭 점수 높은순</option>
+              <option value="score_asc">AI 매칭 점수 낮은순</option>
+              <option value="name_asc">이름 가나다순</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 최근 검색어 칩 바 -->
+        <div class="flex flex-wrap items-center justify-between gap-2 bg-slate-50 px-3 py-1.5 rounded-xl text-[11px]">
+          <div class="flex flex-wrap items-center gap-1.5">
+            <span class="font-bold text-slate-400">최근 검색어:</span>
+            <div id="recentTagsBox" class="flex flex-wrap gap-1.5"></div>
+          </div>
+          <button type="button" id="clearAllRecentBtn" class="text-slate-400 hover:text-rose-600 font-semibold">전체 삭제</button>
+        </div>
+
+        <!-- [로딩 02 스켈레톤 스크린 (숨김 기본)] -->
+        <div id="tableSkeletonView" class="hidden space-y-2 py-2">
+          <div class="h-9 bg-slate-100 rounded-xl animate-pulse"></div>
+          <div class="h-9 bg-slate-100 rounded-xl animate-pulse"></div>
+          <div class="h-9 bg-slate-100 rounded-xl animate-pulse"></div>
+        </div>
+
+        <!-- 데이터 테이블 본문 -->
+        <div id="tableDataView" class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="border-b border-slate-200 text-slate-400 font-bold bg-slate-50/60">
+                <th class="py-2.5 px-3">지원자명</th>
+                <th class="py-2.5 px-3">지원 직무</th>
+                <th class="py-2.5 px-3">핵심 기술 스택</th>
+                <th class="py-2.5 px-3">AI 역량 점수</th>
+                <th class="py-2.5 px-3 text-right">북마크 (낙관적 UI)</th>
+              </tr>
+            </thead>
+            <tbody id="candidateTableBody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+
+        <!-- [검색 08 검색 결과 없음 (0건일 때 자동 노출)] -->
+        <div id="emptySearchView" class="hidden py-8 text-center space-y-2">
+          <div class="text-sm font-extrabold text-slate-700">🔍 일치하는 지원자 데이터가 없습니다</div>
+          <p class="text-xs text-slate-400">오타가 있는지 확인하거나 아래 추천 키워드 칩을 눌러 재검색해 보세요.</p>
+          <div class="flex justify-center gap-1.5 pt-1">
+            <button type="button" data-suggest="Design" class="suggest-btn px-3 py-1 rounded-full bg-blue-50 text-blue-600 text-xs font-bold hover:bg-blue-100">Design 직무 보기</button>
+            <button type="button" data-suggest="" class="suggest-btn px-3 py-1 rounded-full bg-slate-900 text-white text-xs font-bold">필터 전체 해제</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- [입력폼 01 텍스트 필드] + [피드백 06 인라인 오류] + [입력폼 10 파일 드롭존] + [로딩 03 진행 바] (col-span-full) -->
+      <section id="formSection" class="col-span-1 md:col-span-2 lg:col-span-3 bg-white rounded-2xl border border-slate-200 p-4 shadow-2xs space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+          <div>
+            <h2 class="text-sm font-extrabold text-slate-900">신규 포트폴리오 등록 & 실시간 검증 폼</h2>
+            <p class="text-[11px] text-slate-400">이메일 형식 실시간 인라인 오류 검증과 PDF 업로드 프로그레스 바가 작동합니다</p>
+          </div>
+          <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-600">실시간 유효성 검사</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- 이메일 입력 & 인라인 오류 -->
+          <div class="space-y-1.5">
+            <label for="emailField" class="text-xs font-bold text-slate-700 block">지원자 이메일 주소 *</label>
+            <input
+              id="emailField"
+              type="email"
+              value="woody@uxstudio.ai"
+              placeholder="name@company.com"
+              class="w-full px-3 py-2 rounded-xl border-2 border-slate-200 focus:border-blue-600 text-xs font-medium text-slate-800 focus:outline-none transition"
+            />
+            <p id="emailInlineError" class="hidden text-[11px] font-bold text-rose-600 flex items-center gap-1">
+              <span>⚠️ 올바른 이메일 형식(@ 포함)을 입력해 주세요 (Inline Error 작동됨)</span>
+            </p>
+            <p id="emailValidHint" class="text-[11px] font-semibold text-emerald-600">✓ 유효한 이메일 주소입니다</p>
+          </div>
+
+          <!-- 파일 드롭존 & 업로드 프로그레스 바 -->
+          <div class="space-y-2">
+            <div id="fileDropzone" class="border-2 border-dashed border-blue-300 hover:border-blue-500 bg-blue-50/40 rounded-xl p-3 text-center cursor-pointer transition">
+              <div class="text-xs font-extrabold text-blue-600">☁️ 클릭하여 포트폴리오 PDF 업로드 시뮬레이션</div>
+              <div class="text-[10px] text-slate-400 mt-0.5">클릭 시 0% ➔ 100% 진행 바 애니메이션이 실행됩니다</div>
+            </div>
+            <div class="space-y-1">
+              <div class="flex justify-between text-[11px] font-bold">
+                <span id="uploadFileName" class="text-slate-600">UX_Portfolio_2026.pdf</span>
+                <span id="uploadPercentText" class="text-blue-600">100%</span>
+              </div>
+              <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div id="uploadProgressBar" class="h-full bg-blue-600 rounded-full transition-all duration-150" style="width: 100%;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- [로딩 09 로딩 버튼 (중복 클릭 방지)] -->
+        <div class="pt-2 flex justify-end">
+          <button type="button" id="submitPortfolioBtn" class="px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-400 text-white text-xs font-extrabold flex items-center gap-2 shadow-sm transition">
+            <span id="submitSpinner" class="hidden w-3.5 h-3.5 rounded-full border-2 border-white border-t-transparent animate-spin"></span>
+            <span id="submitBtnText">포트폴리오 검증 제출하기</span>
+          </button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- 4) 우측 AI 에이전트 인스펙터 패널 (AI 01, 02, 03, 05, 09 통합 구현) -->
+    <aside aria-label="AI 에이전트 실시간 분석 패널" class="hidden xl:flex w-80 flex-col justify-between p-4 bg-white border-l border-slate-200 shrink-0">
+      <div class="space-y-3">
+        <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="bot" class="w-4 h-4 text-blue-600"></i>
+            <span class="text-xs font-extrabold text-slate-900">AI 포트폴리오 심사 에이전트</span>
+          </div>
+          <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 font-bold">RAG Grounded</span>
+        </div>
+
+        <!-- [AI 03 추천 질문 칩] -->
+        <div class="space-y-1.5">
+          <span class="text-[10px] font-bold text-slate-400">원클릭 프롬프트 실행:</span>
+          <div class="flex flex-wrap gap-1.5">
+            <button type="button" data-ai-prompt="상위 10% 지원자 핵심 강점 요약해줘" class="ai-chip px-2.5 py-1 rounded-full bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 text-[11px] font-semibold transition">
+              ✨ 핵심 강점 요약
+            </button>
+            <button type="button" data-ai-prompt="면접 심층 질문 3가지 뽑아줘" class="ai-chip px-2.5 py-1 rounded-full bg-slate-100 hover:bg-blue-50 text-slate-700 hover:text-blue-600 text-[11px] font-semibold transition">
+              🎯 면접 질문 생성
+            </button>
+          </div>
+        </div>
+
+        <!-- [AI 09 에이전트 실행 단계 파이프라인] -->
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1.5 text-[11px]">
+          <div class="font-extrabold text-slate-700 mb-1">에이전트 도구 호출 파이프라인</div>
+          <div class="flex items-center gap-2 text-emerald-600 font-semibold"><span>✓</span><span>1. 이력서 PDF 텍스트 추출 완료</span></div>
+          <div class="flex items-center gap-2 text-emerald-600 font-semibold"><span>✓</span><span>2. 직무 요구사항(JD) 매칭 비교 완료</span></div>
+          <div id="aiStep3Row" class="flex items-center gap-2 text-blue-600 font-bold"><span>●</span><span>3. 종합 평가 코멘트 스트리밍 준비</span></div>
+        </div>
+
+        <!-- [AI 01 생각 중 바운스 도트 (숨김 기본)] -->
+        <div id="aiThinkingBox" class="hidden p-3 rounded-xl bg-blue-50/60 border border-blue-100 items-center gap-2 text-xs font-semibold text-blue-700">
+          <span class="w-2 h-2 rounded-full bg-blue-600 dot-1"></span>
+          <span class="w-2 h-2 rounded-full bg-blue-600 dot-2"></span>
+          <span class="w-2 h-2 rounded-full bg-blue-600 dot-3"></span>
+          <span>포트폴리오 근거 문서를 추론 중...</span>
+        </div>
+
+        <!-- [AI 02 실시간 스트리밍 답변] + [AI 05 출처 각주 표시] -->
+        <div class="p-3 rounded-2xl bg-slate-900 text-slate-100 text-xs leading-relaxed space-y-2 relative">
+          <div class="flex items-center justify-between text-[10px] text-blue-300 font-bold">
+            <span>AI Evaluation Stream</span>
+            <button type="button" id="regenerateAiBtn" class="hover:text-white underline">다시 생성 ↻</button>
+          </div>
+          <p id="aiStreamText" class="text-xs text-slate-100">
+            김우디 지원자는 디자인 시스템 토큰 설계와 반응형 그리드 구조화 역량이 상위 5% 수준입니다.
+          </p>
+          <div class="pt-1 flex items-center gap-1.5">
+            <span class="text-[10px] text-slate-400">근거 출처:</span>
+            <button type="button" data-citation="출처 [1]: 포트폴리오 p.14 '멀티 브랜드 디자인 토큰 시스템 구축 사례'" class="citation-btn px-1.5 py-0.5 rounded bg-blue-500/30 text-blue-200 text-[10px] font-bold hover:bg-blue-500/50">[1] 포폴 p.14</button>
+            <button type="button" data-citation="출처 [2]: GitHub 리포지토리 커밋 히스토리 및 접근성(WCAG) 검수 통과 로그" class="citation-btn px-1.5 py-0.5 rounded bg-blue-500/30 text-blue-200 text-[10px] font-bold hover:bg-blue-500/50">[2] GitHub 검증</button>
+          </div>
+          <div id="citationToast" class="hidden mt-2 p-2 rounded-lg bg-slate-800 border border-slate-700 text-[10px] text-amber-300 font-medium"></div>
+        </div>
+      </div>
+
+      <div class="text-[10px] text-slate-400 border-t border-slate-100 pt-2">
+        우측 3단 인스펙터 슬롯 (1280px+ 와이드 전용)
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- [탐색 01 모바일 하단 탭바 (모바일에서만 노출: md:hidden)] -->
+  <nav aria-label="모바일 하단 탭바" class="md:hidden fixed bottom-0 inset-x-0 bg-white border-t border-slate-200 px-4 py-2 flex justify-around text-[10px] font-bold z-30">
+    <a href="#kpiSection" class="text-blue-600 flex flex-col items-center gap-0.5"><i data-lucide="home" class="w-4 h-4"></i><span>홈</span></a>
+    <a href="#tableSection" class="text-slate-400 flex flex-col items-center gap-0.5"><i data-lucide="search" class="w-4 h-4"></i><span>지원자</span></a>
+    <a href="#formSection" class="text-slate-400 flex flex-col items-center gap-0.5"><i data-lucide="file-plus" class="w-4 h-4"></i><span>등록</span></a>
+  </nav>
+
+  <!-- [피드백 02 하단 스낵바 + 실행 취소(Undo)] -->
+  <div id="snackbarOverlay" class="fixed bottom-14 md:bottom-5 left-1/2 -translate-x-1/2 z-50 hidden bg-slate-900 text-white px-4 py-2.5 rounded-2xl shadow-xl items-center gap-4 text-xs font-semibold anim-spring">
+    <span id="snackbarText">✓ 포트폴리오 검증 데이터가 안전하게 저장되었습니다.</span>
+    <button type="button" id="snackbarUndoBtn" class="text-amber-400 font-extrabold hover:underline">실행 취소(Undo)</button>
+  </div>
+
+  <!-- [피드백 04 모달 다이얼로그 (네이티브 <dialog closedby="any">)] -->
+  <dialog id="confirmModal" closedby="any" aria-labelledby="confirmModalTitle" class="m-auto w-[90vw] max-w-md rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl flex-col gap-4">
+    <div class="flex items-center justify-between">
+      <h2 id="confirmModalTitle" class="text-base font-extrabold text-slate-900">최종 합격자 평가를 확정할까요?</h2>
+      <form method="dialog">
+        <button type="submit" value="cancel" class="text-slate-400 hover:text-slate-600 text-sm">✕</button>
+      </form>
+    </div>
+    <p class="text-xs text-slate-600 leading-relaxed">
+      확정 버튼을 누르면 현재 선택된 면접 타임슬롯(<strong id="modalSlotSummary" class="text-blue-600">11.18 14:00</strong>)으로 지원자들에게 안내 알림이 즉시 발송됩니다.
+    </p>
+    <form method="dialog" class="flex justify-end gap-2 pt-2 border-t border-slate-100">
+      <button type="submit" value="cancel" autofocus class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">취소</button>
+      <button type="submit" value="confirm" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold">최종 확정 및 발송</button>
+    </form>
+  </dialog>
+
+  <script>
+    // =========================================================================
+    // 공유 반응형 상태 스토어 (Shared Reactive State - 프롬프트 명세 구현)
+    // =========================================================================
+    const candidatesData = [
+      { id: 1, name: '김우디 (Woody)', role: 'Design', stack: 'Figma, Design Token, Prototyping', score: 96, bookmarked: true },
+      { id: 2, name: '이아라 (Ara)', role: 'Frontend', stack: 'React, TypeScript, Tailwind CSS', score: 94, bookmarked: true },
+      { id: 3, name: '박제민 (Jemin)', role: 'AI', stack: 'LLM Agent, RAG, Python', score: 91, bookmarked: false },
+      { id: 4, name: '최유나 (Yuna)', role: 'Design', stack: 'UX Research, Motion, Lottie', score: 89, bookmarked: false },
+      { id: 5, name: '정현우 (Hyun)', role: 'Frontend', stack: 'Next.js, WebGL, Accessibility', score: 87, bookmarked: false },
+      { id: 6, name: '강소희 (Sohee)', role: 'AI', stack: 'Multimodal UI, Prompt Eng', score: 95, bookmarked: true }
+    ];
+
+    let state = {
+      query: '',
+      roleFilter: 'all',
+      sortBy: 'score_desc',
+      recentTags: ['Design Token', 'React', 'RAG'],
+      interviewerCount: 3,
+      selectedSlot: '14:00'
+    };
+
+    // 1. 검색어 강조 (src_07 Keyword Highlight) 헬퍼
+    function highlightText(text, query) {
+      if (!query) return text;
+      const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return text.replace(new RegExp(`(${escaped})`, 'gi'), `<mark class="bg-amber-200 text-slate-900 rounded px-0.5 font-extrabold">$1</mark>`);
+    }
+
+    // 2. 데이터 테이블 실시간 렌더링 (검색 + 직무 필터 + 정렬 + 낙관적 북마크 연동)
+    function renderTable() {
+      const q = state.query.trim().toLowerCase();
+      let filtered = candidatesData.filter(item => {
+        const matchRole = state.roleFilter === 'all' || item.role === state.roleFilter;
+        const matchQuery = !q || item.name.toLowerCase().includes(q) || item.stack.toLowerCase().includes(q) || item.role.toLowerCase().includes(q);
+        return matchRole && matchQuery;
+      });
+
+      if (state.sortBy === 'score_desc') filtered.sort((a, b) => b.score - a.score);
+      else if (state.sortBy === 'score_asc') filtered.sort((a, b) => a.score - b.score);
+      else if (state.sortBy === 'name_asc') filtered.sort((a, b) => a.name.localeCompare(b.name, 'ko'));
+
+      document.getElementById('sidebarTotalBadge').textContent = `${filtered.length}명`;
+
+      const tbody = document.getElementById('candidateTableBody');
+      const emptyView = document.getElementById('emptySearchView');
+      const tableView = document.getElementById('tableDataView');
+
+      if (filtered.length === 0) {
+        tableView.classList.add('hidden');
+        emptyView.classList.remove('hidden');
+        return;
+      }
+
+      tableView.classList.remove('hidden');
+      emptyView.classList.add('hidden');
+      tbody.innerHTML = '';
+
+      filtered.forEach(item => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50/80 transition";
+        tr.innerHTML = `
+          <td class="py-2.5 px-3 font-bold text-slate-900">${highlightText(item.name, state.query)}</td>
+          <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-600">${item.role}</span></td>
+          <td class="py-2.5 px-3 text-slate-600">${highlightText(item.stack, state.query)}</td>
+          <td class="py-2.5 px-3 font-mono font-extrabold text-emerald-600">${item.score}점</td>
+          <td class="py-2.5 px-3 text-right">
+            <button type="button" data-bookmark-id="${item.id}" class="px-2.5 py-1 rounded-lg text-[11px] font-bold transition ${
+              item.bookmarked ? 'bg-amber-100 text-amber-700 border border-amber-300' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
+            }">
+              ${item.bookmarked ? '★ 북마크됨' : '☆ 북마크'}
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // 3. 최근 검색어 칩 렌더링 (src_03)
+    function renderRecentTags() {
+      const box = document.getElementById('recentTagsBox');
+      box.innerHTML = '';
+      if (state.recentTags.length === 0) {
+        box.innerHTML = `<span class="text-slate-400">최근 검색 기록이 없습니다</span>`;
+        return;
+      }
+      state.recentTags.forEach((tag, idx) => {
+        const chip = document.createElement('span');
+        chip.className = "inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-white border border-slate-200 text-slate-700 font-semibold shadow-2xs";
+        chip.innerHTML = `
+          <button type="button" data-apply-tag="${tag}" class="hover:text-blue-600">${tag}</button>
+          <button type="button" data-remove-tag="${idx}" class="text-slate-400 hover:text-rose-600 font-bold">✕</button>
+        `;
+        box.appendChild(chip);
+      });
+    }
+
+    // 4. 스낵바 알림 호출 (fb_02)
+    let snackbarTimer;
+    function showSnackbar(msg) {
+      const bar = document.getElementById('snackbarOverlay');
+      document.getElementById('snackbarText').textContent = msg;
+      bar.classList.remove('hidden');
+      bar.classList.add('flex');
+      clearTimeout(snackbarTimer);
+      snackbarTimer = setTimeout(() => {
+        bar.classList.add('hidden');
+        bar.classList.remove('flex');
+      }, 3000);
+    }
+
+    // 5. AI 타자기 스트리밍 시뮬레이션 (ai_01 + ai_02)
+    let streamInterval;
+    function triggerAiStreaming(promptText) {
+      const thinking = document.getElementById('aiThinkingBox');
+      const output = document.getElementById('aiStreamText');
+      thinking.classList.remove('hidden');
+      thinking.classList.add('flex');
+      output.textContent = '';
+
+      setTimeout(() => {
+        thinking.classList.add('hidden');
+        thinking.classList.remove('flex');
+        const reply = `[질문: "${promptText}"] 분석 결과, 상위 지원자들은共通적으로 모던 웹 표준(<dialog>, <search>)과 디자인 토큰 체계를 실무에 적용해 생산성을 40% 이상 단축했습니다.`;
+        let i = 0;
+        clearInterval(streamInterval);
+        streamInterval = setInterval(() => {
+          output.textContent += reply.charAt(i);
+          i++;
+          if (i >= reply.length) clearInterval(streamInterval);
+        }, 25);
+      }, 650);
+    }
+
+    // 6. 숫자 카운트 업 (txt_04)
+    function playKpiCountUp() {
+      const el = document.getElementById('kpiCountUp');
+      let cur = 0;
+      const target = 74.8;
+      const timer = setInterval(() => {
+        cur += 4.7;
+        if (cur >= target) {
+          cur = target;
+          clearInterval(timer);
+        }
+        el.textContent = cur.toFixed(1);
+      }, 30);
+    }
+
+    // 이벤트 바인딩
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTable();
+      renderRecentTags();
+      lucide.createIcons();
+
+      // 검색창 & 자동완성 & X 지우기
+      const searchInput = document.getElementById('candidateSearchInput');
+      const clearBtn = document.getElementById('searchClearBtn');
+      const autoBox = document.getElementById('autocompleteBox');
+
+      searchInput.addEventListener('input', () => {
+        state.query = searchInput.value;
+        clearBtn.classList.toggle('hidden', state.query.length === 0);
+        renderTable();
+
+        if (state.query.trim().length > 0) {
+          const q = state.query.trim();
+          const suggestions = ['Figma Design Token', 'React & Tailwind', 'LLM Agent RAG', 'Woody 김우디'].filter(s => s.toLowerCase().includes(q.toLowerCase()));
+          if (suggestions.length > 0) {
+            autoBox.innerHTML = suggestions.map(s => {
+              const reg = new RegExp(`(${q})`, 'gi');
+              const hi = s.replace(reg, `<strong class="text-blue-600 font-extrabold">$1</strong>`);
+              return `<div data-auto-pick="${s}" class="px-2.5 py-1.5 rounded-lg hover:bg-slate-50 cursor-pointer flex justify-between"><span>${hi}</span><span class="text-slate-400">↖</span></div>`;
+            }).join('');
+            autoBox.classList.remove('hidden');
+          } else {
+            autoBox.classList.add('hidden');
+          }
+        } else {
+          autoBox.classList.add('hidden');
+        }
+      });
+
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        state.query = '';
+        clearBtn.classList.add('hidden');
+        autoBox.classList.add('hidden');
+        searchInput.focus();
+        renderTable();
+      });
+
+      // 정렬 변경
+      document.getElementById('sortSelect').addEventListener('change', (e) => {
+        state.sortBy = e.target.value;
+        renderTable();
+      });
+
+      // 이메일 실시간 인라인 오류 검증 (fb_06)
+      const emailField = document.getElementById('emailField');
+      emailField.addEventListener('input', () => {
+        const isValid = emailField.value.includes('@') && emailField.value.includes('.');
+        document.getElementById('emailInlineError').classList.toggle('hidden', isValid);
+        document.getElementById('emailValidHint').classList.toggle('hidden', !isValid);
+        emailField.className = isValid
+          ? "w-full px-3 py-2 rounded-xl border-2 border-slate-200 focus:border-blue-600 text-xs font-medium text-slate-800 focus:outline-none transition"
+          : "w-full px-3 py-2 rounded-xl border-2 border-rose-500 bg-rose-50/20 text-xs font-medium text-rose-700 focus:outline-none transition";
+      });
+
+      // 파일 드롭존 프로그레스 바 (ld_03)
+      document.getElementById('fileDropzone').addEventListener('click', () => {
+        const bar = document.getElementById('uploadProgressBar');
+        const txt = document.getElementById('uploadPercentText');
+        let p = 0;
+        bar.style.width = '0%';
+        const timer = setInterval(() => {
+          p += 20;
+          if (p >= 100) {
+            p = 100;
+            clearInterval(timer);
+            showSnackbar('✓ UX_Portfolio_2026.pdf 파일 업로드 및 파싱 완료!');
+          }
+          bar.style.width = p + '%';
+          txt.textContent = p + '%';
+        }, 120);
+      });
+
+      // 로딩 버튼 중복 클릭 방지 (ld_09)
+      document.getElementById('submitPortfolioBtn').addEventListener('click', (e) => {
+        const btn = e.currentTarget;
+        const spinner = document.getElementById('submitSpinner');
+        const label = document.getElementById('submitBtnText');
+        btn.disabled = true;
+        spinner.classList.remove('hidden');
+        label.textContent = 'AI 검증 처리 중...';
+        setTimeout(() => {
+          btn.disabled = false;
+          spinner.classList.add('hidden');
+          label.textContent = '포트폴리오 검증 제출하기';
+          showSnackbar('✓ 신규 포트폴리오가 성공적으로 등록되었습니다!');
+        }, 1200);
+      });
+
+      // 스켈레톤 전환 시연 (ld_02)
+      document.getElementById('triggerSkeletonBtn').addEventListener('click', () => {
+        const skel = document.getElementById('tableSkeletonView');
+        const table = document.getElementById('tableDataView');
+        table.classList.add('hidden');
+        skel.classList.remove('hidden');
+        setTimeout(() => {
+          skel.classList.add('hidden');
+          table.classList.remove('hidden');
+        }, 900);
+      });
+
+      // 모달 열기 (fb_04)
+      const modal = document.getElementById('confirmModal');
+      document.getElementById('openConfirmModalBtn').addEventListener('click', () => {
+        document.getElementById('modalSlotSummary').textContent = `11.18 (수) ${state.selectedSlot} · 면접관 ${state.interviewerCount}명`;
+        modal.showModal();
+      });
+      modal.addEventListener('close', () => {
+        if (modal.returnValue === 'confirm') {
+          showSnackbar('🎉 최종 평가 확정 및 면접 알림 발송이 완료되었습니다!');
+        }
+        modal.returnValue = '';
+      });
+
+      // 위임 클릭 핸들러
+      document.addEventListener('click', (e) => {
+        const roleBtn = e.target.closest('.role-chip');
+        if (roleBtn) {
+          state.roleFilter = roleBtn.dataset.roleFilter;
+          document.querySelectorAll('.role-chip').forEach(b => {
+            b.className = b === roleBtn
+              ? "role-chip px-2.5 py-1 rounded-full bg-blue-600 text-white font-bold transition"
+              : "role-chip px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold transition";
+          });
+          renderTable();
+        }
+
+        const bmBtn = e.target.closest('[data-bookmark-id]');
+        if (bmBtn) {
+          const id = Number(bmBtn.dataset.bookmarkId);
+          const item = candidatesData.find(c => c.id === id);
+          if (item) {
+            item.bookmarked = !item.bookmarked;
+            renderTable();
+            showSnackbar(item.bookmarked ? `★ ${item.name} 님을 북마크했습니다 (0초 낙관적 UI 반영)` : `☆ ${item.name} 님 북마크를 해제했습니다`);
+          }
+        }
+
+        const slotBtn = e.target.closest('.slot-btn');
+        if (slotBtn) {
+          state.selectedSlot = slotBtn.dataset.slot;
+          document.getElementById('selectedSlotBadge').textContent = `11.18 (수) ${state.selectedSlot}`;
+          document.querySelectorAll('.slot-btn').forEach(b => {
+            b.className = b === slotBtn
+              ? "slot-btn py-1.5 rounded-lg bg-blue-600 text-white font-bold shadow-xs transition"
+              : "slot-btn py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 transition";
+          });
+        }
+
+        const autoPick = e.target.closest('[data-auto-pick]');
+        if (autoPick) {
+          searchInput.value = autoPick.dataset.autoPick;
+          state.query = searchInput.value;
+          autoBox.classList.add('hidden');
+          clearBtn.classList.remove('hidden');
+          renderTable();
+        }
+
+        const applyTag = e.target.closest('[data-apply-tag]');
+        if (applyTag) {
+          searchInput.value = applyTag.dataset.applyTag;
+          state.query = searchInput.value;
+          clearBtn.classList.remove('hidden');
+          renderTable();
+        }
+
+        const removeTag = e.target.closest('[data-remove-tag]');
+        if (removeTag) {
+          state.recentTags.splice(Number(removeTag.dataset.removeTag), 1);
+          renderRecentTags();
+        }
+
+        const suggestBtn = e.target.closest('.suggest-btn');
+        if (suggestBtn) {
+          const val = suggestBtn.dataset.suggest;
+          searchInput.value = val;
+          state.query = val;
+          state.roleFilter = 'all';
+          renderTable();
+        }
+
+        const aiChip = e.target.closest('.ai-chip');
+        if (aiChip) {
+          triggerAiStreaming(aiChip.dataset.aiPrompt);
+        }
+
+        const citBtn = e.target.closest('.citation-btn');
+        if (citBtn) {
+          const toast = document.getElementById('citationToast');
+          toast.textContent = citBtn.dataset.citation;
+          toast.classList.remove('hidden');
+        }
+      });
+
+      document.getElementById('clearAllRecentBtn').addEventListener('click', () => {
+        state.recentTags = [];
+        renderRecentTags();
+      });
+      document.getElementById('stepperMinus').addEventListener('click', () => {
+        if (state.interviewerCount > 1) state.interviewerCount--;
+        document.getElementById('stepperValue').textContent = `${state.interviewerCount}명`;
+      });
+      document.getElementById('stepperPlus').addEventListener('click', () => {
+        state.interviewerCount++;
+        document.getElementById('stepperValue').textContent = `${state.interviewerCount}명`;
+      });
+      document.getElementById('waffleBtn').addEventListener('click', () => {
+        document.getElementById('wafflePopover').classList.toggle('hidden');
+      });
+      document.getElementById('closeBannerBtn').addEventListener('click', () => {
+        document.getElementById('topDdayBanner').classList.add('hidden');
+      });
+      document.getElementById('replayCountBtn').addEventListener('click', playKpiCountUp);
+      document.getElementById('regenerateAiBtn').addEventListener('click', () => triggerAiStreaming('포트폴리오 종합 재평가'));
+      document.getElementById('snackbarUndoBtn').addEventListener('click', () => {
+        document.getElementById('snackbarOverlay').classList.add('hidden');
+      });
+    });
+  </script>
+</body>
+</html>

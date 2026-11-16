@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>화면 레이아웃 9가지 인터랙티브 가이드</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    }
+
+    /* Z-패턴 시선 이동 대시 애니메이션 */
+    @keyframes dashDraw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+    .z-path-anim {
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      animation: dashDraw 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* 부드러운 레이아웃 전환 */
+    .layout-transition {
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen antialiased flex flex-col">
+
+  <!-- 헤더 -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 mb-1">
+          <i data-lucide="layout-template" class="w-3.5 h-3.5"></i> 화면 레이아웃 9가지
+        </span>
+        <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+          AI한테 “깔끔하게 배치해 줘”, <span class="text-blue-600">이제 그만</span>
+        </h1>
+      </div>
+      <p class="text-sm text-slate-500 max-w-sm sm:text-right">
+        원하는 페이지 구조의 <span class="text-blue-600 font-semibold">정확한 레이아웃 이름</span>을 알고 직접 변형·시뮬레이션해 보세요.
+      </p>
+    </div>
+  </header>
+
+  <!-- 메인 그리드 9종 레이아웃 -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- 01. 히어로 (Hero section) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">01 히어로 (Hero section)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">랜딩 첫인상 강조</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-2.5 border border-slate-200 flex flex-col justify-between overflow-hidden">
+            <!-- Hero Top Area -->
+            <div id="heroBannerBox" class="bg-blue-50 border border-blue-100 rounded-lg p-3 flex flex-col justify-center gap-1.5 h-28 layout-transition">
+              <div class="h-2.5 w-36 bg-slate-800 rounded-full"></div>
+              <div class="h-2 w-24 bg-slate-600 rounded-full"></div>
+              <button onclick="toggleHeroAlign()" class="mt-1 w-20 py-1 bg-blue-600 text-white text-[9px] font-bold rounded-full shadow-xs hover:bg-blue-700 transition">
+                시작하기 CTA
+              </button>
+            </div>
+            <!-- Sub 3 Cards -->
+            <div class="grid grid-cols-3 gap-1.5 h-7">
+              <div class="bg-slate-200/80 rounded"></div>
+              <div class="bg-slate-200/80 rounded"></div>
+              <div class="bg-slate-200/80 rounded"></div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            화면 맨 위를 큼직하게 할애해 <strong>핵심 카피(헤드라인) + 행동 유도 버튼(CTA)</strong>을 배치합니다. 서비스 랜딩페이지의 전환율을 좌우합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">상단 대형 배너 + CTA</span>
+          <button onclick="toggleHeroAlign()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="align-center" class="w-3 h-3"></i> 좌측/중앙 정렬 전환
+          </button>
+        </div>
+      </div>
+
+      <!-- 02. 벤토 그리드 (Bento grid) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">02 벤토 그리드 (Bento grid)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 font-medium">비대칭 모듈 조합</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-2.5 border border-slate-200 overflow-hidden">
+            <div id="bentoContainer" class="grid grid-cols-3 grid-rows-3 gap-1.5 w-full h-full layout-transition">
+              <!-- Big Span 2x2 -->
+              <div id="bentoCell1" class="col-span-2 row-span-2 bg-blue-100/80 border border-blue-200 rounded-lg p-2 flex flex-col justify-between">
+                <span class="text-[9px] font-bold text-blue-700">핵심 기능 A (2×2)</span>
+                <div class="h-1.5 w-16 bg-blue-400/50 rounded"></div>
+              </div>
+              <!-- Top Right 1x1 -->
+              <div class="col-span-1 row-span-1 bg-slate-200/80 rounded-lg p-1.5 flex items-center justify-center text-[9px] font-semibold text-slate-600">
+                요약
+              </div>
+              <!-- Bottom Right Tall 1x2 -->
+              <div id="bentoCell3" class="col-span-1 row-span-2 bg-blue-600 text-white rounded-lg p-2 flex flex-col justify-between shadow-xs">
+                <span class="text-[9px] font-bold">강조 카드</span>
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 self-end"></i>
+              </div>
+              <!-- Bottom Left 2 cells -->
+              <div class="col-span-1 row-span-1 bg-slate-200/80 rounded-lg"></div>
+              <div class="col-span-1 row-span-1 bg-slate-200/80 rounded-lg"></div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            일본식 도시락(Bento) 칸막이처럼 <strong>서로 다른 크기(2×2, 1×2, 1×1)의 사각형 박스</strong>를 빈틈없이 조립해 중요도에 따라 시각적 강약을 줍니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">애플 스타일 기능 소개</span>
+          <button onclick="shuffleBentoDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="shuffle" class="w-3 h-3"></i> 비율 구성 바꾸기
+          </button>
+        </div>
+      </div>
+
+      <!-- 03. 스플릿 (Split screen) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">03 스플릿 (Split screen)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-purple-50 text-purple-600 font-medium">좌우 5:5 대조·로그인</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-2 border border-slate-200 overflow-hidden">
+            <div id="splitWrapper" class="flex w-full h-full rounded-lg overflow-hidden border border-slate-200 bg-white layout-transition">
+              <!-- Left Media Pane -->
+              <div class="w-1/2 bg-blue-600 flex flex-col items-center justify-center p-2 text-white relative">
+                <div class="w-7 h-7 rounded-full bg-white flex items-center justify-center text-blue-600 shadow-sm">
+                  <i data-lucide="image" class="w-3.5 h-3.5"></i>
+                </div>
+                <span class="text-[9px] font-bold mt-1.5 text-blue-100">브랜드 비주얼</span>
+              </div>
+              <!-- Right Form/Text Pane -->
+              <div class="w-1/2 p-3 flex flex-col justify-between bg-white">
+                <div class="space-y-1.5">
+                  <div class="h-2 w-14 bg-slate-800 rounded-full"></div>
+                  <div class="h-1.5 w-full bg-slate-200 rounded-full"></div>
+                  <div class="h-1.5 w-3/4 bg-slate-200 rounded-full"></div>
+                </div>
+                <div class="h-5 w-14 bg-slate-900 rounded-full flex items-center justify-center text-[8px] text-white font-bold">
+                  로그인
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            화면을 <strong>좌우 절반(5:5 또는 6:4)으로 과감히 양분</strong>합니다. 한쪽엔 그래픽·영상을, 반대쪽엔 로그인 폼이나 핵심 설명을 둘 때 세련됩니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">좌우 반반 분할</span>
+          <button onclick="swapSplitDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="arrow-left-right" class="w-3 h-3"></i> 좌우 위치 반전
+          </button>
+        </div>
+      </div>
+
+      <!-- 04. 카드 그리드 (Card grid) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">04 카드 그리드 (Card grid)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">균일 규격 반복 탐색</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-2.5 border border-slate-200 overflow-hidden flex items-center">
+            <div class="grid grid-cols-3 gap-2 w-full">
+              <!-- Card 1 -->
+              <div onclick="selectGridCard(0)" class="grid-card-item bg-white rounded-lg p-1.5 border border-slate-200 cursor-pointer transition">
+                <div class="h-8 bg-slate-100 rounded mb-1"></div>
+                <div class="h-1.5 w-8 bg-slate-300 rounded"></div>
+              </div>
+              <!-- Card 2 -->
+              <div onclick="selectGridCard(1)" class="grid-card-item bg-white rounded-lg p-1.5 border border-slate-200 cursor-pointer transition">
+                <div class="h-8 bg-blue-50 rounded mb-1"></div>
+                <div class="h-1.5 w-8 bg-slate-300 rounded"></div>
+              </div>
+              <!-- Card 3 (Selected Default) -->
+              <div onclick="selectGridCard(2)" class="grid-card-item bg-white rounded-lg p-1.5 border-2 border-blue-600 shadow-sm cursor-pointer transition">
+                <div class="h-8 bg-slate-200 rounded mb-1"></div>
+                <div class="h-1.5 w-8 bg-blue-600 rounded"></div>
+              </div>
+              <!-- Card 4, 5, 6 -->
+              <div onclick="selectGridCard(3)" class="grid-card-item bg-white rounded-lg p-1.5 border border-slate-200 cursor-pointer transition">
+                <div class="h-8 bg-blue-50 rounded mb-1"></div>
+                <div class="h-1.5 w-8 bg-slate-300 rounded"></div>
+              </div>
+              <div onclick="selectGridCard(4)" class="grid-card-item bg-white rounded-lg p-1.5 border border-slate-200 cursor-pointer transition">
+                <div class="h-8 bg-slate-100 rounded mb-1"></div>
+                <div class="h-1.5 w-8 bg-slate-300 rounded"></div>
+              </div>
+              <div onclick="selectGridCard(5)" class="grid-card-item bg-white rounded-lg p-1.5 border border-slate-200 cursor-pointer transition">
+                <div class="h-8 bg-blue-50 rounded mb-1"></div>
+                <div class="h-1.5 w-8 bg-slate-300 rounded"></div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            벤토 그리드와 달리 <strong>모든 카드의 가로·세로 크기가 100% 동일</strong>합니다. 쇼핑몰 상품 목록, 채용 공고 리스트, 유튜브 썸네일 정렬의 표준입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">동일 크기 바둑판 배열</span>
+          <button onclick="cycleGridCardSelection()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="mouse-pointer" class="w-3 h-3"></i> 포커스 카드 이동
+          </button>
+        </div>
+      </div>
+
+      <!-- 05. 사이드바 레이아웃 (Sidebar layout) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">05 사이드바 (Sidebar layout)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">생산성 웹앱 / SaaS 표준</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-2 border border-slate-200 overflow-hidden">
+            <div class="flex w-full h-full bg-white rounded-lg border border-slate-200 overflow-hidden">
+              <!-- Dark Left Sidebar -->
+              <div id="demoSidebarNav" class="w-14 bg-slate-900 p-2 flex flex-col gap-2 layout-transition shrink-0">
+                <div class="h-1.5 w-6 bg-slate-500 rounded-full mx-auto"></div>
+                <div class="h-5 w-full bg-blue-600 rounded flex items-center justify-center">
+                  <div class="h-1 w-5 bg-white rounded-full"></div>
+                </div>
+                <div class="h-1.5 w-6 bg-slate-600 rounded-full mx-auto"></div>
+                <div class="h-1.5 w-6 bg-slate-600 rounded-full mx-auto"></div>
+              </div>
+              <!-- Main Workspace Area -->
+              <div class="flex-1 p-3 flex flex-col justify-between">
+                <div class="space-y-1.5">
+                  <div class="h-2.5 w-24 bg-slate-800 rounded-full"></div>
+                  <div class="h-1.5 w-full bg-slate-200 rounded-full"></div>
+                </div>
+                <div class="h-16 w-full bg-blue-50/80 border border-blue-100 rounded-lg flex items-center justify-center text-[10px] font-semibold text-blue-600">
+                  메인 작업 캔버스 영역
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            좌측에 고정된 수직 메뉴 단(Sidebar)을 두고 우측 넓은 공간을 작업 영역으로 씁니다. 노션(Notion), 슬랙, 챗GPT 등 PC 웹앱의 기본 골격입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">좌측 고정 메뉴 + 본문</span>
+          <button onclick="toggleSidebarCollapse()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="panel-left-close" class="w-3 h-3"></i> 사이드바 접기/펼치기
+          </button>
+        </div>
+      </div>
+
+      <!-- 06. 매거진 (Magazine layout) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">06 매거진 (Magazine layout)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-amber-50 text-amber-600 font-medium">미디어 / 아티클 큐레이션</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-2.5 border border-slate-200 overflow-hidden">
+            <div class="bg-white w-full h-full rounded-lg border border-slate-200 p-2.5 flex flex-col justify-between">
+              <!-- Top Headline Bar -->
+              <div class="h-2.5 w-3/4 bg-slate-800 rounded-full"></div>
+              <!-- Editorial Grid: Left Featured + Right Multi-column list -->
+              <div class="grid grid-cols-12 gap-2.5 flex-1 mt-2 items-center">
+                <div id="magFeatureBox" class="col-span-6 h-full bg-blue-600 rounded-lg p-2 flex flex-col justify-end text-white layout-transition">
+                  <span class="text-[9px] font-bold">커버 스토리</span>
+                </div>
+                <div class="col-span-6 grid grid-cols-2 gap-1.5">
+                  <div class="space-y-1">
+                    <div class="h-1.5 w-full bg-slate-300 rounded"></div>
+                    <div class="h-1.5 w-4/5 bg-slate-200 rounded"></div>
+                  </div>
+                  <div class="space-y-1">
+                    <div class="h-1.5 w-full bg-slate-300 rounded"></div>
+                    <div class="h-1.5 w-4/5 bg-slate-200 rounded"></div>
+                  </div>
+                  <div class="space-y-1 mt-1">
+                    <div class="h-1.5 w-full bg-slate-300 rounded"></div>
+                    <div class="h-1.5 w-3/5 bg-slate-200 rounded"></div>
+                  </div>
+                  <div class="space-y-1 mt-1">
+                    <div class="h-1.5 w-full bg-slate-300 rounded"></div>
+                    <div class="h-1.5 w-3/5 bg-slate-200 rounded"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            종이 잡지나 신문 편집처럼 <strong>큼직한 대표 기사(Featured) 1개와 다단 보조 기사 목록</strong>을 비대칭으로 조합해 풍부한 읽을거리를 전달합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">에디토리얼/뉴스 포털</span>
+          <button onclick="highlightMagazineStory()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="newspaper" class="w-3 h-3"></i> 헤드라인 강조
+          </button>
+        </div>
+      </div>
+
+      <!-- 07. 대시보드 (Dashboard) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">07 대시보드 (Dashboard)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">KPI 수치 + 차트 결합</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-2.5 border border-slate-200 flex flex-col justify-between overflow-hidden">
+            <!-- Top KPI Row -->
+            <div class="grid grid-cols-2 gap-2">
+              <div class="bg-white p-2 rounded-lg border border-slate-200 shadow-2xs">
+                <span class="text-[9px] text-slate-400 block">주문</span>
+                <span id="dashStat1" class="text-xs font-extrabold text-slate-900">1,254</span>
+              </div>
+              <div class="bg-white p-2 rounded-lg border border-slate-200 shadow-2xs">
+                <span class="text-[9px] text-slate-400 block">결제율</span>
+                <span id="dashStat2" class="text-xs font-extrabold text-slate-900">87%</span>
+              </div>
+            </div>
+            <!-- Bottom Bar Chart Widget -->
+            <div class="bg-white p-2.5 rounded-lg border border-slate-200 flex items-end justify-around h-20 gap-2">
+              <div id="bar1" class="w-full bg-blue-100 rounded-t h-6 layout-transition"></div>
+              <div id="bar2" class="w-full bg-blue-100 rounded-t h-10 layout-transition"></div>
+              <div id="bar3" class="w-full bg-blue-100 rounded-t h-8 layout-transition"></div>
+              <div id="bar4" class="w-full bg-blue-600 rounded-t h-14 layout-transition"></div>
+              <div id="bar5" class="w-full bg-blue-100 rounded-t h-9 layout-transition"></div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            상단에는 <strong>핵심 지표 요약 카드(KPI)</strong>를, 하단에는 <strong>시각화 차트와 테이블</strong>을 스크롤 없이 한 화면에 밀집시켜 실시간 현황을 브리핑합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">지표 모니터링 뷰</span>
+          <button onclick="randomizeDashboardDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="bar-chart-2" class="w-3 h-3"></i> 데이터 리프레시
+          </button>
+        </div>
+      </div>
+
+      <!-- 08. Z 패턴 (Z-pattern) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">08 Z 패턴 (Z-pattern)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 font-medium">인간 시선 추적(Eye-track)</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-between overflow-hidden">
+            <!-- SVG Z-Line Overlay -->
+            <svg class="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 260 160">
+              <path id="zPatternPath" d="M 45 28 L 215 28 L 45 132 L 215 132" fill="none" stroke="#3b82f6" stroke-width="2" stroke-dasharray="4 4" />
+            </svg>
+
+            <!-- 1. Top Left Logo & 2. Top Right Nav -->
+            <div class="flex justify-between items-center relative z-20">
+              <div class="px-2.5 py-1 bg-slate-800 text-white rounded text-[9px] font-bold">① 로고</div>
+              <div class="px-2.5 py-1 bg-slate-200 text-slate-700 rounded text-[9px] font-semibold">② 메뉴</div>
+            </div>
+
+            <!-- Center Value Prop -->
+            <div class="mx-auto w-24 h-2 bg-slate-700 rounded-full relative z-20"></div>
+
+            <!-- 3. Bottom Left Sub & 4. Bottom Right CTA -->
+            <div class="flex justify-between items-center relative z-20">
+              <span class="text-[9px] text-slate-400 font-semibold">③ 보조 설명</span>
+              <div class="px-3 py-1 bg-blue-600 text-white rounded-full text-[9px] font-bold shadow-sm">④ 최종 CTA</div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            사람의 눈이 <strong>좌상단(로고) → 우상단(메뉴) → 대각선 중앙 → 우하단(최종 버튼)</strong>으로 알파벳 Z를 그리며 이동하는 원리를 이용한 고전환 배치입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">시선 동선 최적화</span>
+          <button onclick="replayZPattern()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="eye" class="w-3 h-3"></i> 시선 동선 추적
+          </button>
+        </div>
+      </div>
+
+      <!-- 09. 풀블리드 (Full bleed) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">09 풀블리드 (Full bleed)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-rose-50 text-rose-600 font-medium">여백 없는 100% 몰입감</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div id="fullBleedViewport" class="relative bg-slate-100 rounded-xl h-44 p-0 border border-slate-200 overflow-hidden layout-transition">
+            <!-- Edge-to-Edge Graphic Canvas -->
+            <div class="w-full h-full bg-blue-600 relative flex flex-col justify-between p-4 text-white overflow-hidden">
+              <!-- Decorative Sun/Moon Circle -->
+              <div class="w-8 h-8 rounded-full bg-white/90 self-end shadow-sm"></div>
+              <!-- Decorative Giant Hill Circle -->
+              <div class="w-44 h-44 rounded-full bg-blue-400/50 absolute -bottom-16 -left-10 pointer-events-none"></div>
+              <div class="relative z-10 flex items-center justify-between">
+                <span id="bleedStatusLabel" class="text-[10px] font-bold bg-slate-900/40 backdrop-blur-xs px-2 py-0.5 rounded">
+                  여백 0px (Full Bleed)
+                </span>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            좌우·상하 바깥 여백(Margin/Padding)을 완전히 없애고 <strong>이미지나 영상이 기기 화면 끝(Edge)까지 꽉 차게 흐르도록</strong> 만들어 압도적인 몰입감을 줍니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">테두리 여백 완전 제거</span>
+          <button onclick="toggleFullBleedMargin()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="maximize" class="w-3 h-3"></i> 여백 있음/없음 비교
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    UI & UX 화면 레이아웃 배치 9가지 인터랙션 가이드 &copy; 2026
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // 01. 히어로 정렬 전환
+    let heroCentered = false;
+    function toggleHeroAlign() {
+      heroCentered = !heroCentered;
+      const box = document.getElementById('heroBannerBox');
+      if (heroCentered) {
+        box.className = "bg-blue-600 text-white rounded-lg p-3 flex flex-col items-center justify-center gap-1.5 h-28 layout-transition";
+      } else {
+        box.className = "bg-blue-50 border border-blue-100 rounded-lg p-3 flex flex-col justify-center gap-1.5 h-28 layout-transition";
+      }
+    }
+
+    // 02. 벤토 그리드 스왑
+    let bentoAlt = false;
+    function shuffleBentoDemo() {
+      bentoAlt = !bentoAlt;
+      const c1 = document.getElementById('bentoCell1');
+      if (bentoAlt) {
+        c1.className = "col-span-3 row-span-1 bg-indigo-100 border border-indigo-200 rounded-lg p-2 flex items-center justify-between";
+      } else {
+        c1.className = "col-span-2 row-span-2 bg-blue-100/80 border border-blue-200 rounded-lg p-2 flex flex-col justify-between";
+      }
+    }
+
+    // 03. 스플릿 좌우 반전
+    let splitReversed = false;
+    function swapSplitDemo() {
+      splitReversed = !splitReversed;
+      const wrap = document.getElementById('splitWrapper');
+      wrap.classList.toggle('flex-row-reverse', splitReversed);
+    }
+
+    // 04. 카드 그리드 선택
+    let activeCardIdx = 2;
+    function selectGridCard(idx) {
+      activeCardIdx = idx;
+      const cards = document.querySelectorAll('.grid-card-item');
+      cards.forEach((c, i) => {
+        if (i === idx) {
+          c.className = "grid-card-item bg-white rounded-lg p-1.5 border-2 border-blue-600 shadow-sm cursor-pointer transition";
+        } else {
+          c.className = "grid-card-item bg-white rounded-lg p-1.5 border border-slate-200 cursor-pointer transition";
+        }
+      });
+    }
+    function cycleGridCardSelection() {
+      selectGridCard((activeCardIdx + 1) % 6);
+    }
+
+    // 05. 사이드바 접기/펼치기
+    let sidebarCollapsed = false;
+    function toggleSidebarCollapse() {
+      sidebarCollapsed = !sidebarCollapsed;
+      const nav = document.getElementById('demoSidebarNav');
+      nav.style.width = sidebarCollapsed ? '28px' : '56px';
+    }
+
+    // 06. 매거진 커버 강조
+    let magHighlight = false;
+    function highlightMagazineStory() {
+      magHighlight = !magHighlight;
+      const box = document.getElementById('magFeatureBox');
+      box.className = magHighlight
+        ? "col-span-7 h-full bg-slate-900 rounded-lg p-2 flex flex-col justify-end text-white layout-transition"
+        : "col-span-6 h-full bg-blue-600 rounded-lg p-2 flex flex-col justify-end text-white layout-transition";
+    }
+
+    // 07. 대시보드 데이터 리프레시
+    function randomizeDashboardDemo() {
+      const orders = Math.floor(1100 + Math.random() * 800).toLocaleString();
+      const rate = Math.floor(75 + Math.random() * 22) + '%';
+      document.getElementById('dashStat1').innerText = orders;
+      document.getElementById('dashStat2').innerText = rate;
+
+      const heights = ['h-5', 'h-8', 'h-12', 'h-14', 'h-10'];
+      for (let i = 1; i <= 5; i++) {
+        const bar = document.getElementById(`bar${i}`);
+        const randH = heights[Math.floor(Math.random() * heights.length)];
+        bar.className = `w-full ${i === 4 ? 'bg-blue-600' : 'bg-blue-100'} rounded-t ${randH} layout-transition`;
+      }
+    }
+
+    // 08. Z 패턴 재생
+    function replayZPattern() {
+      const path = document.getElementById('zPatternPath');
+      path.classList.remove('z-path-anim');
+      void path.offsetWidth;
+      path.setAttribute('stroke-dasharray', '400');
+      path.classList.add('z-path-anim');
+    }
+
+    // 09. 풀블리드 여백 토글
+    let isBoxedMargin = false;
+    function toggleFullBleedMargin() {
+      isBoxedMargin = !isBoxedMargin;
+      const vp = document.getElementById('fullBleedViewport');
+      const label = document.getElementById('bleedStatusLabel');
+      if (isBoxedMargin) {
+        vp.className = "relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 overflow-hidden layout-transition";
+        label.innerText = "일반 박스 여백 (Boxed Padded)";
+      } else {
+        vp.className = "relative bg-slate-100 rounded-xl h-44 p-0 border border-slate-200 overflow-hidden layout-transition";
+        label.innerText = "여백 0px (Full Bleed)";
+      }
+    }
+  </script>
+</body>
+</html>

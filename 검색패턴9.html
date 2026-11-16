@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>검색 화면 이름 9가지 인터랙티브 가이드</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    }
+
+    /* 커스텀 슬라이더 스타일 */
+    input[type=range] {
+      -webkit-appearance: none;
+      background: transparent;
+    }
+    input[type=range]:focus {
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 3px solid #2563eb;
+      box-shadow: 0 1px 4px rgba(37, 99, 235, 0.35);
+      cursor: pointer;
+      margin-top: -5px;
+    }
+    input[type=range]::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 6px;
+      cursor: pointer;
+      background: #dbeafe;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen antialiased flex flex-col">
+
+  <!-- 헤더 -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 mb-1">
+          <i data-lucide="search" class="w-3.5 h-3.5"></i> 검색 화면 이름 9가지
+        </span>
+        <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+          검색창 속 <span class="text-blue-600">숨은 이름들</span>
+        </h1>
+      </div>
+      <p class="text-sm text-slate-500 max-w-sm sm:text-right">
+        검색 시작 전부터 결과 탐색까지, <span class="text-blue-600 font-semibold">9가지 검색 UX 컴포넌트</span>를 직접 입력하고 클릭해 보세요.
+      </p>
+    </div>
+  </header>
+
+  <!-- 메인 그리드 9종 검색 패턴 -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- 01. 검색창 (Search bar) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">01 검색창 (Search bar)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">탐색 시작점 + 지우기(X)</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3.5 border border-slate-200 flex flex-col justify-between overflow-hidden">
+            <div id="searchBarWrap" class="bg-white rounded-xl border-2 border-slate-200 px-3 py-2 flex items-center gap-2 shadow-2xs transition-all">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 shrink-0"></i>
+              <input 
+                id="searchBarInput" 
+                type="text" 
+                placeholder="찾으시는 상품을 검색해보세요" 
+                onfocus="focusSearchBar(true)"
+                onblur="focusSearchBar(false)"
+                oninput="toggleClearBtn(this.value)"
+                class="w-full text-xs text-slate-800 bg-transparent focus:outline-none"
+              />
+              <button id="searchBarClearBtn" onclick="clearSearchBar()" class="hidden text-slate-400 hover:text-slate-600">
+                <i data-lucide="x-circle" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+            <p id="searchBarStatus" class="text-[11px] text-slate-400 text-center my-auto">
+              돋보기 아이콘 + 플레이스홀더 힌트 + 한 번에 지우기(X) 버튼으로 구성됩니다.
+            </p>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            사용자가 검색어를 입력하는 기본 인풋 박스입니다. 포커스 시 테두리가 강조되며, 한 글자라도 입력되면 우측에 즉시 삭제(`X`) 버튼이 나타나야 합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">돋보기 + 플레이스홀더</span>
+          <button onclick="demoFillSearchBar()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="keyboard" class="w-3 h-3"></i> 검색어 자동 입력
+          </button>
+        </div>
+      </div>
+
+      <!-- 02. 자동완성 (Autocomplete) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">02 자동완성 (Autocomplete)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">오타 방지 · 입력 시간 단축</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-start overflow-hidden">
+            <div class="bg-white rounded-xl border border-slate-200 px-3 py-1.5 flex items-center gap-2 shadow-2xs mb-2">
+              <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400"></i>
+              <span id="autoKeywordInput" class="text-xs font-bold text-slate-900">니트</span>
+            </div>
+            <!-- Suggestions List -->
+            <div id="autoListContainer" class="bg-white rounded-xl border border-slate-200 p-2 space-y-1.5 text-xs shadow-2xs">
+              <div onclick="selectAutoItem('니트 가디건')" class="px-2 py-1 rounded hover:bg-slate-50 cursor-pointer flex items-center justify-between">
+                <span><strong class="text-blue-600 font-bold">니트</strong> 가디건</span>
+                <i data-lucide="arrow-up-left" class="w-3 h-3 text-slate-300"></i>
+              </div>
+              <div onclick="selectAutoItem('니트 원피스')" class="px-2 py-1 rounded hover:bg-slate-50 cursor-pointer flex items-center justify-between">
+                <span><strong class="text-blue-600 font-bold">니트</strong> 원피스</span>
+                <i data-lucide="arrow-up-left" class="w-3 h-3 text-slate-300"></i>
+              </div>
+              <div onclick="selectAutoItem('니트 조끼')" class="px-2 py-1 rounded hover:bg-slate-50 cursor-pointer flex items-center justify-between">
+                <span><strong class="text-blue-600 font-bold">니트</strong> 조끼</span>
+                <i data-lucide="arrow-up-left" class="w-3 h-3 text-slate-300"></i>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            글자를 치는 도중 연관된 추천 검색어 목록을 실시간으로 띄우고, 사용자가 친 글자와 일치하는 앞부분을 파란색으로 강조해 선택을 돕습니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">실시간 추천어 매칭</span>
+          <button onclick="cycleAutocompleteDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-3 h-3"></i> 키워드 바꾸기
+          </button>
+        </div>
+      </div>
+
+      <!-- 03. 최근 검색어 (Recent searches) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">03 최근 검색어 (Recent)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 font-medium">재검색 1초 단축 칩</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-between overflow-hidden">
+            <div class="bg-white rounded-xl border border-slate-200 px-3 py-1.5 flex items-center gap-2 shadow-2xs">
+              <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400"></i>
+              <span id="recentTargetInput" class="text-[11px] text-slate-400">검색어를 입력하세요</span>
+            </div>
+
+            <div class="bg-white rounded-xl border border-slate-200 p-2.5 flex-1 mt-2 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-[10px] font-bold text-slate-500">최근 검색어</span>
+                  <button onclick="clearAllRecentTags()" class="text-[10px] text-slate-400 hover:text-rose-600 font-medium">전체 삭제</button>
+                </div>
+                <div id="recentChipBox" class="flex flex-wrap gap-1.5"></div>
+              </div>
+              <span class="text-[9px] text-slate-400">칩 클릭 시 재검색 · X 클릭 시 개별 삭제</span>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            이전에 찾아봤던 단어를 알약 칩(Chip) 형태로 보관합니다. 개별 삭제(`X`)와 프라이버시를 위한 **‘전체 삭제’** 버튼을 함께 제공하는 것이 원칙입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">검색 히스토리 관리</span>
+          <button onclick="restoreRecentTags()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="rotate-ccw" class="w-3 h-3"></i> 기록 복원하기
+          </button>
+        </div>
+      </div>
+
+      <!-- 04. 인기 검색어 (Trending) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">04 인기 검색어 (Trending)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-amber-50 text-amber-600 font-medium">발견(Discovery) 유도</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="bg-white rounded-xl border border-slate-200 p-3 shadow-2xs space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-slate-800">지금 많이 찾는</span>
+                <span class="text-[9px] text-slate-400">14:00 기준</span>
+              </div>
+              <div id="trendingList" class="space-y-1.5 text-xs">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2"><span class="font-extrabold text-blue-600 w-3">1</span><span class="font-semibold text-slate-800">패딩</span></div>
+                  <span class="text-[9px] font-bold text-rose-500">▲ 2</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2"><span class="font-extrabold text-blue-600 w-3">2</span><span class="font-semibold text-slate-800">가습기</span></div>
+                  <span class="text-[9px] font-bold text-slate-400">-</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2"><span class="font-extrabold text-blue-600 w-3">3</span><span class="font-semibold text-slate-800">핫팩</span></div>
+                  <span class="text-[9px] font-bold text-rose-500">NEW</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-2"><span class="font-bold text-slate-400 w-3">4</span><span class="text-slate-600">머플러</span></div>
+                  <span class="text-[9px] font-bold text-blue-500">▼ 1</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            무엇을 검색할지 망설이는 사용자에게 지금 다른 사람들이 가장 많이 찾는 급상승 키워드 순위를 보여주어 자연스러운 탐색을 유도합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">실시간 랭킹 리스트</span>
+          <button onclick="shuffleTrendingDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="trending-up" class="w-3 h-3"></i> 순위 변동 시뮬레이션
+          </button>
+        </div>
+      </div>
+
+      <!-- 05. 필터 (Filter) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">05 필터 (Filter)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">결과 범위 좁히기</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-between overflow-hidden">
+            <!-- Top Filter Chips -->
+            <div class="flex items-center gap-1.5">
+              <button class="px-2.5 py-1 rounded-full bg-blue-50 border border-blue-200 text-blue-600 text-[10px] font-bold flex items-center gap-0.5">
+                <span>가격</span><i data-lucide="chevron-down" class="w-3 h-3"></i>
+              </button>
+              <button class="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-slate-600 text-[10px] font-semibold flex items-center gap-0.5">
+                <span>브랜드</span><i data-lucide="chevron-down" class="w-3 h-3"></i>
+              </button>
+              <button onclick="toggleFreeShipFilter(this)" class="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-slate-600 text-[10px] font-semibold">
+                무료배송
+              </button>
+            </div>
+
+            <!-- Price Slider Sheet -->
+            <div class="bg-white rounded-xl p-3 border border-slate-200 shadow-2xs space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="text-[10px] font-bold text-slate-500">가격 범위</span>
+                <span id="filterPriceLabel" class="text-xs font-extrabold text-slate-900">3만 원 ~ 12만 원</span>
+              </div>
+              <input id="filterPriceRange" type="range" min="5" max="30" value="12" oninput="updateFilterPrice(this.value)" class="w-full" />
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            수천 개의 검색 결과 중에서 <strong>가격대, 브랜드, 색상, 무료배송 여부</strong> 등 원하는 조건에 맞는 항목만 남기고 나머지를 걸러냅니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">다중 조건 좁히기</span>
+          <button onclick="randomFilterPrice()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="sliders-horizontal" class="w-3 h-3"></i> 가격대 조절
+          </button>
+        </div>
+      </div>
+
+      <!-- 06. 정렬 (Sort) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">06 정렬 (Sort)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-purple-50 text-purple-600 font-medium">노출 순서 재배열</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-between overflow-hidden">
+            <div class="flex justify-end">
+              <button onclick="cycleSortOption()" class="px-2.5 py-1 rounded-full bg-white border border-slate-200 text-[10px] font-bold text-slate-800 shadow-2xs flex items-center gap-1">
+                <span id="currentSortBtnText">낮은 가격순</span>
+                <i data-lucide="chevron-down" class="w-3 h-3 text-slate-500"></i>
+              </button>
+            </div>
+
+            <!-- Dropdown Menu -->
+            <div class="bg-white rounded-xl border border-slate-200 p-1.5 shadow-sm space-y-0.5 text-xs">
+              <button onclick="setSortOption('추천순', 0)" id="sortOpt0" class="w-full text-left px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-slate-50 font-medium transition">추천순</button>
+              <button onclick="setSortOption('낮은 가격순', 1)" id="sortOpt1" class="w-full text-left px-2.5 py-1.5 rounded-lg bg-blue-50 text-blue-600 font-bold transition">낮은 가격순</button>
+              <button onclick="setSortOption('리뷰 많은순', 2)" id="sortOpt2" class="w-full text-left px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-slate-50 font-medium transition">리뷰 많은순</button>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            필터와 달리 **전체 결과 개수는 줄이지 않고**, ‘추천순 · 낮은 가격순 · 리뷰 많은순 · 최신순’ 등 나열되는 순서만 바꿉니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">결과 개수 유지 · 순서 변경</span>
+          <button onclick="cycleSortOption()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="arrow-up-down" class="w-3 h-3"></i> 정렬 기준 변경
+          </button>
+        </div>
+      </div>
+
+      <!-- 07. 검색어 강조 (Highlight) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">07 검색어 강조 (Highlight)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">일치 키워드 시각적 매칭</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-between overflow-hidden">
+            <div class="bg-white rounded-xl border border-slate-200 px-3 py-1.5 flex items-center gap-2 shadow-2xs">
+              <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400"></i>
+              <span id="hlQueryLabel" class="text-xs font-bold text-slate-900">오사카</span>
+            </div>
+
+            <div id="hlResultList" class="bg-white rounded-xl border border-slate-200 p-2.5 space-y-2 text-xs text-slate-700 font-medium">
+              <div><mark class="bg-blue-100 text-blue-700 font-bold px-1 rounded">오사카</mark> 3박 4일 패키지</div>
+              <div>간사이 공항, <mark class="bg-blue-100 text-blue-700 font-bold px-1 rounded">오사카</mark> 시내 급행열차</div>
+              <div><mark class="bg-blue-100 text-blue-700 font-bold px-1 rounded">오사카</mark> 맛집 지도 총정리</div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            검색 결과 제목이나 본문 요약에서 **내가 입력한 검색어가 어느 위치에 포함되어 있는지** 굵은 파란색 글씨나 배경 하이라이트로 즉시 알아보게 합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">매칭 단어 컬러 마킹</span>
+          <button onclick="toggleHighlightKeyword()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="highlighter" class="w-3 h-3"></i> 다른 검색어 매칭
+          </button>
+        </div>
+      </div>
+
+      <!-- 08. 결과 없음 (No results) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">08 결과 없음 (No results)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-rose-50 text-rose-600 font-medium">막다른 길(Dead-end) 방지</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-between overflow-hidden">
+            <div class="bg-white rounded-xl border border-slate-200 px-3 py-1.5 flex items-center gap-2 shadow-2xs">
+              <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400"></i>
+              <span id="noResInputText" class="text-xs font-semibold text-slate-700">옽사카숙소</span>
+            </div>
+
+            <div id="noResStateBox" class="bg-white rounded-xl border border-slate-200 p-3 flex-1 mt-2 flex flex-col items-center justify-center text-center">
+              <p class="text-xs font-bold text-slate-700">검색 결과가 없어요</p>
+              <p class="text-[10px] text-slate-400 mt-0.5">철자를 확인하거나 아래 추천어를 눌러보세요</p>
+              <button onclick="recoverFromNoResult()" class="mt-2 px-2.5 py-1 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-full text-[10px] font-bold transition">
+                💡 ‘오사카 숙소’로 다시 검색하기
+              </button>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            오타나 재고 부족으로 결과가 0건일 때 단순히 “결과 없음”만 띄우면 이탈합니다. **오타 교정 제안이나 대체 인기 카테고리 버튼**으로 구출해야 합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">오타 교정 및 대체 추천</span>
+          <button onclick="recoverFromNoResult()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="life-buoy" class="w-3 h-3"></i> 오타 교정 구출 시연
+          </button>
+        </div>
+      </div>
+
+      <!-- 09. 검색 범위 탭 (Scope tabs) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">09 검색 범위 탭 (Scope tabs)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 font-medium">도메인별 통합검색 분류</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-between overflow-hidden">
+            <div class="bg-white rounded-xl border border-slate-200 px-3 py-1.5 flex items-center gap-2 shadow-2xs">
+              <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400"></i>
+              <span class="text-xs font-bold text-slate-900">캠핑</span>
+            </div>
+
+            <!-- Scope Tabs Bar -->
+            <div class="flex items-center justify-around border-b border-slate-200 text-[11px] font-semibold text-slate-500 pt-1">
+              <button onclick="switchScopeTab(0, '통합 검색 결과 1,420건')" id="scopeTab0" class="pb-1 border-b-2 border-transparent">전체</button>
+              <button onclick="switchScopeTab(1, '캠핑용품 상품 850개')" id="scopeTab1" class="pb-1 border-b-2 border-transparent">상품</button>
+              <button onclick="switchScopeTab(2, '캠핑 전문 브랜드관 12곳')" id="scopeTab2" class="pb-1 border-b-2 border-blue-600 text-blue-600 font-bold">브랜드</button>
+              <button onclick="switchScopeTab(3, '실사용자 캠핑 후기 558건')" id="scopeTab3" class="pb-1 border-b-2 border-transparent">리뷰</button>
+            </div>
+
+            <!-- Scoped Result Card -->
+            <div class="bg-white rounded-xl border border-slate-200 p-2 flex items-center gap-2.5 shadow-2xs">
+              <div class="w-9 h-9 rounded-lg bg-blue-100 shrink-0"></div>
+              <div class="space-y-1 flex-1">
+                <p id="scopeResultTitle" class="text-[11px] font-bold text-slate-800">캠핑 전문 브랜드관 12곳</p>
+                <div class="h-2 w-2/3 bg-slate-200 rounded"></div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            하나의 검색어(‘캠핑’)에 대해 **전체 · 상품 · 브랜드 · 리뷰 · 동영상** 등 서로 다른 데이터 성격별로 결과를 쪼개어 탐색하게 해주는 상단 탭입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">카테고리 범위 전환</span>
+          <button onclick="cycleScopeTab()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="layers" class="w-3 h-3"></i> 범위 탭 이동
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    UI & UX 검색 화면 패턴 9가지 인터랙션 가이드 &copy; 2026
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // 01. 검색창
+    function focusSearchBar(focused) {
+      const wrap = document.getElementById('searchBarWrap');
+      wrap.className = focused
+        ? "bg-white rounded-xl border-2 border-blue-600 px-3 py-2 flex items-center gap-2 shadow-xs transition-all"
+        : "bg-white rounded-xl border-2 border-slate-200 px-3 py-2 flex items-center gap-2 shadow-2xs transition-all";
+    }
+    function toggleClearBtn(val) {
+      document.getElementById('searchBarClearBtn').classList.toggle('hidden', val.length === 0);
+    }
+    function clearSearchBar() {
+      const input = document.getElementById('searchBarInput');
+      input.value = '';
+      toggleClearBtn('');
+      input.focus();
+    }
+    function demoFillSearchBar() {
+      const input = document.getElementById('searchBarInput');
+      input.value = '무선 노이즈캔슬링 헤드폰';
+      focusSearchBar(true);
+      toggleClearBtn(input.value);
+    }
+
+    // 02. 자동완성
+    const autoSets = [
+      { key: '니트', items: ['니트 가디건', '니트 원피스', '니트 조끼'] },
+      { key: '제주', items: ['제주 렌트카', '제주 애월 숙소', '제주 흑돼지 맛집'] },
+      { key: '아이패드', items: ['아이패드 프로 M4', '아이패드 케이스', '아이패드 필름'] }
+    ];
+    let autoIdx = 0;
+    function cycleAutocompleteDemo() {
+      autoIdx = (autoIdx + 1) % autoSets.length;
+      const data = autoSets[autoIdx];
+      document.getElementById('autoKeywordInput').innerText = data.key;
+      const box = document.getElementById('autoListContainer');
+      box.innerHTML = data.items.map(item => {
+        const rest = item.replace(data.key, '');
+        return `
+          <div onclick="selectAutoItem('${item}')" class="px-2 py-1 rounded hover:bg-slate-50 cursor-pointer flex items-center justify-between">
+            <span><strong class="text-blue-600 font-bold">${data.key}</strong>${rest}</span>
+            <i data-lucide="arrow-up-left" class="w-3 h-3 text-slate-300"></i>
+          </div>`;
+      }).join('');
+      lucide.createIcons();
+    }
+    function selectAutoItem(text) {
+      document.getElementById('autoKeywordInput').innerText = text;
+    }
+
+    // 03. 최근 검색어
+    let recentTags = ['제주 숙소', '캠핑 의자', '가습기'];
+    function renderRecentTags() {
+      const box = document.getElementById('recentChipBox');
+      if (recentTags.length === 0) {
+        box.innerHTML = `<span class="text-[11px] text-slate-400">최근 검색 내역이 없습니다.</span>`;
+        return;
+      }
+      box.innerHTML = recentTags.map((tag, i) => `
+        <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 text-[11px] font-medium">
+          <button onclick="document.getElementById('recentTargetInput').innerText='${tag}'" class="hover:text-blue-600">${tag}</button>
+          <button onclick="removeRecentTag(${i})" class="text-slate-400 hover:text-rose-500">✕</button>
+        </span>
+      `).join('');
+    }
+    function removeRecentTag(idx) {
+      recentTags.splice(idx, 1);
+      renderRecentTags();
+    }
+    function clearAllRecentTags() {
+      recentTags = [];
+      renderRecentTags();
+    }
+    function restoreRecentTags() {
+      recentTags = ['제주 숙소', '캠핑 의자', '가습기'];
+      renderRecentTags();
+    }
+    renderRecentTags();
+
+    // 04. 인기 검색어
+    let trendAlt = false;
+    function shuffleTrendingDemo() {
+      trendAlt = !trendAlt;
+      const list = document.getElementById('trendingList');
+      const items = trendAlt
+        ? [['가습기', '▲ 1'], ['방한 부츠', 'NEW'], ['패딩', '▼ 2'], ['온수매트', '▲ 4']]
+        : [['패딩', '▲ 2'], ['가습기', '-'], ['핫팩', 'NEW'], ['머플러', '▼ 1']];
+      list.innerHTML = items.map((x, idx) => `
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2"><span class="font-extrabold ${idx < 3 ? 'text-blue-600' : 'text-slate-400'} w-3">${idx + 1}</span><span class="font-semibold text-slate-800">${x[0]}</span></div>
+          <span class="text-[9px] font-bold ${x[1].includes('▲') || x[1] === 'NEW' ? 'text-rose-500' : 'text-slate-400'}">${x[1]}</span>
+        </div>
+      `).join('');
+    }
+
+    // 05. 필터
+    function updateFilterPrice(val) {
+      document.getElementById('filterPriceLabel').innerText = `3만 원 ~ ${val}만 원`;
+    }
+    function randomFilterPrice() {
+      const v = Math.floor(8 + Math.random() * 20);
+      document.getElementById('filterPriceRange').value = v;
+      updateFilterPrice(v);
+    }
+    function toggleFreeShipFilter(btn) {
+      btn.classList.toggle('bg-blue-50');
+      btn.classList.toggle('text-blue-600');
+      btn.classList.toggle('border-blue-200');
+    }
+
+    // 06. 정렬
+    const sortNames = ['추천순', '낮은 가격순', '리뷰 많은순'];
+    let curSortIdx = 1;
+    function setSortOption(name, idx) {
+      curSortIdx = idx;
+      document.getElementById('currentSortBtnText').innerText = name;
+      for (let i = 0; i < 3; i++) {
+        const el = document.getElementById(`sortOpt${i}`);
+        el.className = i === idx
+          ? "w-full text-left px-2.5 py-1.5 rounded-lg bg-blue-50 text-blue-600 font-bold transition"
+          : "w-full text-left px-2.5 py-1.5 rounded-lg text-slate-600 hover:bg-slate-50 font-medium transition";
+      }
+    }
+    function cycleSortOption() {
+      const next = (curSortIdx + 1) % 3;
+      setSortOption(sortNames[next], next);
+    }
+
+    // 07. 검색어 강조
+    let hlAlt = false;
+    function toggleHighlightKeyword() {
+      hlAlt = !hlAlt;
+      const lbl = document.getElementById('hlQueryLabel');
+      const list = document.getElementById('hlResultList');
+      if (hlAlt) {
+        lbl.innerText = '교토';
+        list.innerHTML = `
+          <div>오사카·<mark class="bg-blue-100 text-blue-700 font-bold px-1 rounded">교토</mark> 1일 버스 투어</div>
+          <div><mark class="bg-blue-100 text-blue-700 font-bold px-1 rounded">교토</mark> 아라시야마 대나무숲 가이드</div>
+          <div>전통 료칸 예약 (<mark class="bg-blue-100 text-blue-700 font-bold px-1 rounded">교토</mark>역 도보 5분)</div>`;
+      } else {
+        lbl.innerText = '오사카';
+        list.innerHTML = `
+          <div><mark class="bg-blue-100 text-blue-700 font-bold px-1 rounded">오사카</mark> 3박 4일 패키지</div>
+          <div>간사이 공항, <mark class="bg-blue-100 text-blue-700 font-bold px-1 rounded">오사카</mark> 시내 급행열차</div>
+          <div><mark class="bg-blue-100 text-blue-700 font-bold px-1 rounded">오사카</mark> 맛집 지도 총정리</div>`;
+      }
+    }
+
+    // 08. 결과 없음 복구
+    let isRecovered = false;
+    function recoverFromNoResult() {
+      isRecovered = !isRecovered;
+      const input = document.getElementById('noResInputText');
+      const box = document.getElementById('noResStateBox');
+      if (isRecovered) {
+        input.innerText = '오사카 숙소';
+        box.innerHTML = `
+          <p class="text-xs font-bold text-emerald-600">✓ 교정된 검색어로 342건의 숙소를 찾았어요!</p>
+          <p class="text-[10px] text-slate-500 mt-1">난바·우메다 인기 호텔 보러가기</p>`;
+      } else {
+        input.innerText = '옽사카숙소';
+        box.innerHTML = `
+          <p class="text-xs font-bold text-slate-700">검색 결과가 없어요</p>
+          <p class="text-[10px] text-slate-400 mt-0.5">철자를 확인하거나 아래 추천어를 눌러보세요</p>
+          <button onclick="recoverFromNoResult()" class="mt-2 px-2.5 py-1 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-full text-[10px] font-bold transition">
+            💡 ‘오사카 숙소’로 다시 검색하기
+          </button>`;
+      }
+    }
+
+    // 09. 검색 범위 탭
+    const scopeDescs = [
+      '통합 검색 결과 1,420건',
+      '캠핑용품 상품 850개',
+      '캠핑 전문 브랜드관 12곳',
+      '실사용자 캠핑 후기 558건'
+    ];
+    let curScopeIdx = 2;
+    function switchScopeTab(idx, title) {
+      curScopeIdx = idx;
+      document.getElementById('scopeResultTitle').innerText = title;
+      for (let i = 0; i < 4; i++) {
+        const t = document.getElementById(`scopeTab${i}`);
+        t.className = i === idx
+          ? "pb-1 border-b-2 border-blue-600 text-blue-600 font-bold"
+          : "pb-1 border-b-2 border-transparent hover:text-slate-800";
+      }
+    }
+    function cycleScopeTab() {
+      const next = (curScopeIdx + 1) % 4;
+      switchScopeTab(next, scopeDescs[next]);
+    }
+  </script>
+</body>
+</html>

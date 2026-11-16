@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>날짜 고르는 화면 9가지 인터랙티브 가이드</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    }
+
+    /* 휠 피커 드럼 효과 */
+    .wheel-row {
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* 인터랙션 트랜지션 */
+    .picker-transition {
+      transition: all 0.2s ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen antialiased flex flex-col">
+
+  <!-- 헤더 -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 mb-1">
+          <i data-lucide="calendar-clock" class="w-3.5 h-3.5"></i> 날짜 고르는 화면 9가지
+        </span>
+        <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+          날짜 고르는 칸도 <span class="text-blue-600">다 같은 게</span> 아니에요
+        </h1>
+      </div>
+      <p class="text-sm text-slate-500 max-w-sm sm:text-right">
+        생년월일, 숙소 예약, 배송일 지정 등 상황에 맞는 최적의 <span class="text-blue-600 font-semibold">날짜·시간 UI</span>를 직접 클릭해 체험해 보세요.
+      </p>
+    </div>
+  </header>
+
+  <!-- 메인 그리드 9종 날짜 선택 패턴 -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- 01. 캘린더 (Calendar) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">01 캘린더 (Calendar)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">요일·주간 맥락 파악</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="bg-white rounded-xl p-2.5 border border-slate-200 shadow-2xs">
+              <div class="flex items-center justify-between mb-1.5 px-1">
+                <span class="text-[11px] font-bold text-slate-800">11월</span>
+                <span id="calSelectedText" class="text-[10px] font-bold text-blue-600">11월 11일 (수)</span>
+              </div>
+              <div class="grid grid-cols-7 gap-1 text-center text-[9px] text-slate-400 mb-1">
+                <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+              </div>
+              <div id="calGridContainer" class="grid grid-cols-7 gap-1 text-center text-[10px] font-semibold">
+                <button onclick="selectSingleCalDay(8, '일')" id="calDay_8" class="py-1 rounded-lg hover:bg-slate-100 text-slate-500">8</button>
+                <button onclick="selectSingleCalDay(9, '월')" id="calDay_9" class="py-1 rounded-lg hover:bg-slate-100 text-slate-700">9</button>
+                <button onclick="selectSingleCalDay(10, '화')" id="calDay_10" class="py-1 rounded-lg hover:bg-slate-100 text-slate-700">10</button>
+                <button onclick="selectSingleCalDay(11, '수')" id="calDay_11" class="py-1 rounded-lg bg-blue-600 text-white font-bold shadow-xs">11</button>
+                <button onclick="selectSingleCalDay(12, '목')" id="calDay_12" class="py-1 rounded-lg hover:bg-slate-100 text-slate-700">12</button>
+                <button onclick="selectSingleCalDay(13, '금')" id="calDay_13" class="py-1 rounded-lg hover:bg-slate-100 text-slate-700">13</button>
+                <button onclick="selectSingleCalDay(14, '토')" id="calDay_14" class="py-1 rounded-lg hover:bg-slate-100 text-slate-500">14</button>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            한 달 또는 한 주의 격자 달력을 펼쳐 보여줍니다. 사용자가 <strong>‘무슨 요일인지’, ‘주말이나 공휴일이 껴 있는지’</strong> 눈으로 확인하며 고를 때 필수입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">단일 일자 + 요일 확인</span>
+          <button onclick="cycleSingleCalDay()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="calendar" class="w-3 h-3"></i> 다른 날짜 찍기
+          </button>
+        </div>
+      </div>
+
+      <!-- 02. 휠 피커 (Wheel picker) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">02 휠 피커 (Wheel picker)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 font-medium">돌돌 굴리는 드럼롤</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="bg-white rounded-xl p-2 border border-slate-200 shadow-2xs relative overflow-hidden">
+              <!-- Center Selection Highlight Bar -->
+              <div class="absolute inset-x-2 top-1/2 -translate-y-1/2 h-7 bg-slate-100/90 rounded-lg border border-slate-200/80 pointer-events-none z-0"></div>
+
+              <!-- 3-Column Drum Roll -->
+              <div class="relative z-10 grid grid-cols-3 text-center text-[11px] select-none">
+                <!-- Prev Row (Faded) -->
+                <div id="wheelPrevYear" class="py-1 text-slate-400 text-[10px]">2026</div>
+                <div id="wheelPrevMonth" class="py-1 text-slate-400 text-[10px]">10월</div>
+                <div id="wheelPrevDay" class="py-1 text-slate-400 text-[10px]">12</div>
+
+                <!-- Active Center Row -->
+                <div id="wheelCurYear" class="py-1.5 font-extrabold text-slate-900">2027</div>
+                <div id="wheelCurMonth" class="py-1.5 font-extrabold text-slate-900">11월</div>
+                <div id="wheelCurDay" class="py-1.5 font-extrabold text-slate-900">13</div>
+
+                <!-- Next Row (Faded) -->
+                <div id="wheelNextYear" class="py-1 text-slate-400 text-[10px]">2028</div>
+                <div id="wheelNextMonth" class="py-1 text-slate-400 text-[10px]">12월</div>
+                <div id="wheelNextDay" class="py-1 text-slate-400 text-[10px]">14</div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            다이얼 자물쇠처럼 위아래로 돌돌 굴려서 연·월·일이나 알람 시간을 맞춥니다. 좁은 모바일 공간에서 여러 단위(년/월/일)를 한 번에 조합할 때 직관적입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">iOS 스타일 드럼 스크롤</span>
+          <button onclick="spinWheelDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="refresh-cw" class="w-3 h-3"></i> 돌돌 굴리기
+          </button>
+        </div>
+      </div>
+
+      <!-- 03. 기간 선택 (Date range) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">03 기간 선택 (Date range)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">시작일 ~ 종료일 연결</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="bg-white rounded-xl p-2.5 border border-slate-200 shadow-2xs">
+              <div class="flex justify-between items-center mb-1.5 px-1">
+                <span class="text-[10px] font-bold text-slate-500">조회 기간</span>
+                <span id="rangeLabelText" class="text-[10px] font-bold text-blue-600">11.12 ~ 11.19 (8일간)</span>
+              </div>
+              <!-- Range Grid -->
+              <div id="rangeCalendarGrid" class="grid grid-cols-7 gap-y-1 text-center text-[10px] font-semibold">
+                <span class="py-1 text-slate-400">8</span>
+                <span class="py-1 text-slate-600">9</span>
+                <span class="py-1 text-slate-600">10</span>
+                <span class="py-1 text-slate-600">11</span>
+                <!-- Start Node -->
+                <span class="py-1 bg-blue-600 text-white rounded-l-lg font-bold">12</span>
+                <span class="py-1 bg-blue-100 text-blue-700">13</span>
+                <span class="py-1 bg-blue-100 text-blue-700 rounded-r-sm">14</span>
+
+                <span class="py-1 bg-blue-100 text-blue-700 rounded-l-sm">15</span>
+                <span class="py-1 bg-blue-100 text-blue-700">16</span>
+                <span class="py-1 bg-blue-100 text-blue-700">17</span>
+                <span class="py-1 bg-blue-100 text-blue-700">18</span>
+                <!-- End Node -->
+                <span id="rangeEndCell" class="py-1 bg-blue-600 text-white rounded-r-lg font-bold">19</span>
+                <span class="py-1 text-slate-600">20</span>
+                <span class="py-1 text-slate-400">21</span>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            시작일과 종료일 두 지점을 찍으면 그 사이의 날짜들을 연한 하이라이트 띠로 이어줍니다. 휴가 일정이나 통계 조회 기간 설정의 핵심입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">구간 밴드 하이라이트</span>
+          <button onclick="toggleRangeSpanDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="calendar-range" class="w-3 h-3"></i> 기간 늘리기/줄이기
+          </button>
+        </div>
+      </div>
+
+      <!-- 04. 빠른 선택 칩 (Quick chips) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">04 빠른 선택 칩 (Quick chips)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">1초 컷 상대 날짜</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3.5 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="bg-white rounded-xl p-3 border border-slate-200 shadow-2xs space-y-2.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-bold text-slate-800">언제 받으실래요?</span>
+                <span id="quickChipResult" class="text-[10px] font-bold text-blue-600">내일(토) 도착 보장</span>
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                <button onclick="selectQuickChip(0, '오늘 저녁 도착')" id="qChip_0" class="px-2.5 py-1.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                  오늘
+                </button>
+                <button onclick="selectQuickChip(1, '내일(토) 도착 보장')" id="qChip_1" class="px-2.5 py-1.5 rounded-full text-[11px] font-bold bg-blue-600 text-white shadow-xs transition">
+                  내일
+                </button>
+                <button onclick="selectQuickChip(2, '이번 주말 수령')" id="qChip_2" class="px-2.5 py-1.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                  이번 주말
+                </button>
+                <button onclick="selectQuickChip(3, '다음 주 월요일 발송')" id="qChip_3" class="px-2.5 py-1.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition">
+                  다음 주
+                </button>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            복잡한 달력을 띄우지 않고 <strong>‘오늘’, ‘내일’, ‘이번 주말’, ‘최근 1개월’</strong>처럼 자주 쓰는 옵션을 알약 버튼(Chip)으로 제공해 1번의 탭으로 끝냅니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">달력 없이 원클릭 프리셋</span>
+          <button onclick="cycleQuickChip()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="zap" class="w-3 h-3"></i> 빠른 칩 전환
+          </button>
+        </div>
+      </div>
+
+      <!-- 05. 시간 슬롯 (Time slots) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">05 시간 슬롯 (Time slots)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-amber-50 text-amber-600 font-medium">예약 가능 시간대 격자</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="bg-white rounded-xl p-2.5 border border-slate-200 shadow-2xs space-y-2">
+              <div class="flex justify-between items-center">
+                <span class="text-[11px] font-bold text-slate-800">11월 14일 (금)</span>
+                <span id="slotSelectedLabel" class="text-[10px] font-bold text-blue-600">15:00 선택됨</span>
+              </div>
+              <div class="grid grid-cols-3 gap-1.5 text-[11px]">
+                <button onclick="pickTimeSlot('10:00', this)" class="time-slot-btn py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition">10:00</button>
+                <!-- Disabled Booked Slot -->
+                <button disabled class="py-1.5 rounded-lg bg-slate-100 text-slate-300 font-medium line-through cursor-not-allowed">11:00</button>
+                <button onclick="pickTimeSlot('13:00', this)" class="time-slot-btn py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition">13:00</button>
+                <button onclick="pickTimeSlot('14:00', this)" class="time-slot-btn py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition">14:00</button>
+                <button onclick="pickTimeSlot('15:00', this)" class="time-slot-btn py-1.5 rounded-lg bg-blue-600 text-white font-bold shadow-xs transition">15:00</button>
+                <button onclick="pickTimeSlot('16:00', this)" class="time-slot-btn py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition">16:00</button>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            병원 진료, 미용실, 회의실 예약처럼 정해진 시간 단위(30분/1시간)를 버튼으로 나열하고, <strong>마감된 시간은 비활성화(Disabled)</strong> 처리합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">마감/가능 시간대 직관화</span>
+          <button onclick="cycleTimeSlot()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="clock" class="w-3 h-3"></i> 시간대 변경
+          </button>
+        </div>
+      </div>
+
+      <!-- 06. 월 선택 (Month picker) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">06 월 선택 (Month picker)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-purple-50 text-purple-600 font-medium">연·월 단위(1~12월) 전용</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="bg-white rounded-xl p-2.5 border border-slate-200 shadow-2xs">
+              <div class="flex justify-between items-center mb-1.5 px-1">
+                <span class="text-[11px] font-bold text-slate-800">2026년</span>
+                <span id="monthPickedLabel" class="text-[10px] font-bold text-blue-600">2026년 11월</span>
+              </div>
+              <div class="grid grid-cols-4 gap-1 text-center text-[10px] font-semibold">
+                <button onclick="selectMonthGrid(1)" class="month-grid-btn py-1 rounded hover:bg-slate-100 text-slate-600">1월</button>
+                <button onclick="selectMonthGrid(2)" class="month-grid-btn py-1 rounded hover:bg-slate-100 text-slate-600">2월</button>
+                <button onclick="selectMonthGrid(3)" class="month-grid-btn py-1 rounded hover:bg-slate-100 text-slate-600">3월</button>
+                <button onclick="selectMonthGrid(4)" class="month-grid-btn py-1 rounded hover:bg-slate-100 text-slate-600">4월</button>
+                <button onclick="selectMonthGrid(5)" class="month-grid-btn py-1 rounded hover:bg-slate-100 text-slate-600">5월</button>
+                <button onclick="selectMonthGrid(6)" class="month-grid-btn py-1 rounded hover:bg-slate-100 text-slate-600">6월</button>
+                <button onclick="selectMonthGrid(7)" class="month-grid-btn py-1 rounded hover:bg-slate-100 text-slate-600">7월</button>
+                <button onclick="selectMonthGrid(8)" class="month-grid-btn py-1 rounded hover:bg-slate-100 text-slate-600">8월</button>
+                <button onclick="selectMonthGrid(9)" class="month-grid-btn py-1 rounded hover:bg-slate-100 text-slate-600">9월</button>
+                <button onclick="selectMonthGrid(10)" class="month-grid-btn py-1 rounded hover:bg-slate-100 text-slate-600">10월</button>
+                <button onclick="selectMonthGrid(11)" class="month-grid-btn py-1 rounded bg-blue-600 text-white font-bold shadow-xs">11월</button>
+                <button onclick="selectMonthGrid(12)" class="month-grid-btn py-1 rounded hover:bg-slate-100 text-slate-600">12월</button>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            구체적인 ‘일(Day)’이 필요 없는 <strong>이력서 입·퇴사월, 학력 졸업월, 월별 카드 명세서 조회</strong>에서는 31일 달력을 빼고 1~12월 격자만 보여줍니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">경력·청구서 연월 선택</span>
+          <button onclick="cycleMonthGrid()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="calendar-days" class="w-3 h-3"></i> 월 바꾸기
+          </button>
+        </div>
+      </div>
+
+      <!-- 07. 날짜 입력 (Date input) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">07 날짜 입력 (Date input)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">먼 과거(생년월일) 타이핑</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="bg-white rounded-xl p-3 border border-slate-200 shadow-2xs space-y-1.5">
+              <label class="text-[11px] font-bold text-slate-700 block">생년월일</label>
+              <input 
+                id="birthDateInput" 
+                type="text" 
+                value="1998.05.24" 
+                maxlength="10"
+                placeholder="YYYY.MM.DD" 
+                oninput="formatDateInputMask(this)"
+                class="w-full px-3 py-2 rounded-lg border border-slate-300 focus:border-blue-600 focus:outline-none text-xs font-bold text-slate-900 tracking-wider"
+              />
+              <div class="flex justify-between items-center text-[10px]">
+                <span class="text-slate-400 font-mono">YYYY.MM.DD</span>
+                <span id="birthInputHelper" class="text-emerald-600 font-semibold">✓ 자동 마스킹 적용됨</span>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            1990년대 생년월일을 달력에서 찾으려면 수백 번 넘겨야 합니다. 이미 알고 있는 고정 날짜는 <strong>숫자 키패드로 직접 타이핑</strong>하는 것이 가장 빠릅니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">생년월일 숫자 직타 입력</span>
+          <button onclick="typeSampleBirthDate()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="keyboard" class="w-3 h-3"></i> 자동 타이핑 시연
+          </button>
+        </div>
+      </div>
+
+      <!-- 08. 체크인 체크아웃 (Check-in, out) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">08 체크인 체크아웃 (Split range)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 font-medium">숙박·항공 여정 특화</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-between overflow-hidden">
+            <div class="bg-white rounded-xl border border-slate-200 p-2.5 grid grid-cols-2 divide-x divide-slate-200 shadow-2xs">
+              <div class="pr-2">
+                <span class="text-[9px] text-slate-400 font-semibold block">체크인</span>
+                <span id="checkinDateText" class="text-xs font-extrabold text-slate-900 mt-0.5 block">11.14 (금)</span>
+              </div>
+              <div class="pl-2.5">
+                <span class="text-[9px] text-slate-400 font-semibold block">체크아웃</span>
+                <span id="checkoutDateText" class="text-xs font-extrabold text-blue-600 mt-0.5 block">11.17 (월)</span>
+              </div>
+            </div>
+
+            <button onclick="cycleStayNights()" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-xs transition">
+              <span id="stayBtnText">3박 4일 · 객실 보기</span>
+            </button>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            시작점과 끝점을 좌우 2개의 분할 박스로 명확히 쪼개어 보여주고, 하단 CTA 버튼에 <strong>총 몇 박 몇 일인지 자동 계산</strong>해 표시하는 여행·예약 표준입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">좌우 분할 + 숙박일수 계산</span>
+          <button onclick="cycleStayNights()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="bed-double" class="w-3 h-3"></i> 박수 변경
+          </button>
+        </div>
+      </div>
+
+      <!-- 09. 반복 설정 (Recurrence) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">09 반복 설정 (Recurrence)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-rose-50 text-rose-600 font-medium">정기 구독·루틴 주기</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-between overflow-hidden">
+            <div class="bg-white rounded-xl p-2.5 border border-slate-200 shadow-2xs space-y-2">
+              <span class="text-[10px] font-bold text-slate-600 block">정기 배송 주기</span>
+              <div class="grid grid-cols-3 gap-1 bg-slate-100 p-1 rounded-lg text-[10px] font-bold">
+                <button onclick="setRecurCycle('daily')" id="recBtn_daily" class="py-1 rounded text-slate-600 hover:text-slate-900 transition">매일</button>
+                <button onclick="setRecurCycle('weekly')" id="recBtn_weekly" class="py-1 rounded text-slate-600 hover:text-slate-900 transition">매주</button>
+                <button onclick="setRecurCycle('monthly')" id="recBtn_monthly" class="py-1 rounded bg-blue-600 text-white shadow-2xs transition">매월</button>
+              </div>
+              <div class="bg-slate-50 rounded-lg px-2.5 py-1.5 border border-slate-200 flex items-center justify-between text-[10px]">
+                <span id="recurSummaryText" class="font-bold text-slate-800">매월 25일, 원두 1kg</span>
+                <i data-lucide="repeat" class="w-3.5 h-3.5 text-blue-600"></i>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            특정 하루가 아니라 <strong>‘매일’, ‘매주 월·수·금’, ‘매월 25일’</strong> 같은 반복 주기를 설정합니다. 정기 구독 배송, 자동이체, 캘린더 반복 일정에 쓰입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">정기 배송 / 자동이체 주기</span>
+          <button onclick="rotateRecurCycle()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="repeat" class="w-3 h-3"></i> 주기 전환
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    UI & UX 날짜·시간 선택 패턴 9가지 인터랙션 가이드 &copy; 2026
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // 01. 단일 캘린더
+    const calDays = [
+      { d: 8, w: '일' }, { d: 9, w: '월' }, { d: 10, w: '화' },
+      { d: 11, w: '수' }, { d: 12, w: '목' }, { d: 13, w: '금' }, { d: 14, w: '토' }
+    ];
+    let currentCalIdx = 3;
+
+    function selectSingleCalDay(day, dow) {
+      currentCalIdx = calDays.findIndex(x => x.d === day);
+      document.getElementById('calSelectedText').innerText = `11월 ${day}일 (${dow})`;
+      calDays.forEach(item => {
+        const btn = document.getElementById(`calDay_${item.d}`);
+        if (item.d === day) {
+          btn.className = "py-1 rounded-lg bg-blue-600 text-white font-bold shadow-xs";
+        } else {
+          btn.className = "py-1 rounded-lg hover:bg-slate-100 text-slate-700";
+        }
+      });
+    }
+
+    function cycleSingleCalDay() {
+      currentCalIdx = (currentCalIdx + 1) % calDays.length;
+      const target = calDays[currentCalIdx];
+      selectSingleCalDay(target.d, target.w);
+    }
+
+    // 02. 휠 피커
+    const wheelPresets = [
+      { y: [2026, 2027, 2028], m: ['10월', '11월', '12월'], d: [12, 13, 14] },
+      { y: [2027, 2028, 2029], m: ['1월', '2월', '3월'], d: [24, 25, 26] },
+      { y: [2025, 2026, 2027], m: ['5월', '6월', '7월'], d: [8, 9, 10] }
+    ];
+    let wheelIdx = 0;
+
+    function spinWheelDemo() {
+      wheelIdx = (wheelIdx + 1) % wheelPresets.length;
+      const p = wheelPresets[wheelIdx];
+      document.getElementById('wheelPrevYear').innerText = p.y[0];
+      document.getElementById('wheelCurYear').innerText = p.y[1];
+      document.getElementById('wheelNextYear').innerText = p.y[2];
+
+      document.getElementById('wheelPrevMonth').innerText = p.m[0];
+      document.getElementById('wheelCurMonth').innerText = p.m[1];
+      document.getElementById('wheelNextMonth').innerText = p.m[2];
+
+      document.getElementById('wheelPrevDay').innerText = p.d[0];
+      document.getElementById('wheelCurDay').innerText = p.d[1];
+      document.getElementById('wheelNextDay').innerText = p.d[2];
+    }
+
+    // 03. 기간 선택
+    let rangeShort = false;
+    function toggleRangeSpanDemo() {
+      rangeShort = !rangeShort;
+      const label = document.getElementById('rangeLabelText');
+      if (rangeShort) {
+        label.innerText = "11.12 ~ 11.15 (4일간)";
+      } else {
+        label.innerText = "11.12 ~ 11.19 (8일간)";
+      }
+    }
+
+    // 04. 빠른 선택 칩
+    const quickOptions = [
+      { idx: 0, text: '오늘 저녁 도착' },
+      { idx: 1, text: '내일(토) 도착 보장' },
+      { idx: 2, text: '이번 주말 수령' },
+      { idx: 3, text: '다음 주 월요일 발송' }
+    ];
+    let curQuickIdx = 1;
+
+    function selectQuickChip(idx, desc) {
+      curQuickIdx = idx;
+      document.getElementById('quickChipResult').innerText = desc;
+      for (let i = 0; i < 4; i++) {
+        const btn = document.getElementById(`qChip_${i}`);
+        if (i === idx) {
+          btn.className = "px-2.5 py-1.5 rounded-full text-[11px] font-bold bg-blue-600 text-white shadow-xs transition";
+        } else {
+          btn.className = "px-2.5 py-1.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 transition";
+        }
+      }
+    }
+
+    function cycleQuickChip() {
+      curQuickIdx = (curQuickIdx + 1) % 4;
+      selectQuickChip(curQuickIdx, quickOptions[curQuickIdx].text);
+    }
+
+    // 05. 시간 슬롯
+    function pickTimeSlot(timeStr, btnEl) {
+      document.getElementById('slotSelectedLabel').innerText = `${timeStr} 선택됨`;
+      document.querySelectorAll('.time-slot-btn').forEach(b => {
+        b.className = "time-slot-btn py-1.5 rounded-lg bg-slate-100 text-slate-700 font-semibold hover:bg-slate-200 transition";
+      });
+      btnEl.className = "time-slot-btn py-1.5 rounded-lg bg-blue-600 text-white font-bold shadow-xs transition";
+    }
+
+    let slotIdx = 3;
+    function cycleTimeSlot() {
+      const btns = document.querySelectorAll('.time-slot-btn');
+      slotIdx = (slotIdx + 1) % btns.length;
+      btns[slotIdx].click();
+    }
+
+    // 06. 월 선택
+    let curMonthNum = 11;
+    function selectMonthGrid(m) {
+      curMonthNum = m;
+      document.getElementById('monthPickedLabel').innerText = `2026년 ${m}월`;
+      const btns = document.querySelectorAll('.month-grid-btn');
+      btns.forEach((b, i) => {
+        if (i + 1 === m) {
+          b.className = "month-grid-btn py-1 rounded bg-blue-600 text-white font-bold shadow-xs";
+        } else {
+          b.className = "month-grid-btn py-1 rounded hover:bg-slate-100 text-slate-600";
+        }
+      });
+    }
+
+    function cycleMonthGrid() {
+      selectMonthGrid((curMonthNum % 12) + 1);
+    }
+
+    // 07. 날짜 직접 입력
+    function formatDateInputMask(input) {
+      let digits = input.value.replace(/\D/g, '').slice(0, 8);
+      let formatted = digits;
+      if (digits.length > 4 && digits.length <= 6) {
+        formatted = digits.slice(0, 4) + '.' + digits.slice(4);
+      } else if (digits.length > 6) {
+        formatted = digits.slice(0, 4) + '.' + digits.slice(4, 6) + '.' + digits.slice(6, 8);
+      }
+      input.value = formatted;
+    }
+
+    const sampleBirths = ['2001.08.15', '1995.12.03', '1998.05.24'];
+    let birthIdx = 0;
+    function typeSampleBirthDate() {
+      birthIdx = (birthIdx + 1) % sampleBirths.length;
+      document.getElementById('birthDateInput').value = sampleBirths[birthIdx];
+    }
+
+    // 08. 체크인 체크아웃
+    const stayOptions = [
+      { in: '11.14 (금)', out: '11.17 (월)', label: '3박 4일 · 객실 보기' },
+      { in: '11.20 (목)', out: '11.22 (토)', label: '2박 3일 · 객실 보기' },
+      { in: '12.24 (목)', out: '12.25 (금)', label: '1박 2일 · 객실 보기' }
+    ];
+    let stayIdx = 0;
+    function cycleStayNights() {
+      stayIdx = (stayIdx + 1) % stayOptions.length;
+      const s = stayOptions[stayIdx];
+      document.getElementById('checkinDateText').innerText = s.in;
+      document.getElementById('checkoutDateText').innerText = s.out;
+      document.getElementById('stayBtnText').innerText = s.label;
+    }
+
+    // 09. 반복 설정
+    const recurMap = {
+      daily: '매일 오전 7시, 모닝 브리핑',
+      weekly: '매주 금요일, 주간 리포트 발송',
+      monthly: '매월 25일, 원두 1kg 정기배송'
+    };
+    const recurKeys = ['daily', 'weekly', 'monthly'];
+    let curRecurKey = 'monthly';
+
+    function setRecurCycle(key) {
+      curRecurKey = key;
+      document.getElementById('recurSummaryText').innerText = recurMap[key];
+      recurKeys.forEach(k => {
+        const btn = document.getElementById(`recBtn_${k}`);
+        if (k === key) {
+          btn.className = "py-1 rounded bg-blue-600 text-white shadow-2xs transition";
+        } else {
+          btn.className = "py-1 rounded text-slate-600 hover:text-slate-900 transition";
+        }
+      });
+    }
+
+    function rotateRecurCycle() {
+      const nextIdx = (recurKeys.indexOf(curRecurKey) + 1) % recurKeys.length;
+      setRecurCycle(recurKeys[nextIdx]);
+    }
+  </script>
+</body>
+</html>
