@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>콘텐츠 & 레이아웃 9가지 인터랙티브 가이드</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen antialiased flex flex-col">
+
+  <!-- 헤더 -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 mb-1">
+          <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> 콘텐츠와 화면 구조 9가지
+        </span>
+        <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+          본문을 채우는 <span class="text-blue-600">콘텐츠 배치</span>에도 이름이 있어요
+        </h1>
+      </div>
+      <p class="text-sm text-slate-500 max-w-sm sm:text-right">
+        모바일 단일 열부터 PC·태블릿의 다단 격자(Grid)까지, <span class="text-blue-600 font-semibold">콘텐츠 컴포넌트 9종</span>을 직접 조작해 보세요.
+      </p>
+    </div>
+  </header>
+
+  <!-- 메인 그리드 9종 컴포넌트 -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- 01. 히어로 배너 (Hero section) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">01 히어로 배너 (Hero)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 font-medium">시선 집중도: 최상</span>
+          </div>
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex items-center justify-center overflow-hidden">
+            <div id="heroContainer" class="w-full h-full bg-gradient-to-br from-slate-900 to-blue-900 text-white rounded-lg p-3.5 flex flex-col justify-between transition-all">
+              <div>
+                <span class="text-[9px] font-bold px-2 py-0.5 rounded-full bg-blue-500/30 text-blue-200">2026 공채 오픈</span>
+                <h4 id="heroTitleText" class="text-sm font-extrabold mt-1.5 leading-snug">포트폴리오 하나로<br/>합격률을 2배 높이세요</h4>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="toggleHeroLayout()" class="px-3 py-1.5 bg-blue-500 hover:bg-blue-400 text-white rounded-lg text-[11px] font-bold transition">
+                  무료로 시작하기
+                </button>
+                <span class="text-[10px] text-slate-300">1분 소요</span>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            페이지 최상단 전체 폭(Full-width)을 차지하며 핵심 가치 제안(Headline)과 주 행동 유도 버튼(CTA)을 결합해 첫인상을 결정짓습니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">최상단 전체폭 배너</span>
+          <button onclick="toggleHeroLayout()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="layout" class="w-3 h-3"></i> 테마 전환
+          </button>
+        </div>
+      </div>
+
+      <!-- 02. 카드 그리드 / 벤토 격자 (Card / Bento Grid) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">02 카드 그리드 (Bento Grid)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">태블릿/PC 다단 핵심</span>
+          </div>
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div id="bentoGridBox" class="grid grid-cols-2 gap-2 h-full transition-all">
+              <div class="col-span-2 bg-white p-2.5 rounded-lg border border-slate-200 shadow-xs flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] text-blue-600 font-bold">대표 프로젝트</span>
+                  <p class="text-xs font-bold text-slate-800">디자인 시스템 2.0</p>
+                </div>
+                <span class="text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded font-semibold">2단 폭</span>
+              </div>
+              <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-xs flex flex-col justify-between">
+                <span class="text-[10px] text-slate-400">아티클</span>
+                <p class="text-[11px] font-bold text-slate-800">UX 라이팅</p>
+              </div>
+              <div class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-xs flex flex-col justify-between">
+                <span class="text-[10px] text-slate-400">케이스</span>
+                <p class="text-[11px] font-bold text-slate-800">전환율 개선</p>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            독립된 주제의 콘텐츠를 도시락통(Bento)이나 바둑판 격자(2~4열)로 배치합니다. 모바일에선 1열, 태블릿·PC에선 다단으로 반응형 확장됩니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">반응형 다단 격자</span>
+          <button onclick="toggleBentoCols()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="grid" class="w-3 h-3"></i> 단수(1단/2단) 전환
+          </button>
+        </div>
+      </div>
+
+      <!-- 03. 리스트 뷰 (Feed / List view) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">03 리스트 뷰 (List view)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">스캔 속도: 가장 빠름</span>
+          </div>
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center gap-1.5 overflow-hidden">
+            <div onclick="selectListItem(0)" id="listRow0" class="bg-blue-50 border border-blue-300 p-2 rounded-lg flex items-center justify-between cursor-pointer transition">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center text-[10px] font-bold">A</div>
+                <div>
+                  <p class="text-xs font-bold text-slate-800">토스 프로덕트 디자이너</p>
+                  <p class="text-[10px] text-slate-500">마감 D-3 · 경력 무관</p>
+                </div>
+              </div>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-blue-600"></i>
+            </div>
+            <div onclick="selectListItem(1)" id="listRow1" class="bg-white border border-slate-200 p-2 rounded-lg flex items-center justify-between cursor-pointer transition">
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg bg-slate-200 text-slate-700 flex items-center justify-center text-[10px] font-bold">B</div>
+                <div>
+                  <p class="text-xs font-bold text-slate-800">당근 UX 리서처</p>
+                  <p class="text-[10px] text-slate-500">상시 채용 · 경력 3년↑</p>
+                </div>
+              </div>
+              <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400"></i>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            일정한 높이의 행(Row)을 수직으로 나열하여 텍스트 정보(제목, 부제, 메타데이터)를 위에서 아래로 빠르게 훑어볼 때 유리합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">수직 순차 스캔</span>
+          <button onclick="cycleListRow()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="list" class="w-3 h-3"></i> 행 선택 이동
+          </button>
+        </div>
+      </div>
+
+      <!-- 04. 마스터-디테일 분할 뷰 (Split view) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">04 스플릿 뷰 (Split view)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-purple-50 text-purple-600 font-medium">태블릿/PC 2단 전용</span>
+          </div>
+          <div class="relative bg-slate-100 rounded-xl h-44 p-2.5 border border-slate-200 grid grid-cols-12 gap-2 overflow-hidden">
+            <!-- Left Master List (5 cols) -->
+            <div class="col-span-5 bg-white rounded-lg border border-slate-200 p-1.5 space-y-1">
+              <div class="text-[9px] font-bold text-slate-400 px-1">목록 (Master)</div>
+              <button onclick="switchSplitDetail(1)" id="splitItem1" class="w-full text-left px-2 py-1.5 rounded bg-blue-50 text-blue-600 font-bold text-[10px]">
+                1. 지원동기
+              </button>
+              <button onclick="switchSplitDetail(2)" id="splitItem2" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-50 text-slate-600 font-medium text-[10px]">
+                2. 핵심역량
+              </button>
+              <button onclick="switchSplitDetail(3)" id="splitItem3" class="w-full text-left px-2 py-1.5 rounded hover:bg-slate-50 text-slate-600 font-medium text-[10px]">
+                3. 입사포부
+              </button>
+            </div>
+            <!-- Right Detail Pane (7 cols) -->
+            <div class="col-span-7 bg-white rounded-lg border border-slate-200 p-2.5 flex flex-col justify-between">
+              <div>
+                <span class="text-[9px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">상세 본문 (Detail)</span>
+                <h5 id="splitDetailTitle" class="text-xs font-bold text-slate-800 mt-1.5">1. 지원동기 상세</h5>
+                <p id="splitDetailBody" class="text-[10px] text-slate-500 mt-1 leading-relaxed">
+                  사용자 중심의 문제 해결을 통해 팀의 핵심 지표를 개선하고자 지원했습니다.
+                </p>
+              </div>
+              <span class="text-[9px] text-slate-400 text-right">페이지 이동 없이 즉시 열람</span>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            가로 폭이 넓은 태블릿과 PC에서 좌측엔 '목록(Master)', 우측엔 '상세 내용(Detail)'을 나란히 배치해 화면 깜빡임 없이 탐색합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">좌우 2단 연동 레이아웃</span>
+          <button onclick="cycleSplitDetail()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="columns" class="w-3 h-3"></i> 좌측 항목 전환
+          </button>
+        </div>
+      </div>
+
+      <!-- 05. 아코디언 (Accordion) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">05 아코디언 (Accordion)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">공간 절약 / 점진적 공개</span>
+          </div>
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center gap-2 overflow-hidden">
+            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-xs">
+              <button onclick="toggleAccordionItem()" class="w-full px-3 py-2 text-xs font-bold text-slate-800 flex items-center justify-between">
+                <span>Q. 포트폴리오 분량 제한이 있나요?</span>
+                <i id="accIcon" data-lucide="chevron-up" class="w-3.5 h-3.5 text-blue-600 transition-transform"></i>
+              </button>
+              <div id="accBody" class="px-3 pb-2.5 text-[11px] text-slate-600 border-t border-slate-100 pt-1.5">
+                분량 제한은 없으며 PDF 50MB 이하 또는 웹 링크 제출을 권장합니다.
+              </div>
+            </div>
+            <div class="bg-white rounded-xl border border-slate-200 px-3 py-2 text-xs font-medium text-slate-500 flex items-center justify-between">
+              <span>Q. 면접 일정 변경이 가능한가요?</span>
+              <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            제목 줄만 보여주고 클릭 시 상세 본문을 아래로 펼쳐 보여줍니다. FAQ나 긴 상세 정보에서 스크롤 길이를 획기적으로 줄여줍니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">접고 펼치는 콘텐츠</span>
+          <button onclick="toggleAccordionItem()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="chevrons-up-down" class="w-3 h-3"></i> 펼치기/접기
+          </button>
+        </div>
+      </div>
+
+      <!-- 06. 빈 화면 (Empty state) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">06 빈 화면 (Empty state)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-amber-50 text-amber-600 font-medium">이탈 방지 / 행동 유도</span>
+          </div>
+          <div class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col items-center justify-center text-center overflow-hidden">
+            <div id="emptyStateView" class="flex flex-col items-center">
+              <div class="w-10 h-10 rounded-full bg-slate-200 text-slate-500 flex items-center justify-center mb-2">
+                <i data-lucide="folder-open" class="w-5 h-5"></i>
+              </div>
+              <p class="text-xs font-bold text-slate-800">아직 등록된 이력서가 없어요</p>
+              <p class="text-[10px] text-slate-500 mt-0.5 mb-2.5">첫 이력서를 올리고 AI 첨삭을 받아보세요</p>
+              <button onclick="toggleEmptyData()" class="px-3 py-1 bg-blue-600 text-white rounded-lg text-[11px] font-bold hover:bg-blue-700">
+                + 새 이력서 만들기
+              </button>
+            </div>
+            <div id="filledStateView" class="hidden w-full space-y-2">
+              <div class="bg-white p-2.5 rounded-xl border border-blue-300 text-left flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] text-blue-600 font-bold">신규 생성됨</span>
+                  <p class="text-xs font-bold text-slate-800">2026_경력이력서_초안.pdf</p>
+                </div>
+                <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2 py-0.5 rounded font-bold">정상</span>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            데이터가 0건이거나 검색 결과가 없을 때 하얀 백지 대신 '왜 비어있는지' 설명하고 '다음 행동 버튼(CTA)'을 제시하는 필수 상태 화면입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">데이터 0건일 때의 가이드</span>
+          <button onclick="toggleEmptyData()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="refresh-cw" class="w-3 h-3"></i> 빈 화면/데이터 토글
+          </button>
+        </div>
+      </div>
+
+      <!-- 07. 데이터 테이블 (Data table) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">07 데이터 테이블 (Table)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-purple-50 text-purple-600 font-medium">PC 대량 정보 비교</span>
+          </div>
+          <div class="relative bg-slate-100 rounded-xl h-44 p-2.5 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="bg-white rounded-lg border border-slate-200 overflow-hidden shadow-xs text-[10px]">
+              <div class="grid grid-cols-3 bg-slate-50 border-b border-slate-200 px-2.5 py-1.5 font-bold text-slate-600">
+                <span>기업명</span>
+                <span>전형 단계</span>
+                <button onclick="sortTableDemo()" class="text-left text-blue-600 flex items-center gap-0.5">
+                  합격률 ↕
+                </button>
+              </div>
+              <div id="tableRowsContainer" class="divide-y divide-slate-100">
+                <div class="grid grid-cols-3 px-2.5 py-1.5 text-slate-700"><span>A사</span><span>1차 면접</span><span class="font-bold text-blue-600">82%</span></div>
+                <div class="grid grid-cols-3 px-2.5 py-1.5 text-slate-700"><span>B사</span><span>서류 심사</span><span class="font-bold text-slate-800">45%</span></div>
+                <div class="grid grid-cols-3 px-2.5 py-1.5 text-slate-700"><span>C사</span><span>최종 합격</span><span class="font-bold text-emerald-600">95%</span></div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            행(Row)과 열(Column)의 교차 표 구조로 다수의 속성을 정밀 비교·정렬합니다. PC 대시보드의 핵심이며 모바일에선 카드형으로 변환합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">다열 속성 정렬·비교</span>
+          <button onclick="sortTableDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="arrow-up-down" class="w-3 h-3"></i> 합격률순 정렬
+          </button>
+        </div>
+      </div>
+
+      <!-- 08. KPI 요약 카드 (Stat / Metric card) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">08 KPI 요약 카드 (Metric)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">핵심 수치 1초 파악</span>
+          </div>
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 grid grid-cols-2 gap-2 items-center overflow-hidden">
+            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
+              <span class="text-[10px] text-slate-400 font-medium">서류 통과율</span>
+              <div id="kpiVal1" class="text-lg font-extrabold text-slate-900 mt-0.5">68.4%</div>
+              <span class="inline-block text-[9px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded mt-1">▲ +12.1%</span>
+            </div>
+            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-xs">
+              <span class="text-[10px] text-slate-400 font-medium">열람 기업 수</span>
+              <div id="kpiVal2" class="text-lg font-extrabold text-blue-600 mt-0.5">24곳</div>
+              <span class="inline-block text-[9px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded mt-1">이번 주 +5</span>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            대시보드 상단에 2~4열 격자로 배치되어 핵심 성과 지표(숫자)와 전주 대비 증감 추이(▲/▼)를 한눈에 브리핑하는 요약 위젯입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">대시보드 상단 지표 위젯</span>
+          <button onclick="refreshKpiDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="trending-up" class="w-3 h-3"></i> 지표 갱신
+          </button>
+        </div>
+      </div>
+
+      <!-- 09. 타임라인 피드 (Timeline) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">09 타임라인 (Timeline)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">시간순 이력 추적</span>
+          </div>
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3.5 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="relative pl-4 border-l-2 border-blue-500 space-y-2.5">
+              <div class="relative">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-600 absolute -left-[21px] top-1 ring-4 ring-blue-100"></span>
+                <p class="text-[10px] font-bold text-blue-600">오늘 14:20</p>
+                <p class="text-xs font-bold text-slate-800">포트폴리오 AI 검수 완료 (94점)</p>
+              </div>
+              <div class="relative">
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-300 absolute -left-[21px] top-1"></span>
+                <p class="text-[10px] text-slate-400">어제 18:05</p>
+                <p class="text-xs font-medium text-slate-600">경력 기술서 PDF 업로드</p>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            수직 연결선과 노드 점을 따라 시간의 흐름(최신순/과거순)대로 발생한 이벤트나 배송·전형 히스토리를 직관적으로 시각화합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">히스토리 / 활동 로그</span>
+          <button onclick="alertTimelineInfo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="clock" class="w-3 h-3"></i> 로그 구조 확인
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    UI & UX 콘텐츠·레이아웃 패턴 9가지 인터랙션 가이드 &copy; 2026
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // 01. 히어로 배너
+    let heroAlt = false;
+    function toggleHeroLayout() {
+      const box = document.getElementById('heroContainer');
+      const title = document.getElementById('heroTitleText');
+      heroAlt = !heroAlt;
+      if (heroAlt) {
+        box.className = "w-full h-full bg-gradient-to-br from-indigo-600 to-purple-700 text-white rounded-lg p-3.5 flex flex-col justify-between transition-all text-center items-center";
+        title.innerHTML = "AI 면접 코칭으로<br/>실전 감각을 완성하세요";
+      } else {
+        box.className = "w-full h-full bg-gradient-to-br from-slate-900 to-blue-900 text-white rounded-lg p-3.5 flex flex-col justify-between transition-all";
+        title.innerHTML = "포트폴리오 하나로<br/>합격률을 2배 높이세요";
+      }
+    }
+
+    // 02. 벤토 그리드
+    let isSingleCol = false;
+    function toggleBentoCols() {
+      const grid = document.getElementById('bentoGridBox');
+      isSingleCol = !isSingleCol;
+      grid.className = isSingleCol ? "grid grid-cols-1 gap-1.5 h-full overflow-y-auto" : "grid grid-cols-2 gap-2 h-full";
+    }
+
+    // 03. 리스트 뷰
+    let activeRow = 0;
+    function selectListItem(idx) {
+      activeRow = idx;
+      const r0 = document.getElementById('listRow0');
+      const r1 = document.getElementById('listRow1');
+      if (idx === 0) {
+        r0.className = "bg-blue-50 border border-blue-300 p-2 rounded-lg flex items-center justify-between cursor-pointer transition";
+        r1.className = "bg-white border border-slate-200 p-2 rounded-lg flex items-center justify-between cursor-pointer transition";
+      } else {
+        r1.className = "bg-blue-50 border border-blue-300 p-2 rounded-lg flex items-center justify-between cursor-pointer transition";
+        r0.className = "bg-white border border-slate-200 p-2 rounded-lg flex items-center justify-between cursor-pointer transition";
+      }
+    }
+    function cycleListRow() {
+      selectListItem(activeRow === 0 ? 1 : 0);
+    }
+
+    // 04. 스플릿 뷰
+    let currentSplit = 1;
+    const splitData = {
+      1: { title: "1. 지원동기 상세", body: "사용자 중심의 문제 해결을 통해 팀의 핵심 지표를 개선하고자 지원했습니다." },
+      2: { title: "2. 핵심역량 상세", body: "54종 디자인 시스템 구축 및 AI 프롬프트 엔지니어링 협업 파이프라인을 보유하고 있습니다." },
+      3: { title: "3. 입사포부 상세", body: "입사 후 3개월 내 온보딩 퍼널 이탈률을 15%p 절감하는 실험을 주도하겠습니다." }
+    };
+    function switchSplitDetail(num) {
+      currentSplit = num;
+      document.getElementById('splitDetailTitle').innerText = splitData[num].title;
+      document.getElementById('splitDetailBody').innerText = splitData[num].body;
+      [1, 2, 3].forEach(n => {
+        const btn = document.getElementById(`splitItem${n}`);
+        btn.className = n === num 
+          ? "w-full text-left px-2 py-1.5 rounded bg-blue-50 text-blue-600 font-bold text-[10px]"
+          : "w-full text-left px-2 py-1.5 rounded hover:bg-slate-50 text-slate-600 font-medium text-[10px]";
+      });
+    }
+    function cycleSplitDetail() {
+      switchSplitDetail((currentSplit % 3) + 1);
+    }
+
+    // 05. 아코디언
+    let accOpen = true;
+    function toggleAccordionItem() {
+      const body = document.getElementById('accBody');
+      const icon = document.getElementById('accIcon');
+      accOpen = !accOpen;
+      body.classList.toggle('hidden', !accOpen);
+      icon.style.transform = accOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+    }
+
+    // 06. 빈 화면
+    let isEmpty = true;
+    function toggleEmptyData() {
+      isEmpty = !isEmpty;
+      document.getElementById('emptyStateView').classList.toggle('hidden', !isEmpty);
+      document.getElementById('filledStateView').classList.toggle('hidden', isEmpty);
+    }
+
+    // 07. 데이터 테이블
+    let sortAsc = false;
+    function sortTableDemo() {
+      const container = document.getElementById('tableRowsContainer');
+      const rows = Array.from(container.children);
+      rows.reverse();
+      container.innerHTML = '';
+      rows.forEach(r => container.appendChild(r));
+    }
+
+    // 08. KPI 카드
+    let kpiToggle = false;
+    function refreshKpiDemo() {
+      kpiToggle = !kpiToggle;
+      document.getElementById('kpiVal1').innerText = kpiToggle ? "74.2%" : "68.4%";
+      document.getElementById('kpiVal2').innerText = kpiToggle ? "31곳" : "24곳";
+    }
+
+    // 09. 타임라인
+    function alertTimelineInfo() {
+      const firstTitle = document.querySelector('#emptyStateView');
+      // 단순 시각적 하이라이트
+    }
+  </script>
+</body>
+</html>

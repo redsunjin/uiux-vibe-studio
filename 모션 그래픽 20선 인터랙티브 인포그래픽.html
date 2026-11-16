@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>20 Motion Graphics & Visual Design Styles Interactive Showcase</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Outfit & Noto Sans KR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Noto Sans KR', 'Inter', sans-serif;
+    }
+    .font-mono-code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    /* 1. Liquid Motion SVG filter effects & CSS */
+    .liquid-blob-1 {
+      animation: floatLiquid1 6s infinite ease-in-out alternate;
+    }
+    .liquid-blob-2 {
+      animation: floatLiquid2 7s infinite ease-in-out alternate;
+    }
+    @keyframes floatLiquid1 {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(35px, 20px) scale(1.18); }
+      100% { transform: translate(-25px, 35px) scale(0.9); }
+    }
+    @keyframes floatLiquid2 {
+      0% { transform: translate(0, 0) scale(1.1); }
+      50% { transform: translate(-30px, -25px) scale(0.85); }
+      100% { transform: translate(25px, -15px) scale(1.15); }
+    }
+
+    /* 2. Holographic Rainbow Shimmer */
+    .holographic-card {
+      background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 20%, #a1c4fd 40%, #c2e9fb 60%, #e0c3fc 80%, #ffecd2 100%);
+      background-size: 300% 300%;
+      animation: holoShimmer 4s ease infinite;
+    }
+    @keyframes holoShimmer {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* 3. Claymorphism Elements */
+    .clay-sphere {
+      background: #f472b6;
+      border-radius: 50%;
+      box-shadow: 
+        14px 14px 28px rgba(180, 50, 110, 0.4),
+        -10px -10px 24px rgba(255, 255, 255, 0.7),
+        inset 5px 5px 12px rgba(255, 255, 255, 0.8),
+        inset -7px -7px 14px rgba(131, 24, 67, 0.35);
+      animation: clayPulse 3s infinite ease-in-out alternate;
+    }
+    @keyframes clayPulse {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-12px) scale(1.05); }
+    }
+
+    /* 4. Halftone Dots Simulation */
+    .halftone-bg {
+      background: radial-gradient(#1e1e2f 18%, transparent 20%), #f59e0b;
+      background-position: 0 0, 10px 10px;
+      background-size: 16px 16px;
+      animation: halftonePan 8s linear infinite;
+    }
+    @keyframes halftonePan {
+      from { background-position: 0 0, 8px 8px; }
+      to { background-position: 64px 32px, 72px 40px; }
+    }
+
+    /* 5. Isometric Cube Spin */
+    .iso-container {
+      perspective: 900px;
+    }
+    .iso-cube {
+      width: 60px;
+      height: 60px;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateX(-30deg) rotateY(45deg);
+      animation: isoRotate 7s infinite linear;
+    }
+    @keyframes isoRotate {
+      0% { transform: rotateX(-30deg) rotateY(0deg); }
+      100% { transform: rotateX(-30deg) rotateY(360deg); }
+    }
+    .iso-face {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border: 1px solid rgba(255,255,255,0.4);
+    }
+    .iso-front  { transform: rotateY(0deg) translateZ(30px); background: rgba(59, 130, 246, 0.75); }
+    .iso-back   { transform: rotateY(180deg) translateZ(30px); background: rgba(37, 99, 235, 0.75); }
+    .iso-right  { transform: rotateY(90deg) translateZ(30px); background: rgba(96, 165, 250, 0.75); }
+    .iso-left   { transform: rotateY(-90deg) translateZ(30px); background: rgba(29, 78, 216, 0.75); }
+    .iso-top    { transform: rotateX(90deg) translateZ(30px); background: rgba(147, 197, 253, 0.85); }
+    .iso-bottom { transform: rotateX(-90deg) translateZ(30px); background: rgba(30, 58, 138, 0.75); }
+
+    /* 6. Kinetic Marquee */
+    .kinetic-track {
+      display: flex;
+      white-space: nowrap;
+      animation: kineticScroll 5s linear infinite;
+    }
+    @keyframes kineticScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* 7. Y2K Chrome */
+    .y2k-chrome-text {
+      background: linear-gradient(180deg, #fff 0%, #b0c4de 30%, #2f3b52 50%, #ffffff 52%, #a8c0e0 75%, #182236 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 2px 5px rgba(0, 240, 255, 0.7));
+      animation: chromeGleam 2.5s infinite ease-in-out;
+    }
+    @keyframes chromeGleam {
+      0%, 100% { filter: drop-shadow(0 0 4px rgba(0,255,255,0.5)) brightness(1); }
+      50% { filter: drop-shadow(0 0 12px rgba(255,0,220,0.8)) brightness(1.25); }
+    }
+
+    /* 8. Paper Cutout */
+    .paper-layer-1 {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    }
+    .paper-layer-2 {
+      box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+    }
+    .paper-layer-3 {
+      box-shadow: 0 14px 26px rgba(0,0,0,0.35);
+    }
+
+    /* 9. Infinite Zoom */
+    .infinite-zoom-box {
+      animation: zoomPulsate 3s infinite cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    @keyframes zoomPulsate {
+      0% { transform: scale(0.65) rotate(0deg); opacity: 0.3; }
+      50% { transform: scale(1.25) rotate(90deg); opacity: 1; }
+      100% { transform: scale(2) rotate(180deg); opacity: 0; }
+    }
+
+    /* 10. Vaporwave Sun & Grid */
+    .vapor-grid {
+      background: linear-gradient(transparent 90%, rgba(255, 110, 199, 0.8) 92%),
+                  linear-gradient(90deg, transparent 90%, rgba(0, 240, 255, 0.8) 92%);
+      background-size: 24px 24px;
+      perspective: 140px;
+      transform: rotateX(60deg);
+    }
+
+    /* 12. Bauhaus Geometric Shift */
+    .bauhaus-spin {
+      animation: bauhausMove 4s ease-in-out infinite;
+    }
+    @keyframes bauhausMove {
+      0% { transform: rotate(0deg) translate(0, 0); }
+      33% { transform: rotate(90deg) translate(10px, -10px); }
+      66% { transform: rotate(180deg) translate(-10px, 10px); }
+      100% { transform: rotate(360deg) translate(0, 0); }
+    }
+
+    /* 13. Neubrutalism Shadows */
+    .brutal-card {
+      box-shadow: 5px 5px 0px #000;
+      transition: all 0.15s ease;
+    }
+    .brutal-card:hover {
+      box-shadow: 8px 8px 0px #000;
+      transform: translate(-3px, -3px);
+    }
+
+    /* 14. Shape Morph Animation */
+    .morph-shape {
+      animation: morphing 4s infinite ease-in-out alternate;
+    }
+    @keyframes morphing {
+      0% { border-radius: 50%; transform: rotate(0deg) scale(0.9); background: #ec4899; }
+      33% { border-radius: 12px; transform: rotate(45deg) scale(1.1); background: #8b5cf6; }
+      66% { border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; transform: rotate(180deg) scale(1); background: #3b82f6; }
+      100% { border-radius: 0%; transform: rotate(360deg) scale(0.85); background: #10b981; }
+    }
+
+    /* 15. Memphis Pattern */
+    .memphis-pattern {
+      background-color: #fef08a;
+      background-image: radial-gradient(#ef4444 18%, transparent 18%), radial-gradient(#3b82f6 18%, transparent 18%);
+      background-size: 20px 20px;
+      background-position: 0 0, 10px 10px;
+    }
+
+    /* 16. Line Animation Dashoffset */
+    .line-draw {
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      animation: drawLine 3.5s ease-in-out infinite alternate;
+    }
+    @keyframes drawLine {
+      0% { stroke-dashoffset: 400; }
+      100% { stroke-dashoffset: 0; }
+    }
+
+    /* 17. Low Poly Floating */
+    .lowpoly-gem {
+      animation: lowpolyFloat 3s infinite ease-in-out alternate;
+    }
+    @keyframes lowpolyFloat {
+      0% { transform: translateY(-5px) rotate(0deg); }
+      100% { transform: translateY(6px) rotate(8deg); }
+    }
+
+    /* 18. Squash and Stretch */
+    .squash-ball {
+      animation: squashBounce 1.4s infinite ease-in-out;
+      transform-origin: bottom center;
+    }
+    @keyframes squashBounce {
+      0% { transform: translateY(0) scale(1.3, 0.7); }
+      15% { transform: translateY(-15px) scale(0.8, 1.25); }
+      50% { transform: translateY(-60px) scale(0.95, 1.05); }
+      85% { transform: translateY(-15px) scale(0.8, 1.25); }
+      100% { transform: translateY(0) scale(1.3, 0.7); }
+    }
+
+    /* 19. Grain Noise overlay */
+    .grainy-grad {
+      background: radial-gradient(circle at 30% 30%, #f43f5e, #8b5cf6, #06b6d4);
+      position: relative;
+      overflow: hidden;
+    }
+    .grainy-grad::before {
+      content: "";
+      position: absolute;
+      top: -50%; left: -50%; width: 200%; height: 200%;
+      background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)" opacity="0.32"/></svg>');
+      pointer-events: none;
+    }
+
+    /* 20. Glitch Effect */
+    .glitch-text {
+      position: relative;
+      animation: glitchSkew 2s infinite linear alternate-reverse;
+    }
+    .glitch-text::before, .glitch-text::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .glitch-text::before {
+      left: 2px;
+      text-shadow: -2px 0 #ef4444;
+      clip: rect(24px, 550px, 90px, 0);
+      animation: glitchAnim 2s infinite linear alternate-reverse;
+    }
+    .glitch-text::after {
+      left: -2px;
+      text-shadow: -2px 0 #06b6d4;
+      clip: rect(85px, 550px, 140px, 0);
+      animation: glitchAnim2 2.5s infinite linear alternate-reverse;
+    }
+    @keyframes glitchAnim {
+      0% { clip: rect(10px, 9999px, 40px, 0); transform: skew(0.3deg); }
+      50% { clip: rect(60px, 9999px, 95px, 0); transform: skew(-0.5deg); }
+      100% { clip: rect(25px, 9999px, 80px, 0); transform: skew(0.4deg); }
+    }
+    @keyframes glitchAnim2 {
+      0% { clip: rect(70px, 9999px, 110px, 0); transform: skew(-0.4deg); }
+      50% { clip: rect(15px, 9999px, 55px, 0); transform: skew(0.5deg); }
+      100% { clip: rect(85px, 9999px, 130px, 0); transform: skew(-0.2deg); }
+    }
+    @keyframes glitchSkew {
+      0%, 80% { transform: translate(0); }
+      85% { transform: translate(2px, -1px) skew(-2deg); }
+      90% { transform: translate(-2px, 1px) skew(2deg); }
+      100% { transform: translate(0); }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen antialiased selection:bg-purple-600 selection:text-white pb-20">
+
+  <!-- SVG Filter for Liquid Gooey effect -->
+  <svg class="hidden" width="0" height="0">
+    <defs>
+      <filter id="goo">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="
+          1 0 0 0 0  
+          0 1 0 0 0  
+          0 0 1 0 0  
+          0 0 0 19 -9" result="goo" />
+        <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+      </filter>
+    </defs>
+  </svg>
+
+  <!-- Sticky Top Header & Dashboard Controls -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-slate-950/85 border-b border-slate-800/80 px-4 sm:px-8 py-3.5 transition-all">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3">
+      
+      <!-- Brand & Title -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center font-bold text-white shadow-lg shadow-purple-500/25">
+          20
+        </div>
+        <div>
+          <h1 class="text-lg font-bold tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent flex items-center gap-2">
+            모션 그래픽 20선 인터랙티브 인포그래픽
+            <span class="text-xs px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 font-medium">LIVE SHOWCASE</span>
+          </h1>
+          <p class="text-xs text-slate-400">카드를 클릭하면 실제 렌더링된 모션과 상세 제작 팁을 확인할 수 있습니다.</p>
+        </div>
+      </div>
+
+      <!-- Quick Category Filter & Search -->
+      <div class="flex items-center gap-2 w-full md:w-auto">
+        <div class="relative flex-1 md:w-60">
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="스타일명, 무드, 키워드 검색..." 
+            class="w-full bg-slate-900 border border-slate-700/80 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-purple-500 transition-colors"
+          />
+          <span class="absolute right-2.5 top-2 text-xs text-slate-500">🔍</span>
+        </div>
+        
+        <div class="flex gap-1 overflow-x-auto text-xs py-1" id="categoryChips">
+          <button onclick="filterCategory('all')" class="cat-btn px-2.5 py-1 rounded-md bg-purple-600 text-white font-medium hover:bg-purple-500 transition-colors" data-cat="all">전체(20)</button>
+          <button onclick="filterCategory('3D')" class="cat-btn px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors" data-cat="3D">3D/입체</button>
+          <button onclick="filterCategory('Retro')" class="cat-btn px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors" data-cat="Retro">레트로/빈티지</button>
+          <button onclick="filterCategory('Modern')" class="cat-btn px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors" data-cat="Modern">모던/테크</button>
+          <button onclick="filterCategory('Organic')" class="cat-btn px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors" data-cat="Organic">유기적/텍스처</button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Hero / Summary Infographic Bar -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-8 mt-6">
+    <div class="bg-gradient-to-r from-purple-900/40 via-indigo-900/30 to-slate-900/50 border border-purple-500/20 rounded-2xl p-5 sm:p-6 backdrop-blur">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="flex flex-col">
+          <span class="text-xs text-purple-300 font-medium">총 디자인 스타일</span>
+          <span class="text-2xl font-bold text-white mt-1">20 Types</span>
+          <span class="text-xs text-slate-400 mt-1">영상·UI·브랜딩 핵심 사조 총망라</span>
+        </div>
+        <div class="flex flex-col border-l border-slate-800 pl-4">
+          <span class="text-xs text-indigo-300 font-medium">실시간 인터랙션</span>
+          <span class="text-2xl font-bold text-white mt-1">100% Live CSS</span>
+          <span class="text-xs text-slate-400 mt-1">모든 카드에서 샘플 즉시 작동</span>
+        </div>
+        <div class="flex flex-col border-l border-slate-800 pl-4">
+          <span class="text-xs text-pink-300 font-medium">추천 도구 가이드</span>
+          <span class="text-2xl font-bold text-white mt-1">AE & Blender</span>
+          <span class="text-xs text-slate-400 mt-1">각 스타일별 추천 툴 및 옵션</span>
+        </div>
+        <div class="flex flex-col border-l border-slate-800 pl-4">
+          <span class="text-xs text-emerald-300 font-medium">학습 모드</span>
+          <span class="text-2xl font-bold text-white mt-1">Modal Detail</span>
+          <span class="text-xs text-slate-400 mt-1">클릭 시 전체화면 상세 분석</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 20 Interactive Cards Grid -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-8 mt-8">
+    <div id="cardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+      <!-- 20 Cards dynamically inserted or server-rendered for instant fast performance -->
+    </div>
+  </main>
+
+  <!-- Interactive Modal for Deep Dive Detail -->
+  <div id="detailModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 w-full max-w-2xl rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh] animate-in fade-in zoom-in duration-200">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between p-5 border-b border-slate-800 bg-slate-950/60">
+        <div class="flex items-center gap-3">
+          <span id="modalNumber" class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">#01</span>
+          <h2 id="modalTitle" class="text-lg font-bold text-white">Liquid Motion</h2>
+        </div>
+        <button onclick="closeModal()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 flex items-center justify-center text-sm transition-colors">✕</button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-6 overflow-y-auto space-y-5">
+        
+        <!-- Live Preview Stage In Modal -->
+        <div id="modalStage" class="h-48 w-full rounded-xl bg-slate-950 border border-slate-800 flex items-center justify-center overflow-hidden relative shadow-inner">
+          <!-- Dynamic Live Demo cloned here -->
+        </div>
+
+        <!-- Concept -->
+        <div>
+          <h3 class="text-xs font-bold text-purple-400 uppercase tracking-wider">스타일 핵심 개념</h3>
+          <p id="modalConcept" class="text-sm text-slate-300 mt-1.5 leading-relaxed font-normal"></p>
+        </div>
+
+        <!-- Visual Signature & Mood -->
+        <div class="grid grid-cols-2 gap-4">
+          <div class="bg-slate-950/60 p-3.5 rounded-xl border border-slate-800/80">
+            <span class="text-xs text-slate-400 block font-medium">시각적 특징 (Signature)</span>
+            <p id="modalSignature" class="text-xs text-slate-200 font-semibold mt-1"></p>
+          </div>
+          <div class="bg-slate-950/60 p-3.5 rounded-xl border border-slate-800/80">
+            <span class="text-xs text-slate-400 block font-medium">대표 무드 (Vibe)</span>
+            <p id="modalMood" class="text-xs text-slate-200 font-semibold mt-1"></p>
+          </div>
+        </div>
+
+        <!-- Real-world Use Cases -->
+        <div>
+          <h3 class="text-xs font-bold text-indigo-400 uppercase tracking-wider">실무 활용 예시 & 추천 영역</h3>
+          <ul id="modalExamples" class="mt-2 space-y-1.5 text-xs text-slate-300 list-disc list-inside"></ul>
+        </div>
+
+        <!-- Tech & Production Guide -->
+        <div class="bg-purple-950/20 border border-purple-500/20 p-4 rounded-xl">
+          <h4 class="text-xs font-bold text-purple-300 flex items-center gap-1.5">
+            <span>🛠</span> 추천 제작 툴 & 핵심 기법
+          </h4>
+          <p id="modalTooling" class="text-xs text-slate-300 mt-1.5 leading-relaxed"></p>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="p-4 border-t border-slate-800 bg-slate-950/80 flex justify-between items-center">
+        <span class="text-xs text-slate-400">ESC를 누르거나 바깥 영역을 클릭하면 닫힙니다.</span>
+        <button onclick="closeModal()" class="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-medium transition-colors">확인 완료</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-purple-600 text-white text-xs font-medium px-4 py-2 rounded-lg shadow-xl opacity-0 pointer-events-none transition-opacity duration-300">
+    알림 메시지
+  </div>
+
+  <!-- Script Data & Logic -->
+  <script>
+    // 20 Style Complete Data Set
+    const stylesData = [
+      {
+        id: 1,
+        name: "Liquid Motion",
+        korName: "리퀴드 모션",
+        category: "Organic",
+        mood: "유연함, 경쾌함, 유기적, 쫀득함",
+        signature: "표면장력, 액체 융합 및 스플래시, 물방울 합체",
+        concept: "액체(물, 젤, 물감)의 흐름과 표면장력 분리·합체를 모티브로 한 애니메이션 기법입니다. 도형이 늘어나다 방울로 똑 떨어지거나 서로 자석처럼 달라붙는 쫀득한 곡선 변형이 핵심입니다.",
+        examples: [
+          "음료, 코스메틱, 세정제 브랜드의 인트로 및 프로모션 영상",
+          "로고 심볼이 유체 방울에서 퍼져 나오거나 융합되는 애니메이션",
+          "경쾌한 모바일 앱 로딩 스피너 및 탭 전환 마이크로 인터랙션"
+        ],
+        tooling: "After Effects의 Turbulent Displace, CC Blobbylize, Gaussian Blur + Curves(알파 채널 수축) 기법, CSS SVG Gooey Filter",
+        renderDemo: () => `
+          <div class="w-full h-full flex items-center justify-center relative bg-slate-900" style="filter: url(#goo);">
+            <div class="w-14 h-14 bg-cyan-400 rounded-full liquid-blob-1 absolute"></div>
+            <div class="w-12 h-12 bg-blue-500 rounded-full liquid-blob-2 absolute"></div>
+            <div class="w-10 h-10 bg-indigo-400 rounded-full absolute animate-ping opacity-60"></div>
+          </div>
+        `
+      },
+      {
+        id: 2,
+        name: "Holographic",
+        korName: "홀로그래픽",
+        category: "Modern",
+        mood: "미래지향적, 신비로움, 사이버틱, 프리즘",
+        signature: "무지개 빛깔 오팔 반사, 반투명 빛 굴절, 스펙트럼 광원",
+        concept: "빛의 간섭 현상으로 발생하는 무지갯빛 스펙트럼을 오팔(Opal) 및 금속 질감과 결합한 스타일입니다. 보는 각도에 따라 색상이 유려하게 바뀌며 사이버네틱하고 몽환적인 감성을 선사합니다.",
+        examples: [
+          "K-Pop 앨범 패키징, 버추얼 아티스트 티저 비디오",
+          "Web3, 암호화폐, NFT 카드 및 메타버스 브랜딩 아이덴티티",
+          "패션 룩북 및 미래주의 스트리트웨어 프로모션"
+        ],
+        tooling: "Blender / C4D Iridescence 셰이더, AE Colorama, Gradient Ramp + Specular 광원 애니메이션",
+        renderDemo: () => `
+          <div class="w-full h-full flex items-center justify-center holographic-card p-4">
+            <div class="bg-black/30 backdrop-blur-md p-3 rounded-xl border border-white/40 text-center shadow-lg">
+              <span class="text-xs font-mono tracking-widest text-white drop-shadow">HOLO 02</span>
+              <p class="text-[11px] text-white/90 font-bold mt-0.5">SPECTRUM GLOW</p>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 3,
+        name: "Claymorphism",
+        korName: "클레이모피즘",
+        category: "3D",
+        mood: "친근함, 귀여움, 말랑말랑함, 캐주얼",
+        signature: "통통한 입체감, 내부 그림자(Inner Shadow), 둥근 모서리",
+        concept: "점토(Clay)로 빚은 인형처럼 둥글고 부드러운 형태에 내부 하이라이트와 푹신한 외부 그림자를 조합하여 만져보고 싶은 촉각적 입체감을 주는 디자인 스타일입니다.",
+        examples: [
+          "토스(Toss), 피그마 플러그인 등 최신 핀테크/테크 브랜드 3D 그래픽",
+          "에듀테크, 키즈 서비스의 캐릭터 일러스트 및 온보딩 화면",
+          "인터랙티브 3D 버튼 및 마스코트 리액션 모션"
+        ],
+        tooling: "Blender Subsurface Scattering 점토 셰이딩, Figma 다중 Inner Shadow 효과, Spline 3D",
+        renderDemo: () => `
+          <div class="w-full h-full flex items-center justify-center bg-slate-900">
+            <div class="w-16 h-16 clay-sphere flex items-center justify-center text-white font-bold text-xs">
+              CLAY
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 4,
+        name: "Halftone",
+        korName: "하프톤",
+        category: "Retro",
+        mood: "빈티지, 아날로그 인쇄 감성, 팝아트, 코믹북",
+        signature: "도트(Dot) 격자 크기 변화, 오프셋 인쇄 노이즈, CMYK 분판",
+        concept: "신문이나 빈티지 만화책의 인쇄 공정처럼 연속적인 톤을 점(Dot)들의 크기와 밀도로 변환하여 음영을 표현하는 그래픽 기법입니다. 레트로 코믹북 감성을 가장 즉각적으로 전달합니다.",
+        examples: [
+          "영화 《스파이더맨: 뉴 유니버스》의 코믹스 스타일 시각 효과",
+          "스트리트웨어 브랜드의 팝아트 포스터 및 바이럴 영상",
+          "록 밴드 앨범 커버 및 90년대 스케이트보드 문화 아트워크"
+        ],
+        tooling: "AE Halftone 플러그인, Photoshop Color Halftone 필터, C4D Sketch & Toon 셰이더",
+        renderDemo: () => `
+          <div class="w-full h-full flex items-center justify-center halftone-bg relative overflow-hidden">
+            <div class="bg-black text-amber-300 font-black text-xs px-2.5 py-1 tracking-tighter uppercase border-2 border-white rotate-[-6deg] shadow-lg">
+              COMICS DOTS!
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 5,
+        name: "Isometric",
+        korName: "아이소메트릭",
+        category: "3D",
+        mood: "체계적, 정보 집약적, 미니어처, 정돈됨",
+        signature: "30도 등각 투영, 원근감 왜곡 없음(Orthographic), 블록 구조",
+        concept: "원근법에 따른 축소 왜곡 없이 x, y, z 축을 일정한 각도(약 30도)로 유지하여 사물을 3차원 투시하는 도법입니다. 사물의 실제 비율이 정밀하게 유지되어 복잡한 시스템을 체계적으로 조망하기에 최적입니다.",
+        examples: [
+          "스마트 시티, 클라우드 데이터 흐름을 시각화하는 B2B 인포그래픽",
+          "시뮬레이션 게임(심시티, 롤러코스터 타이쿤 류) 뷰",
+          "건축 평면도 입체화 및 물류 자동화 시스템 소개 영상"
+        ],
+        tooling: "Illustrator Isometric Grid 액션, Cinema 4D Parallel Camera 설정, After Effects 3D 레이어",
+        renderDemo: () => `
+          <div class="w-full h-full flex items-center justify-center bg-slate-900 iso-container">
+            <div class="iso-cube">
+              <div class="iso-face iso-front"></div>
+              <div class="iso-face iso-back"></div>
+              <div class="iso-face iso-right"></div>
+              <div class="iso-face iso-left"></div>
+              <div class="iso-face iso-top"></div>
+              <div class="iso-face iso-bottom"></div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 6,
+        name: "Kinetic Typography",
+        korName: "키네틱 타이포그래피",
+        category: "Modern",
+        mood: "강렬함, 리드미컬, 높은 전달력, 박진감",
+        signature: "음악 비트에 맞춘 크기/위치 변형, 무한 루프 마키, 강한 콘트라스트",
+        concept: "텍스트 자체를 애니메이션의 핵심 피사체로 삼아 음악의 비트, 대사의 감정선, 호흡에 동기화시켜 역동적으로 움직이게 하는 '움직이는 문자' 예술입니다.",
+        examples: [
+          "애플 키노트의 임팩트 있는 스펙 전달 영상 ('Don't Blink')",
+          "힙합·팝 음악의 공식 리릭(Lyric) 비디오",
+          "나이키 등 스포츠 브랜드의 강렬한 슬로건 타이틀 캠페인"
+        ],
+        tooling: "AE Text Animators (Range Selector), Expressions (Linear, Ease, Beat Sync), Cinema 4D MoText",
+        renderDemo: () => `
+          <div class="w-full h-full flex flex-col justify-center items-center bg-zinc-950 overflow-hidden font-black text-sm tracking-tighter text-yellow-400">
+            <div class="kinetic-track space-x-4">
+              <span>MOTION IS ENERGY • DANCE WITH TYPE • NEVER STOP •</span>
+              <span>MOTION IS ENERGY • DANCE WITH TYPE • NEVER STOP •</span>
+            </div>
+            <div class="kinetic-track space-x-4 text-purple-400 mt-2 text-xs" style="animation-direction: reverse; animation-duration: 4s;">
+              <span>FAST & IMPACTFUL • RHYTHM & BEAT • EXPRESS YOURSELF •</span>
+              <span>FAST & IMPACTFUL • RHYTHM & BEAT • EXPRESS YOURSELF •</span>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 7,
+        name: "Y2K Chrome",
+        korName: "Y2K 크롬",
+        category: "Retro",
+        mood: "사이버 펑크, 세기말 감성, 반항적, 클럽 컬처",
+        signature: "은색 크롬 금속 광택, 가시 돋친 폰트(Cyber Sigilism), 네온 반사",
+        concept: "1990년대 후반부터 2000년대 초반 테크노 유토피아 감성을 복각한 스타일입니다. 액체 금속을 연상시키는 고광택 크롬, 뾰족한 가시 모양 엠블럼, 사이버네틱 텍스처가 핵심 특징입니다.",
+        examples: [
+          "에스파(aespa), 뉴진스(NewJeans) 등 K-POP 앨범 로고 및 비주얼",
+          "스트리트 패션 브랜드 인스타그램 릴스 및 패션 필름 3D 모션",
+          "DJ 클럽 파티 및 테크노 페스티벌 메인 키비주얼"
+        ],
+        tooling: "Blender Metallic Roughness 0 + 광원 HDRI, Cinema 4D Redshift Metal Carpaint, Photoshop Chrome 액션",
+        renderDemo: () => `
+          <div class="w-full h-full flex flex-col items-center justify-center bg-black relative">
+            <div class="y2k-chrome-text font-black text-2xl tracking-widest font-mono">
+              ✦CYBER✦
+            </div>
+            <span class="text-[10px] text-cyan-400/80 font-mono tracking-widest mt-1">2000 METALLIC VIBE</span>
+          </div>
+        `
+      },
+      {
+        id: 8,
+        name: "Paper Cutout",
+        korName: "페이퍼 컷아웃",
+        category: "Organic",
+        mood: "따뜻함, 동화적, 아날로그 공예, 스톱모션 감성",
+        signature: "다층 레이어 그림자, 종이 질감(Paper Grain), 거친 가위질 단면",
+        concept: "색지를 가위로 직접 오려 여러 겹으로 겹쳐 놓은 듯한 음영과 촉감을 연출하는 기법입니다. 디지털 환경에서도 손으로 직접 만든 공예품의 따뜻한 온기와 스토리텔링 감성을 전합니다.",
+        examples: [
+          "환경 보호, 지속가능성(ESG) 다큐멘터리 캠페인 인트로",
+          "어린이 그림책 원작 애니메이션 및 오프닝 타이틀",
+          "구글 두들(Google Doodle) 및 기념일 스페셜 모션"
+        ],
+        tooling: "After Effects 3D 레이어 분리 + Drop Shadow, 종이 질감 텍스처 블렌딩(Multiply), Posterize Time(12fps 스톱모션)",
+        renderDemo: () => `
+          <div class="w-full h-full flex items-center justify-center bg-amber-100 relative p-4">
+            <div class="w-24 h-24 bg-emerald-500 rounded-3xl paper-layer-1 flex items-center justify-center relative rotate-3">
+              <div class="w-16 h-16 bg-emerald-400 rounded-2xl paper-layer-2 flex items-center justify-center -rotate-6">
+                <div class="w-8 h-8 bg-amber-300 rounded-xl paper-layer-3 flex items-center justify-center font-bold text-slate-800 text-xs">
+                  ✂
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 9,
+        name: "Infinite Zoom",
+        korName: "인피니트 줌",
+        category: "Modern",
+        mood: "초현실적, 몰입감, 사이키델릭, 프랙탈",
+        signature: "끊김 없는 무한 확대, 프레임 속의 프레임, 스케일 트랜지션",
+        concept: "한 객체의 아주 작은 세부 디테일 안으로 카메라가 빨려 들어가면, 그 안에 완전히 새로운 우주나 공간이 펼쳐지며 끝없이 줌인(또는 줌아웃)되는 몽환적인 연속 컷 기법입니다.",
+        examples: [
+          "생성형 AI(Midjourney, Runway) 기반 무한 줌 숏폼 콘텐츠",
+          "브랜드의 거대한 철학과 미시적 가치를 잇는 매니페스토 영상",
+          "미스터리 스릴러 영화의 오프닝 타이틀 시퀀스"
+        ],
+        tooling: "AE Exponential Scale 보간, 3D Camera 레이어 배치 및 Parent 연결, AI Outpainting 확장 기법",
+        renderDemo: () => `
+          <div class="w-full h-full flex items-center justify-center bg-slate-950 overflow-hidden relative">
+            <div class="w-16 h-16 border-2 border-purple-500 rounded-lg infinite-zoom-box flex items-center justify-center">
+              <div class="w-8 h-8 border-2 border-pink-400 rounded-md"></div>
+            </div>
+            <span class="absolute bottom-2 text-[10px] text-purple-400 font-mono tracking-widest">ZOOM MATRIX</span>
+          </div>
+        `
+      },
+      {
+        id: 10,
+        name: "Vaporwave",
+        korName: "베이퍼웨이브",
+        category: "Retro",
+        mood: "나른함, 노스탤지어, 레트로 퓨처리즘, 몽환적",
+        signature: "네온 핑크/시안 컬러, 네온 와이어프레임 지평선, 80년대 PC 감성",
+        concept: "1980~90년대 소비문화, 초기 컴퓨터 운영체제, 고대 로마 조각상, 가와사키 신스웨이브 음악을 몽환적이고 로파이(Lo-Fi)한 무드로 재구성한 인터넷 서브컬처 스타일입니다.",
+        examples: [
+          "시티팝 및 Lo-Fi 힙합 유튜브 라이브 배경 루프 애니메이션",
+          "80년대 복고풍 레트로 하드웨어 및 빈티지 음향기기 광고",
+          "감성 인디 게임의 네온 레트로 스테이지 비주얼"
+        ],
+        tooling: "Photoshop 80s Gradient, AE Venetian Blinds (스캔라인 효과), VHS 트래킹 노이즈 오버레이",
+        renderDemo: () => `
+          <div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-purple-900 via-indigo-950 to-black relative overflow-hidden">
+            <!-- Retro Sun -->
+            <div class="w-12 h-12 rounded-full bg-gradient-to-t from-yellow-400 to-pink-500 shadow-[0_0_20px_#f43f5e] mb-2"></div>
+            <!-- Horizon Grid -->
+            <div class="w-full h-12 vapor-grid"></div>
+            <div class="absolute top-2 left-2 text-[9px] font-mono text-cyan-300">1984 VAPOR.SYS</div>
+          </div>
+        `
+      },
+      {
+        id: 11,
+        name: "Text Scramble",
+        korName: "텍스트 스크램블",
+        category: "Modern",
+        mood: "테크니컬, 사이버 보안, 해킹, 미스터리",
+        signature: "무작위 문자 난수 대입, 디코딩(암호 해독), 터미널 타이핑",
+        concept: "글자가 표시되기 전 무작위 기호(#, $, @, %)와 알파벳이 초고속으로 뒤섞이다가 암호가 풀리듯 본래 단어로 맞춰지는 텍스트 트랜지션 효과입니다. 테크놀로지와 보안 감각을 대변합니다.",
+        examples: [
+          "사이버 보안, 클라우드, 블록체인 기업의 테크 프로모션",
+          "영화 《매트릭스》 풍의 시스템 해킹 콘셉트 인트로 타이틀",
+          "개발자 컨퍼런스 오프닝 영상 및 대시보드 데이터 로딩 화면"
+        ],
+        tooling: "AE Text Character Offset / Character Range 애니메이터, GreenSock(GSAP) ScrambleText 플러그인",
+        renderDemo: () => `
+          <div class="w-full h-full flex flex-col items-center justify-center bg-slate-950 font-mono p-3">
+            <span class="text-[10px] text-emerald-500 mb-1">SYSTEM_DECRYPTING...</span>
+            <div id="scrambleDisplay" class="text-sm font-bold text-emerald-400 tracking-wider bg-black/60 px-3 py-1.5 rounded border border-emerald-500/30">
+              CYBER_SECURITY
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 12,
+        name: "Bauhaus",
+        korName: "바우하우스",
+        category: "Modern",
+        mood: "구조적, 기능주의, 미니멀, 클래식 모던",
+        signature: "원·삼각·사각형 순수 기하학, 3원색(Red·Yellow·Blue) 및 흑백",
+        concept: "'형태는 기능을 따른다'는 원칙 아래 불필요한 장식을 배제하고 순수한 기하학적 도형과 삼원색만을 사용하여 균형과 리듬을 만들어내는 독일 모더니즘 조형 사조입니다.",
+        examples: [
+          "건축, 모던 가구, 인터스트리얼 디자인 전시회 홍보 영상",
+          "현대 미술관(MoMA 등)의 브랜드 필름 및 절제된 모션 포스터",
+          "독일 엔지니어링 및 프리미엄 오디오 브랜드의 아이덴티티 비디오"
+        ],
+        tooling: "Illustrator 기하 도형 그리드 설계, After Effects Trim Paths, Shape Layer 계층 이동",
+        renderDemo: () => `
+          <div class="w-full h-full flex items-center justify-center bg-stone-200 relative p-3">
+            <div class="relative w-20 h-20 bauhaus-spin">
+              <div class="w-12 h-12 bg-red-600 rounded-full absolute top-0 left-0 mix-blend-multiply"></div>
+              <div class="w-10 h-10 bg-blue-600 absolute bottom-0 right-0 mix-blend-multiply"></div>
+              <div class="w-0 h-0 border-l-[18px] border-l-transparent border-r-[18px] border-r-transparent border-b-[32px] border-b-yellow-400 absolute top-2 right-1 mix-blend-multiply"></div>
+            </div>
+            <div class="absolute bottom-1 right-2 text-[9px] font-bold text-slate-800 tracking-widest font-mono">BAUHAUS 1919</div>
+          </div>
+        `
+      },
+      {
+        id: 13,
+        name: "Neubrutalism",
+        korName: "뉴브루탈리즘",
+        category: "Modern",
+        mood: "파격적, 솔직함, 날것(Raw), 트렌디, 자유분방",
+        signature: "두꺼운 100% 블랙 외곽선, 블러 없는 딱딱한 그림자, 원색 대비",
+        concept: "기존의 정형화되고 깔끔한 미니멀리즘 UI 규칙을 거부하고, 굵은 검은색 아웃라인과 원색 컬러, 거친 드롭 섀도우를 과감하게 드러내 솔직하고 당돌한 인상을 주는 최신 디자인 경향입니다.",
+        examples: [
+          "Figma 커뮤니티, Gumroad 등의 최신 크리에이터 플랫폼 UI",
+          "Gen-Z(Z세대) 타깃의 뉴스레터, 패션 쇼핑몰 프로모션",
+          "트렌디한 웹 개발 툴 및 오픈소스 프로젝트 랜딩 페이지"
+        ],
+        tooling: "CSS Hard Drop Shadow (box-shadow: 4px 4px 0px #000), Figma Stroke 설정, 과감한 비대칭 타이포그래피",
+        renderDemo: () => `
+          <div class="w-full h-full flex items-center justify-center bg-teal-200 p-3">
+            <div class="bg-lime-300 border-2 border-black p-3 rounded-lg brutal-card cursor-pointer">
+              <span class="text-xs font-black text-black uppercase tracking-tight">CLICK ME!</span>
+              <div class="w-4 h-4 bg-purple-500 border border-black rounded-full mt-1"></div>
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 14,
+        name: "Shape Morph",
+        korName: "셰이프 모프",
+        category: "Modern",
+        mood: "유연함, 시각적 쾌감, 직관적, 유기적",
+        signature: "단절 없는 벡터 패스 변형, 원에서 사각/아이콘으로의 트랜지션",
+        concept: "화면 전환(컷) 없이 하나의 도형 벡터 패스가 부드럽게 늘어나고 비틀어지며 다른 도형이나 아이콘으로 자연스럽게 변신하는 모션 기법입니다. 보는 이에게 매끄러운 시각적 쾌감을 줍니다.",
+        examples: [
+          "구글 머티리얼 디자인(Material Design) 인터랙티브 아이콘",
+          "설명 영상(Explainer Video)에서 문제 해결 과정을 연속 시각화할 때",
+          "SaaS 제품의 로딩 상태에서 체크 표시로 바뀌는 완료 애니메이션"
+        ],
+        tooling: "After Effects Vector Path 키프레임 보간, Lottie / SVG Path 애니메이션, Rive State Machine",
+        renderDemo: () => `
+          <div class="w-full h-full flex items-center justify-center bg-slate-900">
+            <div class="w-14 h-14 morph-shape flex items-center justify-center text-white text-[10px] font-bold shadow-lg">
+              MORPH
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 15,
+        name: "Memphis Design",
+        korName: "멤피스 디자인",
+        category: "Retro",
+        mood: "발랄함, 유머러스, 키치, 활기참",
+        signature: "지그재그 물결선(Squiggle), 도트 패턴, 캔디 컬러 팔레트",
+        concept: "1980년대 이탈리아 밀라노의 에토레 소트사스가 주도한 포스트모더니즘 디자인 사조로, 규칙에 얽매이지 않는 불규칙한 도형, 물결무늬 패턴, 유쾌한 네온·파스텔 색상이 어우러진 스타일입니다.",
+        examples: [
+          "여름 음악 페스티벌 및 팝업 스토어의 키비주얼 그래픽",
+          "어린이 및 청소년 대상 유튜브 예능 자막·모션 템플릿",
+          "스낵, 음료수 등 경쾌한 식음료 패키징 및 바이럴 광고"
+        ],
+        tooling: "Illustrator Pattern Swatches, After Effects Wiggle 표현식 및 Repeater 효과",
+        renderDemo: () => `
+          <div class="w-full h-full flex flex-col items-center justify-center memphis-pattern relative p-3 border border-yellow-300">
+            <div class="bg-white border-2 border-black px-3 py-1 shadow-[4px_4px_0px_#000] rotate-[-4deg]">
+              <span class="text-xs font-black text-pink-600">MEMPHIS 80s</span>
+            </div>
+            <div class="w-6 h-1 bg-black rounded-full mt-2 rotate-12"></div>
+          </div>
+        `
+      },
+      {
+        id: 16,
+        name: "Line Animation",
+        korName: "라인 애니메이션",
+        category: "Modern",
+        mood: "미니멀, 세련됨, 명료함, 가벼움",
+        signature: "단일 획(Stroke) 드로잉, 패스 트림(Trim Paths), 채우기 없는 외곽선",
+        concept: "복잡한 면이나 색 채우기를 배제하고 단일한 두께의 선(Stroke)이 스스로 그려져 나가는 움직임만으로 사물의 윤곽과 스토리를 정교하게 표현하는 미니멀리즘 애니메이션입니다.",
+        examples: [
+          "B2B 기술 소프트웨어 및 핀테크 기능 설명 라인 아이콘",
+          "고급 건축, 럭셔리 패션 브랜드의 헤리티지 드로잉 필름",
+          "지도 경로 표시 및 네트워크 연결 데이터 플로우 시각화"
+        ],
+        tooling: "After Effects Trim Paths (Start/End 키프레임), Vivus JS (SVG 애니메이션), Lottie",
+        renderDemo: () => `
+          <div class="w-full h-full flex items-center justify-center bg-slate-900 p-2">
+            <svg class="w-20 h-20" viewBox="0 0 100 100">
+              <polygon points="50,15 90,85 10,85" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linejoin="round" class="line-draw" />
+              <circle cx="50" cy="50" r="15" fill="none" stroke="#f472b6" stroke-width="3" class="line-draw" />
+            </svg>
+          </div>
+        `
+      },
+      {
+        id: 17,
+        name: "Low Poly",
+        korName: "로우 폴리",
+        category: "3D",
+        mood: "기하학적, 디지털 오리가미(종이접기), 레트로 3D",
+        signature: "최소한의 각진 다각형 면(Flat Shading), 뚜렷한 음영 대비",
+        concept: "3D 모델링에서 스무딩(곡면 부드럽게 하기) 처리를 하지 않고, 최소한의 다각형(Polygon) 평면 음영을 그대로 노출시켜 마치 종이접기처럼 기하학적인 매력을 살린 3D 스타일입니다.",
+        examples: [
+          "모뉴먼트 밸리(Monument Valley) 등 감성 인디 게임 그래픽",
+          "자연 풍경(산, 나무, 동물)을 현대적으로 해석한 모션 일러스트",
+          "테크 브랜드의 메타포 3D 오브젝트 애니메이션"
+        ],
+        tooling: "Blender Decimate Modifier (다각형 감소) + Flat Shading, Cinema 4D PolyFX",
+        renderDemo: () => `
+          <div class="w-full h-full flex items-center justify-center bg-slate-950 p-2">
+            <svg class="w-16 h-16 lowpoly-gem drop-shadow-[0_10px_10px_rgba(59,130,246,0.3)]" viewBox="0 0 100 100">
+              <polygon points="50,10 85,35 50,60 15,35" fill="#60a5fa" />
+              <polygon points="15,35 50,60 50,95 15,70" fill="#2563eb" />
+              <polygon points="85,35 50,60 50,95 85,70" fill="#1d4ed8" />
+              <polygon points="50,10 50,60 85,35" fill="#93c5fd" opacity="0.6"/>
+            </svg>
+          </div>
+        `
+      },
+      {
+        id: 18,
+        name: "Squash and Stretch",
+        korName: "스쿼시 앤 스트레치",
+        category: "Organic",
+        mood: "생동감, 쫀득함, 탄력적, 만화적 과장",
+        signature: "충돌 시 압축(Squash), 이동 시 팽창(Stretch), 부피 보존 법칙",
+        concept: "디즈니 애니메이션의 12가지 기본 원칙 중 제1원칙입니다. 물체가 속도를 낼 때는 진행 방향으로 늘어나고, 벽에 부딪힐 때는 찌그러지되, 물체의 전체 부피는 일정하게 유지하여 생명력을 부여합니다.",
+        examples: [
+          "통통 튀는 고무공, 캐릭터의 점프 착지 및 표정 모션",
+          "모바일 앱에서 버튼을 눌렀을 때 쫀득하게 반응하는 터치 피드백",
+          "경쾌한 브랜드 로고 등장 및 캐주얼 게임의 팝업 창 연출"
+        ],
+        tooling: "After Effects Scale 프로퍼티 (X/Y 연결 해제 후 비례 조정), Blender Squash 앤 Stretch 디포머",
+        renderDemo: () => `
+          <div class="w-full h-full flex items-end justify-center bg-slate-900 pb-5">
+            <div class="w-12 h-12 bg-gradient-to-t from-orange-500 to-amber-300 rounded-full squash-ball shadow-lg"></div>
+          </div>
+        `
+      },
+      {
+        id: 19,
+        name: "Grainy Gradient",
+        korName: "그레이니 그라디언트",
+        category: "Organic",
+        mood: "감성적, 아늑함, 고급스러움, 아날로그 온기",
+        signature: "필름 노이즈(Film Grain), 몽환적인 다색 그라데이션, 벨벳 질감",
+        concept: "부드러운 멀티 컬러 그라데이션 위에 미세한 입자감의 노이즈(Grain)를 얹어, 차가운 디지털 그래픽에 마치 벨벳 천이나 스프레이를 뿌린 듯한 아날로그 촉감을 더하는 감성 기법입니다.",
+        examples: [
+          "스포티파이 연말 결산(Spotify Wrapped) 메인 배경 키비주얼",
+          "웰니스, 명상, 멘탈케어 앱의 편안한 온보딩 스크린",
+          "프리미엄 스킨케어 및 향수 브랜드의 감성 무드 필름"
+        ],
+        tooling: "Photoshop Dissolve 모드 / 필름 그레인 오버레이, Figma Noise 플러그인, CSS SVG feTurbulence 필터",
+        renderDemo: () => `
+          <div class="w-full h-full grainy-grad flex items-center justify-center p-3 relative">
+            <div class="bg-black/30 backdrop-blur-sm px-3 py-1 rounded-full border border-white/20 text-white text-[11px] font-medium tracking-wide">
+              NOISE & GLOW
+            </div>
+          </div>
+        `
+      },
+      {
+        id: 20,
+        name: "Glitch",
+        korName: "글리치",
+        category: "Retro",
+        mood: "파괴적, 에러 미학, 긴장감, 사이버펑크",
+        signature: "RGB 채널 분리(색수차), 수평 슬라이스 깨짐, 스캔라인 노이즈",
+        concept: "디지털 기기의 신호 불량, 모니터 주사선 오류, 비디오 테이프 손상 등 시스템의 '고장과 왜곡'을 의도적인 시각 예술로 승화시킨 스타일입니다. 강렬한 긴장감과 파괴적인 에너지를 전달합니다.",
+        examples: [
+          "틱톡(TikTok) 브랜드 로고 애니메이션의 시그니처 글리치",
+          "SF 스릴러 영화 티저 및 액션 게임(사이버펑크 2077 등) 트레일러",
+          "반항적인 일렉트로닉 음악 페스티벌 및 힙합 타이틀 시퀀스"
+        ],
+        tooling: "AE Displacement Map + Noise 맵, Shift Channels (RGB 스플릿), Bad TV 플러그인",
+        renderDemo: () => `
+          <div class="w-full h-full flex flex-col items-center justify-center bg-black relative p-2 font-mono">
+            <div class="glitch-text text-xl font-black text-white tracking-widest" data-text="ERROR 404">
+              ERROR 404
+            </div>
+            <span class="text-[9px] text-red-500 mt-1">[SIGNAL CORRUPTED]</span>
+          </div>
+        `
+      }
+    ];
+
+    // Render Grid Cards
+    const grid = document.getElementById('cardsGrid');
+
+    function renderCards(list) {
+      grid.innerHTML = '';
+      if(list.length === 0) {
+        grid.innerHTML = `<div class="col-span-full py-16 text-center text-slate-500">검색 결과가 없습니다.</div>`;
+        return;
+      }
+
+      list.forEach(item => {
+        const card = document.createElement('div');
+        card.className = "group bg-slate-900 border border-slate-800 hover:border-purple-500/60 rounded-2xl overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-purple-950/30 flex flex-col cursor-pointer";
+        card.onclick = () => openModal(item.id);
+
+        card.innerHTML = `
+          <!-- Live Mini Stage -->
+          <div class="h-36 w-full border-b border-slate-800/80 relative overflow-hidden bg-slate-950">
+            ${item.renderDemo()}
+            <div class="absolute top-2 left-2 px-2 py-0.5 rounded bg-black/60 backdrop-blur text-[10px] font-mono text-purple-300 border border-white/10 font-bold">
+              #${String(item.id).padStart(2, '0')}
+            </div>
+            <div class="absolute top-2 right-2 px-2 py-0.5 rounded bg-slate-800/80 text-[10px] text-slate-300 font-medium border border-slate-700">
+              ${item.category}
+            </div>
+          </div>
+
+          <!-- Card Content -->
+          <div class="p-4 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="flex items-baseline gap-1.5">
+                <h3 class="text-base font-bold text-white group-hover:text-purple-300 transition-colors">
+                  ${item.name}
+                </h3>
+                <span class="text-xs text-slate-400">(${item.korName})</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-2 line-clamp-2 leading-relaxed">
+                ${item.concept}
+              </p>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
+              <span class="text-slate-500 truncate max-w-[170px]">💡 ${item.mood.split(',')[0]}</span>
+              <span class="text-purple-400 group-hover:translate-x-1 transition-transform font-medium flex items-center gap-1">
+                자세히 <span>→</span>
+              </span>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Modal Control
+    const modal = document.getElementById('detailModal');
+    let currentScrambleInterval = null;
+
+    function openModal(id) {
+      const item = stylesData.find(d => d.id === id);
+      if(!item) return;
+
+      document.getElementById('modalNumber').innerText = `#${String(item.id).padStart(2, '0')}`;
+      document.getElementById('modalTitle').innerText = `${item.name} (${item.korName})`;
+      document.getElementById('modalConcept').innerText = item.concept;
+      document.getElementById('modalSignature').innerText = item.signature;
+      document.getElementById('modalMood').innerText = item.mood;
+      document.getElementById('modalTooling').innerText = item.tooling;
+
+      // Examples list
+      const exList = document.getElementById('modalExamples');
+      exList.innerHTML = item.examples.map(ex => `<li>${ex}</li>`).join('');
+
+      // Inject Live Stage Demo into Modal
+      const modalStage = document.getElementById('modalStage');
+      modalStage.innerHTML = item.renderDemo();
+
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
+      if(currentScrambleInterval) clearInterval(currentScrambleInterval);
+    }
+
+    // Modal backdrop click
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal) closeModal();
+    });
+
+    // ESC Key listener
+    window.addEventListener('keydown', (e) => {
+      if(e.key === 'Escape' && !modal.classList.contains('hidden')) {
+        closeModal();
+      }
+    });
+
+    // Filter by Category
+    function filterCategory(cat) {
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        if(btn.dataset.cat === cat) {
+          btn.className = 'cat-btn px-2.5 py-1 rounded-md bg-purple-600 text-white font-medium hover:bg-purple-500 transition-colors';
+        } else {
+          btn.className = 'cat-btn px-2.5 py-1 rounded-md bg-slate-800 text-slate-300 hover:bg-slate-700 transition-colors';
+        }
+      });
+
+      const searchVal = document.getElementById('searchInput').value.trim().toLowerCase();
+      applyFilters(cat, searchVal);
+    }
+
+    // Filter Logic
+    function applyFilters(cat, searchVal) {
+      let filtered = stylesData;
+      if(cat && cat !== 'all') {
+        filtered = filtered.filter(item => item.category === cat);
+      }
+      if(searchVal) {
+        filtered = filtered.filter(item => 
+          item.name.toLowerCase().includes(searchVal) ||
+          item.korName.toLowerCase().includes(searchVal) ||
+          item.concept.toLowerCase().includes(searchVal) ||
+          item.mood.toLowerCase().includes(searchVal)
+        );
+      }
+      renderCards(filtered);
+    }
+
+    // Live Text Scrambler Effect Loop in Card #11
+    function initScramblerSimulation() {
+      const chars = "!<>-_\\/[]{}—=+*^?#________";
+      const targetWord = "CYBER_SECURITY";
+      
+      setInterval(() => {
+        const display = document.getElementById('scrambleDisplay');
+        if(!display) return;
+        
+        let iteration = 0;
+        const interval = setInterval(() => {
+          display.innerText = targetWord
+            .split("")
+            .map((letter, index) => {
+              if(index < iteration) {
+                return targetWord[index];
+              }
+              return chars[Math.floor(Math.random() * chars.length)];
+            })
+            .join("");
+
+          if(iteration >= targetWord.length) {
+            clearInterval(interval);
+          }
+          iteration += 1 / 2;
+        }, 30);
+      }, 3500);
+    }
+
+    // Search input listener
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      const activeBtn = document.querySelector('.cat-btn.bg-purple-600');
+      const cat = activeBtn ? activeBtn.dataset.cat : 'all';
+      applyFilters(cat, e.target.value.trim().toLowerCase());
+    });
+
+    // Initial Load
+    window.onload = function() {
+      renderCards(stylesData);
+      initScramblerSimulation();
+    };
+  </script>
+</body>
+</html>

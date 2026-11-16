@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>글자가 나타나는 방식 9가지 인터랙티브 가이드</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    }
+
+    /* 01. 커서 깜빡임 */
+    @keyframes blinkCaret {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .caret-blink {
+      animation: blinkCaret 0.75s infinite;
+    }
+
+    /* 02. 페이드 업 */
+    @keyframes fadeUpIn {
+      0% { opacity: 0; transform: translateY(18px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .anim-fade-up {
+      animation: fadeUpIn 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* 03. 글자 순차 등장 */
+    @keyframes charPop {
+      0% { opacity: 0; transform: translateY(12px) scale(0.9); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .char-stagger {
+      display: inline-block;
+      opacity: 0;
+      animation: charPop 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* 06. 마스크 리빌 */
+    @keyframes maskSlideUp {
+      0% { transform: translateY(110%); }
+      100% { transform: translateY(0%); }
+    }
+    .anim-mask-reveal {
+      display: inline-block;
+      animation: maskSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* 07. 형광펜 하이라이트 */
+    @keyframes highlightSweep {
+      0% { background-size: 0% 45%; }
+      100% { background-size: 100% 45%; }
+    }
+    .marker-highlight {
+      background-image: linear-gradient(120deg, #bfdbfe 0%, #93c5fd 100%);
+      background-repeat: no-repeat;
+      background-position: 0 88%;
+      background-size: 100% 45%;
+    }
+    .anim-highlight {
+      animation: highlightSweep 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* 08. 단어 교체 슬라이드 */
+    @keyframes wordFlipIn {
+      0% { opacity: 0; transform: translateY(14px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .anim-word-flip {
+      display: inline-block;
+      animation: wordFlipIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* 09. 블러 인 */
+    @keyframes blurToSharp {
+      0% { filter: blur(12px); opacity: 0; transform: scale(1.08); }
+      100% { filter: blur(0px); opacity: 1; transform: scale(1); }
+    }
+    .anim-blur-in {
+      animation: blurToSharp 0.75s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen antialiased flex flex-col">
+
+  <!-- 헤더 -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 mb-1">
+          <i data-lucide="type" class="w-3.5 h-3.5"></i> 텍스트 등장 모션 9가지
+        </span>
+        <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+          글자가 나타나는 <span class="text-blue-600">방식</span>도 달라요
+        </h1>
+      </div>
+      <p class="text-sm text-slate-500 max-w-sm sm:text-right">
+        랜딩페이지 헤드라인과 숫자를 생동감 있게 살려주는 <span class="text-blue-600 font-semibold">9가지 타이포그래피 모션</span>을 재생해 보세요.
+      </p>
+    </div>
+  </header>
+
+  <!-- 메인 그리드 9종 텍스트 모션 -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- 01. 타이핑 (Typewriter) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">01 타이핑 (Typewriter)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">타자기 커서 출력</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div onclick="playTypewriter()" class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex items-center justify-center cursor-pointer overflow-hidden">
+            <div class="text-xl font-extrabold text-slate-900 flex items-center">
+              <span id="typewriterText">반가워요</span>
+              <span class="inline-block w-0.5 h-6 bg-blue-600 ml-1 caret-blink"></span>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            깜빡이는 커서와 함께 키보드로 한 글자씩 직접 치는 듯한 효과를 줍니다. AI 챗봇 인사말이나 개발자 포트폴리오 인트로에 친근합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">한 글자씩 타이핑</span>
+          <button onclick="playTypewriter()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 모션 재생
+          </button>
+        </div>
+      </div>
+
+      <!-- 02. 페이드 업 (Fade up) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">02 페이드 업 (Fade up)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">가장 대중적인 타이틀 등장</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div onclick="playFadeUp()" class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex items-center justify-center cursor-pointer overflow-hidden">
+            <div id="fadeUpTarget" class="text-xl font-extrabold text-slate-900 anim-fade-up">
+              디자인 팁
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            투명한 상태(`opacity: 0`)에서 아래에서 위로 약 15~20px 부드럽게 떠오르며 나타납니다. 모든 모던 웹사이트 섹션 타이틀의 기본 표준입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">아래에서 위로 떠오름</span>
+          <button onclick="playFadeUp()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 모션 재생
+          </button>
+        </div>
+      </div>
+
+      <!-- 03. 글자 순차 등장 (Letter stagger) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">03 글자 순차 등장 (Stagger)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-purple-50 text-purple-600 font-medium">음절별 파도타기 리듬감</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div onclick="playLetterStagger()" class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex items-center justify-center cursor-pointer overflow-hidden">
+            <div id="letterStaggerBox" class="text-xl font-extrabold text-slate-900 tracking-tight">
+              하나씩 나와요
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            문장 통째로 뜨지 않고 글자(음절)마다 0.04초씩 미세한 시차(Delay)를 주어 파도타기처럼 리드미컬하게 톡톡 튀어 오르게 만듭니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">글자 단위 시차 애니메이션</span>
+          <button onclick="playLetterStagger()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 모션 재생
+          </button>
+        </div>
+      </div>
+
+      <!-- 04. 카운트 업 (Count up) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">04 카운트 업 (Count up)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">실적·통계 숫자 롤링</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div onclick="playCountUp()" class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex items-center justify-center cursor-pointer overflow-hidden">
+            <div class="flex items-baseline gap-0.5">
+              <span id="countUpNumber" class="text-2xl font-extrabold text-blue-600 tabular-nums">1,280</span>
+              <span class="text-base font-bold text-slate-900">명</span>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            0에서 목표 숫자(예: `1,280명`, `98.5%`)까지 숫자가 바쁘게 올라가며 멈춥니다. 누적 가입자 수나 매출 성과를 드라마틱하게 강조합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">0 → 목표치 숫자 카운팅</span>
+          <button onclick="playCountUp()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 숫자 올리기
+          </button>
+        </div>
+      </div>
+
+      <!-- 05. 스크램블 (Scramble) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">05 스크램블 (Scramble)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 font-medium">암호 해독 디코딩 효과</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div onclick="playScramble()" class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col items-center justify-center cursor-pointer overflow-hidden">
+            <div id="scrambleText" class="text-xl font-extrabold text-slate-800 font-mono tracking-wider">
+              AI 프로덕트
+            </div>
+            <span class="text-[10px] text-slate-400 mt-2">무작위 문자(XQ#9)가 돌아가며 해독됨</span>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            알파벳·기호(`XQ#7자자`)가 무작위로 뒤섞이며 돌아가다가 원래 문장으로 하나씩 맞춰지는 해킹·디코딩 스타일의 테크 감성 모션입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">랜덤 문자 디코딩</span>
+          <button onclick="playScramble()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="shuffle" class="w-3 h-3"></i> 스크램블 재생
+          </button>
+        </div>
+      </div>
+
+      <!-- 06. 마스크 리빌 (Mask reveal) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">06 마스크 리빌 (Mask reveal)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-purple-50 text-purple-600 font-medium">보이지 않는 창문 위로 솟음</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div onclick="playMaskReveal()" class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col items-center justify-center cursor-pointer overflow-hidden">
+            <!-- Overflow Hidden Clipping Box -->
+            <div class="overflow-hidden py-1 border-b border-dashed border-slate-300">
+              <span id="maskRevealTarget" class="text-xl font-extrabold text-slate-900 anim-mask-reveal">
+                새 기능 출시
+              </span>
+            </div>
+            <span class="text-[10px] text-slate-400 mt-2">절단선(overflow-hidden) 아래에서 솟아오름</span>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            글자 영역 바깥에 투명 가림막(`overflow: hidden`)을 씌워두고, 보이지 않는 바닥 틈새에서 글자가 쑥 솟아오르듯 고급스럽게 드러냅니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">클리핑 마스크 슬라이드</span>
+          <button onclick="playMaskReveal()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 모션 재생
+          </button>
+        </div>
+      </div>
+
+      <!-- 07. 하이라이트 (Highlight) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">07 하이라이트 (Highlight)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-amber-50 text-amber-600 font-medium">형광펜 밑줄 쓱 긋기</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div onclick="playHighlight()" class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex items-center justify-center cursor-pointer overflow-hidden">
+            <span id="highlightTarget" class="text-xl font-extrabold text-slate-900 px-1 marker-highlight anim-highlight">
+              핵심만 기억해요
+            </span>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            글자는 가만히 있고 텍스트 뒷배경에 파란색이나 노란색 형광펜을 왼쪽에서 오른쪽으로 쓱 칠하는 효과를 주어 핵심 문구를 각인시킵니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">형광펜 마커 드로잉</span>
+          <button onclick="playHighlight()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="highlighter" class="w-3 h-3"></i> 형광펜 칠하기
+          </button>
+        </div>
+      </div>
+
+      <!-- 08. 단어 교체 (Word rotate) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">08 단어 교체 (Word rotate)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">핵심 키워드 슬롯 회전</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div onclick="rotateNextWord()" class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex items-center justify-center cursor-pointer overflow-hidden">
+            <div class="text-xl font-extrabold text-slate-900 flex items-center gap-1.5">
+              <span>오늘은</span>
+              <span id="rotatingWordSpan" class="text-blue-600 anim-word-flip">기획</span>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            앞뒤 문장은 고정해 두고 핵심 단어 자리만 <strong>‘기획 → 디자인 → 개발 → 배포’</strong>처럼 슬롯머신처럼 번갈아 교체해 다양한 활용성을 어필합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">키워드 롤링 슬롯</span>
+          <button onclick="rotateNextWord()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="refresh-cw" class="w-3 h-3"></i> 단어 교체하기
+          </button>
+        </div>
+      </div>
+
+      <!-- 09. 블러 인 (Blur in) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">09 블러 인 (Blur in)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-rose-50 text-rose-600 font-medium">초점 맞추기 시네마틱 효과</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div onclick="playBlurIn()" class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex items-center justify-center cursor-pointer overflow-hidden">
+            <span id="blurInTarget" class="text-xl font-extrabold text-slate-900 anim-blur-in">
+              지금 집중
+            </span>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            카메라 렌즈의 초점이 맞춰지듯 뿌옇게 흐려진 상태(`filter: blur(12px)`)에서 선명한 글자로 맺히며 등장해 시네마틱하고 몽환적인 몰입감을 줍니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">흐림 → 선명 포커스</span>
+          <button onclick="playBlurIn()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="eye" class="w-3 h-3"></i> 초점 맞추기
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    UI & UX 텍스트 등장 모션 9가지 인터랙션 가이드 &copy; 2026
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // 01. 타이핑
+    let typeTimer;
+    function playTypewriter() {
+      clearTimeout(typeTimer);
+      const el = document.getElementById('typewriterText');
+      const word = "반가워요, 디자이너님!";
+      el.innerText = "";
+      let i = 0;
+      function step() {
+        if (i < word.length) {
+          el.innerText += word.charAt(i);
+          i++;
+          typeTimer = setTimeout(step, 85);
+        }
+      }
+      step();
+    }
+
+    // 02. 페이드 업
+    function playFadeUp() {
+      const el = document.getElementById('fadeUpTarget');
+      el.classList.remove('anim-fade-up');
+      void el.offsetWidth;
+      el.classList.add('anim-fade-up');
+    }
+
+    // 03. 글자 순차 등장
+    function playLetterStagger() {
+      const box = document.getElementById('letterStaggerBox');
+      const text = "하나씩 나와요";
+      box.innerHTML = '';
+      Array.from(text).forEach((ch, idx) => {
+        const span = document.createElement('span');
+        span.textContent = ch === ' ' ? '\u00A0' : ch;
+        span.className = 'char-stagger';
+        span.style.animationDelay = `${idx * 0.06}s`;
+        box.appendChild(span);
+      });
+    }
+
+    // 04. 카운트 업
+    let countTimer;
+    function playCountUp() {
+      clearInterval(countTimer);
+      const el = document.getElementById('countUpNumber');
+      const target = 1280;
+      let cur = 0;
+      countTimer = setInterval(() => {
+        cur += Math.ceil((target - cur) * 0.18) + 15;
+        if (cur >= target) {
+          cur = target;
+          clearInterval(countTimer);
+        }
+        el.innerText = cur.toLocaleString();
+      }, 30);
+    }
+
+    // 05. 스크램블
+    let scrambleInterval;
+    function playScramble() {
+      clearInterval(scrambleInterval);
+      const el = document.getElementById('scrambleText');
+      const finalStr = "AI 프로덕트";
+      const pool = "XQ#9@%A*Z자카타파하";
+      let frame = 0;
+      scrambleInterval = setInterval(() => {
+        el.innerText = finalStr.split('').map((ch, idx) => {
+          if (ch === ' ') return ' ';
+          if (idx < Math.floor(frame / 2)) return finalStr[idx];
+          return pool[Math.floor(Math.random() * pool.length)];
+        }).join('');
+        frame++;
+        if (frame > finalStr.length * 2 + 2) {
+          el.innerText = finalStr;
+          clearInterval(scrambleInterval);
+        }
+      }, 55);
+    }
+
+    // 06. 마스크 리빌
+    function playMaskReveal() {
+      const el = document.getElementById('maskRevealTarget');
+      el.classList.remove('anim-mask-reveal');
+      void el.offsetWidth;
+      el.classList.add('anim-mask-reveal');
+    }
+
+    // 07. 하이라이트
+    function playHighlight() {
+      const el = document.getElementById('highlightTarget');
+      el.classList.remove('anim-highlight');
+      void el.offsetWidth;
+      el.classList.add('anim-highlight');
+    }
+
+    // 08. 단어 교체
+    const rotateWords = ['기획', '디자인', '프로토타입', 'AI 협업'];
+    let wordIdx = 0;
+    function rotateNextWord() {
+      wordIdx = (wordIdx + 1) % rotateWords.length;
+      const span = document.getElementById('rotatingWordSpan');
+      span.classList.remove('anim-word-flip');
+      void span.offsetWidth;
+      span.innerText = rotateWords[wordIdx];
+      span.classList.add('anim-word-flip');
+    }
+
+    // 09. 블러 인
+    function playBlurIn() {
+      const el = document.getElementById('blurInTarget');
+      el.classList.remove('anim-blur-in');
+      void el.offsetWidth;
+      el.classList.add('anim-blur-in');
+    }
+  </script>
+</body>
+</html>

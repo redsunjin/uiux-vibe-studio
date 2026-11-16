@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>인디케이터 이름 9가지 인터랙티브 가이드</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    }
+
+    .custom-scroll::-webkit-scrollbar {
+      width: 4px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background-color: #cbd5e1;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen antialiased flex flex-col">
+
+  <!-- 헤더 -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 mb-1">
+          <i data-lucide="activity" class="w-3.5 h-3.5"></i> 인디케이터 이름 9가지
+        </span>
+        <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+          로딩 막대에도 <span class="text-blue-600">이름</span>이 있어요
+        </h1>
+      </div>
+      <p class="text-sm text-slate-500 max-w-sm sm:text-right">
+        현재 위치, 진행률, 보안 강도를 시각적으로 알려주는 <span class="text-blue-600 font-semibold">9가지 인디케이터</span>를 직접 조작해 보세요.
+      </p>
+    </div>
+  </header>
+
+  <!-- 메인 그리드 9종 인디케이터 -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- 01. 프로그레스 바 (Progress bar) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">01 프로그레스 바</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">선형 작업 진행률(%)</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs">
+              <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                <div id="indProgBar" class="h-full bg-blue-600 rounded-full transition-all duration-300" style="width: 100%;"></div>
+              </div>
+              <div class="flex justify-between items-center mt-2">
+                <span class="text-[10px] text-slate-400 font-medium">파일 동기화</span>
+                <span id="indProgText" class="text-xs font-extrabold text-blue-600">100%</span>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            전체 작업량 대비 현재 완료된 비율(0~100%)을 직선 막대로 채워 보여줍니다. 업로드, 설치, 설문 응답률 표시에 가장 보편적입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">가로 직선 게이지</span>
+          <button onclick="runLinearProgDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 게이지 채우기
+          </button>
+        </div>
+      </div>
+
+      <!-- 02. 스텝 인디케이터 (Step indicator) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">02 스텝 인디케이터</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-indigo-50 text-indigo-600 font-medium">다단계 절차(1-2-3-4)</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-center items-center overflow-hidden">
+            <div class="w-full max-w-[220px] relative flex items-center justify-between">
+              <div class="absolute inset-x-3 top-1/2 -translate-y-1/2 h-0.5 bg-slate-200 z-0"></div>
+              <div id="stepIndLine" class="absolute left-3 top-1/2 -translate-y-1/2 h-0.5 bg-blue-600 transition-all duration-300 z-0" style="width: 66%;"></div>
+
+              <div id="stCircle1" class="w-6 h-6 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center relative z-10">1</div>
+              <div id="stCircle2" class="w-6 h-6 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center relative z-10">2</div>
+              <div id="stCircle3" class="w-6 h-6 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center relative z-10">3</div>
+              <div id="stCircle4" class="w-6 h-6 rounded-full bg-white border border-slate-300 text-slate-400 text-[10px] font-bold flex items-center justify-center relative z-10">4</div>
+            </div>
+            <p id="stepIndLabel" class="text-[11px] font-bold text-slate-700 mt-3">총 4단계 중 3단계 진행 중</p>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            회원가입, 주문 결제, 지원서 작성처럼 여러 화면으로 나뉜 폼에서 ‘전체 몇 단계 중 어디쯤 와 있는지’ 번호 노드로 알려줍니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">번호 노드 연결선</span>
+          <button onclick="advanceStepIndicator()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="chevron-right" class="w-3 h-3"></i> 다음 스텝
+          </button>
+        </div>
+      </div>
+
+      <!-- 03. 페이지 인디케이터 (Page indicator) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">03 페이지 인디케이터</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">캐러셀 슬라이드 점(Dot)</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col items-center justify-center gap-3 overflow-hidden">
+            <div id="pageIndCard" class="w-40 h-20 rounded-xl bg-blue-100 border border-blue-200 flex items-center justify-center text-xs font-bold text-blue-700 transition-all">
+              슬라이드 배너 #2
+            </div>
+            <!-- Pill + Dots -->
+            <div class="flex items-center gap-1.5">
+              <button onclick="setPageDot(0)" id="pgDot0" class="w-1.5 h-1.5 rounded-full bg-slate-300 transition-all"></button>
+              <button onclick="setPageDot(1)" id="pgDot1" class="w-4 h-1.5 rounded-full bg-blue-600 transition-all"></button>
+              <button onclick="setPageDot(2)" id="pgDot2" class="w-1.5 h-1.5 rounded-full bg-slate-300 transition-all"></button>
+              <button onclick="setPageDot(3)" id="pgDot3" class="w-1.5 h-1.5 rounded-full bg-slate-300 transition-all"></button>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            이미지 캐러셀이나 카드 배너 하단에 작은 점(Dot)들을 나열하고, 현재 보고 있는 페이지만 길쭉한 알약(Pill) 모양이나 진한 색으로 강조합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">하단 도트(Dots) 표시기</span>
+          <button onclick="cyclePageDot()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="more-horizontal" class="w-3 h-3"></i> 슬라이드 넘기기
+          </button>
+        </div>
+      </div>
+
+      <!-- 04. 스토리 바 (Story progress) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">04 스토리 바 (Story progress)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-purple-50 text-purple-600 font-medium">인스타 스토리 분할 타이머</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex items-center justify-center overflow-hidden">
+            <div onclick="advanceStoryBar()" class="w-48 h-32 bg-slate-700 rounded-xl p-2.5 flex flex-col justify-between cursor-pointer shadow-md">
+              <!-- Top Segmented Story Bars -->
+              <div class="grid grid-cols-4 gap-1">
+                <div class="h-1 bg-white/30 rounded-full overflow-hidden">
+                  <div id="stSeg0" class="h-full bg-white w-full"></div>
+                </div>
+                <div class="h-1 bg-white/30 rounded-full overflow-hidden">
+                  <div id="stSeg1" class="h-full bg-white w-full"></div>
+                </div>
+                <div class="h-1 bg-white/30 rounded-full overflow-hidden">
+                  <div id="stSeg2" class="h-full bg-white w-1/2 transition-all duration-300"></div>
+                </div>
+                <div class="h-1 bg-white/30 rounded-full overflow-hidden">
+                  <div id="stSeg3" class="h-full bg-white w-0"></div>
+                </div>
+              </div>
+              <div class="text-center text-white">
+                <p id="storyLabelText" class="text-xs font-bold">스토리 3 / 4 재생 중</p>
+                <p class="text-[9px] text-slate-300 mt-0.5">화면을 탭하면 다음 막대로 넘어갑니다</p>
+              </div>
+              <div class="h-1"></div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            인스타그램 스토리처럼 상단에 여러 개의 얇은 막대를 분할 배치하여 <strong>‘전체 장수’와 ‘현재 장의 남은 재생 시간’</strong>을 동시에 전달합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">상단 분할 타임바</span>
+          <button onclick="advanceStoryBar()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="fast-forward" class="w-3 h-3"></i> 다음 스토리
+          </button>
+        </div>
+      </div>
+
+      <!-- 05. 스크롤 진행 바 (Scroll progress) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">05 스크롤 진행 바</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">아티클 완독률 표시</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex items-center justify-center overflow-hidden">
+            <div class="w-48 h-32 bg-white rounded-xl border border-slate-200 shadow-xs flex flex-col overflow-hidden">
+              <!-- Top Sticky Reading Bar -->
+              <div class="w-full h-1 bg-slate-100 shrink-0">
+                <div id="scrollReadBar" class="h-full bg-blue-600 transition-all duration-150" style="width: 65%;"></div>
+              </div>
+              <!-- Scrollable Article Body -->
+              <div id="scrollReadBox" onscroll="syncScrollBar(this)" class="p-2.5 overflow-y-auto custom-scroll space-y-2 text-[10px] text-slate-500">
+                <p class="font-bold text-slate-800">긴 아티클을 스크롤해 보세요</p>
+                <div class="h-2 w-full bg-slate-200 rounded"></div>
+                <div class="h-2 w-5/6 bg-slate-200 rounded"></div>
+                <div class="h-2 w-4/6 bg-slate-200 rounded"></div>
+                <div class="h-2 w-full bg-slate-200 rounded"></div>
+                <div class="h-2 w-3/4 bg-slate-200 rounded"></div>
+                <div class="h-2 w-full bg-slate-200 rounded"></div>
+                <div class="h-2 w-2/3 bg-slate-200 rounded"></div>
+                <p class="text-blue-600 font-bold">✓ 문서 끝에 도달했습니다!</p>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            블로그 아티클이나 긴 약관 문서를 내려 읽을 때 화면 최상단 테두리에 얇은 파란 선이 차오르며 <strong>글의 남은 분량(완독률)</strong>을 알려줍니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">상단 고정 독서 게이지</span>
+          <button onclick="autoScrollArticle()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="arrow-down" class="w-3 h-3"></i> 스크롤 테스트
+          </button>
+        </div>
+      </div>
+
+      <!-- 06. 원형 진행률 (Progress ring) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">06 원형 진행률 (Progress ring)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">도넛형 달성률 게이지</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex items-center justify-center overflow-hidden">
+            <div class="relative flex items-center justify-center">
+              <svg class="w-20 h-20 -rotate-90">
+                <circle cx="40" cy="40" r="32" stroke="#e2e8f0" stroke-width="6" fill="transparent" />
+                <circle id="indRingCircle" cx="40" cy="40" r="32" stroke="#2563eb" stroke-width="6" stroke-linecap="round" fill="transparent"
+                  stroke-dasharray="201" stroke-dashoffset="0" class="transition-all duration-300" />
+              </svg>
+              <span id="indRingText" class="absolute text-xs font-extrabold text-slate-900">100%</span>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            도넛 모양의 원형 링 안에 퍼센트(%) 숫자를 함께 넣은 형태입니다. 프로필 완성도, 일일 미션 달성률 등 컴팩트한 카드 위젯에 최적입니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">원형 도넛 인디케이터</span>
+          <button onclick="cycleRingPercent()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="pie-chart" class="w-3 h-3"></i> 달성률 변경
+          </button>
+        </div>
+      </div>
+
+      <!-- 07. 강도 표시기 (Strength meter) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">07 강도 표시기 (Strength meter)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">비밀번호 보안 수준</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-2xs space-y-2">
+              <input id="pwStrengthInput" type="password" value="uxwoody2026!" oninput="evalPwStrength(this.value)" class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs font-bold tracking-widest focus:outline-none focus:border-blue-500" />
+              <!-- 4 Segmented Bars -->
+              <div class="grid grid-cols-4 gap-1.5">
+                <div id="strBar1" class="h-1.5 rounded-full bg-emerald-500 transition-colors"></div>
+                <div id="strBar2" class="h-1.5 rounded-full bg-emerald-500 transition-colors"></div>
+                <div id="strBar3" class="h-1.5 rounded-full bg-emerald-500 transition-colors"></div>
+                <div id="strBar4" class="h-1.5 rounded-full bg-slate-200 transition-colors"></div>
+              </div>
+              <p id="strStatusLabel" class="text-[10px] font-bold text-emerald-600">안전해요 (3/4 단계)</p>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            비밀번호 입력 칸 바로 아래에 3~4칸의 분할 막대를 두어 <strong>‘위험(빨강) → 보통(노랑) → 안전(초록)’</strong>으로 보안 등급을 실시간 코칭합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">단계별 색상 피드백</span>
+          <button onclick="cyclePwStrengthDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="lock" class="w-3 h-3"></i> 강도 단계 전환
+          </button>
+        </div>
+      </div>
+
+      <!-- 08. 탭 인디케이터 (Tab indicator) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">08 탭 인디케이터 (Tab bar line)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">활성 탭 하단 슬라이딩 바</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-center items-center overflow-hidden">
+            <div class="bg-white px-4 pt-3 rounded-xl border border-slate-200 shadow-2xs w-52">
+              <div class="grid grid-cols-3 text-center text-xs font-bold pb-2 relative">
+                <button onclick="moveTabUnderline(0)" id="tabIndBtn0" class="text-slate-400 hover:text-slate-700 transition">홈</button>
+                <button onclick="moveTabUnderline(1)" id="tabIndBtn1" class="text-slate-400 hover:text-slate-700 transition">쇼핑</button>
+                <button onclick="moveTabUnderline(2)" id="tabIndBtn2" class="text-slate-900 transition">혜택</button>
+                <!-- Sliding Bottom Active Line -->
+                <div id="tabUnderlineBar" class="absolute bottom-0 left-0 w-1/3 h-0.5 bg-blue-600 rounded-full transition-transform duration-300" style="transform: translateX(200%);"></div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            상단 탭 메뉴에서 현재 선택된 탭 글자 바로 아래에 파란색 밑줄(Active Line)이 미끄러지듯 따라붙어 현재 보고 있는 카테고리를 명확히 가리킵니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">선택 탭 밑줄 이동</span>
+          <button onclick="cycleTabUnderline()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="move-horizontal" class="w-3 h-3"></i> 탭 밑줄 이동
+          </button>
+        </div>
+      </div>
+
+      <!-- 09. 홈 인디케이터 (Home indicator) -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">09 홈 인디케이터 (Home bar)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-medium">시스템 하단 제스처 바</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex items-center justify-center overflow-hidden">
+            <!-- Mini Phone Frame -->
+            <div class="w-28 h-36 bg-white rounded-2xl border-[3px] border-slate-800 p-2 flex flex-col justify-between shadow-sm">
+              <div class="grid grid-cols-3 gap-1.5 pt-1">
+                <div class="h-3.5 bg-slate-200 rounded"></div>
+                <div class="h-3.5 bg-slate-200 rounded"></div>
+                <div class="h-3.5 bg-slate-200 rounded"></div>
+                <div class="h-3.5 bg-slate-200 rounded"></div>
+                <div class="h-3.5 bg-slate-200 rounded"></div>
+                <div class="h-3.5 bg-slate-200 rounded"></div>
+              </div>
+              <!-- Bottom Safe Area Home Bar -->
+              <div class="pt-1 flex flex-col items-center">
+                <div id="homeIndBar" class="w-12 h-1 bg-slate-900 rounded-full transition-all duration-300"></div>
+              </div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            물리 홈 버튼이 사라진 스마트폰 최하단 중앙의 가로 막대입니다. 하단 버튼을 배치할 때 이 영역(Safe Area Bottom 34px)과 겹치지 않게 여백을 주어야 합니다.
+          </p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">하단 안전 영역(Safe Area)</span>
+          <button onclick="bounceHomeIndicator()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="arrow-up" class="w-3 h-3"></i> 스와이프 업 모션
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    UI & UX 인디케이터 9가지 인터랙션 가이드 &copy; 2026
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    // 01. 프로그레스 바
+    function runLinearProgDemo() {
+      const bar = document.getElementById('indProgBar');
+      const txt = document.getElementById('indProgText');
+      bar.style.width = '0%';
+      txt.innerText = '0%';
+      let p = 0;
+      const timer = setInterval(() => {
+        p += 20;
+        if (p >= 100) {
+          p = 100;
+          clearInterval(timer);
+        }
+        bar.style.width = p + '%';
+        txt.innerText = p + '%';
+      }, 150);
+    }
+
+    // 02. 스텝 인디케이터
+    let curStepInd = 3;
+    function advanceStepIndicator() {
+      curStepInd = (curStepInd % 4) + 1;
+      const widths = ['0%', '33%', '66%', '92%'];
+      document.getElementById('stepIndLine').style.width = widths[curStepInd - 1];
+      document.getElementById('stepIndLabel').innerText = `총 4단계 중 ${curStepInd}단계 진행 중`;
+      for (let i = 1; i <= 4; i++) {
+        const c = document.getElementById(`stCircle${i}`);
+        c.className = i <= curStepInd
+          ? "w-6 h-6 rounded-full bg-blue-600 text-white text-[10px] font-bold flex items-center justify-center relative z-10 transition-all"
+          : "w-6 h-6 rounded-full bg-white border border-slate-300 text-slate-400 text-[10px] font-bold flex items-center justify-center relative z-10 transition-all";
+      }
+    }
+
+    // 03. 페이지 인디케이터
+    let curPgDot = 1;
+    function setPageDot(idx) {
+      curPgDot = idx;
+      document.getElementById('pageIndCard').innerText = `슬라이드 배너 #${idx + 1}`;
+      for (let i = 0; i < 4; i++) {
+        const dot = document.getElementById(`pgDot${i}`);
+        dot.className = i === idx ? "w-4 h-1.5 rounded-full bg-blue-600 transition-all" : "w-1.5 h-1.5 rounded-full bg-slate-300 transition-all";
+      }
+    }
+    function cyclePageDot() {
+      setPageDot((curPgDot + 1) % 4);
+    }
+
+    // 04. 스토리 바
+    let storyStep = 2;
+    function advanceStoryBar() {
+      storyStep = (storyStep + 1) % 4;
+      document.getElementById('storyLabelText').innerText = `스토리 ${storyStep + 1} / 4 재생 중`;
+      for (let i = 0; i < 4; i++) {
+        const seg = document.getElementById(`stSeg${i}`);
+        if (i < storyStep) seg.style.width = '100%';
+        else if (i === storyStep) seg.style.width = '60%';
+        else seg.style.width = '0%';
+      }
+    }
+
+    // 05. 스크롤 진행 바
+    function syncScrollBar(el) {
+      const max = el.scrollHeight - el.clientHeight;
+      const pct = max > 0 ? Math.round((el.scrollTop / max) * 100) : 0;
+      document.getElementById('scrollReadBar').style.width = pct + '%';
+    }
+    let scrolledBottom = false;
+    function autoScrollArticle() {
+      const box = document.getElementById('scrollReadBox');
+      scrolledBottom = !scrolledBottom;
+      box.scrollTo({ top: scrolledBottom ? box.scrollHeight : 0, behavior: 'smooth' });
+    }
+
+    // 06. 원형 진행률
+    const ringPresets = [25, 60, 85, 100];
+    let ringIdx = 3;
+    function cycleRingPercent() {
+      ringIdx = (ringIdx + 1) % ringPresets.length;
+      const pct = ringPresets[ringIdx];
+      const circ = 201;
+      const offset = circ - (pct / 100) * circ;
+      document.getElementById('indRingCircle').style.strokeDashoffset = offset;
+      document.getElementById('indRingText').innerText = pct + '%';
+    }
+
+    // 07. 강도 표시기
+    let pwLevel = 3;
+    function renderPwStrength(level) {
+      const colors = { 1: 'bg-rose-500', 2: 'bg-amber-400', 3: 'bg-emerald-500', 4: 'bg-blue-600' };
+      const texts = {
+        1: { t: '취약해요 (1/4 단계)', c: 'text-rose-600' },
+        2: { t: '보통이에요 (2/4 단계)', c: 'text-amber-600' },
+        3: { t: '안전해요 (3/4 단계)', c: 'text-emerald-600' },
+        4: { t: '매우 강력해요! (4/4 단계)', c: 'text-blue-600' }
+      };
+      for (let i = 1; i <= 4; i++) {
+        const bar = document.getElementById(`strBar${i}`);
+        bar.className = `h-1.5 rounded-full transition-colors ${i <= level ? colors[level] : 'bg-slate-200'}`;
+      }
+      const lbl = document.getElementById('strStatusLabel');
+      lbl.innerText = texts[level].t;
+      lbl.className = `text-[10px] font-bold ${texts[level].c}`;
+    }
+    function evalPwStrength(val) {
+      let lv = 1;
+      if (val.length >= 6) lv = 2;
+      if (val.length >= 9) lv = 3;
+      if (val.length >= 12 && /[!@#$%^&*]/.test(val)) lv = 4;
+      renderPwStrength(lv);
+    }
+    function cyclePwStrengthDemo() {
+      pwLevel = (pwLevel % 4) + 1;
+      renderPwStrength(pwLevel);
+    }
+
+    // 08. 탭 인디케이터
+    let curTabInd = 2;
+    function moveTabUnderline(idx) {
+      curTabInd = idx;
+      document.getElementById('tabUnderlineBar').style.transform = `translateX(${idx * 100}%)`;
+      for (let i = 0; i < 3; i++) {
+        document.getElementById(`tabIndBtn${i}`).className = i === idx ? 'text-slate-900 transition' : 'text-slate-400 hover:text-slate-700 transition';
+      }
+    }
+    function cycleTabUnderline() {
+      moveTabUnderline((curTabInd + 1) % 3);
+    }
+
+    // 09. 홈 인디케이터
+    function bounceHomeIndicator() {
+      const bar = document.getElementById('homeIndBar');
+      bar.style.transform = 'translateY(-6px) scaleX(1.15)';
+      bar.classList.replace('bg-slate-900', 'bg-blue-600');
+      setTimeout(() => {
+        bar.style.transform = 'translateY(0) scaleX(1)';
+        bar.classList.replace('bg-blue-600', 'bg-slate-900');
+      }, 350);
+    }
+  </script>
+</body>
+</html>

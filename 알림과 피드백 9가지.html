@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UI 알림 및 피드백 9가지 인터랙티브 가이드</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    }
+    /* 커스텀 애니메이션 */
+    @keyframes toastSlideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes toastFadeOut {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(20px); opacity: 0; }
+    }
+    @keyframes sheetSlideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    @keyframes pulseSoft {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .animate-toast {
+      animation: toastSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .animate-sheet {
+      animation: sheetSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .coach-highlight {
+      box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.75), 0 0 15px rgba(59, 130, 246, 0.8);
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen antialiased flex flex-col">
+
+  <!-- 헤더 -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 mb-1">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> 알림과 피드백 9가지
+        </span>
+        <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+          알려주는 방법도 9가지나 있어요
+        </h1>
+      </div>
+      <p class="text-sm text-slate-500 max-w-sm sm:text-right">
+        카드의 <span class="text-blue-600 font-semibold">‘작동해보기’</span> 버튼을 눌러 각 UI 컴포넌트의 실제 동작 방식과 시각적 반응을 확인해 보세요.
+      </p>
+    </div>
+  </header>
+
+  <!-- 메인 그리드 9종 컴포넌트 -->
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- 01. 토스트 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">01 토스트 (Toast)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">방해도: 낮음</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-between overflow-hidden">
+            <div class="space-y-2">
+              <div class="h-2 w-28 bg-slate-400 rounded-full"></div>
+              <div class="h-2 w-44 bg-slate-300 rounded-full"></div>
+            </div>
+            
+            <button onclick="triggerToastDemo()" class="w-full py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700 transition">
+              저장하기
+            </button>
+
+            <!-- Simulated Toast in Preview -->
+            <div id="previewToast" class="hidden absolute bottom-3 left-1/2 -translate-x-1/2 bg-slate-900/90 backdrop-blur text-white text-xs px-3.5 py-2 rounded-full shadow-lg items-center gap-1.5 whitespace-nowrap animate-toast">
+              <i data-lucide="check-circle" class="w-3.5 h-3.5 text-emerald-400"></i>
+              <span>포폴을 저장했어요</span>
+            </div>
+          </div>
+
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            일시적으로 하단에 노출된 뒤 2~3초 후 자동 소멸합니다. 사용자의 진행 흐름을 가로막지 않는 단순 상태 안내에 적합합니다.
+          </p>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">자동 사라짐 / 비침해형</span>
+          <button onclick="triggerToastDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 작동해보기
+          </button>
+        </div>
+      </div>
+
+      <!-- 02. 스낵바 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">02 스낵바 (Snackbar)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-blue-50 text-blue-600 font-medium">방해도: 낮음~중간</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col gap-2 overflow-hidden">
+            <div id="docCard" class="bg-white p-2.5 rounded-lg border border-slate-200 text-xs flex justify-between items-center shadow-xs">
+              <span class="font-medium text-slate-800">A사 지원서.pdf</span>
+              <button onclick="deleteDocItem()" class="text-red-500 hover:text-red-700 text-[11px] font-semibold">삭제</button>
+            </div>
+            <div class="bg-white p-2.5 rounded-lg border border-slate-200 text-xs flex justify-between items-center opacity-70">
+              <span class="font-medium text-slate-800">B사 포트폴리오.pdf</span>
+              <span class="text-[10px] text-slate-400">보관됨</span>
+            </div>
+
+            <!-- Simulated Snackbar in Preview -->
+            <div id="previewSnackbar" class="hidden absolute bottom-2 inset-x-2 bg-slate-900 text-white text-xs px-3 py-2 rounded-lg shadow-lg flex items-center justify-between animate-toast">
+              <span class="truncate">A사 지원서가 삭제되었습니다.</span>
+              <button onclick="undoDeleteDoc()" class="text-yellow-400 font-bold hover:underline shrink-0 text-[11px] ml-2">실행 취소</button>
+            </div>
+          </div>
+
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            토스트와 유사하지만 메시지 우측에 <strong>'실행 취소(Undo)'</strong> 등의 보조 액션 버튼을 제공하여 실수를 즉시 되돌릴 수 있습니다.
+          </p>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">단일 보조 액션 포함</span>
+          <button onclick="deleteDocItem()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 작동해보기
+          </button>
+        </div>
+      </div>
+
+      <!-- 03. 배너 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">03 배너 (Banner)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-amber-50 text-amber-600 font-medium">방해도: 중간</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 border border-slate-200 overflow-hidden flex flex-col">
+            <!-- Simulated Banner -->
+            <div id="previewBanner" class="bg-blue-600 text-white px-3 py-2 text-[11px] flex items-center justify-between shadow-sm transition-all duration-300">
+              <div class="flex items-center gap-1.5 truncate">
+                <i data-lucide="info" class="w-3.5 h-3.5 shrink-0"></i>
+                <span class="font-medium truncate">서류 마감이 3일 남았어요</span>
+              </div>
+              <button onclick="toggleBanner(false)" class="text-blue-100 hover:text-white p-0.5 ml-2">
+                <i data-lucide="x" class="w-3 h-3"></i>
+              </button>
+            </div>
+
+            <div class="p-4 space-y-2 flex-1">
+              <div class="h-3 w-32 bg-slate-300 rounded"></div>
+              <div class="h-2 w-full bg-slate-200 rounded"></div>
+              <div class="h-2 w-4/5 bg-slate-200 rounded"></div>
+            </div>
+          </div>
+
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            화면 상단 영역에 고정되어 사용자가 직접 닫거나 이슈가 해결될 때까지 계속 노출되는 중요 공지 및 상태 표시용 컴포넌트입니다.
+          </p>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">지속적 알림 / 상단 고정</span>
+          <button onclick="toggleBanner(true)" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 작동해보기
+          </button>
+        </div>
+      </div>
+
+      <!-- 04. 모달 다이얼로그 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">04 모달 (Modal dialog)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-rose-50 text-rose-600 font-medium">방해도: 높음</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-center items-center overflow-hidden">
+            <button onclick="openModalDemo()" class="px-3.5 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700">
+              지원서 제출하기
+            </button>
+            <p class="text-[11px] text-slate-400 mt-2">버튼 클릭 시 전체 화면 차단</p>
+
+            <!-- Dim & Mini Modal inside preview -->
+            <div id="miniModalPreview" class="hidden absolute inset-0 bg-slate-900/60 backdrop-blur-[1px] flex items-center justify-center p-3 animate-toast">
+              <div class="bg-white rounded-xl p-3 w-full max-w-[210px] text-center shadow-xl">
+                <p class="text-xs font-bold text-slate-800">지원서를 제출할까요?</p>
+                <p class="text-[10px] text-slate-500 mt-1">제출하면 고칠 수 없어요</p>
+                <div class="flex gap-1.5 mt-3">
+                  <button onclick="closeModalDemo()" class="flex-1 py-1 text-[11px] bg-slate-100 text-slate-700 rounded hover:bg-slate-200 font-medium">취소</button>
+                  <button onclick="confirmModalDemo()" class="flex-1 py-1 text-[11px] bg-blue-600 text-white rounded hover:bg-blue-700 font-semibold">제출</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            화면 전체를 Dim(어둡게) 처리하고 중요한 결정을 강제합니다. 사용자의 실수나 비가역적(되돌릴 수 없는) 행동을 방지할 때 사용합니다.
+          </p>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">화면 차단 / 중요 결정</span>
+          <button onclick="openModalDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 작동해보기
+          </button>
+        </div>
+      </div>
+
+      <!-- 05. 바텀시트 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">05 바텀시트 (Bottom sheet)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-amber-50 text-amber-600 font-medium">방해도: 중간~높음</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 border border-slate-200 flex flex-col justify-end overflow-hidden">
+            <div class="p-3 mb-auto flex justify-between items-center">
+              <span class="text-xs font-semibold text-slate-700">작업 파일 메뉴</span>
+              <button onclick="openBottomSheetDemo()" class="p-1.5 rounded-lg bg-white border border-slate-200 hover:bg-slate-50 text-slate-600">
+                <i data-lucide="more-vertical" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+
+            <!-- Simulated Bottom Sheet -->
+            <div id="previewSheet" class="hidden absolute inset-x-0 bottom-0 bg-white rounded-t-2xl p-3 shadow-2xl border-t border-slate-200 animate-sheet">
+              <div class="w-8 h-1 bg-slate-300 rounded-full mx-auto mb-2"></div>
+              <div class="space-y-1.5 text-xs text-left">
+                <button onclick="closeBottomSheetDemo('공유하기')" class="w-full text-left py-1 px-2 font-medium text-slate-700 hover:bg-slate-50 rounded">공유하기</button>
+                <button onclick="closeBottomSheetDemo('이름 바꾸기')" class="w-full text-left py-1 px-2 font-medium text-slate-700 hover:bg-slate-50 rounded">이름 바꾸기</button>
+                <button onclick="closeBottomSheetDemo('삭제하기')" class="w-full text-left py-1 px-2 font-medium text-rose-600 hover:bg-rose-50 rounded">삭제하기</button>
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            모바일 화면 하단에서 슬라이드 업되어 추가 메뉴나 세부 작업 옵션을 손쉽게 선택할 수 있도록 돕는 모바일 친화적 인터페이스입니다.
+          </p>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">모바일 최적화 메뉴</span>
+          <button onclick="openBottomSheetDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 작동해보기
+          </button>
+        </div>
+      </div>
+
+      <!-- 06. 인라인 오류 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">06 인라인 오류 (Inline error)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">방해도: 낮음</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-center overflow-hidden">
+            <label class="text-[11px] font-semibold text-slate-600 mb-1">이메일</label>
+            <input 
+              id="mockEmailInput" 
+              type="text" 
+              value="woody@mail" 
+              class="w-full text-xs px-3 py-2 rounded-lg border border-rose-500 bg-white text-slate-800 focus:outline-none focus:ring-1 focus:ring-rose-500"
+              oninput="validateInlineEmail(this.value)"
+            />
+            <p id="inlineErrorMsg" class="text-[11px] text-rose-600 font-medium mt-1.5 flex items-center gap-1">
+              <i data-lucide="alert-circle" class="w-3 h-3"></i>
+              <span>이메일 형식을 확인해 주세요</span>
+            </p>
+          </div>
+
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            입력 필드 바로 아래에 붉은색 경고문구를 띄워 문제가 발생한 지점과 원인을 직관적으로 안내하는 실시간 폼 검증 방식입니다.
+          </p>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">입력창 직하단 검증</span>
+          <button onclick="toggleInlineErrorState()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 정상/에러 토글
+          </button>
+        </div>
+      </div>
+
+      <!-- 07. 툴팁 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">07 툴팁 (Tooltip)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">방해도: 매우 낮음</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-center items-center overflow-hidden">
+            <div class="relative bg-white p-4 rounded-xl shadow-xs border border-slate-200 text-center w-full max-w-[200px]">
+              <div class="flex items-center justify-center gap-1">
+                <span class="text-xs font-medium text-slate-600">서류 합격률</span>
+                <button id="tooltipTriggerBtn" onclick="toggleTooltipDemo()" class="text-slate-400 hover:text-slate-700 transition">
+                  <i data-lucide="help-circle" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+              <div class="text-xl font-bold text-slate-900 mt-1">24%</div>
+
+              <!-- Tooltip Balloon -->
+              <div id="previewTooltip" class="hidden absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-[10px] py-1 px-2.5 rounded shadow-lg whitespace-nowrap animate-toast">
+                <span>최근 3개월 지원 기준이에요</span>
+                <div class="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-900"></div>
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            마우스 호버나 물음표 아이콘 터치 시 말풍선 형태로 보조 설명을 제공합니다. 화면을 어지럽히지 않고 용어나 산정 기준을 설명합니다.
+          </p>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">보조 설명 풍선</span>
+          <button onclick="toggleTooltipDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 말풍선 토글
+          </button>
+        </div>
+      </div>
+
+      <!-- 08. 코치마크 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">08 코치마크 (Coach mark)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-amber-50 text-amber-600 font-medium">방해도: 중간~높음</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div id="coachContainer" class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-between overflow-hidden">
+            <div class="h-2 w-20 bg-slate-300 rounded"></div>
+            
+            <div class="flex justify-end">
+              <!-- Target Floating Action Button -->
+              <div id="fabCoachTarget" class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center shadow-md relative z-10">
+                <i data-lucide="plus" class="w-5 h-5"></i>
+              </div>
+            </div>
+
+            <!-- Simulated Coachmark Overlay -->
+            <div id="previewCoachOverlay" class="hidden absolute inset-0 bg-slate-900/70 z-20 flex flex-col justify-end p-4 pointer-events-auto">
+              <div class="absolute right-3.5 bottom-3.5 w-11 h-11 rounded-full ring-4 ring-blue-400 ring-offset-2 ring-offset-transparent pointer-events-none"></div>
+              <div class="bg-slate-900 text-white text-xs p-3 rounded-xl shadow-xl border border-slate-700 max-w-[210px] mb-12">
+                <p class="font-bold">여기서 포폴을 올려요</p>
+                <p class="text-[10px] text-slate-300 mt-0.5">새 포트폴리오를 빠르게 등록해보세요</p>
+                <button onclick="dismissCoachDemo()" class="mt-2 text-[10px] bg-white text-slate-900 font-semibold px-2.5 py-1 rounded hover:bg-slate-100">
+                  알겠어요
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            신규 기능이나 앱 최초 온보딩 시 특정 버튼을 하이라이트하고 주변 배경을 어둡게 만들어 사용자의 시선과 행동을 유도합니다.
+          </p>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">온보딩 / 튜토리얼</span>
+          <button onclick="triggerCoachDemo()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 온보딩 시작
+          </button>
+        </div>
+      </div>
+
+      <!-- 09. 뱃지 -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">09 뱃지 (Badge)</span>
+            <span class="text-xs px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 font-medium">방해도: 매우 낮음</span>
+          </div>
+          <!-- Mockup Viewport -->
+          <div class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-center items-center overflow-hidden">
+            <div class="flex items-center gap-6 bg-white px-6 py-4 rounded-2xl shadow-xs border border-slate-200">
+              <!-- Bell with count badge -->
+              <div class="relative">
+                <i data-lucide="bell" class="w-6 h-6 text-slate-700"></i>
+                <span id="badgeCount" class="absolute -top-1.5 -right-2 bg-rose-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center ring-2 ring-white">
+                  3
+                </span>
+              </div>
+
+              <!-- Message with dot badge -->
+              <div class="relative">
+                <i data-lucide="message-square" class="w-6 h-6 text-slate-700"></i>
+                <span id="badgeDot" class="absolute -top-0.5 -right-0.5 w-2.5 h-2.5 bg-blue-500 rounded-full ring-2 ring-white"></span>
+              </div>
+            </div>
+
+            <p id="badgeStatusText" class="text-xs text-slate-600 font-medium mt-3">
+              새 피드백이 3개 왔어요
+            </p>
+          </div>
+
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">
+            아이콘 모퉁이에 숫자나 점(Dot)을 표시하여 읽지 않은 알림이나 새로운 콘텐츠의 유무를 방해 없이 가볍게 알려줍니다.
+          </p>
+        </div>
+
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+          <span class="text-[11px] text-slate-400">카운트 / 읽지 않음 점</span>
+          <button onclick="toggleBadgeCount()" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition flex items-center gap-1.5">
+            <i data-lucide="play" class="w-3 h-3"></i> 알림 확인/초기화
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- 전체화면 모달 체험 팝업 (모달 선택 시) -->
+  <div id="fullScreenModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 max-w-sm w-full shadow-2xl animate-toast">
+      <div class="w-12 h-12 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+        <i data-lucide="file-check" class="w-6 h-6"></i>
+      </div>
+      <h3 class="text-lg font-bold text-slate-900">지원서를 제출할까요?</h3>
+      <p class="text-xs text-slate-500 mt-2 leading-relaxed">
+        제출 후에는 지원 내용을 수정할 수 없습니다. 작성을 완료하셨다면 [제출하기]를 눌러주세요.
+      </p>
+      <div class="flex gap-2.5 mt-6">
+        <button onclick="closeModalDemo()" class="flex-1 py-2.5 text-xs font-semibold bg-slate-100 text-slate-700 rounded-xl hover:bg-slate-200 transition">
+          취소
+        </button>
+        <button onclick="confirmModalAction()" class="flex-1 py-2.5 text-xs font-semibold bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition">
+          제출하기
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    UI & UX 알림 컴포넌트 9종 인터랙션 가이드 &copy; 2026
+  </footer>
+
+  <script>
+    // Lucide 아이콘 렌더링
+    lucide.createIcons();
+
+    // 01. 토스트 인터랙션
+    let toastTimeout;
+    function triggerToastDemo() {
+      const toast = document.getElementById('previewToast');
+      clearTimeout(toastTimeout);
+      toast.classList.remove('hidden');
+      toastTimeout = setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 2500);
+    }
+
+    // 02. 스낵바 인터랙션
+    let snackbarTimeout;
+    function deleteDocItem() {
+      const doc = document.getElementById('docCard');
+      const snackbar = document.getElementById('previewSnackbar');
+      
+      doc.style.opacity = '0.3';
+      snackbar.classList.remove('hidden');
+
+      clearTimeout(snackbarTimeout);
+      snackbarTimeout = setTimeout(() => {
+        snackbar.classList.add('hidden');
+      }, 3500);
+    }
+
+    function undoDeleteDoc() {
+      const doc = document.getElementById('docCard');
+      const snackbar = document.getElementById('previewSnackbar');
+      doc.style.opacity = '1';
+      snackbar.classList.add('hidden');
+      clearTimeout(snackbarTimeout);
+    }
+
+    // 03. 배너 인터랙션
+    function toggleBanner(show) {
+      const banner = document.getElementById('previewBanner');
+      if (show) {
+        banner.style.display = 'flex';
+      } else {
+        banner.style.display = 'none';
+      }
+    }
+
+    // 04. 모달 인터랙션
+    function openModalDemo() {
+      document.getElementById('fullScreenModal').classList.remove('hidden');
+    }
+    function closeModalDemo() {
+      document.getElementById('fullScreenModal').classList.add('hidden');
+    }
+    function confirmModalAction() {
+      closeModalDemo();
+      alert('지원서가 성공적으로 제출되었습니다!');
+    }
+
+    // 05. 바텀시트 인터랙션
+    function openBottomSheetDemo() {
+      const sheet = document.getElementById('previewSheet');
+      sheet.classList.remove('hidden');
+    }
+    function closeBottomSheetDemo(actionName) {
+      const sheet = document.getElementById('previewSheet');
+      sheet.classList.add('hidden');
+      if (actionName) {
+        // 토스트로 결과 안내 피드백
+        const toast = document.getElementById('previewToast');
+        toast.querySelector('span').innerText = `'${actionName}' 완료`;
+        triggerToastDemo();
+      }
+    }
+
+    // 06. 인라인 오류 인터랙션
+    let isErrorState = true;
+    function toggleInlineErrorState() {
+      const input = document.getElementById('mockEmailInput');
+      const msg = document.getElementById('inlineErrorMsg');
+      
+      if (isErrorState) {
+        input.value = "woody@example.com";
+        input.className = "w-full text-xs px-3 py-2 rounded-lg border border-emerald-500 bg-white text-slate-800 focus:outline-none focus:ring-1 focus:ring-emerald-500";
+        msg.innerHTML = `<i data-lucide="check" class="w-3 h-3"></i><span>사용 가능한 이메일입니다</span>`;
+        msg.className = "text-[11px] text-emerald-600 font-medium mt-1.5 flex items-center gap-1";
+      } else {
+        input.value = "woody@mail";
+        input.className = "w-full text-xs px-3 py-2 rounded-lg border border-rose-500 bg-white text-slate-800 focus:outline-none focus:ring-1 focus:ring-rose-500";
+        msg.innerHTML = `<i data-lucide="alert-circle" class="w-3 h-3"></i><span>이메일 형식을 확인해 주세요</span>`;
+        msg.className = "text-[11px] text-rose-600 font-medium mt-1.5 flex items-center gap-1";
+      }
+      isErrorState = !isErrorState;
+      lucide.createIcons();
+    }
+
+    function validateInlineEmail(val) {
+      const input = document.getElementById('mockEmailInput');
+      const msg = document.getElementById('inlineErrorMsg');
+      const isValid = val.includes('@') && val.includes('.');
+
+      if (isValid) {
+        input.className = "w-full text-xs px-3 py-2 rounded-lg border border-emerald-500 bg-white text-slate-800 focus:outline-none focus:ring-1 focus:ring-emerald-500";
+        msg.innerHTML = `<i data-lucide="check" class="w-3 h-3"></i><span>사용 가능한 이메일입니다</span>`;
+        msg.className = "text-[11px] text-emerald-600 font-medium mt-1.5 flex items-center gap-1";
+      } else {
+        input.className = "w-full text-xs px-3 py-2 rounded-lg border border-rose-500 bg-white text-slate-800 focus:outline-none focus:ring-1 focus:ring-rose-500";
+        msg.innerHTML = `<i data-lucide="alert-circle" class="w-3 h-3"></i><span>이메일 형식을 확인해 주세요</span>`;
+        msg.className = "text-[11px] text-rose-600 font-medium mt-1.5 flex items-center gap-1";
+      }
+      lucide.createIcons();
+    }
+
+    // 07. 툴팁 인터랙션
+    function toggleTooltipDemo() {
+      const tooltip = document.getElementById('previewTooltip');
+      tooltip.classList.toggle('hidden');
+    }
+
+    // 08. 코치마크 인터랙션
+    function triggerCoachDemo() {
+      const overlay = document.getElementById('previewCoachOverlay');
+      overlay.classList.remove('hidden');
+    }
+    function dismissCoachDemo() {
+      const overlay = document.getElementById('previewCoachOverlay');
+      overlay.classList.add('hidden');
+    }
+
+    // 09. 뱃지 인터랙션
+    let count = 3;
+    function toggleBadgeCount() {
+      const badgeCount = document.getElementById('badgeCount');
+      const badgeDot = document.getElementById('badgeDot');
+      const statusText = document.getElementById('badgeStatusText');
+
+      if (count > 0) {
+        count = 0;
+        badgeCount.classList.add('hidden');
+        badgeDot.classList.add('hidden');
+        statusText.innerText = '새로운 알림이 없습니다.';
+      } else {
+        count = 3;
+        badgeCount.classList.remove('hidden');
+        badgeDot.classList.remove('hidden');
+        badgeCount.innerText = count;
+        statusText.innerText = '새 피드백이 3개 왔어요';
+      }
+    }
+  </script>
+</body>
+</html>
