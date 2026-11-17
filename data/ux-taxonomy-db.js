@@ -255,7 +255,10 @@
         { id: 'cht_03', code: '차트 03 막대 & 그룹 비교 차트', eng: 'Grouped Bar chart', slot: 'main', span: 'full', meta: '월별/항목별 실적 높이 직관적 대조', desc: '기간별 매출이나 카테고리 간 수치를 수직·수평 막대 길이로 나란히 비교하고 호버 시 툴팁 표시' },
         { id: 'cht_04', code: '차트 04 잔디 캘린더 히트맵', eng: 'Contribution Heatmap', slot: 'main', span: 'full', meta: 'GitHub 스타일 일별 활동 밀도 타일', desc: '365일 또는 요일·시간대별 활동 빈도를 타일 색상의 진하기(농도)로 시각화해 꾸준함을 증명' },
         { id: 'cht_05', code: '차트 05 전환 퍼널 차트', eng: 'Conversion Funnel chart', slot: 'main', span: 'full', meta: '방문→가입→장바구니→결제 단계별 이탈률', desc: '사용자 여정 단계별로 몇 %가 남고 어디서 가장 많이 이탈했는지 깔때기 폭으로 시각화' },
-        { id: 'cht_06', code: '차트 06 레이더 역량 오각형', eng: 'Radar / Spider chart', slot: 'main', span: 'half', meta: '5~6개 다면 평가 지표 밸런스 비교', desc: '인재 역량 평가나 상품 스펙(성능·가격·디자인·내구성)의 균형도를 다각형 면적으로 한눈에 비교' }
+        { id: 'cht_06', code: '차트 06 레이더 역량 오각형', eng: 'Radar / Spider chart', slot: 'main', span: 'half', meta: '5~6개 다면 평가 지표 밸런스 비교', desc: '인재 역량 평가나 상품 스펙(성능·가격·디자인·내구성)의 균형도를 다각형 면적으로 한눈에 비교' },
+        { id: 'cht_07', code: '차트 07 목표 달성 반원 게이지 [추가]', eng: 'Radial Gauge meter', slot: 'main', span: 'half', meta: '반원 호(Arc) 진행률 + 임계값 색상', desc: 'CPU 점유율이나 월 매출 목표 달성률(78%)을 반원 게이지와 중앙 큰 수치로 즉각 전달' },
+        { id: 'cht_08', code: '차트 08 트리맵 비율 블록 [추가]', eng: 'Treemap breakdown', slot: 'main', span: 'full', meta: '계층별 면적 비례 사각 분할', desc: '전체 리소스나 포트폴리오 자산 비중을 중첩 사각형의 면적 크기로 한눈에 비교' },
+        { id: 'cht_09', code: '차트 09 누적 영역 추이 차트 [추가]', eng: 'Stacked Area chart', slot: 'main', span: 'full', meta: '채널별 시계열 누적 볼륨 비교', desc: '시간 흐름에 따른 채널별 유입량이나 비용의 총합과 구성 비중 변화를 면적 그래프로 표현' }
       ],
       commerce: [
         { id: 'com_01', code: '커머스 01 요금제 가격 비교 카드', eng: 'Pricing tier cards', slot: 'main', span: 'full', meta: 'Free/Pro/Enterprise 3단 비교 + 추천 배지', desc: '[월간/연간 20% 할인] 토글과 함께 요금제별 포함 기능을 비교하고 주력 플랜에 [Most Popular] 강조' },
@@ -263,21 +266,30 @@
         { id: 'com_03', code: '커머스 03 슬라이드 장바구니 드로어', eng: 'Slide-over Mini Cart', slot: 'bottom', span: 'half', meta: '페이지 이동 없이 우측에서 열리는 장바구니', desc: '상품 담기 클릭 시 현재 페이지를 떠나지 않고 우측 드로어로 담긴 목록과 무료배송까지 남은 금액 표시' },
         { id: 'com_04', code: '커머스 04 별점 평균 & 리뷰 분포 바', eng: 'Rating summary & breakdown', slot: 'main', span: 'half', meta: '★ 4.8 평균 + 5점~1점 비율 가로 막대', desc: '단순 별점 평균뿐만 아니라 5점·4점·1점 리뷰가 각각 몇 %인지 가로 게이지 바로 신뢰도 있게 제시' },
         { id: 'com_05', code: '커머스 05 쿠폰·프로모션 코드 입력', eng: 'Promo code input box', slot: 'main', span: 'half', meta: '할인 코드 검증 + 즉시 차감 금액 피드백', desc: '결제 직전 프로모션 코드를 입력해 유효성을 검증하고 할인된 최종 결제 금액을 실시간 재계산' },
-        { id: 'com_06', code: '커머스 06 주문 금액 영수증 요약', eng: 'Order summary receipt', slot: 'main', span: 'half', meta: '상품가 - 할인 + 배송비 = 최종 결제액 명세', desc: '총 상품 금액, 등급 할인, 쿠폰 차감, 배송비를 투명하게 가감하여 최종 결제 예정 금액을 확정' }
+        { id: 'com_06', code: '커머스 06 주문 금액 영수증 요약', eng: 'Order summary receipt', slot: 'main', span: 'half', meta: '상품가 - 할인 + 배송비 = 최종 결제액 명세', desc: '총 상품 금액, 등급 할인, 쿠폰 차감, 배송비를 투명하게 가감하여 최종 결제 예정 금액을 확정' },
+        { id: 'com_07', code: '커머스 07 원클릭 간편결제 시트 [추가]', eng: 'Express Checkout / One-tap Pay', slot: 'bottom', span: 'full', meta: '기본 배송지·결제수단 1초 확정', desc: '복잡한 주문서 입력 없이 저장된 기본 배송지와 간편결제 수단으로 즉시 주문을 확정하는 시트' },
+        { id: 'com_08', code: '커머스 08 옵션·품절 & 재입고 알림 [추가]', eng: 'Variant Selector & Restock Alert', slot: 'main', span: 'half', meta: '색상/사이즈 스와치 + 품절 비활성 + 알림', desc: '옵션 스와치 선택 시 재고를 즉시 확인하고 품절 옵션은 취소선 처리와 함께 [재입고 알림] 제공' },
+        { id: 'com_09', code: '커머스 09 무료배송 달성 게이지 [추가]', eng: 'Free Shipping Threshold Bar', slot: 'header', span: 'half', meta: '목표 금액까지 남은 차액 실시간 안내', desc: '장바구니 상단에 "12,000원 더 담으면 무료배송!" 진행률 바를 띄워 추가 구매를 자연스럽게 유도' }
       ],
       auth: [
         { id: 'aut_01', code: '계정 01 아바타 스택 & 멤버 초대', eng: 'Avatar group stack', slot: 'header', span: 'half', meta: '겹쳐진 원형 프로필 사진 + [+4명] 배지 + 초대', desc: '현재 워크스페이스나 문서에 참여 중인 팀원들의 프로필을 겹쳐 보여주고 [+ 멤버 초대] 모달 연결' },
         { id: 'aut_02', code: '계정 02 권한·역할(RBAC) 관리 표', eng: 'Role & Permission matrix', slot: 'main', span: 'full', meta: 'Owner / Admin / Editor / Viewer 권한 드롭다운', desc: '팀원별로 열람·편집·결제·멤버관리 권한을 부여하거나 회수하는 엔터프라이즈 설정 테이블' },
         { id: 'aut_03', code: '계정 03 API 키 마스킹 & 복사 박스', eng: 'Secret API key reveal & copy', slot: 'main', span: 'half', meta: 'sk-•••••• 마스킹 + 눈 아이콘 보기 + 원클릭 복사', desc: '보안 토큰이나 API 키를 기본 별표(•)로 가려두고 필요할 때만 노출하거나 클립보드로 안전하게 복사' },
         { id: 'aut_04', code: '계정 04 위험 구역 (Danger Zone)', eng: 'Danger zone confirmation', slot: 'main', span: 'full', meta: '붉은 테두리 경고 + 프로젝트명 타이핑 후 영구 삭제', desc: '계정 탈퇴나 데이터 초기화처럼 되돌릴 수 없는 파괴적 액션을 붉은 박스로 격리해 실수를 방지' },
-        { id: 'aut_05', code: '계정 05 패스키 & 2단계 인증(2FA) 설정', eng: 'Passkey & 2FA security card', slot: 'main', span: 'half', meta: '생체인증(FaceID) 패스키 등록 및 활성 배지', desc: '비밀번호 없는 로그인(Passkey)이나 OTP 앱 연동을 설정하고 활성 보안 상태를 표시하는 카드' }
+        { id: 'aut_05', code: '계정 05 패스키 & 2단계 인증(2FA) 설정', eng: 'Passkey & 2FA security card', slot: 'main', span: 'half', meta: '생체인증(FaceID) 패스키 등록 및 활성 배지', desc: '비밀번호 없는 로그인(Passkey)이나 OTP 앱 연동을 설정하고 활성 보안 상태를 표시하는 카드' },
+        { id: 'aut_06', code: '계정 06 활성 기기·세션 관리 [추가]', eng: 'Active Sessions & Device Manager', slot: 'main', span: 'full', meta: '로그인 기기·위치 표시 + 원격 로그아웃', desc: '현재 계정에 접속 중인 OS/브라우저·위치·최근 활동 시각을 보여주고 의심 기기를 원격 로그아웃' },
+        { id: 'aut_07', code: '계정 07 보안 감사 로그 (Audit Log) [추가]', eng: 'Security Audit Trail', slot: 'main', span: 'full', meta: '권한 변경·키 발급·삭제 이력 추적표', desc: '누가 언제 어떤 보안/관리 액션을 수행했는지 IP 및 타임스탬프와 함께 불변 이력으로 조회' },
+        { id: 'aut_08', code: '계정 08 비밀번호 강도 미터 [추가]', eng: 'Password Strength Meter', slot: 'main', span: 'half', meta: '4단계 강도 바 + 길이/특수문자 실시간 체크', desc: '새 비밀번호 입력 시 8자 이상·숫자·특수문자 충족 여부를 실시간 체크리스트와 게이지 바로 안내' }
       ],
       media_collab: [
         { id: 'med_01', code: '미디어 01 이미지 라이트박스 뷰어', eng: 'Image Lightbox gallery', slot: 'bottom', span: 'full', meta: '클릭 시 어두운 배경 위 고해상도 원본 확대', desc: '썸네일 클릭 시 주변을 어둡게 덮고 고화질 원본 이미지와 좌우 넘김·줌 컨트롤을 띄우는 뷰어' },
         { id: 'med_02', code: '미디어 02 비포 & 애프터 비교 슬라이더', eng: 'Before / After split slider', slot: 'main', span: 'full', meta: '중앙 분할선을 좌우로 끌어 보정 전·후 비교', desc: 'AI 화질 개선, 인테리어 시공, 디자인 리뉴얼 전(Before)과 후(After)를 핸들 드래그로 겹쳐 비교' },
         { id: 'med_03', code: '미디어 03 오디오 파형(Waveform) 플레이어', eng: 'Audio waveform player', slot: 'main', span: 'half', meta: '음성 높낮이 막대 파형 + 구간 클릭 점프', desc: '회의 녹음이나 보이스 메모의 소리 크기 파형을 시각화하여 원하는 발언 구간으로 즉시 탐색' },
         { id: 'med_04', code: '미디어 04 스레드 댓글 & 이모지 리액션', eng: 'Threaded comments & reactions', slot: 'main', span: 'full', meta: '대댓글 들여쓰기 + 👍🎉❤️ 원클릭 공감 카운트', desc: '특정 문서 블록이나 피드에 대댓글 스레드를 달고 텍스트 없이도 이모지 칩으로 빠른 피드백 표시' },
-        { id: 'med_05', code: '미디어 05 플로팅 PIP 미니 플레이어', eng: 'Picture-in-Picture (PIP) mini player', slot: 'bottom', span: 'half', meta: '스크롤/이동 시 우측 하단 작은 영상창 고정', desc: '라이브 방송이나 강의 영상을 보면서 다른 메뉴를 탐색할 수 있도록 구석에 띄워두는 미니 창' }
+        { id: 'med_05', code: '미디어 05 플로팅 PIP 미니 플레이어', eng: 'Picture-in-Picture (PIP) mini player', slot: 'bottom', span: 'half', meta: '스크롤/이동 시 우측 하단 작은 영상창 고정', desc: '라이브 방송이나 강의 영상을 보면서 다른 메뉴를 탐색할 수 있도록 구석에 띄워두는 미니 창' },
+        { id: 'med_06', code: '협업 06 실시간 멀티 커서 & 프레즌스 [추가]', eng: 'Live Cursors & Presence', slot: 'main', span: 'half', meta: '동시 편집자 커서 위치·이름표 실시간 표시', desc: '공동 작업 중인 캔버스/문서 위에서 다른 참여자의 커서 움직임과 이름 태그를 실시간으로 노출' },
+        { id: 'med_07', code: '협업 07 버전 비교 (Diff View) [추가]', eng: 'Side-by-Side / Inline Diff', slot: 'main', span: 'full', meta: '수정 전(- 빨강) vs 수정 후(+ 초록) 줄 비교', desc: '문서·코드·설정의 이전 버전과 최신 버전을 나란히 두고 추가·삭제된 변경 라인을 색상으로 강조' },
+        { id: 'med_08', code: '협업 08 공유 권한 & 링크 복사 시트 [추가]', eng: 'Share Modal & Copy Link', slot: 'bottom', span: 'half', meta: '열람 권한 드롭다운 + URL 원클릭 복사', desc: '문서/보드의 접근 권한(비공개·링크 공유·전체 공개)을 설정하고 초대 링크를 즉시 복사' }
       ]
     };
 
@@ -909,6 +921,28 @@
               <div class="text-right"><div class="font-extrabold text-slate-800">${item.code}</div><div class="text-[8px] text-slate-400">5축 역량 밸런스</div></div>
             </div>`;
         }
+        if (item.id === 'cht_07') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+              <svg viewBox="0 0 64 36" class="w-14 h-8 shrink-0"><path d="M8 30 A24 24 0 0 1 56 30" fill="none" stroke="#e2e8f0" stroke-width="6" stroke-linecap="round"/><path d="M8 30 A24 24 0 0 1 48 14" fill="none" stroke="#2563eb" stroke-width="6" stroke-linecap="round"/></svg>
+              <div class="text-right"><div class="font-extrabold text-blue-600">78% 달성</div><div class="text-[8px] text-slate-400">월간 목표 게이지</div></div>
+            </div>`;
+        }
+        if (item.id === 'cht_08') {
+          return `
+            <div class="bg-white p-1.5 rounded-xl border border-slate-200 grid grid-cols-12 gap-1 h-11 text-[8px] font-bold text-white">
+              <div class="col-span-6 bg-blue-600 rounded p-1">코어 52%</div>
+              <div class="col-span-4 bg-indigo-500 rounded p-1">AI 31%</div>
+              <div class="col-span-2 bg-slate-400 rounded p-1">17%</div>
+            </div>`;
+        }
+        if (item.id === 'cht_09') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+              <svg viewBox="0 0 80 28" class="w-20 h-7 shrink-0"><polygon points="0,28 0,18 25,12 50,15 80,5 80,28" fill="rgba(99,102,241,0.28)"/><polygon points="0,28 0,22 25,18 50,20 80,14 80,28" fill="rgba(37,99,235,0.45)"/></svg>
+              <div class="text-right"><div class="font-extrabold text-slate-800">채널 누적 추이</div><div class="text-[8px] text-emerald-600 font-bold">▲ +32.4%</div></div>
+            </div>`;
+        }
         return `
           <div class="bg-white p-2.5 rounded-xl border border-slate-200 text-[9px] space-y-1.5">
             <div class="flex items-center justify-between"><span class="font-extrabold text-slate-800">📊 ${item.code}</span><span class="text-emerald-600 font-bold">▲ +24.8%</span></div>
@@ -952,6 +986,27 @@
               <div class="flex justify-between font-extrabold text-blue-600 border-t border-slate-100 pt-0.5"><span>최종 결제액</span><span>₩44,000</span></div>
             </div>`;
         }
+        if (item.id === 'com_07') {
+          return `
+            <div class="bg-slate-900 text-white p-2 rounded-xl flex items-center justify-between text-[9px]">
+              <div><div class="font-bold">📍 서울 강남구 · 신한 ****1234</div><div class="text-[8px] text-slate-300">원클릭 간편결제</div></div>
+              <span class="px-2.5 py-1 rounded-lg bg-amber-400 text-slate-900 font-extrabold">1초 결제</span>
+            </div>`;
+        }
+        if (item.id === 'com_08') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px] font-bold">
+              <div class="flex gap-1"><span class="px-2 py-0.5 rounded border-2 border-blue-600 text-blue-600">M</span><span class="px-2 py-0.5 rounded border border-slate-200 text-slate-300 line-through">L(품절)</span></div>
+              <span class="text-blue-600 underline text-[8px]">🔔 재입고 알림</span>
+            </div>`;
+        }
+        if (item.id === 'com_09') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 space-y-1 text-[9px]">
+              <div class="flex justify-between font-bold"><span class="text-slate-700">🚚 12,000원 더 담으면 무료배송!</span><span class="text-blue-600">76%</span></div>
+              <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden"><div class="w-3/4 h-full bg-emerald-500 rounded-full"></div></div>
+            </div>`;
+        }
         return `
           <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
             <div><span class="font-extrabold text-slate-900">🛍️ ${item.code}</span><div class="text-[8px] text-slate-400">${item.meta}</div></div>
@@ -979,6 +1034,27 @@
             <div class="bg-rose-50/70 p-2 rounded-xl border border-rose-300 flex items-center justify-between text-[9px]">
               <span class="font-extrabold text-rose-700">⚠️ Danger Zone</span>
               <span class="px-2 py-0.5 rounded bg-rose-600 text-white font-bold">영구 삭제</span>
+            </div>`;
+        }
+        if (item.id === 'aut_06') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+              <div><div class="font-bold text-slate-800">💻 macOS · Seoul (현재)</div><div class="text-[8px] text-slate-400">📱 iPhone 16 · 2시간 전</div></div>
+              <span class="px-2 py-0.5 rounded bg-rose-50 text-rose-600 font-bold">원격 로그아웃</span>
+            </div>`;
+        }
+        if (item.id === 'aut_07') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 space-y-0.5 text-[8px]">
+              <div class="flex justify-between font-bold text-slate-700"><span>🔑 API Key 재발급 (Admin)</span><span class="font-mono text-slate-400">10:42:18</span></div>
+              <div class="flex justify-between text-slate-500"><span>👤 멤버 권한 변경 → Editor</span><span class="font-mono text-slate-400">09:15:02</span></div>
+            </div>`;
+        }
+        if (item.id === 'aut_08') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 space-y-1 text-[9px]">
+              <div class="flex justify-between font-bold"><span class="text-slate-700">비밀번호 강도: 안전</span><span class="text-emerald-600">✓ 8자 · 특수문자</span></div>
+              <div class="grid grid-cols-4 gap-1 h-1.5"><span class="bg-emerald-500 rounded"></span><span class="bg-emerald-500 rounded"></span><span class="bg-emerald-500 rounded"></span><span class="bg-slate-200 rounded"></span></div>
             </div>`;
         }
         return `
@@ -1009,6 +1085,27 @@
             <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
               <span class="font-bold text-slate-700">💬 대댓글 스레드 (3)</span>
               <div class="flex gap-1 text-[8px] font-bold"><span class="px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-700">👍 12</span><span class="px-1.5 py-0.5 rounded-full bg-amber-50 text-amber-700">🎉 4</span></div>
+            </div>`;
+        }
+        if (item.id === 'med_06') {
+          return `
+            <div class="bg-slate-50 p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+              <span class="px-2 py-0.5 rounded-full bg-blue-600 text-white font-bold">↖ 김디자이너 편집 중</span>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-600 text-white font-bold">↗ 박개발 확인 중</span>
+            </div>`;
+        }
+        if (item.id === 'med_07') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 font-mono text-[8px] space-y-0.5">
+              <div class="bg-rose-50 text-rose-700 px-1.5 py-0.5 rounded">- timeout: 3000ms</div>
+              <div class="bg-emerald-50 text-emerald-700 px-1.5 py-0.5 rounded">+ timeout: 5000ms (retry: 2)</div>
+            </div>`;
+        }
+        if (item.id === 'med_08') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+              <span class="text-slate-600 font-bold">🌐 링크 있는 모든 사용자 ▾</span>
+              <span class="px-2 py-0.5 rounded bg-blue-600 text-white font-bold">링크 복사</span>
             </div>`;
         }
       }
@@ -1119,16 +1216,29 @@ function getImplementationRecipe(item) {
         mo_02: "등장 트랜지션에 cubic-bezier(0.215, 0.61, 0.355, 1) Ease-out 감속 곡선 적용",
         mo_03: "모달/카드 팝업에 cubic-bezier(0.34, 1.56, 0.64, 1) 물리 스프링 탄성 오버슈트 키프레임 적용",
         mo_05: "리스트/그리드 자식 카드들에 animation-delay를 60ms씩 차등 부여해 계단식 순차 등장(Stagger) 구현",
+        // 차트 · 커머스 · 보안 · 미디어/협업 확장
+        cht_07: "SVG 반원 호(stroke-dasharray / stroke-dashoffset)로 목표 달성률(%) 애니메이션 및 임계값 색상 분기 구현",
+        cht_08: "CSS Grid 비율 분할 또는 SVG Treemap으로 계층별 면적 비중 렌더링 및 호버 시 상세 수치 툴팁 표시",
+        cht_09: "SVG 다중 polygon/path 영역 그래프 + 범례 클릭 시 특정 채널 시리즈 토글 구현",
+        com_07: "저장된 기본 배송지/결제수단 요약 + 1초 간편결제 버튼 클릭 시 로딩(ld_09) 후 주문 완료 피드백 연결",
+        com_08: "옵션 스와치 선택 시 재고 상태(품절 disabled/취소선) 즉시 반영 및 품절 시 [재입고 알림 신청] 토스트 연동",
+        com_09: "장바구니 합계 금액과 무료배송 기준액 차액을 실시간 계산해 프로그레스 바(%) 및 안내 문구 자동 갱신",
         aut_01: "아바타 원형 겹침(-space-x-2 ring-2 ring-white) + 초과 인원(+N) 배지 + [+ 멤버 초대] <dialog> 모달 연동",
         aut_02: "멤버 행별 역할(Owner/Admin/Editor/Viewer) 셀렉트 변경 시 권한 배지 색상 및 설명 즉시 업데이트",
         aut_03: "API 키 기본 마스킹(sk-••••) + 눈 아이콘 보기/숨김 토글 + navigator.clipboard.writeText 복사 후 2초 '복사됨' 피드백",
         aut_04: "위험 구역(border-rose-300 bg-rose-50/40) 내 확인 입력값이 대상 프로젝트명과 정확히 일치할 때만 영구 삭제 버튼 활성화",
         aut_05: "패스키/2FA 카드에서 등록 상태 배지 토글 및 인증 수단 추가/해제 확인 모달 연동",
+        aut_06: "접속 기기 목록에서 [원격 로그아웃] 클릭 시 확인 후 해당 세션 행 제거 및 스낵바 알림 표시",
+        aut_07: "감사 로그 테이블에서 이벤트 유형/기간 필터링 및 타임스탬프·IP·수행자 상세 인스펙터 연동",
+        aut_08: "input 이벤트마다 길이·영문·숫자·특수문자 정규식 검증으로 4단계 강도 바 및 체크리스트 실시간 갱신",
         med_01: "썸네일 클릭 시 <dialog> 라이트박스 오픈, 좌우 화살표/키보드(←/→) 이미지 전환 및 줌 토글 구현",
         med_02: "중앙 분할 핸들 포인터 드래그(pointermove)로 clip-path: inset(0 X% 0 0) 값을 조절해 Before/After 실시간 비교",
         med_03: "막대 파형(SVG/Flex) 클릭 시 재생 위치(%) 즉시 점프 및 재생/일시정지 시간(01:24 / 03:40) 동기화",
         med_04: "댓글/대댓글 들여쓰기 스레드 렌더링 + 답글 입력 폼 토글 + 이모지 리액션 칩 클릭 시 카운트(+1/-1) 토글",
-        med_05: "스크롤 이탈 시 우측 하단 fixed PIP 미니 플레이어 활성화, 닫기/원위치 복귀 버튼 연동"
+        med_05: "스크롤 이탈 시 우측 하단 fixed PIP 미니 플레이어 활성화, 닫기/원위치 복귀 버튼 연동",
+        med_06: "캔버스 위 참여자별 고유 컬러 커서 좌표 동기화 및 비활성 시 페이드아웃 프레즌스 배지 처리",
+        med_07: "변경 전/후 라인 비교(Side-by-side/Inline 전환 토글) + 추가(+ 초록)/삭제(- 빨강) 하이라이트 렌더링",
+        med_08: "권한 셀렉트(비공개/링크공유/전체) 변경 및 [링크 복사] 클릭 시 clipboard API 복사 + 2초 완료 토스트"
       };
       if (recipes[item.id]) return recipes[item.id];
       if (item.catKey === 'chart') return `SVG 또는 CSS Flex/Grid를 활용해 정적 이미지가 아닌 수치 변경/호버 툴팁이 반응하는 인터랙티브 ${item.eng} 위젯 구현`;
