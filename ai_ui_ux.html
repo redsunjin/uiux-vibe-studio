@@ -105,8 +105,8 @@
         </button>
 
         <button type="button" data-action="run-audit" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5" aria-hidden="true"></i>
-          <span>AI 휴리스틱 검수</span>
+          <i data-lucide="shield-check" class="w-3.5 h-3.5" aria-hidden="true"></i>
+          <span>UX 휴리스틱 검수</span>
         </button>
       </div>
     </div>
@@ -249,16 +249,16 @@
         <!-- 중앙 디바이스 위지윅 뷰포트 스테이지 -->
         <div class="flex-1 bg-slate-200/70 p-4 overflow-y-auto flex flex-col items-center justify-between custom-scroll">
 
-          <!-- AI 휴리스틱 검수 결과 알림창 -->
-          <div id="auditResultBanner" class="hidden w-full mb-3 bg-indigo-950 text-white rounded-xl p-3 border border-indigo-700 shadow-md animate-spring">
+          <!-- UX 휴리스틱 규칙 검수 결과 알림창 -->
+          <div id="auditResultBanner" class="hidden w-full max-w-[960px] mb-3 bg-indigo-950 text-white rounded-xl p-3 border border-indigo-700 shadow-md animate-spring">
             <div class="flex items-start justify-between gap-2">
               <div class="flex items-center gap-1.5 text-xs font-bold text-indigo-300">
-                <i data-lucide="bot" class="w-4 h-4" aria-hidden="true"></i>
-                <span>AI 에이전트 UX 휴리스틱 검수 리포트</span>
+                <i data-lucide="clipboard-check" class="w-4 h-4" aria-hidden="true"></i>
+                <span>UX 휴리스틱 자동 검수 리포트 (로컬 규칙 엔진)</span>
               </div>
               <button type="button" data-action="close-audit" class="text-indigo-300 hover:text-white text-xs">닫기 ✕</button>
             </div>
-            <ul id="auditList" class="mt-2 space-y-1 text-[11px] text-indigo-100 list-disc list-inside"></ul>
+            <ul id="auditList" class="mt-2 space-y-1.5 text-[11px] text-indigo-100"></ul>
           </div>
 
           <!-- 기기별 상태 안내 바 (현재 뷰포트의 반응형 문법 설명) -->
@@ -1759,28 +1759,97 @@ ${buildSharedStateSpec()}
       const ids = activeComponents.map(x => x.id);
       const tips = [];
 
-      if (ids.includes('form_01') && !ids.includes('fb_06')) {
-        tips.push("⚠️ [입력 검증 누락]: '입력폼 01 텍스트 필드'가 있으나 '피드백 06 인라인 오류'가 없습니다. 실시간 오타 검증을 위해 추가를 권장합니다.");
-      }
-      if (ids.includes('src_01') && !ids.includes('src_08')) {
-        tips.push("💡 [검색 엣지케이스 보완]: '검색 01 검색창' 사용 시 검색 결과가 0건일 때 이탈을 막는 '검색 08 검색 결과 없음(No results)' 패턴을 함께 넣으면 완성도가 높아집니다.");
-      }
-      if (ids.includes('fb_04') && ids.includes('fb_05')) {
-        tips.push("⚠️ [레이어 충돌 주의]: '04 모달'과 '05 바텀시트'가 동시에 쓰이면 피로도가 높습니다. 가벼운 알림은 '01 토스트'로 대체하세요.");
-      }
-      if (currentViewport !== 'mobile' && currentGridArch === 'stack') {
-        tips.push("💡 [태블릿/PC 공간 활용 제안]: 현재 태블릿/PC 뷰포트에서 수직 1단만 사용 중입니다. 상단에서 '2단 격자'나 '사이드바+본문', '3단 벤토'를 활성화해 보세요.");
-      }
-      if (!ids.some(id => id.startsWith('cnt_') || id.startsWith('lay_'))) {
-        tips.push("💡 [본문 골격 보완]: 내비게이션/폼 외에 본문 중심을 잡아줄 '화면 레이아웃' 또는 '콘텐츠 구조' 블록을 추가해 보세요.");
-      }
-      if (tips.length === 0) {
-        tips.push("✅ [UX 휴리스틱 통과]: 현재 화면의 단/격자 구조와 탐색-입력-로딩-피드백 밸런스가 매우 우수합니다!");
+      if (ids.length === 0) {
+        tips.push({ text: "💡 [빈 캔버스]: 조립된 블록이 없습니다. 좌측 팔레트에서 블록을 추가하거나 상단 실전 프리셋을 먼저 선택해 보세요." });
+      } else {
+        const hasForm = ids.some(id => id.startsWith('form_'));
+        const hasSearch = ids.includes('src_01') || ids.includes('src_02');
+        const hasListOrTable = ids.some(id => ['cnt_03', 'cnt_07', 'lay_04', 'cnt_02'].includes(id));
+        const hasActionFlow = hasForm || ids.some(id => ['com_02', 'com_06', 'com_07'].includes(id));
+
+        if (hasForm && !ids.includes('fb_06')) {
+          tips.push({
+            text: "⚠️ [입력 검증 누락]: 입력 폼(form_*)이 있으나 실시간 오타·형식 검증용 '피드백 06 인라인 오류'가 없습니다.",
+            fixAction: 'audit-add-pattern',
+            fixId: 'fb_06',
+            fixLabel: '+ 인라인 오류(fb_06) 추가'
+          });
+        }
+        if (hasActionFlow && !ids.includes('ld_09') && !ids.includes('ld_07')) {
+          tips.push({
+            text: "⚠️ [중복 클릭 방지 누락]: 제출·결제 플로우에 '로딩 09 로딩 버튼(ld_09)' 또는 '낙관적 UI(ld_07)'를 두어 중복 전송을 막는 것이 좋습니다.",
+            fixAction: 'audit-add-pattern',
+            fixId: 'ld_09',
+            fixLabel: '+ 로딩 버튼(ld_09) 추가'
+          });
+        }
+        if (hasActionFlow && !ids.includes('fb_01') && !ids.includes('fb_02')) {
+          tips.push({
+            text: "💡 [완료 피드백 보완]: 작업 완료 후 사용자에게 결과를 알리는 '토스트(fb_01)' 또는 '실행 취소 스낵바(fb_02)'를 연결하세요.",
+            fixAction: 'audit-add-pattern',
+            fixId: 'fb_02',
+            fixLabel: '+ 스낵바(fb_02) 추가'
+          });
+        }
+        if (hasSearch && !ids.includes('src_08')) {
+          tips.push({
+            text: "💡 [검색 엣지케이스 보완]: 검색 결과가 0건일 때 이탈을 막는 '검색 08 검색 결과 없음(src_08)' 폴백을 권장합니다.",
+            fixAction: 'audit-add-pattern',
+            fixId: 'src_08',
+            fixLabel: '+ 결과 없음(src_08) 추가'
+          });
+        }
+        if (hasListOrTable && !ids.includes('ld_02') && !ids.includes('cnt_06')) {
+          tips.push({
+            text: "💡 [대기·빈 상태 보완]: 목록/테이블 로딩 중 '스켈레톤(ld_02)' 또는 데이터 0건용 '빈 화면(cnt_06)'을 준비하면 완성도가 높아집니다.",
+            fixAction: 'audit-add-pattern',
+            fixId: 'ld_02',
+            fixLabel: '+ 스켈레톤(ld_02) 추가'
+          });
+        }
+        if (ids.includes('fb_04') && ids.includes('fb_05')) {
+          tips.push({ text: "⚠️ [레이어 충돌 주의]: '04 모달(fb_04)'과 '05 바텀시트(fb_05)'가 동시에 쓰이면 피로도가 높습니다. 가벼운 알림은 '01 토스트'로 대체하세요." });
+        }
+        if (currentViewport === 'mobile' && (ids.includes('nav_01') || ids.includes('com_02')) && !ids.includes('ind_09')) {
+          tips.push({
+            text: "💡 [모바일 Safe Area 보완]: 모바일 하단 고정 바 사용 시 노치/제스처 영역 보호용 '홈 인디케이터(ind_09)' 추가를 권장합니다.",
+            fixAction: 'audit-add-pattern',
+            fixId: 'ind_09',
+            fixLabel: '+ Safe Area(ind_09) 추가'
+          });
+        }
+        if (currentViewport !== 'mobile' && currentGridArch === 'stack') {
+          tips.push({
+            text: "💡 [태블릿/PC 공간 활용 제안]: 현재 태블릿/PC 뷰포트에서 수직 1단만 사용 중입니다. 다단 격자로 전환해 보세요.",
+            fixAction: 'audit-set-grid',
+            fixId: currentViewport === 'desktop' ? 'sidebar' : 'grid2',
+            fixLabel: currentViewport === 'desktop' ? '사이드바+본문 전환' : '2단 격자 전환'
+          });
+        }
+        if (!ids.some(id => id.startsWith('cnt_') || id.startsWith('lay_') || id.startsWith('onb_') || id.startsWith('ai_'))) {
+          tips.push({ text: "💡 [본문 골격 보완]: 내비게이션/폼 외에 본문 중심을 잡아줄 '화면 레이아웃' 또는 '콘텐츠 구조' 블록을 추가해 보세요." });
+        }
       }
 
-      tips.forEach(t => {
+      if (tips.length === 0) {
+        tips.push({ text: "✅ [UX 휴리스틱 통과]: 입력 검증, 중복 클릭 방지, 빈 상태/에러 폴백, 반응형 격자 밸런스가 모두 우수합니다!" });
+      }
+
+      tips.forEach(tip => {
         const li = document.createElement('li');
-        li.textContent = t;
+        li.className = 'flex flex-wrap items-center justify-between gap-2 bg-indigo-900/50 rounded-lg px-2.5 py-1.5';
+        const span = document.createElement('span');
+        span.textContent = tip.text;
+        li.appendChild(span);
+        if (tip.fixAction) {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.dataset.action = tip.fixAction;
+          btn.dataset.id = tip.fixId;
+          btn.className = 'px-2 py-0.5 rounded-md bg-blue-500 hover:bg-blue-400 text-white font-bold text-[10px] shrink-0 transition';
+          btn.textContent = tip.fixLabel;
+          li.appendChild(btn);
+        }
         list.appendChild(li);
       });
 
@@ -1929,6 +1998,16 @@ ${buildSharedStateSpec()}
         loadPreset(target.dataset.preset);
       } else if (action === 'run-audit') {
         if (currentWorkspaceMode !== 'composer') switchWorkspaceMode('composer');
+        runAiHeuristicAudit();
+      } else if (action === 'audit-add-pattern') {
+        const found = ALL_PATTERNS.find(x => x.id === target.dataset.id);
+        if (found && !activeComponents.some(x => x.id === found.id)) {
+          activeComponents.push({ ...found, note: '' });
+          syncAllViews();
+        }
+        runAiHeuristicAudit();
+      } else if (action === 'audit-set-grid') {
+        setGridArchitecture(target.dataset.id);
         runAiHeuristicAudit();
       } else if (action === 'close-audit') {
         document.getElementById('auditResultBanner').classList.add('hidden');
