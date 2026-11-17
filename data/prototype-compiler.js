@@ -541,6 +541,72 @@
       .replace(/"/g, '&quot;');
   }
 
+  const CAT_ICON_MAP = {
+    search: 'search',
+    datetime: 'calendar',
+    chart: 'bar-chart-2',
+    commerce: 'shopping-bag',
+    ai: 'bot',
+    auth: 'shield-check',
+    form: 'file-text',
+    onboarding: 'rocket',
+    media_collab: 'users',
+    feedback: 'bell',
+    loading: 'loader',
+    content: 'layout-grid',
+    layout: 'layout-template'
+  };
+
+  const PRESET_DOMAIN_LABELS = {
+    apply: '채용·평가',
+    ai_chat: 'AI 에이전트',
+    search_shop: '커머스 탐색',
+    booking: '예약 플로우',
+    onboarding: '온보딩',
+    saas_dash: 'SaaS 분석',
+    rbac_security: '팀·보안',
+    social_feed: '소셜 피드'
+  };
+
+  // 현재 조립된 블록(범용) + 프리셋 도메인 맥락을 결합해 레일/사이드바 내비게이션 항목 생성
+  function buildNavigationItems(activeComponents = [], presetKey = '') {
+    const domainLabel = PRESET_DOMAIN_LABELS[presetKey] || '커스텀 워크스페이스';
+    const items = [
+      {
+        targetId: '__top__',
+        label: '전체 화면 홈',
+        icon: 'home',
+        badge: activeComponents.length > 0 ? String(activeComponents.length) : ''
+      }
+    ];
+
+    const mainItems = activeComponents.filter(x => x.slot === 'main');
+    const sourceList = mainItems.length > 0 ? mainItems : activeComponents;
+    const seen = new Set();
+
+    for (const comp of sourceList) {
+      if (items.length >= 5) break;
+      if (!comp || seen.has(comp.id)) continue;
+      seen.add(comp.id);
+      const shortLabel = (comp.code || '').replace(/^[^\d]*\d+\s*/, '').replace(/\s*\[추가\]\s*/g, '').trim() || comp.catShort || comp.eng;
+      items.push({
+        targetId: comp.id,
+        label: shortLabel,
+        icon: CAT_ICON_MAP[comp.catKey] || 'layers',
+        badge: ''
+      });
+    }
+
+    if (items.length === 1) {
+      items.push(
+        { targetId: '__top__', label: '주요 구성 블록', icon: 'layers', badge: '' },
+        { targetId: '__top__', label: '화면 설정', icon: 'settings', badge: '' }
+      );
+    }
+
+    return { domainLabel, items };
+  }
+
   // ===========================================================================
   // 메인 동적 HTML 합성 함수 (현재 캔버스 상태 -> 독립 실행 가능한 완전한 HTML 문서)
   // ===========================================================================
@@ -550,6 +616,7 @@
       viewport = 'desktop',
       gridArch = 'sidebar',
       visualTheme = 'clean',
+      presetKey = '',
       activeComponents = []
     } = config;
 
@@ -609,6 +676,19 @@
     }).join('\n');
     const bottomHtml = bottoms.map((item, idx) => renderInteractiveComponentSection(item, idx)).join('\n');
     const behaviorBadges = behaviors.map(b => `<span class="px-2.5 py-0.5 rounded-full bg-indigo-500/20 border border-indigo-400/30 text-indigo-200 text-[11px] font-bold">⚡ ${escapeHtml(b.code)}</span>`).join('');
+    const { domainLabel, items: navItems } = buildNavigationItems(activeComponents, presetKey);
+    const railButtonsHtml = navItems.slice(0, 5).map((nav, idx) => `
+      <button type="button" data-role="proto-nav-jump" data-target="${escapeHtml(nav.targetId)}" title="${escapeHtml(nav.label)}" aria-label="${escapeHtml(nav.label)}" class="w-9 h-9 rounded-xl flex items-center justify-center transition ${idx === 0 ? 'bg-slate-800 text-blue-400' : 'hover:bg-slate-800 text-slate-400'}">
+        <i data-lucide="${escapeHtml(nav.icon)}" class="w-4 h-4"></i>
+      </button>`).join('');
+    const sidebarButtonsHtml = navItems.map((nav, idx) => `
+      <button type="button" data-role="proto-nav-jump" data-target="${escapeHtml(nav.targetId)}" class="w-full text-left px-3 py-2 rounded-xl flex items-center justify-between gap-2 transition ${idx === 0 ? 'bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 font-extrabold' : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800'}">
+        <span class="flex items-center gap-2 min-w-0">
+          <i data-lucide="${escapeHtml(nav.icon)}" class="w-3.5 h-3.5 shrink-0"></i>
+          <span class="truncate">${escapeHtml(nav.label)}</span>
+        </span>
+        ${nav.badge ? `<span class="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 font-bold shrink-0">${escapeHtml(nav.badge)}</span>` : ''}
+      </button>`).join('');
 
     return `<!DOCTYPE html>
 <html lang="ko">
@@ -668,45 +748,40 @@
   <div class="flex-1 max-w-7xl w-full mx-auto flex">
 
     <!-- 태블릿 네비게이션 레일 (md:flex lg:hidden) -->
-    <aside class="hidden md:flex lg:hidden w-14 flex-col items-center py-4 gap-4 bg-slate-900 text-slate-400 shrink-0">
+    <aside aria-label="태블릿 네비게이션 레일" class="hidden md:flex lg:hidden w-14 flex-col items-center py-4 gap-3 bg-slate-900 text-slate-400 shrink-0">
       <div class="w-8 h-8 rounded-xl bg-blue-600 text-white font-extrabold text-xs flex items-center justify-center">UX</div>
-      <i data-lucide="home" class="w-4 h-4 text-blue-400"></i>
-      <i data-lucide="search" class="w-4 h-4"></i>
-      <i data-lucide="layers" class="w-4 h-4"></i>
+      ${railButtonsHtml}
     </aside>
 
     ${hasSidebar ? `
     <!-- 데스크톱 좌측 고정 사이드바 -->
-    <aside class="hidden lg:flex w-60 flex-col justify-between p-4 bg-white border-r border-slate-200 shrink-0">
+    <aside aria-label="워크스페이스 내비게이션" class="hidden lg:flex w-60 flex-col justify-between p-4 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 shrink-0">
       <div class="space-y-1.5 text-xs font-bold">
-        <div class="text-[10px] font-extrabold text-slate-400 uppercase px-2 mb-2">Workspace Navigation</div>
-        <div class="px-3 py-2 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-between"><span>대시보드 홈</span><span>●</span></div>
-        <div class="px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 cursor-pointer">컴포넌트 워크플로우</div>
-        <div class="px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 cursor-pointer">데이터 리포트</div>
-        <div class="px-3 py-2 rounded-xl text-slate-600 hover:bg-slate-50 cursor-pointer">환경설정</div>
+        <div class="text-[10px] font-extrabold text-slate-400 uppercase px-2 mb-2 truncate">${escapeHtml(domainLabel)}</div>
+        ${sidebarButtonsHtml}
       </div>
-      <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 text-[11px] text-slate-500">
-        <div class="font-extrabold text-slate-800">격자 아키텍처: ${escapeHtml(gridArch.toUpperCase())}</div>
-        <div class="mt-0.5">창 크기를 조절해 반응형 변화를 확인하세요.</div>
+      <div class="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/70 border border-slate-200 dark:border-slate-700 text-[11px] text-slate-500 dark:text-slate-400">
+        <div class="font-extrabold text-slate-800 dark:text-slate-200">${escapeHtml(domainLabel)} · ${escapeHtml(gridArch.toUpperCase())}</div>
+        <div class="mt-0.5">메뉴를 클릭하면 해당 블록으로 이동합니다.</div>
       </div>
     </aside>` : ''}
 
     <!-- 중앙 본문 격자 슬롯 -->
     <main class="flex-1 p-4 sm:p-6 ${mainGridClass} content-start">
-      ${mainHtml || `<div class="col-span-full p-12 text-center text-slate-400 border-2 border-dashed border-slate-300 rounded-2xl">캔버스 본문(Main) 슬롯에 추가된 블록이 없습니다.</div>`}
+      ${mainHtml || `<div class="col-span-full p-12 text-center text-slate-400 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-2xl">캔버스 본문(Main) 슬롯에 추가된 블록이 없습니다.</div>`}
     </main>
 
     ${hasRightInspector ? `
     <!-- 우측 3단 보조 인스펙터 / 목차 -->
-    <aside class="hidden xl:flex w-72 flex-col justify-between p-4 bg-white border-l border-slate-200 shrink-0 text-xs">
+    <aside class="hidden xl:flex w-72 flex-col justify-between p-4 bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 shrink-0 text-xs">
       <div class="space-y-3">
         <div class="text-[10px] font-extrabold text-slate-400 uppercase">Right Inspector / TOC</div>
-        <div class="p-3 rounded-xl bg-blue-50/70 border border-blue-200 space-y-1">
-          <div class="font-extrabold text-blue-800">현재 화면 구성 요약</div>
-          <p class="text-[11px] text-blue-600">총 ${activeComponents.length}개의 표준 패턴이 유기적으로 연결되어 작동 중입니다.</p>
+        <div class="p-3 rounded-xl bg-blue-50/70 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 space-y-1">
+          <div class="font-extrabold text-blue-800 dark:text-blue-200">현재 화면 구성 요약</div>
+          <p class="text-[11px] text-blue-600 dark:text-blue-300">총 ${activeComponents.length}개의 표준 패턴이 유기적으로 연결되어 작동 중입니다.</p>
         </div>
-        <div class="space-y-1.5 border-l-2 border-slate-200 pl-3 text-[11px] text-slate-600">
-          <div class="font-bold text-blue-600">1. 상단 헤더 (${headers.length}개 블록)</div>
+        <div class="space-y-1.5 border-l-2 border-slate-200 dark:border-slate-700 pl-3 text-[11px] text-slate-600 dark:text-slate-300">
+          <div class="font-bold text-blue-600 dark:text-blue-400">1. 상단 헤더 (${headers.length}개 블록)</div>
           <div>2. 중앙 본문 (${mains.length}개 블록)</div>
           <div>3. 하단/오버레이 (${bottoms.length}개 블록)</div>
         </div>
@@ -1097,6 +1172,32 @@
           navTab.classList.add('bg-blue-600', 'text-white');
         }
       }
+      const navJump = e.target.closest('[data-role="proto-nav-jump"]');
+      if (navJump) {
+        const targetId = navJump.dataset.target;
+        document.querySelectorAll('[data-role="proto-nav-jump"]').forEach(btn => {
+          const isMatch = btn.dataset.target === targetId;
+          if (btn.closest('aside')?.getAttribute('aria-label')?.includes('레일')) {
+            btn.className = isMatch
+              ? 'w-9 h-9 rounded-xl flex items-center justify-center transition bg-slate-800 text-blue-400'
+              : 'w-9 h-9 rounded-xl flex items-center justify-center transition hover:bg-slate-800 text-slate-400';
+          } else {
+            btn.className = isMatch
+              ? 'w-full text-left px-3 py-2 rounded-xl flex items-center justify-between gap-2 transition bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 font-extrabold'
+              : 'w-full text-left px-3 py-2 rounded-xl flex items-center justify-between gap-2 transition text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800';
+          }
+        });
+        if (targetId === '__top__') {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          const targetEl = document.querySelector('[data-proto-block="' + targetId + '"]');
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            targetEl.classList.add('ring-2', 'ring-blue-500');
+            setTimeout(() => targetEl.classList.remove('ring-2', 'ring-blue-500'), 1100);
+          }
+        }
+      }
       const stepBtn = e.target.closest('[data-role="proto-step-btn"]');
       if (stepBtn) {
         stepBtn.parentElement.querySelectorAll('[data-role="proto-step-btn"]').forEach(btn => {
@@ -1183,6 +1284,7 @@
   }
 
   window.UX_PROTOTYPE_COMPILER = {
+    buildNavigationItems,
     compileDynamicPrototypeHTML,
     generatePrototypeViaAiApi
   };
