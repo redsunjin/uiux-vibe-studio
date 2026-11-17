@@ -39,6 +39,9 @@ const ID_REGEX = /^[a-z]+_\d{2}$/;
 // 1. 스키마 및 ID 유일성 검증
 const seenIds = new Set();
 for (const book of SHOWCASE_BOOKS) {
+  if (!book.file || !fs.existsSync(path.join(rootDir, book.file))) {
+    errors.push(`[Showcase] '${book.key}'의 참조 파일 '${book.file}'이 존재하지 않습니다.`);
+  }
   const items = PATTERN_DB[book.key];
   if (!Array.isArray(items) || items.length === 0) {
     errors.push(`[Category] '${book.key}' 카테고리에 패턴이 없습니다.`);

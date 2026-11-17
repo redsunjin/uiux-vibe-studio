@@ -8,26 +8,26 @@
     // 1. 20대 도감 카테고리 메타데이터 & 208종 전체 패턴 데이터베이스
     // =========================================================================
     const SHOWCASE_BOOKS = [
-      { key: 'layout', title: '01. 화면 레이아웃 & 그리드', short: '화면 레이아웃', file: '화면 레이아웃9.html', icon: 'layout-template', badge: '페이지 골격' },
-      { key: 'content', title: '02. 콘텐츠 & 단 구조', short: '콘텐츠 구조', file: '콘텐츠와 화면 구조 9가지.html', icon: 'layout-grid', badge: '본문 블록' },
-      { key: 'onboarding', title: '03. 앱 첫 화면 & 온보딩', short: '앱 첫화면', file: '앱 첫화면9.html', icon: 'rocket', badge: '진입/가입' },
-      { key: 'nav', title: '04. 앱 탐색 & 내비게이션', short: '내비게이션', file: '앱 탐색 패턴 9가지.html', icon: 'compass', badge: '이동/탐색' },
-      { key: 'menu_icon', title: '05. 메뉴 버튼 & 트리거 아이콘', short: '메뉴 아이콘', file: '메뉴버튼 9.html', icon: 'menu', badge: '트리거 버튼' },
-      { key: 'search', title: '06. 검색 & 필터링 패턴', short: '검색 패턴', file: '검색패턴9.html', icon: 'search', badge: '검색/필터' },
-      { key: 'form', title: '07. 데이터 입력 폼 컨트롤', short: '입력 폼', file: '입력 폼 패턴 9가지.html', icon: 'text-cursor-input', badge: '데이터 입력' },
-      { key: 'datetime', title: '08. 날짜·시간 & 일정 선택', short: '날짜/시간', file: '날짜시간9.html', icon: 'calendar-clock', badge: '일정/예약' },
-      { key: 'feedback', title: '09. 알림 & 피드백 레이어', short: '알림/피드백', file: '알림과 피드백 9가지.html', icon: 'bell-ring', badge: '상태/모달' },
-      { key: 'loading', title: '10. 로딩 & 대기 경험', short: '로딩 패턴', file: '로딩 패턴 9가지.html', icon: 'loader-2', badge: '체감 대기' },
-      { key: 'indicator', title: '11. 진행률 & 상태 인디케이터', short: '인디케이터', file: '로딩막대9.html', icon: 'sliders-horizontal', badge: '진행/위치' },
-      { key: 'ai', title: '12. 생성형 AI 인터페이스', short: 'AI 화면', file: 'AI 화면 9가지.html', icon: 'bot', badge: '생성형 AI' },
-      { key: 'gesture', title: '13. 모바일 터치 제스처', short: '손짓 제스처', file: '움직임 이름 9가지.html', icon: 'hand', badge: '터치 액션' },
-      { key: 'motion', title: '14. UI 트랜지션 & 물리 모션', short: 'UI 움직임', file: '움직임 이름 9가지.html', icon: 'sparkles', badge: '물리 모션' },
-      { key: 'text_anim', title: '15. 타이포그래피 텍스트 모션', short: '글자 효과', file: '텍스트 입력9.html', icon: 'type', badge: '타이포 모션' },
-      { key: 'visual_style', title: '16. 모션 그래픽 & 비주얼 테마', short: '비주얼 테마', file: '모션 그래픽 20선 인터랙티브 인포그래픽.html', icon: 'palette', badge: '아트 테마' },
-      { key: 'chart', title: '17. 데이터 시각화 & 차트 [확장]', short: '차트/시각화', file: '콘텐츠와 화면 구조 9가지.html', icon: 'bar-chart-3', badge: '신규 확장' },
-      { key: 'commerce', title: '18. 커머스·결제 & 가격표 [확장]', short: '커머스/결제', file: '검색패턴9.html', icon: 'shopping-bag', badge: '신규 확장' },
-      { key: 'auth', title: '19. 계정·보안 & 권한 설정 [확장]', short: '계정/보안', file: '앱 첫화면9.html', icon: 'shield-check', badge: '신규 확장' },
-      { key: 'media_collab', title: '20. 미디어·소셜 & 실시간 협업 [확장]', short: '미디어/협업', file: 'AI 화면 9가지.html', icon: 'users', badge: '신규 확장' }
+      { key: 'layout', title: '01. 화면 레이아웃 & 그리드', short: '화면 레이아웃', file: 'showcases/layout.html', icon: 'layout-template', badge: '페이지 골격' },
+      { key: 'content', title: '02. 콘텐츠 & 단 구조', short: '콘텐츠 구조', file: 'showcases/content.html', icon: 'layout-grid', badge: '본문 블록' },
+      { key: 'onboarding', title: '03. 앱 첫 화면 & 온보딩', short: '앱 첫화면', file: 'showcases/onboarding.html', icon: 'rocket', badge: '진입/가입' },
+      { key: 'nav', title: '04. 앱 탐색 & 내비게이션', short: '내비게이션', file: 'showcases/navigation.html', icon: 'compass', badge: '이동/탐색' },
+      { key: 'menu_icon', title: '05. 메뉴 버튼 & 트리거 아이콘', short: '메뉴 아이콘', file: 'showcases/menu-icons.html', icon: 'menu', badge: '트리거 버튼' },
+      { key: 'search', title: '06. 검색 & 필터링 패턴', short: '검색 패턴', file: 'showcases/search.html', icon: 'search', badge: '검색/필터' },
+      { key: 'form', title: '07. 데이터 입력 폼 컨트롤', short: '입력 폼', file: 'showcases/forms.html', icon: 'text-cursor-input', badge: '데이터 입력' },
+      { key: 'datetime', title: '08. 날짜·시간 & 일정 선택', short: '날짜/시간', file: 'showcases/datetime.html', icon: 'calendar-clock', badge: '일정/예약' },
+      { key: 'feedback', title: '09. 알림 & 피드백 레이어', short: '알림/피드백', file: 'showcases/feedback.html', icon: 'bell-ring', badge: '상태/모달' },
+      { key: 'loading', title: '10. 로딩 & 대기 경험', short: '로딩 패턴', file: 'showcases/loading.html', icon: 'loader-2', badge: '체감 대기' },
+      { key: 'indicator', title: '11. 진행률 & 상태 인디케이터', short: '인디케이터', file: 'showcases/indicators.html', icon: 'sliders-horizontal', badge: '진행/위치' },
+      { key: 'ai', title: '12. 생성형 AI 인터페이스', short: 'AI 화면', file: 'showcases/ai-interface.html', icon: 'bot', badge: '생성형 AI' },
+      { key: 'gesture', title: '13. 모바일 터치 제스처', short: '손짓 제스처', file: 'showcases/motion-gestures.html', icon: 'hand', badge: '터치 액션' },
+      { key: 'motion', title: '14. UI 트랜지션 & 물리 모션', short: 'UI 움직임', file: 'showcases/motion-gestures.html', icon: 'sparkles', badge: '물리 모션' },
+      { key: 'text_anim', title: '15. 타이포그래피 텍스트 모션', short: '글자 효과', file: 'showcases/text-motion.html', icon: 'type', badge: '타이포 모션' },
+      { key: 'visual_style', title: '16. 모션 그래픽 & 비주얼 테마', short: '비주얼 테마', file: 'showcases/visual-themes.html', icon: 'palette', badge: '아트 테마' },
+      { key: 'chart', title: '17. 데이터 시각화 & 차트 [확장]', short: '차트/시각화', file: 'showcases/content.html', icon: 'bar-chart-3', badge: '신규 확장' },
+      { key: 'commerce', title: '18. 커머스·결제 & 가격표 [확장]', short: '커머스/결제', file: 'showcases/search.html', icon: 'shopping-bag', badge: '신규 확장' },
+      { key: 'auth', title: '19. 계정·보안 & 권한 설정 [확장]', short: '계정/보안', file: 'showcases/onboarding.html', icon: 'shield-check', badge: '신규 확장' },
+      { key: 'media_collab', title: '20. 미디어·소셜 & 실시간 협업 [확장]', short: '미디어/협업', file: 'showcases/ai-interface.html', icon: 'users', badge: '신규 확장' }
     ];
 
     const PATTERN_DB = {
