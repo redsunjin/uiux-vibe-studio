@@ -59,7 +59,7 @@
             <div class="flex flex-wrap items-center gap-2">
               <h1 class="text-sm font-extrabold tracking-tight">UI/UX 백과사전 & 바이브 코딩 스튜디오</h1>
               <span id="totalPatternBadge" class="text-[10px] px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-semibold border border-blue-400/30">
-                20대 도감 카테고리 · 212종 패턴 완전체
+                20대 도감 카테고리 · 표준 패턴 사전
               </span>
             </div>
             <p class="text-[11px] text-slate-400">
@@ -2025,6 +2025,11 @@ ${buildSharedStateSpec()}
 
     // 초기화
     window.addEventListener('DOMContentLoaded', () => {
+      const badgeEl = document.getElementById('totalPatternBadge');
+      if (badgeEl && window.UX_TAXONOMY_DB) {
+        const activeCount = (window.UX_TAXONOMY_DB.ACTIVE_PATTERNS || ALL_PATTERNS).length;
+        badgeEl.textContent = `${SHOWCASE_BOOKS.length}대 도감 카테고리 · ${activeCount}종 활성 패턴`;
+      }
       if (!loadStateFromLocal()) {
         setViewportDevice('mobile');
         loadPreset('apply');

@@ -382,6 +382,29 @@
         </div>`;
     }
 
+    // 8.5 계정·보안 & 미디어·협업 인터랙티브 블록 (aut_*, med_*)
+    if (item.catKey === 'auth' || item.catKey === 'media_collab') {
+      const isAuth = item.catKey === 'auth';
+      const actionLabel = isAuth ? '보안 검증 실행' : '협업 액션 테스트';
+      const toastMsg = isAuth
+        ? `🔐 [${escapeHtml(item.code)}] 보안 정책이 안전하게 검증되었습니다.`
+        : `🎬 [${escapeHtml(item.code)}] 실시간 협업 상태가 동기화되었습니다.`;
+      return `
+        <div class="${cardBase} space-y-2.5" data-proto-block="${item.id}">
+          ${noteBadge}
+          <div class="flex items-center justify-between gap-2">
+            <div>
+              <h3 class="text-xs sm:text-sm font-extrabold text-slate-900">${escapeHtml(item.code)}</h3>
+              <p class="text-[11px] text-slate-500">${escapeHtml(item.note || item.desc)}</p>
+            </div>
+            <button type="button" data-role="proto-trigger-toast" data-msg="${toastMsg}" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-blue-600 text-white text-[11px] font-bold transition shrink-0">
+              ${actionLabel} ▶
+            </button>
+          </div>
+          <div>${window.UX_TAXONOMY_DB ? window.UX_TAXONOMY_DB.getVisualWireframeHTML(item) : ''}</div>
+        </div>`;
+    }
+
     // 9. 기본 범용 인터랙티브 카드 (모든 나머지 패턴 대응)
     return `
       <div class="${cardBase} space-y-2" data-proto-block="${item.id}" data-item-text="${escapeHtml(item.code + ' ' + item.eng + ' ' + (item.note || ''))}">
