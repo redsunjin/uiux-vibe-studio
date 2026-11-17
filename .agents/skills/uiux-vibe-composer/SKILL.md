@@ -38,6 +38,7 @@ description: >-
   - 툴팁(`fb_07`)·더보기 팝오버(`ico_02~03`)에는 네이티브 `popover="auto"` 속성을 우선 활용하세요.
   - 검색 영역은 `<search>` 시맨틱 태그로 감싸고, 인라인 `onclick` 대신 `addEventListener()`와 이벤트 위임을 사용하세요.
   - 카드/위젯(`cnt_02`, `cnt_08`) 내부 밀도는 `@container` 컨테이너 쿼리로 자율 대응하도록 설계하세요.
+  - 한국어 UI의 `body` 기본 스타일에는 반드시 `word-break: keep-all; overflow-wrap: break-word;`를 적용해 어절 중간 끊김(`탐색하/고`)을 방지하세요.
 - **다크 모드 & 접근성(A11y) 기본 내장**:
   - 색상은 `bg-white dark:bg-slate-900`, `text-slate-900 dark:text-slate-100`, `border-slate-200 dark:border-slate-800` 등 라이트/다크 시맨틱 토큰 쌍을 유지하세요.
   - 토스트/스낵바 및 동적 결과 건수 영역에는 `role="status" aria-live="polite"`를 부여하고, 모든 인터랙티브 요소는 `Tab` / `Esc` 키보드 조작과 명확한 `focus-visible` 링을 지원해야 합니다.
