@@ -13,7 +13,7 @@
          </div>`
       : '';
 
-    const cardBase = `proto-card bg-white rounded-2xl border border-slate-200 p-4 shadow-sm transition-all duration-200`;
+    const cardBase = `proto-card bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm transition-all duration-200`;
 
     // 1. 검색 카테고리 (src_*)
     if (item.catKey === 'search') {
@@ -412,6 +412,106 @@
         </div>`;
     }
 
+    // 8.6 온보딩 / 첫화면 카테고리 (onb_*)
+    if (item.catKey === 'onboarding') {
+      if (item.id === 'onb_01' || item.id === 'onb_02') {
+        return `
+          <div class="${cardBase} space-y-3" data-proto-block="${item.id}" data-onb-step="0">
+            ${noteBadge}
+            <div class="flex items-center justify-between">
+              <span class="px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-300 text-[10px] font-extrabold">${escapeHtml(item.code)}</span>
+              <span data-role="proto-onb-badge" class="text-[11px] font-bold text-slate-400">1 / 3</span>
+            </div>
+            <div class="p-4 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white space-y-1.5">
+              <div data-role="proto-onb-title" class="text-sm font-extrabold">${escapeHtml(item.note || '1단계: 직관적인 AI 워크스페이스 시작하기')}</div>
+              <p data-role="proto-onb-desc" class="text-xs text-blue-100 leading-relaxed">복잡한 설정 없이 표준 UI/UX 블록을 조합해 즉시 실행 가능한 프로토타입을 완성하세요.</p>
+            </div>
+            <div class="flex items-center justify-between pt-1">
+              <div class="flex items-center gap-1.5">
+                <button type="button" data-role="proto-onb-dot" data-idx="0" aria-label="1단계" class="w-5 h-2 rounded-full bg-blue-600 transition-all"></button>
+                <button type="button" data-role="proto-onb-dot" data-idx="1" aria-label="2단계" class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-700 transition-all"></button>
+                <button type="button" data-role="proto-onb-dot" data-idx="2" aria-label="3단계" class="w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-700 transition-all"></button>
+              </div>
+              <button type="button" data-role="proto-onb-next" class="px-3.5 py-1.5 rounded-xl bg-slate-900 dark:bg-blue-600 text-white text-xs font-bold hover:opacity-90 transition">다음 →</button>
+            </div>
+          </div>`;
+      }
+      if (item.id === 'onb_05') {
+        return `
+          <div class="${cardBase} space-y-2.5" data-proto-block="${item.id}">
+            ${noteBadge}
+            <div class="text-xs font-extrabold text-slate-900 dark:text-slate-100">${escapeHtml(item.code)}</div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-bold">
+              <button type="button" data-role="proto-trigger-toast" data-msg="💬 카카오 계정으로 3초 간편 로그인되었습니다." class="py-2.5 px-3 rounded-xl bg-amber-300 hover:bg-amber-400 text-slate-950 transition">카카오로 시작</button>
+              <button type="button" data-role="proto-trigger-toast" data-msg="🍎 Apple 계정으로 간편 인증되었습니다." class="py-2.5 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white transition">Apple로 계속</button>
+              <button type="button" data-role="proto-trigger-toast" data-msg="🔵 Google 계정으로 간편 인증되었습니다." class="py-2.5 px-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100 hover:bg-slate-50 transition">Google 계속</button>
+            </div>
+          </div>`;
+      }
+      if (item.id === 'onb_06') {
+        return `
+          <div class="${cardBase} space-y-2.5 text-xs" data-proto-block="${item.id}">
+            ${noteBadge}
+            <label class="flex items-center gap-2 p-2.5 rounded-xl bg-blue-50/70 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800 font-extrabold text-slate-900 dark:text-slate-100 cursor-pointer">
+              <input type="checkbox" data-role="proto-terms-master" class="w-4 h-4 accent-blue-600">
+              <span>약관 전체 동의 (필수 · 선택 포함)</span>
+            </label>
+            <div class="space-y-1.5 pl-2 text-slate-600 dark:text-slate-300">
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" data-role="proto-terms-item" class="accent-blue-600"><span>[필수] 서비스 이용약관 동의</span></label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" data-role="proto-terms-item" class="accent-blue-600"><span>[필수] 개인정보 수집 및 이용 동의</span></label>
+              <label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" data-role="proto-terms-item" class="accent-blue-600"><span>[선택] 맞춤형 혜택 알림 수신</span></label>
+            </div>
+          </div>`;
+      }
+      return `
+        <div class="${cardBase} flex items-center justify-between gap-3" data-proto-block="${item.id}">
+          <div>
+            ${noteBadge}
+            <h3 class="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-slate-100">🎉 ${escapeHtml(item.code)}</h3>
+            <p class="text-[11px] text-slate-500 dark:text-slate-400">${escapeHtml(item.note || item.desc)}</p>
+          </div>
+          <button type="button" data-role="proto-trigger-toast" data-msg="🎉 환영합니다! 온보딩이 완료되어 홈 화면으로 이동합니다." class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-extrabold shrink-0 transition">시작하기 ▶</button>
+        </div>`;
+    }
+
+    // 8.7 탐색 & 인디케이터 (nav_*, ind_*)
+    if (item.id === 'nav_01') {
+      return `
+        <nav aria-label="하단 탭바" class="flex items-center justify-around py-1 text-[11px] font-bold text-slate-500 dark:text-slate-400" data-proto-block="${item.id}">
+          <button type="button" data-role="proto-nav-tab" class="flex flex-col items-center gap-0.5 text-blue-600 dark:text-blue-400"><span>🏠</span><span>홈</span></button>
+          <button type="button" data-role="proto-nav-tab" class="flex flex-col items-center gap-0.5 hover:text-slate-900 dark:hover:text-white"><span>🔍</span><span>탐색</span></button>
+          <button type="button" data-role="proto-nav-tab" class="flex flex-col items-center gap-0.5 hover:text-slate-900 dark:hover:text-white"><span>💬</span><span>피드</span></button>
+          <button type="button" data-role="proto-nav-tab" class="flex flex-col items-center gap-0.5 hover:text-slate-900 dark:hover:text-white"><span>👤</span><span>마이</span></button>
+        </nav>`;
+    }
+    if (item.id === 'nav_02') {
+      return `
+        <div class="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-1 text-xs font-bold overflow-x-auto" data-proto-block="${item.id}">
+          <button type="button" data-role="proto-nav-tab" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white shrink-0">추천</button>
+          <button type="button" data-role="proto-nav-tab" class="px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 shrink-0">최신</button>
+          <button type="button" data-role="proto-nav-tab" class="px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 shrink-0">팔로잉</button>
+        </div>`;
+    }
+    if (item.id === 'ind_02' || item.id === 'ind_04') {
+      return `
+        <div class="${cardBase} flex items-center justify-between gap-2 text-xs" data-proto-block="${item.id}">
+          <span class="font-extrabold text-slate-800 dark:text-slate-100">${escapeHtml(item.code)}</span>
+          <div class="flex items-center gap-1.5">
+            <button type="button" data-role="proto-step-btn" class="px-2.5 py-1 rounded-full bg-blue-600 text-white font-bold">1. 정보</button>
+            <span class="text-slate-300">→</span>
+            <button type="button" data-role="proto-step-btn" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold">2. 옵션</button>
+            <span class="text-slate-300">→</span>
+            <button type="button" data-role="proto-step-btn" class="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold">3. 완료</button>
+          </div>
+        </div>`;
+    }
+    if (item.id === 'ind_09') {
+      return `
+        <div class="pt-2 pb-[env(safe-area-inset-bottom)] flex justify-center" data-proto-block="${item.id}" aria-hidden="true">
+          <div class="w-28 h-1 rounded-full bg-slate-400/60 dark:bg-slate-600"></div>
+        </div>`;
+    }
+
     // 9. 기본 범용 인터랙티브 카드 (모든 나머지 패턴 대응)
     return `
       <div class="${cardBase} space-y-2" data-proto-block="${item.id}" data-item-text="${escapeHtml(item.code + ' ' + item.eng + ' ' + (item.note || ''))}">
@@ -517,6 +617,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>${escapeHtml(screenTitle)} — Live Compiled Prototype</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config = { darkMode: 'class' };</script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
@@ -527,13 +628,20 @@
       100% { transform: translateY(0) scale(1); opacity: 1; }
     }
     .anim-stagger { animation: springIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
     dialog:modal { overscroll-behavior: contain; }
     dialog[open] { display: flex; }
     dialog::backdrop { background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(4px); }
     ${themeCustomCss}
   </style>
 </head>
-<body class="${themeBodyClass} min-h-screen flex flex-col antialiased">
+<body class="${themeBodyClass} dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col antialiased">
 
   <!-- 상단 프로토타입 메타 & 적용된 모션 규칙 안내 바 -->
   <div class="bg-slate-900 text-white px-4 py-2 text-xs flex flex-wrap items-center justify-between gap-2">
@@ -544,12 +652,13 @@
     </div>
     <div class="flex flex-wrap items-center gap-1.5">
       ${behaviorBadges || '<span class="text-[11px] text-slate-400">기본 인터랙션 모드</span>'}
+      <button type="button" id="protoDarkToggle" class="ml-2 px-2.5 py-0.5 rounded-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-[11px] font-bold text-slate-200 transition">🌙 다크 모드</button>
     </div>
   </div>
 
   <!-- [A. Header Slot 영역] -->
   ${headers.length > 0 ? `
-  <header class="sticky top-0 z-30 bg-white/90 backdrop-blur border-b border-slate-200 px-4 sm:px-6 py-3">
+  <header class="sticky top-0 z-30 bg-white/90 dark:bg-slate-900/90 backdrop-blur border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 py-3">
     <div class="max-w-7xl mx-auto space-y-2.5">
       ${headerHtml}
     </div>
@@ -609,24 +718,24 @@
 
   <!-- [C. Bottom / Overlay Slot 영역] -->
   ${bottoms.length > 0 ? `
-  <footer class="sticky bottom-0 z-30 bg-white/95 backdrop-blur border-t border-slate-200 px-4 py-3">
+  <footer class="sticky bottom-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur border-t border-slate-200 dark:border-slate-800 px-4 py-3">
     <div class="max-w-7xl mx-auto space-y-2">
       ${bottomHtml}
     </div>
   </footer>` : ''}
 
   <!-- 공용 인터랙티브 스낵바 & 네이티브 모달 -->
-  <div id="protoSnackbar" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden bg-slate-900 text-white px-4 py-2.5 rounded-2xl shadow-xl items-center gap-3 text-xs font-bold anim-stagger">
+  <div id="protoSnackbar" role="status" aria-live="polite" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden bg-slate-900 text-white px-4 py-2.5 rounded-2xl shadow-xl items-center gap-3 text-xs font-bold anim-stagger">
     <span id="protoSnackbarMsg">✓ 작업이 완료되었습니다.</span>
     <button type="button" id="protoSnackbarUndo" class="text-amber-400 underline">실행 취소(Undo)</button>
   </div>
 
-  <dialog id="protoModal" closedby="any" class="m-auto w-[90vw] max-w-md rounded-2xl border border-slate-200 bg-white p-5 shadow-2xl flex-col gap-4">
+  <dialog id="protoModal" closedby="any" class="m-auto w-[90vw] max-w-md rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-5 shadow-2xl flex-col gap-4">
     <div class="flex items-center justify-between">
-      <h3 class="text-base font-extrabold text-slate-900">${escapeHtml(screenTitle)} — 확인 모달</h3>
+      <h3 class="text-base font-extrabold text-slate-900 dark:text-slate-100">${escapeHtml(screenTitle)} — 확인 모달</h3>
       <form method="dialog"><button type="submit" class="text-slate-400 hover:text-slate-700">✕</button></form>
     </div>
-    <p class="text-xs text-slate-600 leading-relaxed">네이티브 &lt;dialog closedby="any"&gt; 모달입니다. 바깥 배경(Backdrop)을 클릭하거나 Esc 키를 눌러 닫을 수 있습니다.</p>
+    <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">네이티브 &lt;dialog closedby="any"&gt; 모달입니다. 바깥 배경(Backdrop)을 클릭하거나 Esc 키를 눌러 닫을 수 있습니다.</p>
     <form method="dialog" class="flex justify-end gap-2 pt-2 border-t border-slate-100">
       <button type="submit" value="cancel" class="px-3.5 py-1.5 rounded-xl bg-slate-100 text-slate-700 text-xs font-bold">취소</button>
       <button type="submit" value="confirm" class="px-3.5 py-1.5 rounded-xl bg-blue-600 text-white text-xs font-bold">확인 완료</button>
@@ -935,6 +1044,79 @@
 
     document.getElementById('protoSnackbarUndo').addEventListener('click', () => {
       document.getElementById('protoSnackbar').classList.add('hidden');
+    });
+
+    const darkToggle = document.getElementById('protoDarkToggle');
+    if (darkToggle) {
+      darkToggle.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        darkToggle.textContent = isDark ? '☀️ 라이트 모드' : '🌙 다크 모드';
+      });
+    }
+
+    const onbSlides = [
+      { title: '1단계: 직관적인 AI 워크스페이스 시작하기', desc: '복잡한 설정 없이 표준 UI/UX 블록을 조합해 즉시 실행 가능한 프로토타입을 완성하세요.' },
+      { title: '2단계: 모바일·태블릿·PC 자동 반응형 전환', desc: '단일 명세서로 엄지 영역(Thumb Zone)부터 3단 벤토 그리드까지 완벽히 대응합니다.' },
+      { title: '3단계: 클릭 한 번으로 실시간 코드 검증', desc: '폼 검증, 스낵바 Undo, 네이티브 모달까지 지금 바로 시작해 보세요!' }
+    ];
+    function setOnbStep(card, step) {
+      card.dataset.onbStep = String(step);
+      const t = card.querySelector('[data-role="proto-onb-title"]');
+      const d = card.querySelector('[data-role="proto-onb-desc"]');
+      const b = card.querySelector('[data-role="proto-onb-badge"]');
+      if (t) t.textContent = onbSlides[step].title;
+      if (d) d.textContent = onbSlides[step].desc;
+      if (b) b.textContent = (step + 1) + ' / ' + onbSlides.length;
+      card.querySelectorAll('[data-role="proto-onb-dot"]').forEach((dot, i) => {
+        dot.className = i === step
+          ? 'w-5 h-2 rounded-full bg-blue-600 transition-all'
+          : 'w-2 h-2 rounded-full bg-slate-300 dark:bg-slate-700 transition-all';
+      });
+    }
+
+    document.addEventListener('click', (e) => {
+      const onbNext = e.target.closest('[data-role="proto-onb-next"]');
+      if (onbNext) {
+        const card = onbNext.closest('[data-proto-block]');
+        const cur = Number(card.dataset.onbStep || 0);
+        setOnbStep(card, (cur + 1) % onbSlides.length);
+      }
+      const onbDot = e.target.closest('[data-role="proto-onb-dot"]');
+      if (onbDot) {
+        setOnbStep(onbDot.closest('[data-proto-block]'), Number(onbDot.dataset.idx || 0));
+      }
+      const navTab = e.target.closest('[data-role="proto-nav-tab"]');
+      if (navTab) {
+        const parent = navTab.parentElement;
+        parent.querySelectorAll('[data-role="proto-nav-tab"]').forEach(btn => {
+          btn.classList.remove('bg-blue-600', 'text-white', 'text-blue-600', 'dark:text-blue-400');
+        });
+        if (parent.tagName === 'NAV') {
+          navTab.classList.add('text-blue-600', 'dark:text-blue-400');
+        } else {
+          navTab.classList.add('bg-blue-600', 'text-white');
+        }
+      }
+      const stepBtn = e.target.closest('[data-role="proto-step-btn"]');
+      if (stepBtn) {
+        stepBtn.parentElement.querySelectorAll('[data-role="proto-step-btn"]').forEach(btn => {
+          btn.className = btn === stepBtn
+            ? 'px-2.5 py-1 rounded-full bg-blue-600 text-white font-bold'
+            : 'px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold';
+        });
+      }
+    });
+
+    document.addEventListener('change', (e) => {
+      if (e.target.matches('[data-role="proto-terms-master"]')) {
+        const card = e.target.closest('[data-proto-block]');
+        card.querySelectorAll('[data-role="proto-terms-item"]').forEach(cb => { cb.checked = e.target.checked; });
+      } else if (e.target.matches('[data-role="proto-terms-item"]')) {
+        const card = e.target.closest('[data-proto-block]');
+        const items = Array.from(card.querySelectorAll('[data-role="proto-terms-item"]'));
+        const master = card.querySelector('[data-role="proto-terms-master"]');
+        if (master) master.checked = items.every(cb => cb.checked);
+      }
     });
   <\/script>
 </body>

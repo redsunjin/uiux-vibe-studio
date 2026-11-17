@@ -1427,10 +1427,10 @@ ${buildSharedStateSpec()}
 `;
 
         if (useTailwind) {
-          prompt += `\n## 4. 기술 스택 및 완료 자가 검증 체크리스트 (Self-Verification)\n- Tailwind CSS CDN + Lucide Icons CDN + Pretendard 폰트를 포함한 단일 HTML 파일로 작성할 것.\n- 코드 출력 전 위 명세의 **총 ${activeComponents.length}개 UI/UX 블록**이 단 하나도 누락 없이 화면에 렌더링되고 클릭/입력 이벤트가 작동하는지 스스로 검증할 것.`;
+          prompt += `\n## 4. 기술 스택 및 완료 자가 검증 체크리스트 (Self-Verification)\n- Tailwind CSS CDN + Lucide Icons CDN + Pretendard 폰트(\`word-break: keep-all; overflow-wrap: break-word;\`)를 포함한 단일 HTML 파일로 작성할 것.\n- 라이트/다크 시맨틱 토큰(\`bg-white dark:bg-slate-900\`, \`text-slate-900 dark:text-slate-100\`, \`border-slate-200 dark:border-slate-800\`)을 함께 적용할 것.\n- 코드 출력 전 위 명세의 **총 ${activeComponents.length}개 UI/UX 블록**이 단 하나도 누락 없이 화면에 렌더링되고 클릭/입력 이벤트가 작동하는지 스스로 검증할 것.`;
         }
         if (useA11y) {
-          prompt += `\n- 모달은 네이티브 \`<dialog closedby="any">\`와 \`showModal()\`을 사용하고, 검색 영역은 \`<search>\` 시맨틱 태그를 적용할 것. 모바일(1단) ↔ 태블릿(좌측 레일+2단) ↔ PC(상단 GNB/사이드바+다단) 반응형 전환을 보장할 것.`;
+          prompt += `\n- 모달은 네이티브 \`<dialog closedby="any">\`와 \`showModal()\`을, 검색 영역은 \`<search>\`를, 토스트·동적 상태 알림에는 \`role="status" aria-live="polite"\`를 적용할 것.\n- \`@media (prefers-reduced-motion: reduce)\` 모션 완화 폴백과 모바일(1단) ↔ 태블릿(좌측 레일+2단) ↔ PC(상단 GNB/사이드바+다단) 반응형 전환을 보장할 것.`;
         }
 
         outputEl.textContent = prompt;
