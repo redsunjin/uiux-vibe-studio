@@ -55,10 +55,12 @@ description: >-
 
 ---
 
-## 2. 참조 파일 경로
+## 2. 참조 파일 경로 & 콘텐츠 관리 하네스
+- **콘텐츠 제작 계약 & 규칙 지침**: [references/content-contract.md](./references/content-contract.md) (신규 패턴/레시피 추가 및 숨김·폐기 처리 시 필수 준수)
 - **도메인별 세트 프리셋**: [references/domain-presets.md](./references/domain-presets.md)
 - **전체 208종 패턴 & 레시피 표**: [references/taxonomy-catalog.md](./references/taxonomy-catalog.md)
 - **마스터 JS 데이터베이스**: [data/ux-taxonomy-db.js](../../../data/ux-taxonomy-db.js)
-- **카탈로그 자동 동기화 스크립트**: [scripts/build-catalog.mjs](../../../scripts/build-catalog.mjs)
+- **콘텐츠 검증 하네스**: [scripts/validate-harness.mjs](../../../scripts/validate-harness.mjs) (`node scripts/validate-harness.mjs`)
+- **카탈로그 자동 동기화 스크립트**: [scripts/build-catalog.mjs](../../../scripts/build-catalog.mjs) (`node scripts/build-catalog.mjs`)
 - **비주얼 스튜디오 웹앱**: [ai_ui_ux.html](../../../ai_ui_ux.html)
 - **프롬프트 컴파일 검증 샘플**: [검증테스트_결과화면.html](../../../%EA%B2%80%EC%A6%9D%ED%85%8C%EC%8A%A4%ED%8A%B8_%EA%B2%B0%EA%B3%BC%ED%99%94%EB%A9%B4.html)
