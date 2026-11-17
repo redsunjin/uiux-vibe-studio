@@ -13,7 +13,7 @@
          </div>`
       : '';
 
-    const cardBase = `proto-card bg-white rounded-2xl border border-slate-200 p-4 shadow-2xs transition-all duration-200`;
+    const cardBase = `proto-card bg-white rounded-2xl border border-slate-200 p-4 shadow-sm transition-all duration-200`;
 
     // 1. 검색 카테고리 (src_*)
     if (item.catKey === 'search') {
@@ -28,7 +28,7 @@
                   type="search"
                   data-role="proto-search-input"
                   placeholder="${escapeHtml(item.note || '검색어를 입력하면 하단 리스트와 테이블이 실시간 필터링됩니다...')}"
-                  class="w-full pl-10 pr-9 py-2.5 bg-white border-2 border-slate-200 focus:border-blue-600 rounded-xl text-xs sm:text-sm font-medium text-slate-800 focus:outline-none shadow-2xs transition"
+                  class="w-full pl-10 pr-9 py-2.5 bg-white border-2 border-slate-200 focus:border-blue-600 rounded-xl text-xs sm:text-sm font-medium text-slate-800 focus:outline-none shadow-sm transition"
                 />
                 <button type="button" data-role="proto-search-clear" class="hidden absolute right-3 text-slate-400 hover:text-slate-600">
                   <i data-lucide="x-circle" class="w-4 h-4"></i>
@@ -125,23 +125,29 @@
                 </tr>
               </thead>
               <tbody data-role="proto-filterable-list" class="divide-y divide-slate-100">
-                <tr data-item-text="디자인 시스템 토큰 설계 인기" data-score="96" class="hover:bg-slate-50">
+                <tr data-item-text="디자인 시스템 토큰 설계 인기" data-score="96" data-order="1" class="hover:bg-slate-50">
                   <td class="py-2.5 px-3 font-bold text-slate-900">디자인 시스템 토큰 설계</td>
                   <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 text-[10px] font-bold">인기</span></td>
                   <td class="py-2.5 px-3 text-emerald-600 font-bold">● 승인 완료</td>
                   <td class="py-2.5 px-3 text-right"><button type="button" data-role="proto-optimistic-like" class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-700 font-bold">★ 96점</button></td>
                 </tr>
-                <tr data-item-text="AI 에이전트 RAG 파이프라인 신규" data-score="92" class="hover:bg-slate-50">
+                <tr data-item-text="AI 에이전트 RAG 파이프라인 신규" data-score="92" data-order="2" class="hover:bg-slate-50">
                   <td class="py-2.5 px-3 font-bold text-slate-900">AI 에이전트 RAG 파이프라인</td>
                   <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-600 text-[10px] font-bold">신규</span></td>
                   <td class="py-2.5 px-3 text-blue-600 font-bold">● 심사 진행중</td>
                   <td class="py-2.5 px-3 text-right"><button type="button" data-role="proto-optimistic-like" class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 font-bold">☆ 92점</button></td>
                 </tr>
-                <tr data-item-text="React & Tailwind 반응형 대시보드 인기" data-score="89" class="hover:bg-slate-50">
+                <tr data-item-text="React & Tailwind 반응형 대시보드 인기" data-score="89" data-order="3" class="hover:bg-slate-50">
                   <td class="py-2.5 px-3 font-bold text-slate-900">React & Tailwind 반응형 대시보드</td>
                   <td class="py-2.5 px-3"><span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-600 text-[10px] font-bold">인기</span></td>
                   <td class="py-2.5 px-3 text-emerald-600 font-bold">● 검증 통과</td>
                   <td class="py-2.5 px-3 text-right"><button type="button" data-role="proto-optimistic-like" class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 font-bold">☆ 89점</button></td>
+                </tr>
+                <tr data-role="proto-empty-state" class="hidden">
+                  <td colspan="4" class="py-8 px-4 text-center text-slate-400">
+                    <div class="text-xs font-bold text-slate-500">조건에 일치하는 항목이 없습니다.</div>
+                    <button type="button" data-role="proto-reset-filter" class="mt-2 px-3 py-1 rounded-lg bg-blue-50 text-blue-600 text-[11px] font-bold hover:bg-blue-100 transition">검색·필터 초기화</button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -174,25 +180,26 @@
             <h3 class="text-xs font-extrabold text-slate-900">📋 ${escapeHtml(item.code)} (상태 클릭 시 다음 단계로 카드 이동)</h3>
             <span class="text-[10px] text-blue-600 font-bold">Interactive Kanban</span>
           </div>
-          <div class="grid grid-cols-3 gap-2.5 text-xs">
-            <div class="bg-slate-100 p-2.5 rounded-xl space-y-2">
+          <div class="grid grid-cols-3 gap-2.5 text-xs" data-role="proto-kanban-board">
+            <div data-kanban-col="todo" class="bg-slate-100 p-2.5 rounded-xl space-y-2">
               <div class="font-extrabold text-slate-600 text-[11px]">할 일 (TO DO)</div>
-              <div data-role="proto-kanban-card" class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-2xs cursor-pointer hover:border-blue-400">
+              <div data-role="proto-kanban-card" class="bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm cursor-pointer hover:border-blue-400">
                 <div class="font-bold text-slate-800">와이어프레임 조립</div>
                 <div class="text-[10px] text-slate-400 mt-1">클릭하여 상태 변경 →</div>
               </div>
             </div>
-            <div class="bg-blue-50/70 p-2.5 rounded-xl border border-blue-200/60 space-y-2">
+            <div data-kanban-col="doing" class="bg-blue-50/70 p-2.5 rounded-xl border border-blue-200/60 space-y-2">
               <div class="font-extrabold text-blue-700 text-[11px]">진행 중 (DOING)</div>
-              <div data-role="proto-kanban-card" class="bg-white p-2.5 rounded-lg border border-blue-300 shadow-2xs cursor-pointer">
+              <div data-role="proto-kanban-card" class="bg-white p-2.5 rounded-lg border border-blue-300 shadow-sm cursor-pointer">
                 <div class="font-bold text-blue-700">프롬프트 실시간 검증</div>
                 <div class="text-[10px] text-blue-400 mt-1">클릭하여 완료 처리 →</div>
               </div>
             </div>
-            <div class="bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-200/60 space-y-2">
+            <div data-kanban-col="done" class="bg-emerald-50/70 p-2.5 rounded-xl border border-emerald-200/60 space-y-2">
               <div class="font-extrabold text-emerald-700 text-[11px]">완료됨 (DONE)</div>
-              <div class="bg-white p-2.5 rounded-lg border border-emerald-200 text-slate-400 line-through">
-                208종 도감 DB 구축
+              <div data-role="proto-kanban-card" class="bg-white p-2.5 rounded-lg border border-emerald-200 text-slate-400 line-through cursor-pointer">
+                <div class="font-bold">도감 DB 구축</div>
+                <div class="text-[10px] mt-1">클릭하여 되돌리기 ↺</div>
               </div>
             </div>
           </div>
@@ -226,9 +233,9 @@
               <div class="text-[11px] text-slate-400">${escapeHtml(item.desc)}</div>
             </div>
             <div class="flex items-center gap-3 bg-slate-100 px-3 py-1.5 rounded-xl font-extrabold text-sm">
-              <button type="button" data-role="proto-step-minus" class="w-6 h-6 rounded-lg bg-white shadow-2xs text-slate-700 hover:bg-slate-50">-</button>
+              <button type="button" data-role="proto-step-minus" class="w-6 h-6 rounded-lg bg-white shadow-sm text-slate-700 hover:bg-slate-50">-</button>
               <span data-role="proto-step-val" class="text-blue-600 min-w-[24px] text-center">2</span>
-              <button type="button" data-role="proto-step-plus" class="w-6 h-6 rounded-lg bg-white shadow-2xs text-slate-700 hover:bg-slate-50">+</button>
+              <button type="button" data-role="proto-step-plus" class="w-6 h-6 rounded-lg bg-white shadow-sm text-slate-700 hover:bg-slate-50">+</button>
             </div>
           </div>`;
       }
@@ -282,7 +289,7 @@
           <div class="grid grid-cols-7 gap-1 text-center text-xs font-bold">
             <button type="button" data-role="proto-day-btn" data-day="11월 12일 (수)" class="py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-600">12(수)</button>
             <button type="button" data-role="proto-day-btn" data-day="11월 13일 (목)" class="py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-600">13(목)</button>
-            <button type="button" data-role="proto-day-btn" data-day="11월 14일 (금)" class="py-1.5 rounded-lg bg-blue-600 text-white shadow-xs">14(금)</button>
+            <button type="button" data-role="proto-day-btn" data-day="11월 14일 (금)" class="py-1.5 rounded-lg bg-blue-600 text-white shadow-sm">14(금)</button>
             <button type="button" data-role="proto-day-btn" data-day="11월 15일 (토)" class="py-1.5 rounded-lg bg-blue-100 text-blue-700">15(토)</button>
             <button type="button" data-role="proto-day-btn" data-day="11월 16일 (일)" class="py-1.5 rounded-lg bg-blue-100 text-blue-700">16(일)</button>
             <button type="button" data-role="proto-day-btn" data-day="11월 17일 (월)" class="py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-600">17(월)</button>
@@ -354,7 +361,7 @@
               <h3 class="text-sm font-extrabold text-slate-900">🛍️ ${escapeHtml(item.code)}</h3>
               <p class="text-[11px] text-slate-500">${escapeHtml(item.note || item.desc)}</p>
             </div>
-            <button type="button" data-role="proto-trigger-toast" data-msg="🛒 장바구니/결제 상태에 즉시 반영되었습니다!" class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-extrabold shadow-xs transition">
+            <button type="button" data-role="proto-trigger-toast" data-msg="🛒 장바구니/결제 상태에 즉시 반영되었습니다!" class="px-3.5 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-extrabold shadow-sm transition">
               즉시 적용 / 구매하기
             </button>
           </div>
@@ -371,7 +378,7 @@
             <div class="text-[11px] text-slate-500">${escapeHtml(item.note || item.desc)}</div>
           </div>
           <div class="flex items-center gap-2">
-            <button type="button" data-role="proto-loading-cta" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-400 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-xs transition">
+            <button type="button" data-role="proto-loading-cta" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 disabled:bg-slate-400 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-sm transition">
               <span data-role="proto-cta-spinner" class="hidden w-3.5 h-3.5 rounded-full border-2 border-white border-t-transparent animate-spin"></span>
               <span data-role="proto-cta-label">${escapeHtml(item.note || '클릭하여 액션 실행 & 피드백 확인')}</span>
             </button>
@@ -452,7 +459,7 @@
     const bottoms = bySlot('bottom');
     const behaviors = bySlot('behavior');
 
-    // 비주얼 테마별 커스텀 CSS 주입
+    // 비주얼 테마별 커스텀 CSS 주입 (10종 전체 지원)
     let themeBodyClass = "bg-slate-50 text-slate-900";
     let themeCustomCss = "";
     if (visualTheme.includes('Claymorphism')) {
@@ -467,6 +474,21 @@
     } else if (visualTheme.includes('Holographic') || visualTheme.includes('Y2K')) {
       themeBodyClass = "bg-slate-950 text-slate-100";
       themeCustomCss = `.proto-card { background: rgba(30, 41, 59, 0.85) !important; border-color: rgba(99, 102, 241, 0.4) !important; color: #f8fafc !important; } .proto-card h3, .proto-card td { color: #f8fafc !important; }`;
+    } else if (visualTheme.includes('Liquid Motion')) {
+      themeBodyClass = "bg-gradient-to-br from-sky-50 via-indigo-50 to-purple-50 text-slate-900";
+      themeCustomCss = `.proto-card { border-radius: 28px !important; border: 1px solid rgba(99, 102, 241, 0.18) !important; box-shadow: 0 12px 30px -10px rgba(79, 70, 229, 0.16) !important; } .proto-card:hover { transform: translateY(-2px); }`;
+    } else if (visualTheme.includes('Bauhaus')) {
+      themeBodyClass = "bg-stone-100 text-slate-950";
+      themeCustomCss = `.proto-card { border-radius: 0px !important; border: 2px solid #0f172a !important; border-top: 6px solid #2563eb !important; box-shadow: none !important; }`;
+    } else if (visualTheme.includes('Grainy Gradient')) {
+      themeBodyClass = "bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-slate-100";
+      themeCustomCss = `.proto-card { background: rgba(15, 23, 42, 0.82) !important; border: 1px solid rgba(148, 163, 184, 0.25) !important; color: #f8fafc !important; } .proto-card h3, .proto-card td, .proto-card label { color: #f8fafc !important; }`;
+    } else if (visualTheme.includes('Isometric')) {
+      themeBodyClass = "bg-slate-100 text-slate-900";
+      themeCustomCss = `body { background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 16px 16px; } .proto-card { border: 1px solid #cbd5e1 !important; box-shadow: 4px 4px 0px rgba(37, 99, 235, 0.14) !important; }`;
+    } else if (visualTheme.includes('Kinetic Typography')) {
+      themeBodyClass = "bg-neutral-950 text-white";
+      themeCustomCss = `.proto-card { background: #171717 !important; border: 1px solid #404040 !important; color: #fafafa !important; } .proto-card h3, .proto-card td { color: #fafafa !important; letter-spacing: -0.02em; }`;
     }
 
     const mainGridClass = gridArch === 'stack'
@@ -627,6 +649,25 @@
       }, 2800);
     }
 
+    let activeSearchQuery = '';
+    let activeFilterTag = 'all';
+
+    function applyProtoFilterAndSearch() {
+      const rows = document.querySelectorAll('[data-item-text]');
+      let visibleCount = 0;
+      rows.forEach(row => {
+        const text = (row.dataset.itemText || '').toLowerCase();
+        const matchesQuery = !activeSearchQuery || text.includes(activeSearchQuery);
+        const matchesFilter = activeFilterTag === 'all' || text.includes(activeFilterTag.toLowerCase());
+        const show = matchesQuery && matchesFilter;
+        row.style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+      });
+      document.querySelectorAll('[data-role="proto-empty-state"]').forEach(emptyRow => {
+        emptyRow.classList.toggle('hidden', visibleCount > 0);
+      });
+    }
+
     // 검색 입력 시 페이지 내 리스트/카드 실시간 필터링 연동
     document.querySelectorAll('[data-role="proto-search-input"]').forEach(input => {
       const wrap = input.closest('search');
@@ -634,18 +675,14 @@
       const autoBox = wrap.querySelector('[data-role="proto-autocomplete-box"]');
 
       input.addEventListener('input', () => {
-        const q = input.value.trim().toLowerCase();
-        if (clearBtn) clearBtn.classList.toggle('hidden', q.length === 0);
-
-        document.querySelectorAll('[data-item-text]').forEach(row => {
-          const text = (row.dataset.itemText || '').toLowerCase();
-          row.style.display = (!q || text.includes(q)) ? '' : 'none';
-        });
+        activeSearchQuery = input.value.trim().toLowerCase();
+        if (clearBtn) clearBtn.classList.toggle('hidden', activeSearchQuery.length === 0);
+        applyProtoFilterAndSearch();
 
         if (autoBox) {
-          if (q.length > 0) {
+          if (activeSearchQuery.length > 0) {
             autoBox.innerHTML = ['디자인 시스템', 'AI 에이전트', 'React & Tailwind'].map(keyword =>
-              \`<div class="px-2.5 py-1.5 rounded-lg hover:bg-slate-50 cursor-pointer flex justify-between" data-pick="\${keyword}"><span><strong class="text-blue-600">\${q}</strong> 관련 추천: \${keyword}</span><span>↖</span></div>\`
+              \`<div class="px-2.5 py-1.5 rounded-lg hover:bg-slate-50 cursor-pointer flex justify-between" data-pick="\${keyword}"><span><strong class="text-blue-600">\${activeSearchQuery}</strong> 관련 추천: \${keyword}</span><span>↖</span></div>\`
             ).join('');
             autoBox.classList.remove('hidden');
           } else {
@@ -661,6 +698,29 @@
           input.focus();
         });
       }
+    });
+
+    // 정렬 셀렉트 변경 시 테이블 행 실시간 재정렬
+    document.querySelectorAll('[data-role="proto-sort-select"]').forEach(sel => {
+      sel.addEventListener('change', () => {
+        const mode = sel.value;
+        document.querySelectorAll('tbody[data-role="proto-filterable-list"]').forEach(tbody => {
+          const emptyRow = tbody.querySelector('[data-role="proto-empty-state"]');
+          const rows = Array.from(tbody.querySelectorAll('tr[data-item-text]'));
+          rows.sort((a, b) => {
+            if (mode === 'score_desc') {
+              return Number(b.dataset.score || 0) - Number(a.dataset.score || 0);
+            }
+            if (mode === 'latest') {
+              return Number(b.dataset.order || 0) - Number(a.dataset.order || 0);
+            }
+            return Number(a.dataset.order || 0) - Number(b.dataset.order || 0);
+          });
+          rows.forEach(r => tbody.appendChild(r));
+          if (emptyRow) tbody.appendChild(emptyRow);
+        });
+        showProtoToast('↕️ 정렬 기준(' + sel.options[sel.selectedIndex].text + ')이 반영되었습니다.');
+      });
     });
 
     // 실시간 텍스트 인풋 인라인 에러 검증
@@ -721,12 +781,94 @@
         }, 120);
       }
 
+      const pickItem = e.target.closest('[data-pick]');
+      if (pickItem) {
+        const wrap = pickItem.closest('search');
+        const input = wrap ? wrap.querySelector('[data-role="proto-search-input"]') : null;
+        const autoBox = wrap ? wrap.querySelector('[data-role="proto-autocomplete-box"]') : null;
+        if (input) {
+          input.value = pickItem.dataset.pick;
+          input.dispatchEvent(new Event('input'));
+        }
+        if (autoBox) autoBox.classList.add('hidden');
+      }
+
+      const filterBtn = e.target.closest('[data-role="proto-filter-btn"]');
+      if (filterBtn) {
+        activeFilterTag = filterBtn.dataset.filter || 'all';
+        const group = filterBtn.parentElement;
+        if (group) {
+          group.querySelectorAll('[data-role="proto-filter-btn"]').forEach(btn => {
+            btn.className = btn === filterBtn
+              ? 'px-3 py-1 rounded-full bg-blue-600 text-white font-bold transition'
+              : 'px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition';
+          });
+        }
+        applyProtoFilterAndSearch();
+      }
+
+      const resetBtn = e.target.closest('[data-role="proto-reset-filter"]');
+      if (resetBtn) {
+        activeSearchQuery = '';
+        activeFilterTag = 'all';
+        document.querySelectorAll('[data-role="proto-search-input"]').forEach(inp => { inp.value = ''; });
+        document.querySelectorAll('[data-role="proto-search-clear"]').forEach(btn => btn.classList.add('hidden'));
+        document.querySelectorAll('[data-role="proto-filter-btn"]').forEach(btn => {
+          btn.className = btn.dataset.filter === 'all'
+            ? 'px-3 py-1 rounded-full bg-blue-600 text-white font-bold transition'
+            : 'px-3 py-1 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold transition';
+        });
+        applyProtoFilterAndSearch();
+        showProtoToast('🔄 검색어와 필터가 초기화되었습니다.');
+      }
+
+      const skelBtn = e.target.closest('[data-role="proto-skeleton-toggle"]');
+      if (skelBtn) {
+        const card = skelBtn.closest('[data-proto-block]');
+        const tbody = card ? card.querySelector('tbody[data-role="proto-filterable-list"]') : null;
+        if (tbody) {
+          tbody.classList.add('animate-pulse', 'opacity-40');
+          skelBtn.disabled = true;
+          showProtoToast('⏳ 스켈레톤 로딩 상태를 시연 중입니다...');
+          setTimeout(() => {
+            tbody.classList.remove('animate-pulse', 'opacity-40');
+            skelBtn.disabled = false;
+          }, 900);
+        }
+      }
+
+      const kanbanCard = e.target.closest('[data-role="proto-kanban-card"]');
+      if (kanbanCard) {
+        const board = kanbanCard.closest('[data-role="proto-kanban-board"]');
+        const col = kanbanCard.closest('[data-kanban-col]');
+        if (board && col) {
+          const order = ['todo', 'doing', 'done'];
+          const nextKey = order[(order.indexOf(col.dataset.kanbanCol) + 1) % order.length];
+          const nextCol = board.querySelector('[data-kanban-col="' + nextKey + '"]');
+          if (nextCol) {
+            nextCol.appendChild(kanbanCard);
+            const sub = kanbanCard.querySelector('div:last-child');
+            if (nextKey === 'done') {
+              kanbanCard.className = 'bg-white p-2.5 rounded-lg border border-emerald-200 text-slate-400 line-through cursor-pointer';
+              if (sub) sub.textContent = '클릭하여 되돌리기 ↺';
+            } else if (nextKey === 'doing') {
+              kanbanCard.className = 'bg-white p-2.5 rounded-lg border border-blue-300 shadow-sm cursor-pointer';
+              if (sub) sub.textContent = '클릭하여 완료 처리 →';
+            } else {
+              kanbanCard.className = 'bg-white p-2.5 rounded-lg border border-slate-200 shadow-sm cursor-pointer hover:border-blue-400';
+              if (sub) sub.textContent = '클릭하여 상태 변경 →';
+            }
+            showProtoToast('📋 칸반 카드가 [' + nextKey.toUpperCase() + '] 단계로 이동했습니다.');
+          }
+        }
+      }
+
       const dayBtn = e.target.closest('[data-role="proto-day-btn"]');
       if (dayBtn) {
         const card = dayBtn.closest('[data-proto-block]');
         card.querySelectorAll('[data-role="proto-day-btn"]').forEach(b => {
           b.className = b === dayBtn
-            ? "py-1.5 rounded-lg bg-blue-600 text-white shadow-xs font-bold"
+            ? "py-1.5 rounded-lg bg-blue-600 text-white shadow-sm font-bold"
             : "py-1.5 rounded-lg bg-slate-50 hover:bg-slate-100 text-slate-600 font-bold";
         });
         const sum = card.querySelector('[data-role="proto-date-summary"]');
