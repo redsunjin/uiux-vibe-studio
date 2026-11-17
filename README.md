@@ -16,7 +16,12 @@
 
 ## 빠른 시작
 
-### 1. 비주얼 스튜디오 웹앱 실행
+### 0. 웹에서 바로 사용하기 (GitHub Pages)
+- **포털 & 쇼케이스 런처**: [`https://redsunjin.github.io/uiux-vibe-studio/`](https://redsunjin.github.io/uiux-vibe-studio/) (`index.html`)
+- **바이브 코딩 스튜디오 직행**: [`ai_ui_ux.html`](https://redsunjin.github.io/uiux-vibe-studio/ai_ui_ux.html)
+- **도감 사전 모드 직행**: [`ai_ui_ux.html?mode=dictionary`](https://redsunjin.github.io/uiux-vibe-studio/ai_ui_ux.html?mode=dictionary)
+
+### 1. 로컬에서 비주얼 스튜디오 웹앱 실행
 저장소를 클론한 뒤 `ai_ui_ux.html`을 브라우저(또는 로컬 정적 서버)로 열면 208종 패턴 도감, 조립기 캔버스, 숨김/가리기 관리, 실시간 프로토타입 컴파일러를 바로 사용할 수 있습니다.
 - `ai_ui_ux.html` 및 쇼케이스 HTML들은 스타일/아이콘/폰트 렌더링을 위해 외부 CDN(Tailwind CSS, Lucide Icons, Pretendard)을 사용합니다.
 - AI 코드 생성 기능에 입력하는 API Key는 브라우저의 `sessionStorage`에만 임시 보관되며 외부 서버로 수집·저장되지 않습니다. **절대 저장소에 API Key를 커밋하지 마세요.**
