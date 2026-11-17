@@ -316,13 +316,13 @@
         case 'lay_01':
         case 'cnt_01':
           return `
-            <div class="bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-900 text-white p-3 rounded-xl flex items-center justify-between gap-2 shadow-xs">
+            <div class="bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-900 text-white p-3 rounded-xl flex items-center justify-between gap-2 shadow-sm">
               <div class="space-y-1">
                 <span class="text-[8px] bg-blue-500/30 border border-blue-400/30 text-blue-200 px-1.5 py-0.5 rounded-full font-bold">HERO BANNER</span>
                 <div class="text-xs font-extrabold tracking-tight">핵심 가치 제안 헤드라인 타이틀</div>
                 <div class="text-[9px] text-slate-300">방문자의 시선을 사로잡는 상단 와이드 영역</div>
               </div>
-              <span class="bg-blue-500 hover:bg-blue-400 text-white text-[10px] font-extrabold px-3 py-1.5 rounded-lg shrink-0 shadow-xs">시작하기 →</span>
+              <span class="bg-blue-500 hover:bg-blue-400 text-white text-[10px] font-extrabold px-3 py-1.5 rounded-lg shrink-0 shadow-sm">시작하기 →</span>
             </div>`;
         case 'lay_02':
         case 'cnt_02':
@@ -378,15 +378,15 @@
         case 'cnt_08':
           return `
             <div class="grid grid-cols-3 gap-1.5 text-[9px]">
-              <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-2xs">
+              <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-sm">
                 <div class="text-slate-400 font-medium">전환율 KPI</div>
                 <div class="text-xs font-extrabold text-slate-900 mt-0.5">68.4% <span class="text-[8px] text-emerald-600 font-bold">▲12%</span></div>
               </div>
-              <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-2xs">
+              <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-sm">
                 <div class="text-slate-400 font-medium">활성 사용자</div>
                 <div class="text-xs font-extrabold text-blue-600 mt-0.5">1,280명</div>
               </div>
-              <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-2xs flex items-end gap-1 h-full">
+              <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-sm flex items-end gap-1 h-full">
                 <div class="w-full bg-blue-200 h-3 rounded-t"></div><div class="w-full bg-blue-400 h-5 rounded-t"></div><div class="w-full bg-blue-600 h-8 rounded-t"></div><div class="w-full bg-blue-300 h-6 rounded-t"></div>
               </div>
             </div>`;
@@ -436,9 +436,9 @@
         case 'cnt_10':
           return `
             <div class="grid grid-cols-3 gap-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-[9px]">
-              <div class="bg-slate-200/70 p-1.5 rounded-lg space-y-1"><div class="font-extrabold text-slate-600">TO DO (2)</div><div class="bg-white p-1.5 rounded shadow-2xs font-semibold">기획안 작성</div></div>
-              <div class="bg-blue-50/80 p-1.5 rounded-lg space-y-1 border border-blue-200"><div class="font-extrabold text-blue-700">DOING (1)</div><div class="bg-white p-1.5 rounded shadow-2xs font-bold text-blue-600">UI 와이어프레임</div></div>
-              <div class="bg-emerald-50/70 p-1.5 rounded-lg space-y-1"><div class="font-extrabold text-emerald-700">DONE (4)</div><div class="bg-white p-1.5 rounded shadow-2xs text-slate-400 line-through">사전 DB 구축</div></div>
+              <div class="bg-slate-200/70 p-1.5 rounded-lg space-y-1"><div class="font-extrabold text-slate-600">TO DO (2)</div><div class="bg-white p-1.5 rounded shadow-sm font-semibold">기획안 작성</div></div>
+              <div class="bg-blue-50/80 p-1.5 rounded-lg space-y-1 border border-blue-200"><div class="font-extrabold text-blue-700">DOING (1)</div><div class="bg-white p-1.5 rounded shadow-sm font-bold text-blue-600">UI 와이어프레임</div></div>
+              <div class="bg-emerald-50/70 p-1.5 rounded-lg space-y-1"><div class="font-extrabold text-emerald-700">DONE (4)</div><div class="bg-white p-1.5 rounded shadow-sm text-slate-400 line-through">사전 DB 구축</div></div>
             </div>`;
         case 'cnt_11':
           return `
@@ -452,7 +452,7 @@
           return `
             <div class="flex gap-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-[9px]">
               <div class="flex-1 bg-white p-2 rounded-lg text-slate-500">메인 캔버스 영역</div>
-              <div class="w-28 bg-white p-2 rounded-lg border-l-2 border-blue-500 shadow-xs"><div class="font-extrabold text-blue-600">우측 인스펙터</div><div class="text-[8px] text-slate-400 mt-0.5">속성·목차 상세창</div></div>
+              <div class="w-28 bg-white p-2 rounded-lg border-l-2 border-blue-500 shadow-sm"><div class="font-extrabold text-blue-600">우측 인스펙터</div><div class="text-[8px] text-slate-400 mt-0.5">속성·목차 상세창</div></div>
             </div>`;
       }
 
@@ -496,7 +496,7 @@
         };
         if (iconSvgMap[item.id]) {
           return `
-            <div class="bg-white border border-slate-200 rounded-xl px-3 py-1.5 flex items-center justify-between text-[10px] shadow-2xs">
+            <div class="bg-white border border-slate-200 rounded-xl px-3 py-1.5 flex items-center justify-between text-[10px] shadow-sm">
               <div class="flex items-center gap-2">
                 <span class="w-7 h-7 rounded-lg bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0">${iconSvgMap[item.id]}</span>
                 <div><div class="font-bold text-slate-800">${item.code}</div><div class="text-[8px] text-slate-400">${item.meta}</div></div>
@@ -512,7 +512,7 @@
                 <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-[9px]">📷</span>
                 <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-[9px]">🎙</span>
                 <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-600 flex items-center justify-center text-[9px]">📄</span>
-                <span class="w-6 h-6 rounded-full bg-blue-600 text-white font-extrabold flex items-center justify-center shadow-xs">✕</span>
+                <span class="w-6 h-6 rounded-full bg-blue-600 text-white font-extrabold flex items-center justify-center shadow-sm">✕</span>
               </div>
             </div>`;
         }
@@ -528,7 +528,7 @@
         }
         if (item.id === 'nav_01') {
           return `
-            <div class="bg-white border border-slate-200 rounded-xl px-3 py-1.5 flex justify-around text-[9px] font-bold shadow-2xs">
+            <div class="bg-white border border-slate-200 rounded-xl px-3 py-1.5 flex justify-around text-[9px] font-bold shadow-sm">
               <span class="text-blue-600 flex flex-col items-center"><span>●</span><span>홈</span></span>
               <span class="text-slate-400 flex flex-col items-center"><span>○</span><span>검색</span></span>
               <span class="text-slate-400 flex flex-col items-center"><span>○</span><span>리포트</span></span>
@@ -596,7 +596,7 @@
             </div>`;
         }
         return `
-          <div class="bg-white border border-slate-200 rounded-xl px-3 py-1.5 flex items-center justify-between text-[10px] shadow-2xs">
+          <div class="bg-white border border-slate-200 rounded-xl px-3 py-1.5 flex items-center justify-between text-[10px] shadow-sm">
             <div class="flex items-center gap-2">
               <span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-800 font-extrabold">☰</span>
               <span class="font-bold text-slate-800">${item.code}</span>
@@ -608,7 +608,7 @@
       if (item.catKey === 'search') {
         if (item.id === 'src_01' || item.id === 'src_02') {
           return `
-            <div class="bg-white rounded-xl border-2 border-blue-500 px-3 py-1.5 flex items-center justify-between text-[10px] shadow-2xs">
+            <div class="bg-white rounded-xl border-2 border-blue-500 px-3 py-1.5 flex items-center justify-between text-[10px] shadow-sm">
               <div class="flex items-center gap-2"><span class="text-blue-600 font-bold">🔍</span><span class="text-slate-800 font-semibold">프론트엔드 포트폴리오</span></div>
               <span class="w-4 h-4 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[8px] font-bold">✕</span>
             </div>`;
@@ -644,7 +644,7 @@
         if (item.id === 'form_03') {
           return `
             <div class="grid grid-cols-3 bg-slate-100 p-1 rounded-xl text-[9px] font-bold text-center">
-              <div class="bg-white text-blue-600 py-1 rounded-lg shadow-2xs">일간</div>
+              <div class="bg-white text-blue-600 py-1 rounded-lg shadow-sm">일간</div>
               <div class="text-slate-500 py-1">주간</div>
               <div class="text-slate-500 py-1">월간</div>
             </div>`;
@@ -807,7 +807,7 @@
         }
         if (item.id === 'ld_09') {
           return `
-            <div class="bg-blue-600 text-white py-2 px-3 rounded-xl text-[10px] font-extrabold text-center flex items-center justify-center gap-1.5 shadow-xs">
+            <div class="bg-blue-600 text-white py-2 px-3 rounded-xl text-[10px] font-extrabold text-center flex items-center justify-center gap-1.5 shadow-sm">
               <span class="w-3 h-3 rounded-full border-2 border-white border-t-transparent animate-spin"></span>
               <span>안전하게 제출 처리 중... (중복 클릭 방지)</span>
             </div>`;
@@ -961,7 +961,7 @@
           return `
             <div class="grid grid-cols-3 gap-1.5 text-[9px] text-center">
               <div class="bg-white p-1.5 rounded-lg border border-slate-200"><div class="font-bold">Free</div><div class="text-slate-400">₩0</div></div>
-              <div class="bg-blue-600 text-white p-1.5 rounded-lg font-bold shadow-xs"><div>Pro ★</div><div>₩19,000</div></div>
+              <div class="bg-blue-600 text-white p-1.5 rounded-lg font-bold shadow-sm"><div>Pro ★</div><div>₩19,000</div></div>
               <div class="bg-white p-1.5 rounded-lg border border-slate-200"><div class="font-bold">Team</div><div class="text-slate-400">₩49,000</div></div>
             </div>`;
         }
