@@ -46,7 +46,7 @@
         { id: 'lay_12', code: '레이아웃 12 홀리 그레일 3단 [추가]', eng: 'Holy Grail 3-Column', slot: 'main', span: 'full', meta: '좌측 트리메뉴 + 중앙 본문 + 우측 목차', desc: '기술 문서(Docs)나 커뮤니티 표준인 좌측 탐색·중앙 아티클·우측 온페이지 목차(TOC) 3단 구조' }
       ],
       content: [
-        { id: 'cnt_01', code: '콘텐츠 01 히어로 배너', eng: 'Hero section', slot: 'main', span: 'full', meta: '시선 집중도: 최상 · 전체폭', desc: '최상단 핵심 헤드라인 메시지 + 대표 행동 유도(CTA) 배너 블록' },
+        { id: 'cnt_01', code: '콘텐츠 01 히어로 배너', eng: 'Hero section', slot: 'main', span: 'full', status: 'deprecated', replacedBy: 'lay_01', meta: '시선 집중도: 최상 · 전체폭', desc: '최상단 핵심 헤드라인 메시지 + 대표 행동 유도(CTA) 배너 블록' },
         { id: 'cnt_02', code: '콘텐츠 02 카드 그리드', eng: 'Bento / Card grid', slot: 'main', span: 'full', meta: '태블릿/PC 다단 격자 핵심', desc: '독립된 카드들을 2~3단 바둑판 격자(Bento)로 반응형 배치' },
         { id: 'cnt_03', code: '콘텐츠 03 리스트 뷰', eng: 'Feed / List view', slot: 'main', span: 'half', meta: '스캔 속도: 가장 빠름', desc: '썸네일+타이틀+메타데이터를 수직 행(Row)으로 나열해 빠른 텍스트 스캔 지원' },
         { id: 'cnt_04', code: '콘텐츠 04 마스터-디테일 분할', eng: 'Master-Detail Split', slot: 'main', span: 'full', meta: '태블릿/PC 좌우 2단 전용', desc: '좌측에 목록(Master), 우측에 선택 항목의 상세 본문(Detail)을 동시 배치' },
@@ -67,7 +67,7 @@
         { id: 'onb_05', code: '첫화면 05 간편 로그인', eng: 'Social login', slot: 'main', span: 'half', meta: '카카오·Apple 3초 원클릭 인증', desc: '복잡한 이메일·비밀번호 입력 없이 OAuth 소셜 계정으로 원클릭 가입/로그인' },
         { id: 'onb_06', code: '첫화면 06 약관 동의', eng: 'Terms agreement', slot: 'main', span: 'half', meta: '전체 동의 마스터 체크박스 + 필수/선택', desc: '상단 [전체 동의] 일괄 체크박스와 필수/선택 약관 구분으로 가입 피로도 단축' },
         { id: 'onb_07', code: '첫화면 07 프로필 설정', eng: 'Profile setup', slot: 'main', span: 'half', meta: '아바타 이미지 + 닉네임 초기 세팅', desc: '가입 직후 활동할 프로필 아바타 사진과 닉네임을 입력받아 개인화 준비' },
-        { id: 'onb_08', code: '첫화면 08 초기 피드 스켈레톤', eng: 'Initial feed skeleton', slot: 'main', span: 'half', meta: '스플래시 직후 홈 윤곽선 선노출', desc: '첫 홈 화면 진입 시 맞춤형 피드 로딩 동안 카드 윤곽선 쉬머를 먼저 노출' },
+        { id: 'onb_08', code: '첫화면 08 초기 피드 스켈레톤', eng: 'Initial feed skeleton', slot: 'main', span: 'half', status: 'deprecated', replacedBy: 'ld_02', meta: '스플래시 직후 홈 윤곽선 선노출', desc: '첫 홈 화면 진입 시 맞춤형 피드 로딩 동안 카드 윤곽선 쉬머를 먼저 노출' },
         { id: 'onb_09', code: '첫화면 09 웰컴 화면', eng: 'Welcome screen', slot: 'main', span: 'full', meta: '가입 완료 폭죽(Confetti) & 첫 CTA', desc: '가입 완료 직후 축하 폭죽 애니메이션과 함께 본 화면 진입을 유도하는 피날레 뷰' },
         { id: 'onb_10', code: '첫화면 10 취향/관심사 칩 선택 [추가]', eng: 'Interest tag picker', slot: 'main', span: 'full', meta: '관심 토픽 3개 이상 선택 · 추천 콜드스타트 해결', desc: '신규 가입 시 관심 분야 태그를 3개 이상 고르게 하여 첫 홈 피드 추천 알고리즘을 초기화' },
         { id: 'onb_11', code: '첫화면 11 온보딩 미션 체크리스트 [추가]', eng: 'Onboarding checklist widget', slot: 'main', span: 'half', meta: '초기 정착 4단계 퀘스트 + 달성률 바', desc: '가입 후 핵심 기능(프로필 등록→첫 글 작성→알림 켜기)을 하나씩 달성하게 유도하는 가이드 위젯' }
@@ -147,7 +147,7 @@
         { id: 'fb_05', code: '피드백 05 바텀시트', eng: 'Bottom sheet', slot: 'bottom', span: 'full', meta: '방해도: 중간 · 모바일 하단 슬라이드업', desc: '모바일 화면 하단에서 위로 부드럽게 올라오는 상세 옵션/필터 시트' },
         { id: 'fb_06', code: '피드백 06 인라인 오류', eng: 'Inline error', slot: 'main', span: 'half', meta: '방해도: 낮음 · 입력칸 직하단 즉시 검증', desc: '문제가 발생한 입력 칸 바로 아래에 붉은색으로 노출되는 실시간 유효성 검증 문구' },
         { id: 'fb_07', code: '피드백 07 툴팁', eng: 'Tooltip', slot: 'main', span: 'half', meta: '방해도: 매우 낮음 · 호버/탭 보조 말풍선', desc: '? 아이콘 호버나 탭 시 나타나는 산정 기준·용어 설명 보조 말풍선' },
-        { id: 'fb_08', code: '피드백 08 코치마크 피드백', eng: 'Coach mark spotlight', slot: 'bottom', span: 'full', meta: '방해도: 높음 · 신규 기능 하이라이트', desc: '타깃 UI 요소를 스포트라이트로 비추어 신규 기능을 학습시키는 가이드 레이어' },
+        { id: 'fb_08', code: '피드백 08 코치마크 피드백', eng: 'Coach mark spotlight', slot: 'bottom', span: 'full', status: 'deprecated', replacedBy: 'onb_04', meta: '방해도: 높음 · 신규 기능 하이라이트', desc: '타깃 UI 요소를 스포트라이트로 비추어 신규 기능을 학습시키는 가이드 레이어' },
         { id: 'fb_09', code: '피드백 09 알림 뱃지', eng: 'Notification Badge', slot: 'header', span: 'half', meta: '방해도: 매우 낮음 · 읽지 않음 카운트/점', desc: '종 모양 아이콘 모퉁이에 읽지 않은 알림 개수나 빨간 점을 표시하는 인디케이터' },
         { id: 'fb_10', code: '피드백 10 팝오버 재확인창 (Popconfirm) [추가]', eng: 'Popconfirm balloon', slot: 'main', span: 'half', meta: '무거운 모달 대신 버튼 직상단 초경량 확인', desc: '[삭제] 버튼 클릭 시 화면 전체를 덮지 않고 버튼 바로 위에 작은 말풍선으로 "정말 삭제할까요?" 확인' },
         { id: 'fb_11', code: '피드백 11 알림 센터 인박스 [추가]', eng: 'Notification inbox drawer', slot: 'header', span: 'half', meta: '전체 알림 내역 보관 + [모두 읽음] 처리', desc: '종 아이콘 클릭 시 열리는 알림 보관함으로, 읽지 않은 알림 필터와 일괄 읽음 처리를 제공' }
@@ -293,6 +293,7 @@
     });
 
     const ALL_PATTERNS = Object.values(PATTERN_DB).flat();
+    const ACTIVE_PATTERNS = ALL_PATTERNS.filter(p => (p.status || 'active') === 'active');
 
     // =========================================================================
     // 3. 207종 전 패턴 리얼 미니 UI 그래픽 렌더러 (단순 텍스트 박스 완전 퇴출)
@@ -1178,6 +1179,7 @@ window.UX_TAXONOMY_DB = {
   SHOWCASE_BOOKS,
   PATTERN_DB,
   ALL_PATTERNS,
+  ACTIVE_PATTERNS,
   getVisualWireframeHTML,
   getImplementationRecipe,
   getVisualThemeCssGuide

@@ -25,7 +25,7 @@ const sandbox = { window: {} };
 vm.createContext(sandbox);
 vm.runInContext(dbSource, sandbox);
 
-const { SHOWCASE_BOOKS, PATTERN_DB, ALL_PATTERNS, getImplementationRecipe } =
+const { SHOWCASE_BOOKS, PATTERN_DB, ALL_PATTERNS, ACTIVE_PATTERNS, getImplementationRecipe } =
   sandbox.window.UX_TAXONOMY_DB;
 
 const escapeCell = (str) =>
@@ -34,14 +34,16 @@ const escapeCell = (str) =>
     .replace(/\r?\n/g, ' ');
 
 const lines = [
-  `# UI/UX 도감 백과사전 & 바이브 코딩 마스터 카탈로그 (${SHOWCASE_BOOKS.length}대 영역 · ${ALL_PATTERNS.length}종 패턴)`,
+  `# UI/UX 도감 백과사전 & 바이브 코딩 마스터 카탈로그 (${SHOWCASE_BOOKS.length}대 영역 · 활성 ${ACTIVE_PATTERNS.length}종 / 전체 ${ALL_PATTERNS.length}종)`,
   '',
-  '이 문서는 `data/ux-taxonomy-db.js`에서 `scripts/build-catalog.mjs`로 자동 생성된 AI 에이전트용 UI/UX 컴포넌트 및 인터랙션 구현 레시피 참조표입니다.',
+  '이 문서는 `data/ux-taxonomy-db.js`에서 `scripts/build-catalog.mjs`로 자동 생성된 AI 에이전트용 UI/UX 컴포넌트 및 인터랙션 구현 레시피 참조표입니다. (`status: hidden/deprecated` 항목은 자동 제외됩니다)',
   ''
 ];
 
 for (const book of SHOWCASE_BOOKS) {
-  const items = PATTERN_DB[book.key] || [];
+  const items = (PATTERN_DB[book.key] || []).filter(
+    (item) => (item.status || 'active') === 'active'
+  );
   lines.push(`## ${book.title} (참조 쇼케이스: \`${book.file}\`)`);
   lines.push('');
   lines.push('| ID | 패턴명 | 영문명 | 슬롯 | 격자폭 | 핵심 특성 | 설명 및 쇼케이스 구현 레시피 |');
@@ -57,5 +59,5 @@ for (const book of SHOWCASE_BOOKS) {
 
 fs.writeFileSync(outPath, lines.join('\n'), 'utf8');
 console.log(
-  `Generated ${path.relative(rootDir, outPath)} (${SHOWCASE_BOOKS.length} categories, ${ALL_PATTERNS.length} patterns)`
+  `Generated ${path.relative(rootDir, outPath)} (${SHOWCASE_BOOKS.length} categories, ${ACTIVE_PATTERNS.length}/${ALL_PATTERNS.length} active patterns)`
 );
