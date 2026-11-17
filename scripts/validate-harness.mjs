@@ -120,6 +120,48 @@ if (catalogRows.length !== ACTIVE_PATTERNS.length) {
   );
 }
 
+// 7. 아이콘·자산(Assets) 유실 및 무결성 검증
+const pluginJsonPath = path.join(rootDir, 'plugin.json');
+if (fs.existsSync(pluginJsonPath)) {
+  const pluginMeta = JSON.parse(fs.readFileSync(pluginJsonPath, 'utf8'));
+  if (!pluginMeta.logo || !fs.existsSync(path.join(rootDir, pluginMeta.logo))) {
+    errors.push(`[Asset] plugin.json의 logo 경로 '${pluginMeta.logo}'가 존재하지 않습니다.`);
+  }
+}
+
+for (const htmlFile of ['index.html', 'ai_ui_ux.html']) {
+  const fullHtmlPath = path.join(rootDir, htmlFile);
+  if (!fs.existsSync(fullHtmlPath)) continue;
+  const htmlText = fs.readFileSync(fullHtmlPath, 'utf8');
+  const assetRefs = [...htmlText.matchAll(/(?:src|href)=["'](assets\/[^"']+)["']/g)].map((m) => m[1]);
+  for (const ref of assetRefs) {
+    if (!fs.existsSync(path.join(rootDir, ref))) {
+      errors.push(`[Asset] ${htmlFile}에서 참조하는 자산 '${ref}'가 누락되었습니다.`);
+    }
+  }
+}
+
+const assetsDir = path.join(rootDir, 'assets');
+if (fs.existsSync(assetsDir)) {
+  for (const f of fs.readdirSync(assetsDir)) {
+    if (f.endsWith('.svg')) {
+      const svgText = fs.readFileSync(path.join(assetsDir, f), 'utf8');
+      if (!/<svg[\s>]/i.test(svgText)) {
+        errors.push(`[Asset] assets/${f} 파일에 유효한 <svg> 루트 요소가 없습니다.`);
+      }
+      if (/<script/i.test(svgText)) {
+        errors.push(`[Asset] assets/${f} 파일에 보안상 금지된 <script> 태그가 포함되어 있습니다.`);
+      }
+    }
+  }
+}
+
+for (const book of SHOWCASE_BOOKS) {
+  if (!book.icon || String(book.icon).trim() === '') {
+    errors.push(`[Asset] SHOWCASE_BOOKS '${book.key}'에 icon 메타데이터가 누락되었습니다.`);
+  }
+}
+
 const hiddenCount = ALL_PATTERNS.length - ACTIVE_PATTERNS.length;
 console.log(
   `Checked ${SHOWCASE_BOOKS.length} categories, ${ALL_PATTERNS.length} total patterns (Active: ${ACTIVE_PATTERNS.length}, Hidden/Deprecated: ${hiddenCount}).`

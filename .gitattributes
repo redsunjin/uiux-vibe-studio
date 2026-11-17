@@ -1,0 +1,9 @@
+# OS 간 줄바꿈/바이너리 손상 방지 (자산 무결성 보호)
+* text=auto eol=lf
+*.svg text eol=lf
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.ico binary
+*.woff2 binary
