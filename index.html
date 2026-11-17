@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>UI/UX 백과사전 &amp; 바이브 코딩 스튜디오</title>
-  <meta name="description" content="20대 도감 카테고리 · 208종 표준 UI/UX 패턴 사전과 쇼케이스 레시피를 기반으로 반응형 화면을 설계·바이브 코딩·검수하는 오픈소스 웹 스튜디오 (CC BY-NC-SA 4.0)">
+  <meta name="description" content="20대 도감 카테고리 · 217종 활성 UI/UX 패턴 사전과 쇼케이스 레시피를 기반으로 반응형 화면을 설계·바이브 코딩·검수하는 오픈소스 웹 스튜디오 (CC BY-NC-SA 4.0)">
   <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
@@ -149,7 +149,7 @@
           <div class="tag-row">
             <span id="heroStatsBadge" class="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-blue-500/20 text-blue-200 font-bold border border-blue-400/30">
               <i data-lucide="sparkles" class="w-3.5 h-3.5" aria-hidden="true"></i>
-              <span>20대 도감 카테고리 · 208종 표준 패턴</span>
+              <span>20대 도감 카테고리 · 217종 활성 패턴</span>
             </span>
             <span class="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-200 font-semibold border border-emerald-400/30">
               <i data-lucide="shield-check" class="w-3.5 h-3.5" aria-hidden="true"></i>
@@ -393,7 +393,7 @@
                   ${item.previewNames}
                 </p>
                 <footer class="pt-2 flex items-center justify-between text-xs text-slate-500 border-t border-slate-100">
-                  <span class="font-semibold">${item.patternCount}종 패턴 수록</span>
+                  <span class="font-semibold">${item.patternCount}종 패턴 · <span class="font-mono text-[10px] text-slate-400">${item.file.replace('showcases/', '')}</span></span>
                   <span class="font-bold text-blue-600 inline-flex items-center gap-1">
                     열기 <i data-lucide="arrow-up-right" class="w-3.5 h-3.5" aria-hidden="true"></i>
                   </span>

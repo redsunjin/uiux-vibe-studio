@@ -1,13 +1,13 @@
 ---
 name: uiux-vibe-composer
 description: >-
-  20대 도감 카테고리 · 208종 표준 UI/UX 패턴 사전과 15개 인터랙티브 쇼케이스 구현 레시피를 기반으로 화면을 설계·바이브 코딩(Vibe Coding)·검수하는 스킬.
+  20대 도감 카테고리 · 217종 활성 UI/UX 패턴 사전과 15개 인터랙티브 쇼케이스 구현 레시피를 기반으로 화면을 설계·바이브 코딩(Vibe Coding)·검수하는 스킬.
   사용자가 웹/앱 화면 구성을 요청하거나, UI 사전 기준으로 프로토타입 생성, 반응형(모바일/태블릿/PC) 레이아웃 설계, 또는 기존 화면의 UX 휴리스틱 검수를 요청할 때 반드시 활성화하세요.
 ---
 
 # UI/UX Dictionary & Vibe Coding Composer Skill (`uiux-vibe-composer`)
 
-이 스킬은 프로젝트의 **마스터 UI/UX 도감 데이터베이스([ux-taxonomy-db.js](../../../data/ux-taxonomy-db.js))** 및 **카탈로그 레퍼런스([taxonomy-catalog.md](./references/taxonomy-catalog.md))**에 정의된 **20대 카테고리 · 208종 표준 패턴**을 활용하여, 한 번의 프롬프트로 쇼케이스 수준의 인터랙티브 프로토타입을 구현하거나 기존 UI를 검수합니다.
+이 스킬은 프로젝트의 **마스터 UI/UX 도감 데이터베이스([ux-taxonomy-db.js](../../../data/ux-taxonomy-db.js))** 및 **카탈로그 레퍼런스([taxonomy-catalog.md](./references/taxonomy-catalog.md))**에 정의된 **20대 카테고리 · 217종 활성 패턴**을 활용하여, 한 번의 프롬프트로 쇼케이스 수준의 인터랙티브 프로토타입을 구현하거나 기존 UI를 검수합니다.
 
 ---
 
@@ -59,7 +59,7 @@ description: >-
 ## 2. 참조 파일 경로 & 콘텐츠 관리 하네스
 - **콘텐츠 제작 계약 & 규칙 지침**: [references/content-contract.md](./references/content-contract.md) (신규 패턴/레시피 추가 및 숨김·폐기 처리 시 필수 준수)
 - **도메인별 세트 프리셋**: [references/domain-presets.md](./references/domain-presets.md)
-- **전체 208종 패턴 & 레시피 표**: [references/taxonomy-catalog.md](./references/taxonomy-catalog.md)
+- **전체 217종 활성 패턴 & 레시피 표**: [references/taxonomy-catalog.md](./references/taxonomy-catalog.md)
 - **마스터 JS 데이터베이스**: [data/ux-taxonomy-db.js](../../../data/ux-taxonomy-db.js)
 - **콘텐츠 검증 하네스**: [scripts/validate-harness.mjs](../../../scripts/validate-harness.mjs) (`node scripts/validate-harness.mjs`)
 - **카탈로그 자동 동기화 스크립트**: [scripts/build-catalog.mjs](../../../scripts/build-catalog.mjs) (`node scripts/build-catalog.mjs`)

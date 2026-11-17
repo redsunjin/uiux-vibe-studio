@@ -10,6 +10,15 @@
     @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
     body {
       font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
     /* 모션 03 스프링 & 모션 02 이즈 아웃 & 모션 05 순차 등장 (쇼케이스 레시피 반영) */
     @keyframes springOvershoot {

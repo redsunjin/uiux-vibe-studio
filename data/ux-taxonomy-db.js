@@ -1,11 +1,11 @@
 /**
  * UI/UX Interactive Dictionary & Vibe Coding Studio — Master Taxonomy DB
- * 총 20대 도감 카테고리 · 208종 실전 UI/UX 패턴 및 쇼케이스 구현 레시피
+ * 총 20대 도감 카테고리 · 217종 활성(총 220종) 실전 UI/UX 패턴 및 쇼케이스 구현 레시피
  * (Single Source of Truth: 웹앱과 AI 에이전트 스킬이 공통으로 참조합니다)
  */
 
 // =========================================================================
-    // 1. 20대 도감 카테고리 메타데이터 & 208종 전체 패턴 데이터베이스
+    // 1. 20대 도감 카테고리 메타데이터 & 전체 패턴 데이터베이스
     // =========================================================================
     const SHOWCASE_BOOKS = [
       { key: 'layout', title: '01. 화면 레이아웃 & 그리드', short: '화면 레이아웃', file: 'showcases/layout.html', icon: 'layout-template', badge: '페이지 골격' },
