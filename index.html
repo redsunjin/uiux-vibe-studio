@@ -127,7 +127,7 @@
 
       <nav aria-label="주요 메뉴" class="flex flex-wrap items-center gap-2 text-xs font-semibold">
         <a href="#studio-features" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition">핵심 기능</a>
-        <a href="#showcase-gallery" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition">쇼케이스 15선</a>
+        <a href="#showcase-gallery" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition">20대 쇼케이스</a>
         <a href="#license-section" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition">라이선스</a>
         <a href="https://github.com/redsunjin/uiux-vibe-studio" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition inline-flex items-center gap-1.5">
           <i data-lucide="github" class="w-3.5 h-3.5" aria-hidden="true"></i>
@@ -243,14 +243,14 @@
       </div>
     </section>
 
-    <!-- 15개 인터랙티브 쇼케이스 갤러리 -->
+    <!-- 20대 인터랙티브 쇼케이스 갤러리 -->
     <section id="showcase-gallery" class="bg-white border-y border-slate-200 py-12 sm:py-16">
       <div class="max-w-7xl mx-auto px-4 sm:px-6">
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
-            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Interactive Showcases</span>
-            <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 mt-1">인터랙티브 쇼케이스 페이지 직접 열기</h2>
-            <p class="text-sm text-slate-600 mt-1">각 카테고리별 실전 인터랙티브 데모 HTML을 클릭해 브라우저에서 바로 체험할 수 있습니다.</p>
+            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">20 Interactive Showcases</span>
+            <h2 class="text-2xl font-extrabold tracking-tight text-slate-900 mt-1">20대 쇼케이스 페이지 직접 열기</h2>
+            <p class="text-sm text-slate-600 mt-1">20대 도감 카테고리별 실전 인터랙티브 쇼케이스를 클릭해 브라우저에서 바로 체험할 수 있습니다.</p>
           </div>
           <div class="w-full md:w-72">
             <label for="showcaseSearchInput" class="sr-only">쇼케이스 검색</label>
@@ -338,41 +338,29 @@
         `;
       }
 
-      // 고유 쇼케이스 파일 단위로 그룹핑 (15종 HTML + 연결된 카테고리 목록)
-      const fileMap = new Map();
-      SHOWCASE_BOOKS.forEach((book) => {
-        const count = (PATTERN_DB[book.key] || []).filter((p) => (p.status || 'active') === 'active').length;
-        if (!fileMap.has(book.file)) {
-          fileMap.set(book.file, {
-            file: book.file,
-            icon: book.icon || 'layout-grid',
-            primaryTitle: book.short,
-            badge: book.badge,
-            categories: [book.title],
-            patternCount: count
-          });
-        } else {
-          const entry = fileMap.get(book.file);
-          entry.categories.push(book.title);
-          entry.patternCount += count;
-        }
+      // 20대 카테고리 전체를 쇼케이스 카드로 구성
+      const showcases = SHOWCASE_BOOKS.map((book) => {
+        const activeItems = (PATTERN_DB[book.key] || []).filter((p) => (p.status || 'active') === 'active');
+        const previewNames = activeItems.slice(0, 3).map((p) => p.code).join(' · ');
+        return {
+          key: book.key,
+          file: book.file,
+          icon: book.icon || 'layout-grid',
+          title: book.title,
+          short: book.short,
+          badge: book.badge,
+          patternCount: activeItems.length,
+          previewNames,
+          searchText: [book.title, book.short, book.badge, book.file, ...activeItems.map((p) => `${p.code} ${p.eng}`)].join(' ').toLowerCase()
+        };
       });
 
-      const showcases = Array.from(fileMap.values());
       const gridEl = document.getElementById('showcaseGrid');
       const searchInput = document.getElementById('showcaseSearchInput');
 
       function renderShowcases(query = '') {
         const q = query.trim().toLowerCase();
-        const filtered = showcases.filter((item) => {
-          if (!q) return true;
-          return (
-            item.primaryTitle.toLowerCase().includes(q) ||
-            item.file.toLowerCase().includes(q) ||
-            item.badge.toLowerCase().includes(q) ||
-            item.categories.some((c) => c.toLowerCase().includes(q))
-          );
-        });
+        const filtered = showcases.filter((item) => !q || item.searchText.includes(q));
 
         if (filtered.length === 0) {
           gridEl.innerHTML = `
@@ -386,7 +374,6 @@
         gridEl.innerHTML = filtered
           .map((item) => {
             const safeHref = encodeURI(item.file);
-            const catSummary = item.categories.join(' · ');
             return `
               <article class="card">
                 <header class="flex items-center justify-between gap-2">
@@ -399,11 +386,11 @@
                 </header>
                 <h3 class="text-base font-extrabold text-slate-900">
                   <a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="card-link hover:text-blue-600 transition">
-                    ${item.primaryTitle}
+                    ${item.title}
                   </a>
                 </h3>
-                <p class="text-xs text-slate-600 leading-relaxed snippet-clamp" title="${catSummary}">
-                  ${catSummary}
+                <p class="text-xs text-slate-600 leading-relaxed snippet-clamp" title="${item.previewNames}">
+                  ${item.previewNames}
                 </p>
                 <footer class="pt-2 flex items-center justify-between text-xs text-slate-500 border-t border-slate-100">
                   <span class="font-semibold">${item.patternCount}종 패턴 수록</span>
