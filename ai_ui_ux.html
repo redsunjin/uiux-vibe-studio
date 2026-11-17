@@ -73,7 +73,7 @@
 
         <!-- 메인 워크스페이스 모드 전환 탭 (사전 vs 빌더) -->
         <nav aria-label="워크스페이스 모드 전환" class="flex items-center bg-slate-800 p-1 rounded-xl border border-slate-700 text-xs">
-          <button type="button" id="modeBtn_composer" data-action="switch-workspace-mode" data-mode="composer" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold flex items-center gap-1.5 shadow-xs transition">
+          <button type="button" id="modeBtn_composer" data-action="switch-workspace-mode" data-mode="composer" class="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold flex items-center gap-1.5 shadow-sm transition">
             <i data-lucide="layout-dashboard" class="w-3.5 h-3.5" aria-hidden="true"></i>
             <span>🧩 바이브 코딩 화면 조립기</span>
             <span id="headerBadgeCount" class="ml-1 px-1.5 py-0.2 rounded-full bg-white/20 text-[10px]">0</span>
@@ -95,6 +95,8 @@
           <button type="button" data-action="load-preset" data-preset="booking" class="px-2 py-1 rounded-lg hover:bg-slate-700 text-slate-200 font-semibold transition">숙박·예약 달력</button>
           <button type="button" data-action="load-preset" data-preset="onboarding" class="px-2 py-1 rounded-lg hover:bg-slate-700 text-slate-200 font-semibold transition">앱 첫화면·온보딩</button>
           <button type="button" data-action="load-preset" data-preset="saas_dash" class="px-2 py-1 rounded-lg hover:bg-slate-700 text-slate-200 font-semibold transition">SaaS 대시보드</button>
+          <button type="button" data-action="load-preset" data-preset="rbac_security" class="px-2 py-1 rounded-lg hover:bg-slate-700 text-slate-200 font-semibold transition">팀·보안(RBAC)</button>
+          <button type="button" data-action="load-preset" data-preset="social_feed" class="px-2 py-1 rounded-lg hover:bg-slate-700 text-slate-200 font-semibold transition">소셜 피드</button>
         </div>
 
         <button type="button" data-action="save-local" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-semibold flex items-center gap-1 transition" title="현재 조립 상태를 브라우저에 임시 저장">
@@ -119,7 +121,7 @@
     <div id="viewComposer" class="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1">
 
       <!-- 좌측 패널 (3 cols): 16개 카테고리 쇼케이스 팔레트 & 검색 -->
-      <section aria-labelledby="paletteHeading" class="lg:col-span-3 bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden">
+      <section aria-labelledby="paletteHeading" class="lg:col-span-3 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden">
         <div class="p-3 border-b border-slate-100 space-y-2">
           <div class="flex items-center justify-between">
             <h2 id="paletteHeading" class="text-xs font-extrabold text-slate-800 flex items-center gap-1.5">
@@ -158,7 +160,7 @@
       </section>
 
       <!-- 중앙 패널: 반응형 디바이스 스테이지 (기본 6 cols, 와이드 확장 시 9 cols) -->
-      <section id="composerCanvasCol" aria-labelledby="canvasHeading" class="lg:col-span-6 bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden transition-all duration-300">
+      <section id="composerCanvasCol" aria-labelledby="canvasHeading" class="lg:col-span-6 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden transition-all duration-300">
         <!-- 캔버스 상단 컨트롤 바 -->
         <div class="p-3 border-b border-slate-100 flex flex-col gap-2">
           <div class="flex flex-wrap items-center justify-between gap-2">
@@ -176,7 +178,7 @@
 
             <!-- 뷰포트 디바이스 스위처 (모바일 9:19 / 태블릿 4:3 / PC 16:10) -->
             <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-xl text-[11px]">
-              <button type="button" id="vpBtn_mobile" data-action="set-viewport" data-viewport="mobile" class="px-2.5 py-1 rounded-lg bg-white text-blue-600 shadow-xs flex items-center gap-1 transition font-bold">
+              <button type="button" id="vpBtn_mobile" data-action="set-viewport" data-viewport="mobile" class="px-2.5 py-1 rounded-lg bg-white text-blue-600 shadow-sm flex items-center gap-1 transition font-bold">
                 <i data-lucide="smartphone" class="w-3.5 h-3.5" aria-hidden="true"></i>
                 <span>모바일 (9:19)</span>
               </button>
@@ -193,7 +195,7 @@
             <!-- 클린 실화면 뷰 vs 블록 편집 뷰 토글 & 와이드 확장 -->
             <div class="flex items-center gap-1">
               <div class="flex bg-slate-100 p-0.5 rounded-lg text-[10px] font-bold">
-                <button type="button" id="viewMode_clean" data-action="set-canvas-view-mode" data-viewmode="clean" class="px-2 py-1 rounded-md bg-blue-600 text-white shadow-2xs transition" title="조작 버튼을 숨기고 실제 앱/웹 화면처럼 직관적으로 미리봅니다">
+                <button type="button" id="viewMode_clean" data-action="set-canvas-view-mode" data-viewmode="clean" class="px-2 py-1 rounded-md bg-blue-600 text-white shadow-sm transition" title="조작 버튼을 숨기고 실제 앱/웹 화면처럼 직관적으로 미리봅니다">
                   ✨ 실화면 뷰
                 </button>
                 <button type="button" id="viewMode_blueprint" data-action="set-canvas-view-mode" data-viewmode="blueprint" class="px-2 py-1 rounded-md text-slate-600 hover:text-slate-900 transition" title="블록 코드명과 슬롯 경계선을 모두 펼쳐 편집합니다">
@@ -218,7 +220,7 @@
               <span class="font-bold text-slate-600 flex items-center gap-1 mr-1">
                 <i data-lucide="layout-template" class="w-3.5 h-3.5 text-blue-600" aria-hidden="true"></i> 화면 골격(Shell):
               </span>
-              <button type="button" id="gridBtn_stack" data-action="set-grid" data-grid="stack" class="px-2 py-0.5 rounded bg-blue-600 text-white font-bold shadow-xs transition">수직 1단 (모바일 기본)</button>
+              <button type="button" id="gridBtn_stack" data-action="set-grid" data-grid="stack" class="px-2 py-0.5 rounded bg-blue-600 text-white font-bold shadow-sm transition">수직 1단 (모바일 기본)</button>
               <button type="button" id="gridBtn_grid2" data-action="set-grid" data-grid="grid2" class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition">좌우 2단 분할 (Split/2열)</button>
               <button type="button" id="gridBtn_sidebar" data-action="set-grid" data-grid="sidebar" class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition">사이드바 + 다단 본문</button>
               <button type="button" id="gridBtn_bento3" data-action="set-grid" data-grid="bento3" class="px-2 py-0.5 rounded bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition">3단 벤토 / 홀리그레일</button>
@@ -260,7 +262,7 @@
           </div>
 
           <!-- 기기별 상태 안내 바 (현재 뷰포트의 반응형 문법 설명) -->
-          <div class="w-full max-w-[960px] mb-2.5 flex flex-wrap items-center justify-between gap-2 px-3 py-1.5 rounded-xl bg-white/90 border border-slate-200/80 shadow-2xs text-[11px]">
+          <div class="w-full max-w-[960px] mb-2.5 flex flex-wrap items-center justify-between gap-2 px-3 py-1.5 rounded-xl bg-white/90 border border-slate-200/80 shadow-sm text-[11px]">
             <div class="flex items-center gap-2">
               <span id="viewportSizeBadge" class="px-2 py-0.5 rounded-md bg-blue-600 text-white font-extrabold text-[10px]">📱 Mobile 375×812 · 9:19 세로형</span>
               <span id="viewportGrammarHint" class="text-slate-600 font-medium">상단 앱바 + 단일 세로 스크롤 + 하단 고정 탭바/시트 구조</span>
@@ -308,7 +310,7 @@
               <!-- 태블릿(iPadOS) 전용: 좌측 아이콘 네비게이션 레일 (Navigation Rail) -->
               <aside id="tabletLeftRail" aria-label="태블릿 좌측 네비게이션 레일" class="hidden w-12 bg-slate-900 text-slate-400 py-3 flex-col items-center justify-between shrink-0 border-r border-slate-800">
                 <div class="flex flex-col items-center gap-3">
-                  <div class="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center font-extrabold text-[10px] shadow-xs">UX</div>
+                  <div class="w-7 h-7 rounded-xl bg-blue-600 text-white flex items-center justify-center font-extrabold text-[10px] shadow-sm">UX</div>
                   <div class="w-7 h-7 rounded-lg bg-slate-800 text-blue-400 flex items-center justify-center" title="홈"><i data-lucide="home" class="w-3.5 h-3.5"></i></div>
                   <div class="w-7 h-7 rounded-lg hover:bg-slate-800 flex items-center justify-center" title="검색"><i data-lucide="search" class="w-3.5 h-3.5"></i></div>
                   <div class="w-7 h-7 rounded-lg hover:bg-slate-800 flex items-center justify-center" title="분석"><i data-lucide="bar-chart-2" class="w-3.5 h-3.5"></i></div>
@@ -379,7 +381,7 @@
           </div>
 
           <!-- 기기 프레임 외부 하단 독(Dock): 적용된 제스처 · 물리 모션 · 타이포 효과 · 비주얼 테마 -->
-          <div class="w-full max-w-[960px] mt-3 bg-white rounded-xl border border-indigo-200/80 p-2.5 shadow-2xs">
+          <div class="w-full max-w-[960px] mt-3 bg-white rounded-xl border border-indigo-200/80 p-2.5 shadow-sm">
             <div class="flex items-center justify-between mb-1.5">
               <span class="text-[10px] font-extrabold text-indigo-700 flex items-center gap-1">
                 <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600" aria-hidden="true"></i>
@@ -394,7 +396,7 @@
       </section>
 
       <!-- 우측 패널 (기본 3 cols): Claude / Gemini 협업 프롬프트 & MCP JSON 컴파일러 -->
-      <section id="composerOutputCol" aria-labelledby="outputHeading" class="lg:col-span-3 bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden transition-all duration-300">
+      <section id="composerOutputCol" aria-labelledby="outputHeading" class="lg:col-span-3 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden transition-all duration-300">
         <div class="p-3 border-b border-slate-100 flex items-center justify-between gap-1">
           <div>
             <h2 id="outputHeading" class="text-xs font-extrabold text-slate-800 flex items-center gap-1.5">
@@ -406,7 +408,7 @@
 
           <!-- 출력 모드 탭 -->
           <div class="flex bg-slate-100 p-1 rounded-xl text-[10px] font-bold shrink-0">
-            <button type="button" id="outTab_prompt" data-action="switch-output-tab" data-tab="prompt" class="px-2 py-1 rounded-lg bg-white text-blue-600 shadow-xs transition">
+            <button type="button" id="outTab_prompt" data-action="switch-output-tab" data-tab="prompt" class="px-2 py-1 rounded-lg bg-white text-blue-600 shadow-sm transition">
               프롬프트
             </button>
             <button type="button" id="outTab_json" data-action="switch-output-tab" data-tab="json" class="px-2 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition">
@@ -442,7 +444,7 @@
             <span id="copyStatusText" class="text-[11px] text-slate-500 font-medium">
               총 <strong id="activeCountLabel" class="text-blue-600">0</strong>개의 표준 UX 블록 조합됨
             </span>
-            <button type="button" data-action="open-live-prototype" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-extrabold flex items-center gap-1.5 shadow-xs transition active:scale-95" title="현재 캔버스에 조립한 블록·순서·테마·메모로 즉시 작동하는 풀사이즈 화면을 합성하거나 AI API로 생성합니다">
+            <button type="button" data-action="open-live-prototype" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-[11px] font-extrabold flex items-center gap-1.5 shadow-sm transition active:scale-95" title="현재 캔버스에 조립한 블록·순서·테마·메모로 즉시 작동하는 풀사이즈 화면을 합성하거나 AI API로 생성합니다">
               <i data-lucide="play" class="w-3.5 h-3.5" aria-hidden="true"></i>
               <span>🚀 실시간 프로토타입 실행 & AI 생성</span>
             </button>
@@ -468,7 +470,7 @@
     <div id="viewDictionary" class="hidden flex-1 flex-col gap-4">
 
       <!-- 사전 상단 컨트롤 & 통합 검색 바 -->
-      <section aria-label="백과사전 검색 및 뷰 전환" class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
+      <section aria-label="백과사전 검색 및 뷰 전환" class="bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-3">
         <div>
           <div class="flex items-center gap-2">
             <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-600">UI/UX Interactive Dictionary</span>
@@ -496,7 +498,7 @@
 
           <!-- 사전 보기 방식 전환 (통합 카드 도감 vs 원본 쇼케이스 라이브 뷰어) -->
           <div class="flex bg-slate-100 p-1 rounded-xl text-xs font-bold">
-            <button type="button" id="dictSubBtn_cards" data-action="switch-dict-subview" data-subview="cards" class="px-3 py-1.5 rounded-lg bg-white text-blue-600 shadow-xs transition">
+            <button type="button" id="dictSubBtn_cards" data-action="switch-dict-subview" data-subview="cards" class="px-3 py-1.5 rounded-lg bg-white text-blue-600 shadow-sm transition">
               🗂️ 통합 카드 도감
             </button>
             <button type="button" id="dictSubBtn_live" data-action="switch-dict-subview" data-subview="live" class="px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition">
@@ -510,7 +512,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 min-h-[640px]">
 
         <!-- 좌측: 쇼케이스 도감 목차 -->
-        <aside aria-label="쇼케이스 카테고리 목차" class="lg:col-span-3 bg-white rounded-2xl border border-slate-200 p-3 shadow-xs flex flex-col h-[calc(100vh-190px)] min-h-[580px]">
+        <aside aria-label="쇼케이스 카테고리 목차" class="lg:col-span-3 bg-white rounded-2xl border border-slate-200 p-3 shadow-sm flex flex-col h-[calc(100vh-190px)] min-h-[580px]">
           <div class="flex items-center justify-between pb-2 mb-2 border-b border-slate-100">
             <span class="text-xs font-extrabold text-slate-800">📚 쇼케이스 도감 목차</span>
             <button type="button" data-action="select-dict-cat" data-cat="all" id="dictCatAllBtn" class="text-[11px] font-bold text-blue-600 hover:underline">전체 보기</button>
@@ -519,7 +521,7 @@
         </aside>
 
         <!-- 우측 서브뷰 A: 통합 카드 그리드 -->
-        <section id="dictCardsSection" aria-label="패턴 카드 목록" class="lg:col-span-9 bg-white rounded-2xl border border-slate-200 p-4 shadow-xs flex flex-col h-[calc(100vh-190px)] min-h-[580px]">
+        <section id="dictCardsSection" aria-label="패턴 카드 목록" class="lg:col-span-9 bg-white rounded-2xl border border-slate-200 p-4 shadow-sm flex flex-col h-[calc(100vh-190px)] min-h-[580px]">
           <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-100">
             <div class="flex items-center gap-2">
               <h3 id="dictCurrentCatTitle" class="text-sm font-extrabold text-slate-900">전체 UI/UX 패턴 도감</h3>
@@ -539,7 +541,7 @@
         </section>
 
         <!-- 우측 서브뷰 B: 원본 HTML 쇼케이스 라이브 실행기 + 빠른 블록 담기 바 -->
-        <section id="dictLiveSection" aria-label="원본 쇼케이스 라이브 실행기" class="hidden lg:col-span-9 bg-white rounded-2xl border border-slate-200 shadow-xs flex-col h-[calc(100vh-190px)] min-h-[580px] overflow-hidden">
+        <section id="dictLiveSection" aria-label="원본 쇼케이스 라이브 실행기" class="hidden lg:col-span-9 bg-white rounded-2xl border border-slate-200 shadow-sm flex-col h-[calc(100vh-190px)] min-h-[580px] overflow-hidden">
           <!-- 상단 빠른 담기 바 -->
           <div class="p-3 bg-slate-900 text-white flex flex-col gap-2 shrink-0">
             <div class="flex flex-wrap items-center justify-between gap-2">
@@ -709,10 +711,10 @@
     function setCanvasViewMode(mode) {
       canvasViewMode = mode;
       document.getElementById('viewMode_clean').className = mode === 'clean'
-        ? "px-2 py-1 rounded-md bg-blue-600 text-white shadow-2xs transition"
+        ? "px-2 py-1 rounded-md bg-blue-600 text-white shadow-sm transition"
         : "px-2 py-1 rounded-md text-slate-600 hover:text-slate-900 transition";
       document.getElementById('viewMode_blueprint').className = mode === 'blueprint'
-        ? "px-2 py-1 rounded-md bg-blue-600 text-white shadow-2xs transition"
+        ? "px-2 py-1 rounded-md bg-blue-600 text-white shadow-sm transition"
         : "px-2 py-1 rounded-md text-slate-600 hover:text-slate-900 transition";
 
       // 블록 편집 뷰(blueprint)일 때만 슬롯 영문 가이드 헤더 노출
@@ -731,12 +733,12 @@
       const label = document.getElementById('wideStageLabel');
 
       if (isWideStage) {
-        canvasCol.className = "lg:col-span-9 bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden transition-all duration-300";
-        outputCol.className = "lg:col-span-12 bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col min-h-[360px] overflow-hidden transition-all duration-300";
+        canvasCol.className = "lg:col-span-9 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden transition-all duration-300";
+        outputCol.className = "lg:col-span-12 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col min-h-[360px] overflow-hidden transition-all duration-300";
         if (label) label.innerText = "기본 폭 복귀";
       } else {
-        canvasCol.className = "lg:col-span-6 bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden transition-all duration-300";
-        outputCol.className = "lg:col-span-3 bg-white rounded-2xl border border-slate-200 shadow-xs flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden transition-all duration-300";
+        canvasCol.className = "lg:col-span-6 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden transition-all duration-300";
+        outputCol.className = "lg:col-span-3 bg-white rounded-2xl border border-slate-200 shadow-sm flex flex-col h-[calc(100vh-84px)] min-h-[660px] overflow-hidden transition-all duration-300";
         if (label) label.innerText = "넓게 보기";
       }
       lucide.createIcons();
@@ -753,7 +755,7 @@
         compView.classList.remove('hidden');
         dictView.classList.add('hidden');
         dictView.classList.remove('flex');
-        btnComp.className = "px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold flex items-center gap-1.5 shadow-xs transition";
+        btnComp.className = "px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold flex items-center gap-1.5 shadow-sm transition";
         btnDict.className = "px-3 py-1.5 rounded-lg text-slate-300 hover:text-white font-semibold flex items-center gap-1.5 transition";
         renderPalette();
         renderCanvasSlots();
@@ -762,7 +764,7 @@
         compView.classList.add('hidden');
         dictView.classList.remove('hidden');
         dictView.classList.add('flex');
-        btnDict.className = "px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold flex items-center gap-1.5 shadow-xs transition";
+        btnDict.className = "px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold flex items-center gap-1.5 shadow-sm transition";
         btnComp.className = "px-3 py-1.5 rounded-lg text-slate-300 hover:text-white font-semibold flex items-center gap-1.5 transition";
         renderDictionaryView();
       }
@@ -784,7 +786,7 @@
         btn.dataset.action = 'switch-category';
         btn.dataset.cat = book.key;
         btn.className = `px-2 py-1.5 rounded-lg text-left transition flex items-center justify-between gap-1 ${
-          isCurrent ? 'bg-white text-blue-600 shadow-xs font-extrabold' : 'text-slate-600 hover:text-slate-900 font-medium'
+          isCurrent ? 'bg-white text-blue-600 shadow-sm font-extrabold' : 'text-slate-600 hover:text-slate-900 font-medium'
         }`;
         btn.innerHTML = `
           <span class="truncate">${book.short}</span>
@@ -825,7 +827,7 @@
         const isAdded = activeComponents.some(x => x.id === item.id);
         const card = document.createElement('div');
         card.className = `p-2.5 rounded-xl border transition flex flex-col gap-1.5 ${
-          isAdded ? 'bg-blue-50/70 border-blue-400' : 'bg-white border-slate-200 hover:border-blue-400 hover:shadow-xs'
+          isAdded ? 'bg-blue-50/70 border-blue-400' : 'bg-white border-slate-200 hover:border-blue-400 hover:shadow-sm'
         }`;
         card.innerHTML = `
           <div class="flex items-start justify-between gap-2">
@@ -966,7 +968,7 @@
         const el = document.createElement('div');
 
         if (item.slot === 'behavior') {
-          el.className = `animate-spring inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold border shadow-2xs cursor-pointer transition ${
+          el.className = `animate-spring inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[11px] font-bold border shadow-sm cursor-pointer transition ${
             isSelected ? 'bg-indigo-600 text-white border-indigo-700' : 'bg-indigo-50/70 text-indigo-800 border-indigo-200 hover:bg-indigo-100'
           }`;
           el.innerHTML = `
@@ -1023,7 +1025,7 @@
             `;
           } else {
             // 🛠️ 블록 편집 뷰 (Blueprint Mode)
-            el.className = `animate-spring bg-white border rounded-xl p-2 shadow-xs transition ${spanClass} ${
+            el.className = `animate-spring bg-white border rounded-xl p-2 shadow-sm transition ${spanClass} ${
               isSelected ? 'border-blue-500 ring-2 ring-blue-100' : 'border-slate-200 hover:border-blue-300'
             }`;
             el.innerHTML = `
@@ -1101,7 +1103,7 @@
         const btn = document.getElementById(`gridBtn_${m}`);
         if (!btn) return;
         btn.className = m === archMode
-          ? "px-2 py-0.5 rounded bg-blue-600 text-white font-bold shadow-xs transition"
+          ? "px-2 py-0.5 rounded bg-blue-600 text-white font-bold shadow-sm transition"
           : "px-2 py-0.5 rounded bg-slate-100 text-slate-600 hover:bg-slate-200 font-medium transition";
       });
 
@@ -1164,7 +1166,7 @@
         const btn = document.getElementById(`vpBtn_${m}`);
         if (!btn) return;
         btn.className = m === mode
-          ? "px-2.5 py-1 rounded-lg bg-white text-blue-600 shadow-xs flex items-center gap-1 transition font-bold"
+          ? "px-2.5 py-1 rounded-lg bg-white text-blue-600 shadow-sm flex items-center gap-1 transition font-bold"
           : "px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 flex items-center gap-1 transition font-medium";
       });
 
@@ -1214,28 +1216,51 @@
       if (type === 'apply') {
         titleEl.value = "채용 포트폴리오 제출 및 실시간 검증 화면";
         themeEl.value = "clean";
+        setViewportDevice('desktop');
+        setGridArchitecture('grid2');
         activeComponents = pick(['nav_05', 'fb_03', 'cnt_08', 'form_01', 'fb_06', 'dt_06', 'ld_03', 'ld_09', 'fb_02', 'mo_02', 'mo_03']);
       } else if (type === 'ai_chat') {
         titleEl.value = "RAG 기반 AI 에이전트 멀티모달 워크스페이스";
         themeEl.value = "Grainy Gradient (그레이니 그라디언트)";
+        setViewportDevice('desktop');
+        setGridArchitecture('grid2');
         activeComponents = pick(['nav_02', 'cnt_04', 'ai_03', 'ai_09', 'ai_02', 'ai_05', 'ai_07', 'ai_08', 'mo_05', 'txt_01']);
       } else if (type === 'search_shop') {
-        titleEl.value = "커머스 통합 검색 및 다중 필터·정렬 탐색 화면";
+        titleEl.value = "커머스 통합 검색 및 다중 필터·장바구니 화면";
         themeEl.value = "clean";
-        activeComponents = pick(['src_01', 'src_02', 'src_09', 'src_05', 'src_06', 'src_03', 'src_04', 'lay_04', 'src_07', 'ld_07', 'nav_01']);
+        setViewportDevice('desktop');
+        setGridArchitecture('sidebar');
+        activeComponents = pick(['src_01', 'src_02', 'src_09', 'src_10', 'src_06', 'src_11', 'lay_04', 'src_07', 'src_08', 'com_04', 'com_06', 'com_02', 'com_03', 'ld_07', 'fb_02', 'nav_01']);
       } else if (type === 'booking') {
         titleEl.value = "숙박·항공 여정 날짜 및 타임슬롯 예약 플로우";
         themeEl.value = "Claymorphism (클레이모피즘)";
-        activeComponents = pick(['nav_09', 'ind_02', 'dt_08', 'dt_03', 'dt_04', 'dt_05', 'form_08', 'fb_05', 'ld_09', 'mo_03']);
+        setViewportDevice('tablet');
+        setGridArchitecture('grid2');
+        activeComponents = pick(['nav_09', 'ind_02', 'dt_10', 'dt_08', 'dt_03', 'dt_04', 'dt_05', 'form_08', 'form_01', 'fb_06', 'com_06', 'ld_09', 'fb_01', 'mo_03']);
       } else if (type === 'onboarding') {
         titleEl.value = "신규 유저 앱 첫 진입 온보딩 및 3초 간편 가입";
         themeEl.value = "Liquid Motion (리퀴드 모션)";
+        setViewportDevice('mobile');
+        setGridArchitecture('stack');
         activeComponents = pick(['onb_01', 'ind_04', 'onb_02', 'onb_05', 'onb_06', 'onb_09', 'ind_09', 'txt_02', 'mo_03']);
       } else if (type === 'saas_dash') {
         titleEl.value = "B2B 엔터프라이즈 분석 대시보드 & 벤토 그리드";
         themeEl.value = "Isometric (아이소메트릭)";
         setViewportDevice('desktop');
-        activeComponents = pick(['ico_04', 'src_01', 'ico_06', 'lay_07', 'lay_02', 'cnt_07', 'ico_03', 'dt_03', 'txt_04']);
+        setGridArchitecture('bento3');
+        activeComponents = pick(['nav_05', 'nav_10', 'ico_04', 'src_01', 'src_08', 'ico_06', 'lay_07', 'lay_02', 'cnt_08', 'cnt_07', 'cnt_12', 'ico_03', 'dt_03', 'txt_04']);
+      } else if (type === 'rbac_security') {
+        titleEl.value = "팀 설정 · 권한(RBAC) · 보안 관리 콘솔";
+        themeEl.value = "clean";
+        setViewportDevice('desktop');
+        setGridArchitecture('sidebar');
+        activeComponents = pick(['nav_04', 'nav_02', 'aut_01', 'aut_02', 'aut_03', 'aut_05', 'form_04', 'aut_04', 'fb_04', 'ld_09', 'fb_01', 'fb_06']);
+      } else if (type === 'social_feed') {
+        titleEl.value = "모바일 콘텐츠 피드 · 소셜 커뮤니티";
+        themeEl.value = "Glassmorphism (글래스모피즘)";
+        setViewportDevice('mobile');
+        setGridArchitecture('stack');
+        activeComponents = pick(['nav_05', 'nav_02', 'src_01', 'src_08', 'ld_08', 'cnt_03', 'med_01', 'med_04', 'nav_08', 'ld_02', 'nav_01', 'ind_09', 'ico_10', 'fb_05', 'ld_07']);
       }
 
       syncAllViews();
@@ -1453,7 +1478,7 @@ ${buildSharedStateSpec()}
         btn.dataset.action = 'select-dict-cat';
         btn.dataset.cat = book.key;
         btn.className = `w-full p-2.5 rounded-xl border text-left transition flex items-center justify-between gap-2 ${
-          isSelected ? 'bg-blue-600 text-white border-blue-600 shadow-xs' : 'bg-slate-50/70 hover:bg-white border-slate-200 text-slate-800'
+          isSelected ? 'bg-blue-600 text-white border-blue-600 shadow-sm' : 'bg-slate-50/70 hover:bg-white border-slate-200 text-slate-800'
         }`;
         btn.innerHTML = `
           <div class="min-w-0">
@@ -1470,10 +1495,10 @@ ${buildSharedStateSpec()}
 
       // 2) 서브뷰 전환 버튼 상태
       document.getElementById('dictSubBtn_cards').className = dictSubView === 'cards'
-        ? "px-3 py-1.5 rounded-lg bg-white text-blue-600 shadow-xs transition"
+        ? "px-3 py-1.5 rounded-lg bg-white text-blue-600 shadow-sm transition"
         : "px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition";
       document.getElementById('dictSubBtn_live').className = dictSubView === 'live'
-        ? "px-3 py-1.5 rounded-lg bg-white text-blue-600 shadow-xs transition"
+        ? "px-3 py-1.5 rounded-lg bg-white text-blue-600 shadow-sm transition"
         : "px-3 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 transition";
 
       const cardsSec = document.getElementById('dictCardsSection');
@@ -1534,7 +1559,7 @@ ${buildSharedStateSpec()}
         const card = document.createElement('article');
         card.className = `rounded-2xl border p-3.5 flex flex-col justify-between gap-3 transition ${
           (isDeprecated || isUserHidden) ? 'bg-slate-50/80 border-dashed border-slate-300 opacity-75' :
-          isAdded ? 'bg-blue-50/50 border-blue-400 shadow-xs' : 'bg-white border-slate-200 hover:border-blue-300 hover:shadow-sm'
+          isAdded ? 'bg-blue-50/50 border-blue-400 shadow-sm' : 'bg-white border-slate-200 hover:border-blue-300 hover:shadow-sm'
         }`;
         card.innerHTML = `
           <div class="space-y-2">
@@ -1599,7 +1624,7 @@ ${buildSharedStateSpec()}
         btn.dataset.action = 'toggle-component';
         btn.dataset.id = item.id;
         btn.className = `px-2.5 py-1 rounded-full text-[11px] font-bold transition flex items-center gap-1 ${
-          isAdded ? 'bg-blue-500 text-white shadow-xs' : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
+          isAdded ? 'bg-blue-500 text-white shadow-sm' : 'bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700'
         }`;
         btn.innerHTML = `<span>${isAdded ? '✓' : '+'} ${item.code}</span>`;
         chipsBox.appendChild(btn);
@@ -1842,10 +1867,10 @@ ${buildSharedStateSpec()}
       } else if (action === 'switch-output-tab') {
         currentOutputTab = target.dataset.tab;
         document.getElementById('outTab_prompt').className = currentOutputTab === 'prompt'
-          ? "px-2.5 py-1 rounded-lg bg-white text-blue-600 shadow-xs transition"
+          ? "px-2.5 py-1 rounded-lg bg-white text-blue-600 shadow-sm transition"
           : "px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition";
         document.getElementById('outTab_json').className = currentOutputTab === 'json'
-          ? "px-2.5 py-1 rounded-lg bg-white text-blue-600 shadow-xs transition"
+          ? "px-2.5 py-1 rounded-lg bg-white text-blue-600 shadow-sm transition"
           : "px-2.5 py-1 rounded-lg text-slate-600 hover:text-slate-900 transition";
         updateOutput();
       } else if (action === 'copy-output') {

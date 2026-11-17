@@ -40,7 +40,7 @@
 <body class="bg-slate-50 text-slate-900 min-h-screen antialiased flex flex-col">
 
   <!-- 헤더 -->
-  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
       <div>
         <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 mb-1">
@@ -149,7 +149,7 @@
           </div>
           <!-- Mockup Viewport -->
           <div class="relative bg-slate-100 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-center overflow-hidden">
-            <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-xs">
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-sm">
               <div class="flex justify-between items-center text-xs mb-2">
                 <span class="font-bold text-slate-800 flex items-center gap-1.5">
                   <i data-lucide="file-text" class="w-3.5 h-3.5 text-blue-600"></i> 포폴.pdf
@@ -223,11 +223,11 @@
                 <div id="stepperLineActive" class="absolute top-1/2 left-4 -translate-y-1/2 h-0.5 bg-blue-600 transition-all duration-300 z-0" style="width: 50%;"></div>
 
                 <!-- Step 1 -->
-                <div id="stepNode1" class="w-7 h-7 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center relative z-10 shadow-xs">
+                <div id="stepNode1" class="w-7 h-7 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center relative z-10 shadow-sm">
                   <i data-lucide="check" class="w-4 h-4"></i>
                 </div>
                 <!-- Step 2 -->
-                <div id="stepNode2" class="w-7 h-7 rounded-full bg-white border-2 border-blue-600 text-blue-600 text-[11px] font-bold flex items-center justify-center relative z-10 shadow-xs">
+                <div id="stepNode2" class="w-7 h-7 rounded-full bg-white border-2 border-blue-600 text-blue-600 text-[11px] font-bold flex items-center justify-center relative z-10 shadow-sm">
                   2
                 </div>
                 <!-- Step 3 -->
@@ -331,12 +331,12 @@
           <div class="relative bg-slate-100 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-between overflow-hidden">
             <!-- User Prompt -->
             <div class="flex justify-end">
-              <span class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded-xl rounded-br-xs font-medium shadow-xs">
+              <span class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded-xl rounded-br-xs font-medium shadow-sm">
                 첫 장 봐줘
               </span>
             </div>
             <!-- AI Response with cursor -->
-            <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-xs max-w-[85%] text-xs text-slate-800 leading-relaxed">
+            <div class="bg-white p-2.5 rounded-xl border border-slate-200 shadow-sm max-w-[85%] text-xs text-slate-800 leading-relaxed">
               <span id="streamingOutputText">공고 단어가 첫 줄에 없어요.</span><span id="streamingCursor" class="inline-block w-0.5 h-3.5 bg-blue-600 ml-0.5 cursor-blink align-middle"></span>
             </div>
           </div>
@@ -476,7 +476,7 @@
 
       if (currentStep === 1) {
         line.style.width = '0%';
-        node1.className = "w-7 h-7 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center relative z-10 shadow-xs";
+        node1.className = "w-7 h-7 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center relative z-10 shadow-sm";
         node1.innerHTML = "1";
         node2.className = "w-7 h-7 rounded-full bg-slate-200 text-slate-500 text-[11px] font-bold flex items-center justify-center relative z-10";
         node2.innerHTML = "2";
@@ -485,20 +485,20 @@
         desc.innerText = "1단계: 파일 업로드 준비 중";
       } else if (currentStep === 2) {
         line.style.width = '50%';
-        node1.className = "w-7 h-7 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center relative z-10 shadow-xs";
+        node1.className = "w-7 h-7 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center relative z-10 shadow-sm";
         node1.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i>`;
-        node2.className = "w-7 h-7 rounded-full bg-white border-2 border-blue-600 text-blue-600 text-[11px] font-bold flex items-center justify-center relative z-10 shadow-xs";
+        node2.className = "w-7 h-7 rounded-full bg-white border-2 border-blue-600 text-blue-600 text-[11px] font-bold flex items-center justify-center relative z-10 shadow-sm";
         node2.innerHTML = "2";
         node3.className = "w-7 h-7 rounded-full bg-slate-200 text-slate-500 text-[11px] font-bold flex items-center justify-center relative z-10";
         node3.innerHTML = "3";
         desc.innerText = "2단계: 포트폴리오 유효성 검사 중";
       } else if (currentStep === 3) {
         line.style.width = '100%';
-        node1.className = "w-7 h-7 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center relative z-10 shadow-xs";
+        node1.className = "w-7 h-7 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center relative z-10 shadow-sm";
         node1.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i>`;
-        node2.className = "w-7 h-7 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center relative z-10 shadow-xs";
+        node2.className = "w-7 h-7 rounded-full bg-blue-600 text-white text-[11px] font-bold flex items-center justify-center relative z-10 shadow-sm";
         node2.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i>`;
-        node3.className = "w-7 h-7 rounded-full bg-emerald-500 text-white text-[11px] font-bold flex items-center justify-center relative z-10 shadow-xs";
+        node3.className = "w-7 h-7 rounded-full bg-emerald-500 text-white text-[11px] font-bold flex items-center justify-center relative z-10 shadow-sm";
         node3.innerHTML = `<i data-lucide="check" class="w-4 h-4"></i>`;
         desc.innerText = "3단계: 최종 제출 및 보관 완료!";
       }
