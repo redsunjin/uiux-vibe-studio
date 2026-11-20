@@ -37,9 +37,10 @@
 
 - 기본 브랜치: `main`
 - 모든 수정사항은 작업 브랜치 생성 후 **Pull Request(PR)** 를 통해 `main`으로 병합합니다.
-- 콘텐츠 추가/수정 시 [CONTRIBUTING.md](./CONTRIBUTING.md) 및 [content-contract.md](./.agents/skills/uiux-vibe-composer/references/content-contract.md)를 준수하고, 아래 검증을 통과해야 합니다:
+- 콘텐츠 추가/수정 시 [CONTRIBUTING.md](./CONTRIBUTING.md), [content-contract.md](./.agents/skills/uiux-vibe-composer/references/content-contract.md), [TESTING.md](./TESTING.md)를 준수하고, 아래 검증 및 자동 회귀 테스트를 통과해야 합니다:
   ```bash
   node scripts/build-catalog.mjs
   node scripts/validate-harness.mjs
+  node scripts/test-regression.mjs
   ```
 - 릴리즈 버전은 `vX.Y.Z` 태그 및 GitHub Release로 관리합니다.
