@@ -71,7 +71,7 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
 
       <!-- 01. 생각 중 표시 (Thinking indicator) -->
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+      <div id="pattern-ai_01" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">01 생각 중 표시</span>
@@ -101,7 +101,7 @@
       </div>
 
       <!-- 02. 스트리밍 답변 (Streaming response) -->
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+      <div id="pattern-ai_02" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">02 스트리밍 답변</span>
@@ -134,7 +134,7 @@
       </div>
 
       <!-- 03. 추천 질문 칩 (Suggested prompts) -->
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+      <div id="pattern-ai_03" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">03 추천 질문 칩</span>
@@ -170,7 +170,7 @@
       </div>
 
       <!-- 04. 다시 생성 (Regenerate) -->
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+      <div id="pattern-ai_04" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">04 다시 생성</span>
@@ -208,7 +208,7 @@
       </div>
 
       <!-- 05. 출처 표시 (Citations / Grounding) -->
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+      <div id="pattern-ai_05" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">05 출처 표시</span>
@@ -245,7 +245,7 @@
       </div>
 
       <!-- 06. 답변 피드백 (Feedback buttons) -->
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+      <div id="pattern-ai_06" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">06 답변 피드백</span>
@@ -286,7 +286,7 @@
       </div>
 
       <!-- 07. 고쳐 묻기 (Edit and resend) -->
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+      <div id="pattern-ai_07" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">07 고쳐 묻기</span>
@@ -327,7 +327,7 @@
       </div>
 
       <!-- 08. 파일 첨부 (File attachment) -->
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+      <div id="pattern-ai_08" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">08 파일 첨부</span>
@@ -372,7 +372,7 @@
       </div>
 
       <!-- 09. 에이전트 단계 (Agent steps) -->
-      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+      <div id="pattern-ai_09" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between mb-3">
             <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">09 에이전트 단계</span>
@@ -410,102 +410,14 @@
         </div>
       </div>
 
-    </div>
-  
-    <!-- 확장 패턴 자동 수록 섹션 -->
-    <section class="mt-10 pt-8 border-t border-slate-200">
-      <div class="mb-5">
-        <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Extended Patterns</span>
-        <h2 class="text-lg font-extrabold text-slate-900 mt-0.5">확장 · 추가 수록 패턴 (7종)</h2>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        
-      <article id="pattern-ai_04" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">04 다시 생성 &amp; 버전 비교</span>
-            <span class="text-[11px] text-slate-400 font-mono truncate">Regenerate &amp; Versioning</span>
-          </div>
-          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
-            <div class="w-full">
-          <div class="bg-gradient-to-r from-indigo-50/80 to-blue-50/80 p-2 rounded-xl border border-indigo-200/80 text-[9px] space-y-1">
-            <div class="flex items-center justify-between"><span class="font-extrabold text-indigo-700">✨ AI 04 다시 생성 & 버전 비교</span><span class="text-[8px] bg-white px-1.5 py-0.5 rounded text-indigo-600 font-bold">Regenerate & Versioning</span></div>
-            <div class="text-slate-700 truncate">답변 재생성 및 버전(< 1/2 >) 탐색</div>
-          </div></div>
-          </div>
-          <p class="mt-3 text-xs text-slate-600 leading-relaxed">답변을 다른 관점으로 다시 생성하고 이전 생성 버전과 최신 버전을 좌우로 비교</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
-          <strong class="text-slate-900">구현 힌트:</strong> 답변을 다른 관점으로 다시 생성하고 이전 생성 버전과 최신 버전을 좌우로 비교 (답변 재생성 및 버전(&lt; 1/2 &gt;) 탐색 특성 준수)
-        </div>
-      </article>
-
-      <article id="pattern-ai_06" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">06 답변 평가 피드백</span>
-            <span class="text-[11px] text-slate-400 font-mono truncate">RLHF Feedback buttons</span>
-          </div>
-          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
-            <div class="w-full">
-          <div class="bg-gradient-to-r from-indigo-50/80 to-blue-50/80 p-2 rounded-xl border border-indigo-200/80 text-[9px] space-y-1">
-            <div class="flex items-center justify-between"><span class="font-extrabold text-indigo-700">✨ AI 06 답변 평가 피드백</span><span class="text-[8px] bg-white px-1.5 py-0.5 rounded text-indigo-600 font-bold">RLHF Feedback buttons</span></div>
-            <div class="text-slate-700 truncate">좋아요(👍)/싫어요(👎) 및 복사 바</div>
-          </div></div>
-          </div>
-          <p class="mt-3 text-xs text-slate-600 leading-relaxed">응답 하단에 좋아요/싫어요 평가 버튼과 클립보드 원클릭 복사 액션 바 배치</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
-          <strong class="text-slate-900">구현 힌트:</strong> 응답 하단에 좋아요/싫어요 평가 버튼과 클립보드 원클릭 복사 액션 바 배치 (좋아요(👍)/싫어요(👎) 및 복사 바 특성 준수)
-        </div>
-      </article>
-
-      <article id="pattern-ai_08" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">08 멀티모달 파일 첨부</span>
-            <span class="text-[11px] text-slate-400 font-mono truncate">Multimodal File attachment</span>
-          </div>
-          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
-            <div class="w-full">
-          <div class="bg-gradient-to-r from-indigo-50/80 to-blue-50/80 p-2 rounded-xl border border-indigo-200/80 text-[9px] space-y-1">
-            <div class="flex items-center justify-between"><span class="font-extrabold text-indigo-700">✨ AI 08 멀티모달 파일 첨부</span><span class="text-[8px] bg-white px-1.5 py-0.5 rounded text-indigo-600 font-bold">Multimodal File attachment</span></div>
-            <div class="text-slate-700 truncate">채팅 입력창 내 이미지·PDF 썸네일 칩</div>
-          </div></div>
-          </div>
-          <p class="mt-3 text-xs text-slate-600 leading-relaxed">프롬프트 입력창 상단에 업로드된 PDF·이미지 썸네일 프리뷰 칩과 개별 제거(X) 제공</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
-          <strong class="text-slate-900">구현 힌트:</strong> 프롬프트 입력창 상단에 업로드된 PDF·이미지 썸네일 프리뷰 칩과 개별 제거(X) 제공 (채팅 입력창 내 이미지·PDF 썸네일 칩 특성 준수)
-        </div>
-      </article>
-
-      <article id="pattern-ai_09" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
-        <div>
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">09 에이전트 실행 단계</span>
-            <span class="text-[11px] text-slate-400 font-mono truncate">Agent tool steps</span>
-          </div>
-          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
-            <div class="w-full">
-            <div class="bg-slate-900 text-white p-2 rounded-xl text-[8px] flex items-center justify-between font-bold">
-              <span class="text-emerald-400">✓ 1. 파싱</span><span>→</span><span class="text-emerald-400">✓ 2. 대조</span><span>→</span><span class="text-blue-300">⟳ 3. 생성</span>
-            </div></div>
-          </div>
-          <p class="mt-3 text-xs text-slate-600 leading-relaxed">에이전트가 수행 중인 하위 작업(읽기→비교→정리) 진행 상태를 체크리스트로 투명 공개</p>
-        </div>
-        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
-          <strong class="text-slate-900">구현 힌트:</strong> 에이전트 도구 실행 파이프라인(1. 문맥 파싱 → 2. 데이터 대조 → 3. 결론 생성) 단계별 완료 체크 애니메이션
-        </div>
-      </article>
-
-      <article id="pattern-ai_10" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+      <!-- 10. 아티팩트/캔버스 분할 뷰 (Side-by-side Artifact canvas) -->
+      <div id="pattern-ai_10" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between gap-2 mb-3">
             <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">10 아티팩트/캔버스 분할 뷰</span>
             <span class="text-[11px] text-slate-400 font-mono truncate">Side-by-side Artifact canvas</span>
           </div>
-          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+          <div class="bg-slate-50 rounded-xl h-44 p-3.5 border border-slate-200 flex items-center justify-center overflow-hidden">
             <div class="w-full">
             <div class="grid grid-cols-12 gap-1.5 bg-slate-900 text-white p-2 rounded-xl text-[9px]">
               <div class="col-span-5 bg-slate-800 p-1.5 rounded-lg"><div class="text-blue-300 font-bold">💬 AI 대화 스트림</div><div class="text-[8px] text-slate-300 mt-0.5">대시보드 코드를 생성했습니다</div></div>
@@ -514,18 +426,19 @@
           </div>
           <p class="mt-3 text-xs text-slate-600 leading-relaxed">채팅창 안에서 긴 코드나 문서를 말풍선에 가두지 않고 우측 전용 캔버스 창에 렌더링·편집</p>
         </div>
-        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
-          <strong class="text-slate-900">구현 힌트:</strong> 좌측 대화 스트림(col-span-5)과 우측 실시간 결과물 아티팩트 프리뷰 캔버스(col-span-7) 분할 구조
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400 leading-snug">
+          <strong class="text-slate-700">구현 힌트:</strong> 좌측 대화 스트림(col-span-5)과 우측 실시간 결과물 아티팩트 프리뷰 캔버스(col-span-7) 분할 구조
         </div>
-      </article>
+      </div>
 
-      <article id="pattern-ai_11" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+      <!-- 11. 슬래시(/) &amp; 멘션(@) 프롬프트 메뉴 (Slash &amp; Mention command menu) -->
+      <div id="pattern-ai_11" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between gap-2 mb-3">
             <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">11 슬래시(/) &amp; 멘션(@) 프롬프트 메뉴</span>
             <span class="text-[11px] text-slate-400 font-mono truncate">Slash &amp; Mention command menu</span>
           </div>
-          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+          <div class="bg-slate-50 rounded-xl h-44 p-3.5 border border-slate-200 flex items-center justify-center overflow-hidden">
             <div class="w-full">
           <div class="bg-gradient-to-r from-indigo-50/80 to-blue-50/80 p-2 rounded-xl border border-indigo-200/80 text-[9px] space-y-1">
             <div class="flex items-center justify-between"><span class="font-extrabold text-indigo-700">✨ AI 11 슬래시(/) & 멘션(@) 프롬프트 메뉴 [추가]</span><span class="text-[8px] bg-white px-1.5 py-0.5 rounded text-indigo-600 font-bold">Slash & Mention command menu</span></div>
@@ -534,18 +447,19 @@
           </div>
           <p class="mt-3 text-xs text-slate-600 leading-relaxed">프롬프트 입력 중 / 또는 @를 치면 사용할 스킬이나 참조할 파일 목록 팝오버가 즉시 노출</p>
         </div>
-        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
-          <strong class="text-slate-900">구현 힌트:</strong> 프롬프트 입력 중 / 또는 @를 치면 사용할 스킬이나 참조할 파일 목록 팝오버가 즉시 노출 (입력창에서 /요약, @문서명 즉시 호출 특성 준수)
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400 leading-snug">
+          <strong class="text-slate-700">구현 힌트:</strong> 프롬프트 입력 중 / 또는 @를 치면 사용할 스킬이나 참조할 파일 목록 팝오버가 즉시 노출 (입력창에서 /요약, @문서명 즉시 호출 특성 준수)
         </div>
-      </article>
+      </div>
 
-      <article id="pattern-ai_12" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+      <!-- 12. 생성 즉시 중단 버튼 (Stop generating button) -->
+      <div id="pattern-ai_12" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
         <div>
           <div class="flex items-center justify-between gap-2 mb-3">
             <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">12 생성 즉시 중단 버튼</span>
             <span class="text-[11px] text-slate-400 font-mono truncate">Stop generating button</span>
           </div>
-          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+          <div class="bg-slate-50 rounded-xl h-44 p-3.5 border border-slate-200 flex items-center justify-center overflow-hidden">
             <div class="w-full">
           <div class="bg-gradient-to-r from-indigo-50/80 to-blue-50/80 p-2 rounded-xl border border-indigo-200/80 text-[9px] space-y-1">
             <div class="flex items-center justify-between"><span class="font-extrabold text-indigo-700">✨ AI 12 생성 즉시 중단 버튼 [추가]</span><span class="text-[8px] bg-white px-1.5 py-0.5 rounded text-indigo-600 font-bold">Stop generating button</span></div>
@@ -554,13 +468,13 @@
           </div>
           <p class="mt-3 text-xs text-slate-600 leading-relaxed">AI가 답변을 생성하는 도중 전송 화살표가 정지(■) 버튼으로 바뀌어 원치 않는 출력을 즉시 멈춤</p>
         </div>
-        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
-          <strong class="text-slate-900">구현 힌트:</strong> AI가 답변을 생성하는 도중 전송 화살표가 정지(■) 버튼으로 바뀌어 원치 않는 출력을 즉시 멈춤 (스트리밍 도중 ■ 중지 버튼으로 즉시 제어권 반환 특성 준수)
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400 leading-snug">
+          <strong class="text-slate-700">구현 힌트:</strong> AI가 답변을 생성하는 도중 전송 화살표가 정지(■) 버튼으로 바뀌어 원치 않는 출력을 즉시 멈춤 (스트리밍 도중 ■ 중지 버튼으로 즉시 제어권 반환 특성 준수)
         </div>
-      </article>
       </div>
-    </section>
-  
+
+
+    </div>
   </main>
 
   <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
