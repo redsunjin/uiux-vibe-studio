@@ -1238,7 +1238,174 @@ function getImplementationRecipe(item) {
         med_05: "스크롤 이탈 시 우측 하단 fixed PIP 미니 플레이어 활성화, 닫기/원위치 복귀 버튼 연동",
         med_06: "캔버스 위 참여자별 고유 컬러 커서 좌표 동기화 및 비활성 시 페이드아웃 프레즌스 배지 처리",
         med_07: "변경 전/후 라인 비교(Side-by-side/Inline 전환 토글) + 추가(+ 초록)/삭제(- 빨강) 하이라이트 렌더링",
-        med_08: "권한 셀렉트(비공개/링크공유/전체) 변경 및 [링크 복사] 클릭 시 clipboard API 복사 + 2초 완료 토스트"
+        med_08: "권한 셀렉트(비공개/링크공유/전체) 변경 및 [링크 복사] 클릭 시 clipboard API 복사 + 2초 완료 토스트",
+
+        // 레이아웃 (lay_01~09)
+        lay_01: "최상단 <section>에 clamp() 반응형 헤드라인·핵심 가치 1줄·단일 Primary CTA를 배치하고 모바일 1단 ↔ PC 2단(텍스트+비주얼)으로 전환",
+        lay_02: "CSS Grid(grid-cols-1 md:grid-cols-4 auto-rows-[160px])와 col-span-2/row-span-2 조합으로 중요도별 비대칭 벤토 모듈 구성",
+        lay_03: "grid-cols-1 lg:grid-cols-2 min-h-[520px]로 좌우 5:5 분할(좌측 브랜드 비주얼, 우측 폼/콘텐츠)하고 모바일에서는 폼 우선 단일 열로 스택",
+        lay_04: "grid-cols-[repeat(auto-fill,minmax(260px,1fr))] + gap-5와 @container 쿼리로 뷰포트·컨테이너 폭에 맞춰 동일 규격 카드를 자동 줄바꿈",
+        lay_05: "lg:grid-cols-[240px_1fr] 골격으로 좌측 고정 사이드바(sticky top-0 h-dvh overflow-y-auto)를 유지하고 모바일에서는 오프캔버스 드로어로 전환",
+        lay_06: "상단 12컬럼 그리드에서 대표 커버 기사(lg:col-span-7)와 우측 보조 기사 목록(lg:col-span-5)을 비대칭 배치하고 하단에 3단 피드 연결",
+        lay_07: "상단 4열 KPI 요약 카드(grid-cols-2 lg:grid-cols-4) 아래에 8:4 비율 차트·테이블 행을 배치해 첫 화면에서 핵심 지표를 즉시 스캔",
+        lay_08: "상단 좌측 로고→우측 액션, 중앙 핵심 비주얼→우하단 Primary CTA 순으로 시선 흐름(Z축)을 설계하고 섹션마다 단일 행동 목표 유지",
+        lay_09: "컨테이너 max-w 제약을 해제한 w-full aspect-[16/9] 풀블리드 미디어에 그라데이션 스크림 오버레이를 얹어 텍스트 대비(4.5:1+) 확보",
+
+        // 콘텐츠 (cnt_02, 03, 06, 08, 09)
+        cnt_02: "동일 카드 내부에 썸네일(aspect-video)·제목(line-clamp-2)·메타·액션 슬롯을 고정하고 @container 크기에 따라 패딩과 폰트 밀도 조절",
+        cnt_03: "<ul>/<article> 수직 리스트 행에 좌측 썸네일·중앙 2줄 요약·우측 메타/액션을 정렬하고 키보드 화살표 및 hover 배경 하이라이트 제공",
+        cnt_06: "데이터 0건 시 role='status' 컨테이너에 상황 설명 일러스트·원인 1줄·[+ 첫 항목 만들기] 단일 Primary CTA를 중앙 배치해 이탈 방지",
+        cnt_08: "tabular-nums 큰 수치·라벨·전기간 대비 증감 배지(▲ 초록 / ▼ 빨강 + 스크린리더용 sr-only 문구)와 선택적 미니 스파크라인을 카드에 결합",
+        cnt_09: "세로 기준선(border-l-2)과 원형 노드 마커를 시간순(<ol><time>)으로 연결하고 상태별 색상 점·접기/펼치기 상세 로그 연동",
+
+        // 온보딩 (onb_01~05, 07, 09)
+        onb_01: "앱 초기 진입 시 중앙 로고와 브랜드 컬러 배경을 1~1.5초 표시 후 opacity 페이드아웃 전환(prefers-reduced-motion 시 즉시 본문 진입)",
+        onb_02: "3~4장 핵심 가치 슬라이드에 가로 스냅 스크롤(scroll-snap-type: x mandatory), 하단 도트 인디케이터, [건너뛰기]·[다음/시작하기] 버튼 연동",
+        onb_03: "OS 시스템 권한 팝업 직전에 '왜 이 권한이 필요한지' 혜택 카드와 [허용하기]/[나중에] 사전 안내(Pre-permission) 화면을 먼저 제시",
+        onb_04: "어두운 딤드 오버레이 위 타깃 요소만 하이라이트(box-shadow/clip-path)하고 단계별 말풍선(1/3)·[다음]·[닫기(Esc)] 키보드 포커스 트랩 적용",
+        onb_05: "OAuth 간편 인증 버튼 2~3개를 최소 44px 높이로 수직 배치하고 클릭 시 로딩 스피너 전환 및 최근 로그인 수단 배지 표시",
+        onb_07: "원형 아바타 업로드 미리보기(FileReader) + 닉네임 실시간 중복/글자수 검증(fb_06) + [건너뛰기] 옵션을 포함한 1단계 프로필 폼 구성",
+        onb_09: "가입 완료 시 축하 아이콘/경량 컨페티 애니메이션(reduced-motion 대응)과 개인화된 환영 문구, 첫 핵심 행동(CTA) 1개만 명확히 노출",
+
+        // 내비게이션 (nav_04~09)
+        nav_04: "<nav aria-label='현재 경로'><ol> 구조로 계층 경로를 구분자(/)와 함께 표시하고 현재 페이지 항목에 aria-current='page' 및 모바일 말줄임 처리",
+        nav_05: "position: sticky; top: 0; z-index: 40 헤더에 backdrop-blur-md 반투명 배경을 적용하고 스크롤 임계값(scrollY > 16) 통과 시 하단 그림자 활성화",
+        nav_06: "우측 하단 fixed(bottom-6 right-6, Safe Area 여백 포함) 56×56px 원형 Primary FAB에 명확한 aria-label과 스크롤 다운 시 축소(Extended→Icon) 전환 적용",
+        nav_07: "<nav aria-label='페이지 이동'>에 이전/다음 버튼과 현재 페이지(aria-current='page'), 말줄임(…)을 배치해 전체 페이지 수와 푸터 접근성을 보장",
+        nav_08: "하단 센티널 요소에 IntersectionObserver(rootMargin: '200px')를 걸어 다음 배치를 자동 로드하고 로딩 스켈레톤·에러 재시도·[맨 위로] 버튼 제공",
+        nav_09: "상단 좌측 최소 44×44px 터치 영역의 뒤로 가기 버튼(aria-label='이전 화면으로')에 history.back() 또는 명시적 상위 경로 폴백과 미저장 이탈 경고 연동",
+
+        // 메뉴 아이콘 (ico_01~09)
+        ico_01: "3선 햄버거 버튼에 aria-expanded·aria-controls를 바인딩해 클릭 시 오프캔버스 드로어를 열고 3선이 X 형태로 부드럽게 변형(transform)되도록 구현",
+        ico_02: "세로 점 3개(⋮) 트리거 버튼에 popovertarget 또는 aria-haspopup='menu'를 연결해 컨텍스트 액션 메뉴를 우측 정렬 팝오버로 호출(Esc 닫기)",
+        ico_03: "가로 점 3개(⋯) 행/카드 보조 액션 버튼을 호버·포커스 시 노출하고 클릭 시 복제·이동·삭제 팝오버 메뉴를 키보드 화살표 탐색과 함께 제공",
+        ico_04: "3×3 원형 점 와플 버튼 클릭 시 연관 앱·서비스 타일 그리드(3열) 팝오버를 열고 각 항목에 아이콘·앱명·새 탭 열기 접근성 라벨 부여",
+        ico_05: "3×3 사각 벤토 아이콘 버튼으로 리스트 뷰 ↔ 카드 그리드 뷰 전환(aria-pressed 토글)을 즉시 반영하고 사용자 선택을 localStorage에 저장",
+        ico_06: "역삼각형 3선 필터 아이콘 버튼 클릭 시 필터 드로어/패널을 열고 적용 중인 조건 개수를 우측 상단 숫자 뱃지로 실시간 표시",
+        ico_07: "미니멀 2선(=) 토글 버튼 클릭 시 상·하 선이 ±45도 회전해 닫기(✕) 아이콘으로 전환되며 전체 화면 메뉴 오버레이와 동기화",
+        ico_08: "계단식 3선 정렬 아이콘 클릭 시 정렬 기준(최신순/인기순/가격순) 팝오버 메뉴를 열고 현재 선택 항목에 체크 마크와 aria-checked 표시",
+        ico_09: "수평 슬라이더 노브 아이콘 클릭 시 세부 범위·임계값·환경설정 패널을 열고 값 변경 시 실시간 미리보기와 [기본값 복원] 버튼 제공",
+
+        // 검색 (src_04, 07)
+        src_04: "1~10위 급상승 키워드 목록에 순위 숫자·등락 배지(▲/▼/NEW)를 배치하고 항목 클릭 시 검색창에 즉시 입력·실행되도록 바인딩",
+        src_07: "검색어 매칭 텍스트를 정규식 이스케이프 후 <mark class='bg-amber-200/80 dark:bg-amber-500/30 rounded px-0.5'> 태그로 감싸 결과 내 일치 구간 강조",
+
+        // 입력폼 (form_02, 05, 06, 07, 09)
+        form_02: "네이티브 <select> 또는 커스텀 role='listbox' 드롭다운에 키보드(↑/↓/Enter/Esc) 탐색, 선택값 표시, 옵션 10개 이상 시 내부 검색 필터 제공",
+        form_05: "<label>로 감싼 <input type='checkbox'>(최소 44px 클릭 영역)에 indeterminate(부분 선택) 상태와 전체 선택/해제 그룹 연동을 구현",
+        form_06: "<fieldset>/<legend> 내부 동일 name의 <input type='radio'> 그룹으로 상호 배타적 단일 선택을 보장하고 선택 카드는 border-blue-600 링 강조",
+        form_07: "<input type='range'>에 현재 수치 라이브 배지(<output>)와 최소/최대 눈금을 연동하고 키보드 좌우 화살표 미세 조절 지원",
+        form_09: "폼 필드 내부 또는 직하단에 인라인 7열 월간 미니 달력을 배치해 오늘 강조·선택일 하이라이트·비활성 날짜(disabled) 선택 차단을 처리",
+
+        // 날짜·시간 (dt_01, 02, 04, 06, 07, 09)
+        dt_01: "월 이동(‹/›) 헤더와 7열(일~토) 격자 달력에서 키보드 화살표 이동, 오늘 링, 공휴일 색상, 선택일 aria-selected='true' 상태 관리 구현",
+        dt_02: "년/월/일/시/분 컬럼에 scroll-snap-type: y mandatory 드럼롤 스크롤과 중앙 선택 하이라이트 밴드를 배치하고 데스크톱 클릭/휠 조작 병행 지원",
+        dt_04: "[오늘]·[내일]·[이번 주말]·[최근 7일] 빠른 선택 칩 클릭 시 aria-pressed 토글과 함께 연결된 날짜 입력값/달력 범위를 즉시 계산 반영",
+        dt_06: "연도 전환(‹ 2026 ›) 헤더 아래 4×3(1월~12월) 월 격자 버튼을 배치해 일(Day) 선택 없이 YYYY-MM 값을 1클릭으로 확정",
+        dt_07: "inputmode='numeric' 텍스트 필드에 입력 시 자동으로 YYYY.MM.DD 구분자를 마스킹하고 유효하지 않은 월/일(예: 2월 30일)은 인라인 오류 표시",
+        dt_09: "[매일/매주/매월/사용자 지정] 주기 탭과 요일 토글 칩(월~일), 종료 조건(무기한/N회 후/특정일)을 조합해 사람이 읽을 수 있는 요약 문장 실시간 출력",
+
+        // 피드백 (fb_09, 10, 11)
+        fb_09: "아이콘 우측 상단에 절대 배치된 알림 뱃지(99+ 상한 처리, 0건 시 숨김)에 aria-label='읽지 않은 알림 N건'을 부여해 시각·청각 정보 동기화",
+        fb_10: "삭제/초기화 버튼 직상단에 popover='auto' 소형 재확인 말풍선(안내 1줄 + [취소]/[확인])을 띄워 화면 전체 차단 없이 오클릭 방지",
+        fb_11: "우측 드로어/팝오버 인박스에 [전체/안읽음] 필터 탭, 알림별 읽음 상태 점, [모두 읽음] 일괄 처리 및 0건 빈 화면 상태를 연동",
+
+        // 로딩 (ld_01, 04, 05, 06, 10)
+        ld_01: "role='status' aria-live='polite' 컨테이너에 SVG 원형 스피너(animate-spin)와 시각/보조 텍스트('불러오는 중...')를 배치(3초 미만 단기 대기용)",
+        ld_04: "SVG <circle>의 stroke-dasharray·stroke-dashoffset을 진행률(0~100%)에 맞춰 보간하고 중앙에 tabular-nums 퍼센트 숫자와 role='progressbar' 제공",
+        ld_05: "다단계 비동기 작업(예: 검증→변환→저장)을 번호·체크 아이콘·현재 활성 스피너가 있는 수직/수평 스텝 리스트로 실시간 상태 전환",
+        ld_06: "저해상도 프리뷰에 filter: blur(16px) scale(1.05)를 먼저 표시하고 고해상도 이미지 onload 완료 시 transition(filter 0.4s ease-out)으로 선명하게 전환",
+        ld_10: "우측 하단 고정 최소화 트레이(접기/펼치기 토글)에 파일별 업로드 진행률 바와 취소/재시도 버튼을 배치해 다른 페이지 탐색 중에도 상태 유지",
+
+        // 인디케이터 (ind_01, 04, 05, 06, 07, 08, 10)
+        ind_01: "role='progressbar' aria-valuenow/min/max 속성을 갖춘 수평 트랙과 내부 채움 바(width/scaleX transition) 및 우측 퍼센트 라벨 연동",
+        ind_04: "상단 N등분 트랙(grid-cols-N gap-1)에서 현재 인덱스 막대만 0→100% 자동 채움 애니메이션을 실행하고 탭(좌/우)·길게 누르기(일시정지) 제어 연결",
+        ind_05: "화면 최상단 고정 2~3px 바에 scroll 이벤트(또는 CSS animation-timeline: scroll())로 scaleX(0→1) 변환을 적용해 아티클 완독률 표시",
+        ind_06: "conic-gradient 또는 SVG stroke-dashoffset 도넛 링 내부에 중앙 퍼센트 수치와 상태별 시맨틱 컬러(진행: blue, 완료: emerald)를 동시 표시",
+        ind_07: "비밀번호 입력 시 길이·대소문자·숫자·특수문자 규칙을 점수화해 4칸 분할 막대 색상(빨강→주황→노랑→초록)과 실시간 보완 가이드 문구 출력",
+        ind_08: "활성 탭의 offsetLeft·offsetWidth를 계산해 하단 2px 밑줄 바를 transform: translateX()와 width 트랜지션으로 부드럽게 슬라이딩 이동",
+        ind_10: "실시간 연결 상태 옆에 8px 원형 점과 animate-ping 외곽 파동 링을 조합하고 연결 끊김 시 회색 정지 점 + 상태 텍스트('오프라인')로 전환",
+
+        // 생성형 AI (ai_03, 04, 06, 07, 08, 11, 12)
+        ai_03: "빈 대화 화면에 도메인별 추천 질문 칩 3~4개를 배치하고 클릭 시 입력창에 프롬프트를 채우거나 즉시 전송해 빈 화면 증후군 해소",
+        ai_04: "AI 답변 하단 [다시 생성] 버튼 클릭 시 새 응답을 배열에 추가하고 < 1 / 2 > 버전 네비게이터로 이전·최신 답변을 손실 없이 비교 전환",
+        ai_06: "답변 하단 툴바에 복사(클립보드 + 2초 체크 피드백)·좋아요(👍)·싫어요(👎) 토글 버튼을 두고 부정 평가 시 사유 선택 칩을 인라인 전개",
+        ai_07: "사용자 메시지 호버 시 [수정] 버튼을 노출해 인라인 textarea 편집 모드로 전환하고 [저장 후 재전송] 시 해당 시점 이후 응답을 새로 생성",
+        ai_08: "채팅 입력창 내부에 파일 첨부 버튼·드래그앤드롭 영역을 두고 첨부된 이미지/PDF를 썸네일·파일명·개별 삭제(×) 칩으로 미리보기 표시",
+        ai_11: "입력창에 '/' 또는 '@' 입력 시 커서 상단에 명령어·문서 멘션 팝오버 메뉴를 띄우고 ↑/↓/Enter 키보드로 선택해 구조화된 토큰 칩으로 삽입",
+        ai_12: "스트리밍 생성 중에만 전송 버튼을 [■ 생성 중지] 버튼으로 교체하고 클릭 시 AbortController/타이머를 즉시 중단해 현재까지 생성된 텍스트 보존",
+
+        // 모바일 터치 제스처 (gs_01~10)
+        gs_01: "최소 44×44px 터치 타깃에 pointerdown 스케일 축소(active:scale-95) 또는 리플 피드백을 적용하고 touch-action: manipulation으로 300ms 지연 제거",
+        gs_02: "pointerdown 후 600~800ms 타이머로 길게 누르기를 감지해 컨텍스트 퀵 메뉴를 호출하고 10px 이상 이동 시 취소(데스크톱 우클릭/더보기 버튼 병행)",
+        gs_03: "touch-action: pan-y 환경에서 수평 드래그 거리(deltaX > 50px) 또는 속도를 계산해 캐러셀/탭 슬라이드를 전환하고 좌우 화살표 버튼 대체 제공",
+        gs_04: "리스트 행을 좌측으로 스와이프 시 transform: translateX(-80px)로 고정해 우측 붉은색 [삭제] 액션을 노출하고 키보드/데스크톱용 삭제 버튼 병행",
+        gs_05: "그립 핸들(⋮⋮) 포인터 드래그로 항목 순서를 재정렬하며 이동 중 그림자·플레이스홀더 표시 및 키보드(↑/↓ 순서 이동) 접근성 대안 제공",
+        gs_06: "2-포인터 거리 변화(Pointer Events)로 이미지/캔버스 scale(1~4배)과 팬 좌표를 계산하고 데스크톱·접근성용 [+]/[-]/[초기화] 줌 버튼 병행 제공",
+        gs_07: "300ms 이내 연속 2회 탭 감지 시 카드 중앙에 하트 팝 애니메이션을 실행하며 좋아요 상태를 토글(단일 좋아요 버튼도 항상 별도 제공)",
+        gs_08: "스크롤 최상단(scrollTop === 0)에서 아래로 당김 거리(deltaY > 64px)에 비례해 리프레시 스피너를 노출하고 놓으면 최신 데이터 재조회 후 복귀",
+        gs_09: "화면 좌측 끝 24px 영역에서 우측 스와이프 시 이전 화면 프리뷰를 따라오게 이동시키고 임계값(35%) 초과 시 뒤로 가기 완료(뒤로 버튼 병행)",
+        gs_10: "바텀시트 상단 드래그 핸들(36×4px)을 수직 포인터 드래그해 50%/95%/닫힘 스냅 포인트로 스프링 전환하고 키보드 Esc·높이 전환 버튼 병행",
+
+        // UI 트랜지션 & 물리 모션 (mo_01, 04, 06, 07, 08, 09, 10)
+        mo_01: "퇴장·닫힘 요소에 cubic-bezier(0.4, 0, 1, 1) 180~220ms 가속 커브를 적용해 화면 밖으로 빠르게 사라지게 처리(prefers-reduced-motion 시 즉시 숨김)",
+        mo_04: "성공 배지·알림 아이콘 등장 시 다단 @keyframes 바운스(0%→60% 오버슈트→80%→100%)를 450ms 실행하고 모션 완화 설정 시 단순 페이드로 대체",
+        mo_06: "뷰·탭 전환 시 opacity(0↔1) 180ms 크로스 디졸브를 적용하고 레이아웃 점프 없이 GPU 합성 레이어만 사용해 60fps 유지",
+        mo_07: "계층 진입(우→좌)과 복귀(좌→우) 방향성에 맞춰 translateX(±24px)+opacity 240ms 전환을 적용해 공간적 위치 관계를 직관적으로 전달",
+        mo_08: "모달·팝오버 등장 시 scale(0.94→1.0)+opacity(0→1) 200ms cubic-bezier(0.16, 1, 0.3, 1) 전환을 적용해 트리거 지점에서 자연스럽게 확대",
+        mo_09: "View Transitions API(document.startViewTransition)와 고유 view-transition-name 매핑으로 목록 썸네일이 상세 헤더로 심리스 확장되도록 구현",
+        mo_10: "스크롤 위치에 따라 배경(0.3x)·전경(1.0x) 레이어의 translateY 비율을 차등 적용하고 prefers-reduced-motion 시 패럴랙스 오프셋을 0으로 고정",
+
+        // 타이포그래피 텍스트 모션 (txt_01~10)
+        txt_01: "문자열을 35~55ms 간격으로 1글자씩 추가 렌더링하고 우측 2px 깜빡이는 커서(animate-pulse)를 배치(스크린리더용 aria-label 원문 제공)",
+        txt_02: "IntersectionObserver 진입 시 opacity: 0; translateY(16px) → opacity: 1; translateY(0) 450ms ease-out으로 1회 부드럽게 부상",
+        txt_03: "단어/음절을 <span>으로 분할해 --i 인덱스 기반 animation-delay(calc(var(--i) * 40ms)) 파도타기 등장을 적용하고 부모에 원문 aria-label 유지",
+        txt_04: "requestAnimationFrame + easeOutExpo 보간으로 0→목표 숫자까지 800ms 롤링하며 tabular-nums로 자릿수 흔들림 방지(reduced-motion 시 즉시 최종값)",
+        txt_05: "무작위 기호 풀(!@#%&*0-9)에서 좌→우로 1글자씩 원본 문자로 수렴하는 requestAnimationFrame 디코딩 효과를 600ms 내 완료",
+        txt_06: "overflow-hidden 래퍼 내부 텍스트가 translateY(110%)→translateY(0)로 절단선 위로 솟아오르는 마스크 리빌(cubic-bezier(0.16,1,0.3,1)) 구현",
+        txt_07: "핵심 문구 배경에 linear-gradient(transparent 55%, rgba(253,224,71,0.65) 55%)와 background-size(0%→100% 100%) 500ms 좌→우 마커 스윕 적용",
+        txt_08: "고정 문장 사이 inline-grid 슬롯에서 키워드 배열을 2.5초 주기로 translateY(-100%→0→100%) 롤링하고 role='status' 접근성 안내 유지",
+        txt_09: "등장 시 filter: blur(12px); opacity: 0 → filter: blur(0); opacity: 1(550ms ease-out)로 초점이 맺히는 포커스 리빌 구현",
+        txt_10: "bg-gradient-to-r + bg-[length:200%_100%] + bg-clip-text text-transparent에 background-position 좌→우 무한 쉬머 @keyframes 적용",
+
+        // 모션 그래픽 & 비주얼 테마 (sty_01~21 — 구체적 CSS/시각 토큰 통합)
+        sty_01: "SVG feGaussianBlur + feColorMatrix(고대비 알파) 구이(Gooey) 필터와 border-radius 유기적 변형(@keyframes blob)으로 액체 합체·분리 표현",
+        sty_02: "다색 프리즘 gradient(from-pink-200 via-indigo-200 to-cyan-200) 배경 이동(@keyframes)과 반투명 다크/라이트 유리 카드(border-white/50 shadow-lg) 결합",
+        sty_03: "rounded-3xl 둥근 형태에 부드러운 외부 그림자(box-shadow: 12px 12px 24px rgba(37,99,235,0.14))와 이중 내부 하이라이트(inset 3px 3px 8px rgba(255,255,255,0.9), inset -4px -4px 10px rgba(30,58,138,0.12)) 적용",
+        sty_04: "radial-gradient(circle, rgba(15,23,42,0.16) 1.5px, transparent 1.5px) 망점 패턴(background-size: 8px 8px)과 2px 굵은 보더·원색 배지로 팝아트 질감 구현",
+        sty_05: "transform: rotateX(55deg) rotateZ(-45deg) 30도 등각 투영 레이어와 다단 shadow로 입체 카드 스택을 구성하고 hover 시 translateZ/translateY 부양",
+        sty_06: "초대형 display 타이포(font-black tracking-tight)를 두 벌 복제해 translateX(0→-50%) 무한 마키(@keyframes)와 호버 일시정지(reduced-motion 정지) 적용",
+        sty_07: "금속성 다중 그라데이션(linear-gradient(135deg,#f8fafc,#94a3b8,#e2e8f0,#475569))과 border-slate-300·specular 광택 오버레이로 Y2K 크롬 질감 구현",
+        sty_08: "다층 색지 카드에 겹겹이 쌓인 clip-path 곡선 레이어와 따뜻한 오프셋 그림자(box-shadow: 0 8px 20px rgba(120,53,15,0.14))로 종이 컷아웃 깊이감 표현",
+        sty_09: "중첩 프레임 컨테이너에 @keyframes scale(0.85→1.35) + opacity 교차 루프를 적용해 끊김 없는 무한 확대 시퀀스 구성(reduced-motion 시 정적 프레임)",
+        sty_10: "네온 핑크(#f472b6)·시안(#22d3ee) gradient와 perspective(400px) rotateX(65deg) 원근 그리드 바닥·glow shadow(rgba(34,211,238,0.45))로 레트로 신스웨이브 구현",
+        sty_11: "bg-slate-950 터미널 캔버스·text-emerald-400 모노스페이스 폰트·1px border-emerald-500/30·미세 스캔라인(repeating-linear-gradient)과 텍스트 디코딩 모션 결합",
+        sty_12: "원·삼각·사각 기하 도형(rounded-full/clip-path)과 3원색(bg-red-500, bg-blue-600, bg-amber-400)·border-2 border-slate-900·비대칭 그리드로 바우하우스 조형 구현",
+        sty_13: "2px 솔리드 블랙 보더(border-2 border-black)와 블러 없는 하드 드롭 그림자(shadow-[4px_4px_0px_#000]), 고채도 원색 배경 + 클릭 시 active:translate-x-[2px] active:translate-y-[2px] 적용",
+        sty_14: "SVG <path> d 속성 전환 또는 CSS clip-path/border-radius @keyframes(300~500ms cubic-bezier)으로 아이콘·배경 도형이 단절 없이 변형되도록 구현",
+        sty_15: "SVG 지그재그 물결선·radial-gradient 도트 패턴·파스텔 캔디 컬러(bg-pink-200/bg-yellow-200/bg-teal-200)와 2px 어두운 윤곽선을 경쾌하게 조합",
+        sty_16: "fill: none; stroke: currentColor; stroke-width: 2px SVG 경로에 stroke-dasharray/stroke-dashoffset @keyframes 드로잉 애니메이션을 적용해 선화 강조",
+        sty_17: "삼각형/다각형 SVG <polygon> 또는 clip-path 면 분할에 명도 차이를 둔 인접 팔레트(hsl 명도 ±8%)를 배치해 각진 로우 폴리 평면 음영 표현",
+        sty_18: "이동·클릭 시 transform: scaleX(1.18) scaleY(0.84) 압축 → scaleX(0.9) scaleY(1.12) 팽창 → scale(1) 복원 @keyframes로 부피 보존 탄성 모션 구현",
+        sty_19: "다색 radial-gradient 메시 배경 위에 SVG feTurbulence 노이즈 레이어(opacity: 0.14; mix-blend-mode: overlay)를 겹쳐 필름 그레인 질감 완성",
+        sty_20: "::before/::after 가상 요소에 clip-path 수평 슬라이스와 RGB 채널 오프셋(text-shadow/transform: translateX(±2px), cyan/magenta filter) @keyframes 글리치 적용",
+        sty_21: "반투명 유리 표면(bg-white/70 dark:bg-slate-900/70 backdrop-blur-md) + 1px 밝은 유리 테두리(border border-white/60 dark:border-slate-700/60) + shadow-xl 및 파스텔 배경 오브젝트 배치",
+
+        // 데이터 시각화 & 차트 (cht_01~06)
+        cht_01: "SVG <polyline> 미니 추세선(viewBox 반응형)에 끝점 강조 원·호버 포인트 툴팁·KPI 수치 및 증감 배지를 카드 내부에 결합",
+        cht_02: "SVG stroke-dasharray 또는 conic-gradient 도넛 링 중앙에 합계/선택 항목 수치를 배치하고 범례 버튼 클릭·호버 시 해당 비중을 실시간 하이라이트",
+        cht_03: "기간/그룹별 막대(Flex/SVG)를 나란히 배치하고 범례 토글 필터·호버 수치 툴팁·0→목표 높이 등장 트랜지션 및 데이터 테이블 대안(aria-label) 제공",
+        cht_04: "7행×N열 CSS Grid 캘린더 히트맵에 활동량 5단계 색상 스케일(bg-slate-100→bg-emerald-600)을 매핑하고 셀 호버/포커스 시 날짜·건수 툴팁 표시",
+        cht_05: "방문→가입→결제 단계별 가로 막대 폭을 전환율(%)에 비례 렌더링하고 인접 단계 사이 이탈률(-XX%) 배지를 표시해 병목 구간 즉시 식별",
+        cht_06: "SVG 다각형 축(5~6개 지표) 위에 기준선 격자와 데이터 <polygon>(fill-opacity: 0.25)을 겹쳐 그리고 비교 대상 시리즈 토글 및 꼭짓점 수치 툴팁 연동",
+
+        // 커머스·결제 (com_01~06)
+        com_01: "월간/연간 결제 주기 토글(연간 20% 할인 재계산)과 3단 요금제 카드를 배치하고 추천 플랜에 ring-2 border-blue-600 강조 배지 및 기능 체크리스트 제공",
+        com_02: "하단 고정(fixed bottom-0, Safe Area 포함) 구매 바에 찜하기 토글(하트)·총액·[장바구니]/[바로 구매] CTA를 배치해 상세 스크롤 중에도 즉시 결제 진입",
+        com_03: "우측 슬라이드 오버 드로어(<dialog> 또는 fixed panel + 백드롭)에 상품 수량 스테퍼(±)·개별 삭제·무료배송 게이지·실시간 합계 재계산 로직 연동",
+        com_04: "좌측 평균 별점(★ 4.8)과 우측 5점~1점 가로 분포 막대를 배치하고 특정 별점 행 클릭 시 해당 평점 리뷰만 필터링하도록 양방향 연동",
+        com_05: "프로모션 코드 입력창+[적용] 버튼에 유효 코드 검증, 잘못된 코드 인라인 오류(fb_06), 적용 완료 시 할인 태그 칩 및 영수증 할인액 즉시 차감 연동",
+        com_06: "상품 금액 − 할인 금액 + 배송비 = 최종 결제 예정 금액을 <dl> 구조와 tabular-nums 우측 정렬로 명세화하고 옵션·쿠폰 변경 시 실시간 재계산"
       };
       if (recipes[item.id]) return recipes[item.id];
       if (item.catKey === 'chart') return `SVG 또는 CSS Flex/Grid를 활용해 정적 이미지가 아닌 수치 변경/호버 툴팁이 반응하는 인터랙티브 ${item.eng} 위젯 구현`;

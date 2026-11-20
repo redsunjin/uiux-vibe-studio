@@ -264,9 +264,9 @@ function check(stage, label, condition, failDetail = '') {
     `구버전 표기 잔존: ${staleSkillPatterns.join(', ')}`
   );
 
-  // 1-4. 브랜드명 중립화 (code, meta, desc, recipe 본문; '토스트' 오탐 제외)
+  // 1-4. 브랜드명 중립화 (code, meta, desc, recipe 본문; '토스트', 'linear-gradient', 'Linear Progress' 오탐 제외)
   const brandRegex =
-    /토스(?!트)|인스타|카카오|노션|슬랙|애플|구글|유튜브|넷플릭스|쿠팡|배민|네이버|당근|에어비앤비|피그마|깃허브|트위터|페이스북|틱톡|스포티파이|\b(Linear|Notion|Slack|Toss|Apple|Google|Airbnb|Figma|Stripe|ChatGPT|Claude|Instagram|YouTube|Netflix)\b/i;
+    /토스(?!트)|인스타|카카오|노션|슬랙|애플|구글|유튜브|넷플릭스|쿠팡|배민|네이버|당근|에어비앤비|피그마|깃허브|트위터|페이스북|틱톡|스포티파이|\b(Linear(?!-gradient|\s+Progress)|Notion|Slack|Toss|Apple|Google|Airbnb|Figma|Stripe|ChatGPT|Claude|Instagram|YouTube|Netflix)\b/i;
   const brandHits = [];
   for (const p of ACTIVE_PATTERNS) {
     const txt = `${p.code} ${p.meta} ${p.desc} ${getImplementationRecipe(p)}`;
