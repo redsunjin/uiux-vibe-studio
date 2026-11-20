@@ -1,0 +1,6 @@
+{
+  "enforcedStage": 0,
+  "baselineMinActivePatterns": 217,
+  "baselineCategoryCount": 20,
+  "description": "CI에서 필수 통과(FAIL)로 강제하는 회귀 테스트 단계. 각 단계 PR 완료 시 1씩 올려 이전 단계로의 회귀를 원천 차단합니다."
+}
