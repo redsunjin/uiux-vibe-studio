@@ -1,7 +1,7 @@
 ---
 name: uiux-vibe-composer
 description: >-
-  20대 도감 카테고리 · 217종 활성 UI/UX 패턴 사전과 15개 인터랙티브 쇼케이스 구현 레시피를 기반으로 화면을 설계·바이브 코딩(Vibe Coding)·검수하는 스킬.
+  20대 도감 카테고리 · 217종 활성 UI/UX 패턴 사전과 19개 인터랙티브 쇼케이스 구현 레시피를 기반으로 화면을 설계·바이브 코딩(Vibe Coding)·검수하는 스킬.
   사용자가 웹/앱 화면 구성을 요청하거나, UI 사전 기준으로 프로토타입 생성, 반응형(모바일/태블릿/PC) 레이아웃 설계, 또는 기존 화면의 UX 휴리스틱 검수를 요청할 때 반드시 활성화하세요.
 ---
 
@@ -25,7 +25,7 @@ description: >-
 ### Step 2. 20대 도감 카탈로그에서 최적 패턴 조합(Composition) 선택
 먼저 자주 쓰이는 도메인 조합이 정의된 **[domain-presets.md](./references/domain-presets.md)**를 확인해 기본 세트를 빠르게 고른 뒤, 세부 패턴과 레시피는 **[taxonomy-catalog.md](./references/taxonomy-catalog.md)**에서 조회하여 4개 슬롯에 배정합니다:
 1. **`header` 슬롯**: 고정 헤더(`nav_05`), 메뉴 트리거 아이콘(`ico_01~11`), 커맨드 팔레트(`nav_10`), 검색창(`src_01`), 자동완성(`src_02`), 필터/정렬(`src_05~06`), 스텝/스크롤 인디케이터(`ind_02~05`), 상단 배너(`fb_03`).
-2. **`main` 슬롯**: 화면 레이아웃(`lay_01~12`), 콘텐츠 구조(`cnt_01~12`), 입력 폼(`form_01~12`), 날짜·시간 선택(`dt_01~11`), 차트 시각화(`cht_01~06`), 커머스/가격표(`com_01~06`), AI 인터페이스(`ai_01~12`), 계정·보안(`aut_01~05`), 미디어·협업(`med_01~05`).
+2. **`main` 슬롯**: 화면 레이아웃(`lay_01~12`), 콘텐츠 구조(`cnt_02~12`), 입력 폼(`form_01~12`), 날짜·시간 선택(`dt_01~11`), 차트 시각화(`cht_01~09`), 커머스/가격표(`com_01~09`), AI 인터페이스(`ai_01~12`), 계정·보안(`aut_01~08`), 미디어·협업(`med_01~08`).
 3. **`bottom` 슬롯**: 하단 탭바(`nav_01`), 로딩 버튼(`ld_09`), 토스트/스낵바(`fb_01~02`), 모달(`fb_04`), 바텀시트(`fb_05`), 장바구니 드로어(`com_03`).
 4. **`behavior` 데코레이터**: 모바일 제스처(`gs_01~10`), 물리 트랜지션(`mo_01~10`), 타이포그래피 등장 효과(`txt_01~10`), 비주얼 아트 테마(`sty_01~21`).
 
@@ -64,4 +64,4 @@ description: >-
 - **콘텐츠 검증 하네스**: [scripts/validate-harness.mjs](../../../scripts/validate-harness.mjs) (`node scripts/validate-harness.mjs`)
 - **카탈로그 자동 동기화 스크립트**: [scripts/build-catalog.mjs](../../../scripts/build-catalog.mjs) (`node scripts/build-catalog.mjs`)
 - **비주얼 스튜디오 웹앱**: [ai_ui_ux.html](../../../ai_ui_ux.html)
-- **프롬프트 컴파일 검증 샘플**: [검증테스트_결과화면.html](../../../%EA%B2%80%EC%A6%9D%ED%85%8C%EC%8A%A4%ED%8A%B8_%EA%B2%B0%EA%B3%BC%ED%99%94%EB%A9%B4.html)
+- **바이브 코딩 생성 결과 샘플**: [sample-prototype.html](../../../sample-prototype.html)

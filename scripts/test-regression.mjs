@@ -264,9 +264,9 @@ function check(stage, label, condition, failDetail = '') {
     `구버전 표기 잔존: ${staleSkillPatterns.join(', ')}`
   );
 
-  // 1-4. 브랜드명 중립화 (code, meta, desc, recipe 본문)
+  // 1-4. 브랜드명 중립화 (code, meta, desc, recipe 본문; '토스트' 오탐 제외)
   const brandRegex =
-    /토스|인스타|카카오|노션|슬랙|애플|구글|유튜브|넷플릭스|쿠팡|배민|네이버|당근|에어비앤비|피그마|깃허브|트위터|페이스북|틱톡|스포티파이|\b(Linear|Notion|Slack|Toss|Apple|Google|Airbnb|Figma|Stripe|ChatGPT|Claude|Instagram|YouTube|Netflix)\b/i;
+    /토스(?!트)|인스타|카카오|노션|슬랙|애플|구글|유튜브|넷플릭스|쿠팡|배민|네이버|당근|에어비앤비|피그마|깃허브|트위터|페이스북|틱톡|스포티파이|\b(Linear|Notion|Slack|Toss|Apple|Google|Airbnb|Figma|Stripe|ChatGPT|Claude|Instagram|YouTube|Netflix)\b/i;
   const brandHits = [];
   for (const p of ACTIVE_PATTERNS) {
     const txt = `${p.code} ${p.meta} ${p.desc} ${getImplementationRecipe(p)}`;
@@ -280,13 +280,24 @@ function check(stage, label, condition, failDetail = '') {
     `잔여 ${brandHits.length}건: ${brandHits.slice(0, 6).join(', ')}`
   );
 
-  // 1-5. 포털에서 QA용 샘플 파일명 제거
+  // 1-5. 포털에서 QA용 샘플 파일명 제거 & 쇼케이스 내 [추가] 태그 0건
   const indexHtml = fs.readFileSync(path.join(rootDir, 'index.html'), 'utf8');
   check(
     1,
     'index.html 샘플 링크에서 QA용 파일명(검증테스트_결과화면.html) 제거',
     !indexHtml.includes('검증테스트_결과화면.html'),
     'index.html에 검증테스트_결과화면.html 링크가 남아 있습니다'
+  );
+
+  const showcaseAddedTags = fs
+    .readdirSync(path.join(rootDir, 'showcases'))
+    .filter((f) => f.endsWith('.html'))
+    .filter((f) => fs.readFileSync(path.join(rootDir, 'showcases', f), 'utf8').includes('[추가]'));
+  check(
+    1,
+    'showcases/*.html 내 [추가] 내부 태그 0건',
+    showcaseAddedTags.length === 0,
+    `잔여 파일: ${showcaseAddedTags.join(', ')}`
   );
 }
 
