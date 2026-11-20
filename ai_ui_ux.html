@@ -85,8 +85,14 @@
         </nav>
       </div>
 
-      <!-- 우측: 슬림 프리셋 선택기 & 검수/저장 액션 바 -->
+      <!-- 우측: ⌘K 검색 · 슬림 프리셋 선택기 & 검수/저장 액션 바 -->
       <div class="flex flex-wrap items-center gap-2">
+        <button type="button" data-action="open-cmd-palette" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition" title="프리셋·패턴·쇼케이스 통합 검색 (⌘K / Ctrl+K)">
+          <i data-lucide="search" class="w-3.5 h-3.5 text-slate-400" aria-hidden="true"></i>
+          <span class="hidden sm:inline">빠른 검색</span>
+          <kbd class="px-1.5 py-0.5 rounded bg-slate-900 border border-slate-600 text-[10px] font-mono text-slate-300">⌘K</kbd>
+        </button>
+
         <div class="flex items-center gap-1.5 bg-slate-800 rounded-xl px-2.5 py-1 border border-slate-700 text-xs">
           <i data-lucide="wand-2" class="w-3.5 h-3.5 text-blue-400 shrink-0" aria-hidden="true"></i>
           <label for="presetQuickSelect" class="sr-only">실전 프리셋 선택</label>
@@ -608,9 +614,43 @@
       <div id="modalQuickChips" class="flex flex-wrap gap-1.5"></div>
     </div>
 
+    <!-- 특정 카드 포커스 안내 바 -->
+    <div id="showcaseTargetHint" class="hidden px-4 py-1.5 bg-blue-950/80 border-b border-blue-800/70 text-[11px] text-blue-200 font-semibold flex items-center justify-between gap-2 shrink-0">
+      <span id="showcaseTargetHintText"></span>
+    </div>
+
     <!-- 쇼케이스 원본 iframe -->
     <iframe id="modalShowcaseIframe" src="about:blank" title="쇼케이스 인터랙티브 모달 프리뷰" class="w-full flex-1 border-0 bg-white"></iframe>
   </dialog>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL DIALOG 3: ⌘K 통합 빠른 검색 모달 (프리셋 · 217종 패턴 · 쇼케이스) -->
+  <!-- ===================================================================== -->
+  <dialog id="cmdPaletteModal" closedby="any" aria-label="통합 빠른 검색" class="m-auto w-[92vw] max-w-xl rounded-2xl border border-slate-700 bg-slate-900 text-slate-100 shadow-2xl p-0 flex-col overflow-hidden">
+    <div class="px-4 py-3 bg-slate-950 border-b border-slate-800 flex items-center gap-2.5">
+      <i data-lucide="search" class="w-4 h-4 text-blue-400 shrink-0" aria-hidden="true"></i>
+      <input
+        id="cmdPaletteInput"
+        type="search"
+        placeholder="프리셋, 217종 패턴(예: 검색창, 모달, 차트), 쇼케이스 검색..."
+        class="w-full bg-transparent text-sm text-white placeholder-slate-400 focus:outline-none"
+      />
+      <form method="dialog">
+        <button type="submit" class="px-2 py-0.5 rounded bg-slate-800 border border-slate-700 text-[10px] font-mono text-slate-300 hover:text-white">ESC</button>
+      </form>
+    </div>
+    <div id="cmdPaletteResults" class="max-h-[60vh] overflow-y-auto p-3 space-y-3 text-xs custom-scroll"></div>
+    <div class="px-4 py-2 bg-slate-950 border-t border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
+      <span>↑↓ 이동 · Enter 선택 · Esc 닫기</span>
+      <span>프리셋 8종 · 활성 패턴 217종 · 20개 카테고리</span>
+    </div>
+  </dialog>
+
+  <!-- 1줄 변경 토스트 피드백 (비파괴적 하단 중앙 알약 알림) -->
+  <div id="studioToast" role="status" aria-live="polite" class="fixed bottom-5 left-1/2 -translate-x-1/2 z-50 hidden items-center gap-2 px-4 py-2 rounded-full bg-slate-900/95 text-white border border-slate-700 shadow-xl text-xs font-bold backdrop-blur">
+    <span id="studioToastIcon" class="px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[11px]">+</span>
+    <span id="studioToastMsg"></span>
+  </div>
 
   <!-- ===================================================================== -->
   <!-- MODAL DIALOG 2: 실시간 동적 프로토타입 합성기(방식 A) & AI API 생성기(방식 B) -->
@@ -879,6 +919,7 @@
       if (idx > -1) {
         activeComponents.splice(idx, 1);
         if (selectedBlockId === id) selectedBlockId = null;
+        showStudioToast('~', `[${baseItem.code}] 제거됨 (총 ${activeComponents.length}개)`);
       } else {
         activeComponents.push({ ...baseItem, note: '' });
         // 레이아웃 골격(Shell) 패턴을 추가할 경우 기기 뷰포트 및 격자 골격을 직관적으로 자동 연동!
@@ -892,6 +933,7 @@
           if (currentViewport === 'mobile') setViewportDevice('tablet');
           setGridArchitecture('grid2');
         }
+        showStudioToast('+', `[${baseItem.code}] 추가됨 (총 ${activeComponents.length}개)`);
       }
       syncAllViews();
     }
@@ -1331,6 +1373,9 @@
       }
 
       syncAllViews();
+      if (titleEl && titleEl.value) {
+        showStudioToast('~', `[${titleEl.value}] 프리셋 적용 (${activeComponents.length}개 블록)`);
+      }
     }
 
     // =========================================================================
@@ -1703,17 +1748,115 @@ ${buildSharedStateSpec()}
     // =========================================================================
     const showcaseModal = document.getElementById('showcaseModal');
     let currentModalCatKey = 'layout';
+    let pendingShowcaseTargetId = null;
+    let studioToastTimer = null;
 
-    function openShowcaseModalByCat(catKey) {
+    function showStudioToast(type, message) {
+      const toast = document.getElementById('studioToast');
+      const icon = document.getElementById('studioToastIcon');
+      const msg = document.getElementById('studioToastMsg');
+      if (!toast || !icon || !msg) return;
+      icon.textContent = type || '✓';
+      icon.className = type === '+'
+        ? 'px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[11px]'
+        : type === '~'
+        ? 'px-1.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono text-[11px]'
+        : 'px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-mono text-[11px]';
+      msg.textContent = message;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      clearTimeout(studioToastTimer);
+      studioToastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 2200);
+    }
+
+    function focusShowcaseCardInIframe(iframe, targetItemId) {
+      const hintBar = document.getElementById('showcaseTargetHint');
+      const hintText = document.getElementById('showcaseTargetHintText');
+      if (!targetItemId) {
+        if (hintBar) hintBar.classList.add('hidden');
+        return;
+      }
+      const item = ALL_PATTERNS.find(x => x.id === targetItemId);
+      if (!item) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+
+        const numMatch = item.id.match(/_(\d+)$/);
+        const twoDigit = numMatch ? numMatch[1] : '';
+        const cleanTitle = (item.code || '').replace(/^[^\d]*\d+\s*/, '').replace(/\s*\[추가\]\s*/g, '').trim();
+        const engLower = (item.eng || '').toLowerCase();
+
+        const candidates = Array.from(doc.querySelectorAll('main .rounded-2xl, main article, main section'));
+        let bestCard = null;
+        let bestScore = 0;
+
+        candidates.forEach(card => {
+          const text = (card.textContent || '').trim();
+          if (!text || text.length > 2600) return;
+          const headText = text.slice(0, 180);
+          const headLower = headText.toLowerCase();
+          let score = 0;
+          if (twoDigit && (headText.includes(`${twoDigit} `) || headText.includes(`#${twoDigit}`) || headText.includes(`${twoDigit}.`))) score += 4;
+          if (cleanTitle && headText.includes(cleanTitle)) score += 6;
+          if (engLower && engLower.length >= 4 && headLower.includes(engLower)) score += 5;
+          if (score > bestScore) {
+            bestScore = score;
+            bestCard = card;
+          }
+        });
+
+        if (bestCard && bestScore >= 5) {
+          bestCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          const prevOutline = bestCard.style.outline;
+          const prevOffset = bestCard.style.outlineOffset;
+          const prevShadow = bestCard.style.boxShadow;
+          bestCard.style.outline = '3px solid #2563eb';
+          bestCard.style.outlineOffset = '4px';
+          bestCard.style.boxShadow = '0 0 0 8px rgba(37, 99, 235, 0.18)';
+          setTimeout(() => {
+            bestCard.style.outline = prevOutline;
+            bestCard.style.outlineOffset = prevOffset;
+            bestCard.style.boxShadow = prevShadow;
+          }, 2400);
+          if (hintBar && hintText) {
+            hintText.textContent = `🎯 [${item.code}] 카드로 바로 이동했습니다.`;
+            hintBar.classList.remove('hidden');
+          }
+        } else if (hintBar && hintText) {
+          hintText.textContent = `ℹ️ [${item.code}] 개별 카드가 원본 쇼케이스에 수록되지 않아 해당 카테고리 전체 문서를 표시합니다.`;
+          hintBar.classList.remove('hidden');
+        }
+      } catch (err) {
+        if (hintBar) hintBar.classList.add('hidden');
+      }
+    }
+
+    function openShowcaseModalByCat(catKey, targetItemId = null) {
       const book = SHOWCASE_BOOKS.find(b => b.key === catKey) || SHOWCASE_BOOKS[0];
       currentModalCatKey = book.key;
+      pendingShowcaseTargetId = targetItemId;
       document.getElementById('showcaseModalTitle').innerText = `${book.title} — 원본 인터랙티브 쇼케이스`;
       document.getElementById('modalNewTabLink').href = book.file;
 
       const iframe = document.getElementById('modalShowcaseIframe');
       if (iframe.dataset.loadedFile !== book.file) {
+        iframe.onload = () => {
+          if (pendingShowcaseTargetId) {
+            focusShowcaseCardInIframe(iframe, pendingShowcaseTargetId);
+          } else {
+            const hintBar = document.getElementById('showcaseTargetHint');
+            if (hintBar) hintBar.classList.add('hidden');
+          }
+        };
         iframe.src = book.file;
         iframe.dataset.loadedFile = book.file;
+      } else {
+        focusShowcaseCardInIframe(iframe, targetItemId);
       }
 
       renderModalQuickChips();
@@ -1978,7 +2121,9 @@ ${buildSharedStateSpec()}
       } else if (action === 'preview-item-showcase') {
         e.stopPropagation();
         const item = ALL_PATTERNS.find(x => x.id === target.dataset.id);
-        if (item) openShowcaseModalByCat(item.catKey);
+        if (item) openShowcaseModalByCat(item.catKey, item.id);
+      } else if (action === 'open-cmd-palette') {
+        openCmdPalette();
       } else if (action === 'open-current-showcase') {
         openShowcaseModalByCat(currentCategory);
       } else if (action === 'set-viewport') {
@@ -1996,6 +2141,7 @@ ${buildSharedStateSpec()}
         const presetSelectEl = document.getElementById('presetQuickSelect');
         if (presetSelectEl) presetSelectEl.value = '';
         syncAllViews();
+        showStudioToast('~', '캔버스가 초기화되었습니다');
       } else if (action === 'nav-jump') {
         const targetId = target.dataset.target;
         selectedBlockId = targetId === '__top__' ? null : targetId;
@@ -2019,6 +2165,7 @@ ${buildSharedStateSpec()}
         if (found && !activeComponents.some(x => x.id === found.id)) {
           activeComponents.push({ ...found, note: '' });
           syncAllViews();
+          showStudioToast('+', `[${found.code}] UX 검수 보완 완료`);
         }
         runAiHeuristicAudit();
       } else if (action === 'audit-set-grid') {
@@ -2250,6 +2397,161 @@ ${buildSharedStateSpec()}
       const modeParam = params.get('mode');
       if (modeParam === 'dictionary' || modeParam === 'composer') {
         switchWorkspaceMode(modeParam);
+      }
+    });
+
+    // =========================================================================
+    // 15. ⌘K 통합 빠른 검색 모달 (프리셋 8종 · 활성 패턴 217종 · 20개 쇼케이스)
+    // =========================================================================
+    const CMD_PRESET_ITEMS = [
+      { key: 'apply', title: '채용 지원 · 포트폴리오 검증', desc: 'Desktop 2단 · 폼 검증·로딩·스낵바' },
+      { key: 'ai_chat', title: '생성형 AI 워크스페이스', desc: 'Desktop 2단 · 스트리밍·도구 파이프라인·RAG 출처' },
+      { key: 'search_shop', title: '커머스 검색 · 필터 · 장바구니', desc: 'Desktop 사이드바 · 자동완성·0건 폴백·장바구니' },
+      { key: 'booking', title: '숙박 · 일정 타임슬롯 예약', desc: 'Tablet 2단 · 기간 달력·시간 슬롯·예상 영수증' },
+      { key: 'onboarding', title: '앱 첫화면 · 온보딩', desc: 'Mobile 1단 · 슬라이드·간편 로그인·약관 동의' },
+      { key: 'saas_dash', title: 'B2B SaaS 분석 대시보드', desc: 'Desktop 3단 벤토 · KPI·데이터 테이블·인스펙터' },
+      { key: 'rbac_security', title: '팀 설정 · 권한(RBAC) · 보안', desc: 'Desktop 사이드바 · 권한표·API 키·패스키·위험구역' },
+      { key: 'social_feed', title: '모바일 소셜 피드', desc: 'Mobile 1단 · 피드·라이트박스·스레드 댓글·하단탭' }
+    ];
+
+    let cmdSelectedIdx = 0;
+
+    function openCmdPalette() {
+      const modal = document.getElementById('cmdPaletteModal');
+      const input = document.getElementById('cmdPaletteInput');
+      if (!modal || !input) return;
+      input.value = '';
+      cmdSelectedIdx = 0;
+      renderCmdPaletteResults('');
+      if (!modal.open) modal.showModal();
+      input.focus();
+    }
+
+    function renderCmdPaletteResults(query = '') {
+      const container = document.getElementById('cmdPaletteResults');
+      if (!container) return;
+      const q = query.trim().toLowerCase();
+
+      const presets = CMD_PRESET_ITEMS.filter(p => !q || p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
+      const patterns = (window.UX_TAXONOMY_DB?.ACTIVE_PATTERNS || ALL_PATTERNS)
+        .filter(p => !q || p.code.toLowerCase().includes(q) || p.eng.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.catTitle.toLowerCase().includes(q))
+        .slice(0, q ? 20 : 8);
+      const books = SHOWCASE_BOOKS.filter(b => !q || b.title.toLowerCase().includes(q) || b.short.toLowerCase().includes(q) || b.badge.toLowerCase().includes(q)).slice(0, q ? 10 : 5);
+
+      let html = '';
+      if (presets.length > 0) {
+        html += `<div class="space-y-1"><div class="text-[10px] font-extrabold text-slate-400 uppercase px-2">실전 프리셋 (${presets.length})</div>`;
+        html += presets.map(p => `
+          <button type="button" data-cmd-type="preset" data-cmd-val="${p.key}" class="cmd-item w-full text-left px-3 py-2 rounded-xl hover:bg-slate-800 flex items-center justify-between gap-2 transition">
+            <div class="min-w-0">
+              <div class="font-bold text-slate-100 truncate">${p.title}</div>
+              <div class="text-[11px] text-slate-400 truncate">${p.desc}</div>
+            </div>
+            <span class="px-2 py-0.5 rounded bg-blue-600/20 text-blue-300 border border-blue-500/30 text-[10px] font-bold shrink-0">프리셋 적용</span>
+          </button>`).join('');
+        html += `</div>`;
+      }
+
+      if (patterns.length > 0) {
+        html += `<div class="space-y-1"><div class="text-[10px] font-extrabold text-slate-400 uppercase px-2">UI 패턴 (${patterns.length}${q ? '' : ' / 217종'})</div>`;
+        html += patterns.map(p => {
+          const isAdded = activeComponents.some(x => x.id === p.id);
+          return `
+            <div class="cmd-item rounded-xl hover:bg-slate-800 px-3 py-2 flex items-center justify-between gap-2 transition" data-cmd-type="pattern" data-cmd-val="${p.id}">
+              <button type="button" data-cmd-type="pattern" data-cmd-val="${p.id}" class="flex-1 text-left min-w-0">
+                <div class="font-bold text-slate-100 truncate">${p.code} <span class="text-[10px] font-mono text-slate-400">${p.eng}</span></div>
+                <div class="text-[11px] text-slate-400 truncate">${p.desc}</div>
+              </button>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <button type="button" data-cmd-type="showcase-item" data-cmd-val="${p.id}" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-300 text-[10px] font-bold">뷰</button>
+                <button type="button" data-cmd-type="pattern" data-cmd-val="${p.id}" class="px-2 py-0.5 rounded ${isAdded ? 'bg-emerald-600/25 text-emerald-300 border border-emerald-500/40' : 'bg-slate-800 text-slate-200 border border-slate-700'} text-[10px] font-bold">${isAdded ? '담김 ✓' : '+ 추가'}</button>
+              </div>
+            </div>`;
+        }).join('');
+        html += `</div>`;
+      }
+
+      if (books.length > 0) {
+        html += `<div class="space-y-1"><div class="text-[10px] font-extrabold text-slate-400 uppercase px-2">카테고리 쇼케이스</div>`;
+        html += books.map(b => `
+          <button type="button" data-cmd-type="showcase" data-cmd-val="${b.key}" class="cmd-item w-full text-left px-3 py-2 rounded-xl hover:bg-slate-800 flex items-center justify-between gap-2 transition">
+            <span class="font-bold text-slate-200 truncate">${b.title}</span>
+            <span class="text-[10px] text-slate-400 shrink-0">쇼케이스 열기 ↗</span>
+          </button>`).join('');
+        html += `</div>`;
+      }
+
+      if (!html) {
+        html = `<div class="py-10 text-center text-slate-400">검색어와 일치하는 프리셋·패턴·쇼케이스가 없습니다.</div>`;
+      }
+
+      container.innerHTML = html;
+      cmdSelectedIdx = 0;
+      highlightCmdItem();
+    }
+
+    function highlightCmdItem() {
+      const items = Array.from(document.querySelectorAll('#cmdPaletteResults .cmd-item'));
+      items.forEach((el, idx) => {
+        el.classList.toggle('bg-slate-800', idx === cmdSelectedIdx);
+        el.classList.toggle('ring-1', idx === cmdSelectedIdx);
+        el.classList.toggle('ring-blue-500/60', idx === cmdSelectedIdx);
+      });
+      if (items[cmdSelectedIdx]) {
+        items[cmdSelectedIdx].scrollIntoView({ block: 'nearest' });
+      }
+    }
+
+    function executeCmdAction(type, val) {
+      const modal = document.getElementById('cmdPaletteModal');
+      if (modal && modal.open) modal.close();
+      if (type === 'preset') {
+        if (currentWorkspaceMode !== 'composer') switchWorkspaceMode('composer');
+        loadPreset(val);
+      } else if (type === 'pattern') {
+        if (currentWorkspaceMode !== 'composer') switchWorkspaceMode('composer');
+        toggleComponentById(val);
+      } else if (type === 'showcase-item') {
+        const item = ALL_PATTERNS.find(x => x.id === val);
+        if (item) openShowcaseModalByCat(item.catKey, item.id);
+      } else if (type === 'showcase') {
+        openShowcaseModalByCat(val);
+      }
+    }
+
+    document.getElementById('cmdPaletteInput')?.addEventListener('input', (e) => {
+      renderCmdPaletteResults(e.target.value);
+    });
+
+    document.getElementById('cmdPaletteResults')?.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-cmd-type]');
+      if (!btn) return;
+      executeCmdAction(btn.dataset.cmdType, btn.dataset.cmdVal);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openCmdPalette();
+        return;
+      }
+      const modal = document.getElementById('cmdPaletteModal');
+      if (modal && modal.open) {
+        const items = Array.from(document.querySelectorAll('#cmdPaletteResults .cmd-item'));
+        if (items.length === 0) return;
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          cmdSelectedIdx = (cmdSelectedIdx + 1) % items.length;
+          highlightCmdItem();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          cmdSelectedIdx = (cmdSelectedIdx - 1 + items.length) % items.length;
+          highlightCmdItem();
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          const activeEl = items[cmdSelectedIdx];
+          if (activeEl) executeCmdAction(activeEl.dataset.cmdType, activeEl.dataset.cmdVal);
+        }
       }
     });
   </script>
