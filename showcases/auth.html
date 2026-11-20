@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>19. 계정·보안 &amp; 권한 설정 쇼케이스</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@0.460.0"></script>
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+    body {
+      font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen antialiased flex flex-col">
+  <!-- 스튜디오 공통 복귀 내비게이션 -->
+  <nav aria-label="스튜디오 내비게이션" class="bg-slate-900 text-slate-200 border-b border-slate-800 px-4 py-2 text-xs">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <a href="../index.html" class="inline-flex items-center gap-1.5 font-bold text-white hover:text-blue-300 transition">
+        <span>←</span><span>UI/UX Vibe Studio 포털</span>
+      </a>
+      <div class="flex items-center gap-2">
+        <a href="../ai_ui_ux.html?mode=dictionary" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold transition">📖 도감 사전</a>
+        <a href="../ai_ui_ux.html?mode=composer" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold transition">🧩 화면 조립기</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 mb-1">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Account, Security &amp; RBAC
+        </span>
+        <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+          19. 계정·보안 &amp; <span class="text-blue-600">권한 설정 패턴</span> (8종)
+        </h1>
+      </div>
+      <p class="text-sm text-slate-500 max-w-sm sm:text-right">
+        RBAC 역할 관리, API 키 마스킹, 패스키 2FA, 위험 구역까지 <span class="text-blue-600 font-semibold">엔터프라이즈 보안 UX</span>를 테스트해 보세요.
+      </p>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- 01. 아바타 스택 & 멤버 초대 -->
+      <article id="pattern-aut_01" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">01 아바타 스택 &amp; 멤버 초대</span>
+            <span class="text-[11px] text-slate-400 font-mono">Avatar group stack</span>
+          </div>
+          <div class="bg-slate-50 rounded-xl h-44 p-4 border border-slate-200 flex flex-col items-center justify-center gap-3">
+            <div class="flex items-center -space-x-2">
+              <span class="w-9 h-9 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center ring-2 ring-white">김</span>
+              <span class="w-9 h-9 rounded-full bg-indigo-600 text-white text-xs font-bold flex items-center justify-center ring-2 ring-white">이</span>
+              <span class="w-9 h-9 rounded-full bg-emerald-600 text-white text-xs font-bold flex items-center justify-center ring-2 ring-white">박</span>
+              <span id="memberCount" class="w-9 h-9 rounded-full bg-slate-200 text-slate-700 text-xs font-extrabold flex items-center justify-center ring-2 ring-white">+4</span>
+            </div>
+            <button type="button" id="btnInviteMember" class="px-3.5 py-1.5 rounded-lg bg-slate-900 hover:bg-blue-600 text-white text-xs font-bold transition">+ 멤버 초대하기</button>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">참여 중인 팀원 프로필을 겹쳐 보여주고 원클릭 초대 액션을 연결합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">초대 클릭 시 멤버 수 증가</div>
+      </article>
+
+      <!-- 02. 권한·역할(RBAC) 관리 표 -->
+      <article id="pattern-aut_02" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">02 권한·역할(RBAC) 관리 표</span>
+            <span class="text-[11px] text-slate-400 font-mono">Role &amp; Permission</span>
+          </div>
+          <div class="bg-slate-50 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center gap-2 text-xs">
+            <div class="flex items-center justify-between bg-white px-2.5 py-2 rounded-lg border border-slate-200">
+              <span class="font-bold">김민수 (PM)</span>
+              <select class="bg-slate-50 border border-slate-200 rounded px-1.5 py-0.5 text-[11px] font-bold"><option>Owner</option><option selected>Admin</option><option>Editor</option><option>Viewer</option></select>
+            </div>
+            <div class="flex items-center justify-between bg-white px-2.5 py-2 rounded-lg border border-slate-200">
+              <span class="font-bold">박지연 (Design)</span>
+              <select class="bg-slate-50 border border-slate-200 rounded px-1.5 py-0.5 text-[11px] font-bold"><option>Admin</option><option selected>Editor</option><option>Viewer</option></select>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">팀원별 열람·편집·관리 권한을 드롭다운으로 즉시 부여하거나 회수합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">엔터프라이즈 권한 매트릭스</div>
+      </article>
+
+      <!-- 03. API 키 마스킹 & 복사 박스 -->
+      <article id="pattern-aut_03" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">03 API 키 마스킹 &amp; 복사 박스</span>
+            <span class="text-[11px] text-slate-400 font-mono">Secret API key</span>
+          </div>
+          <div class="bg-slate-900 text-slate-100 rounded-xl h-44 p-4 border border-slate-800 flex flex-col justify-center gap-3">
+            <div class="text-[10px] text-slate-400 font-bold uppercase">Production Secret Key</div>
+            <div class="flex items-center gap-1.5 bg-slate-800 rounded-lg px-2.5 py-2 font-mono text-xs">
+              <span id="apiKeyText" class="flex-1 truncate text-emerald-300">sk-live-••••••••••••••••9f2a</span>
+              <button type="button" id="btnRevealKey" class="px-2 py-0.5 rounded bg-slate-700 hover:bg-slate-600 text-[10px] font-sans font-bold">보기</button>
+              <button type="button" id="btnCopyKey" class="px-2 py-0.5 rounded bg-blue-600 hover:bg-blue-500 text-[10px] font-sans font-bold">복사</button>
+            </div>
+            <div id="apiKeyStatus" class="text-[11px] text-slate-400">기본 마스킹 보호 상태</div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">시크릿 토큰을 기본 마스킹으로 보호하고 필요 시 노출·원클릭 복사합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">어깨너머 유출(Shoulder Surfing) 방지</div>
+      </article>
+
+      <!-- 04. 위험 구역 (Danger Zone) -->
+      <article id="pattern-aut_04" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded">04 위험 구역 (Danger Zone)</span>
+            <span class="text-[11px] text-slate-400 font-mono">Danger zone</span>
+          </div>
+          <div class="bg-rose-50/60 rounded-xl h-44 p-3.5 border-2 border-rose-200 flex flex-col justify-between text-xs">
+            <div class="text-rose-800 font-bold">영구 삭제하려면 <code class="bg-white px-1 rounded border border-rose-200">ux-studio</code> 입력</div>
+            <input id="dangerInput" type="text" placeholder="ux-studio 입력..." class="w-full px-2.5 py-1.5 rounded-lg border border-rose-300 bg-white text-xs focus:outline-none">
+            <button type="button" id="btnDangerDelete" disabled class="w-full py-2 rounded-lg bg-rose-600 disabled:bg-slate-300 text-white font-extrabold transition">프로젝트 영구 삭제</button>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">되돌릴 수 없는 파괴적 액션을 붉은 구역과 텍스트 일치 확인으로 보호합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">프로젝트명 정확 일치 시에만 활성</div>
+      </article>
+
+      <!-- 05. 패스키 & 2단계 인증(2FA) 설정 -->
+      <article id="pattern-aut_05" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">05 패스키 &amp; 2단계 인증(2FA)</span>
+            <span class="text-[11px] text-slate-400 font-mono">Passkey &amp; 2FA</span>
+          </div>
+          <div class="bg-slate-50 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-between text-xs">
+            <div class="flex items-center justify-between">
+              <div class="font-extrabold text-slate-800">TouchID / FaceID 패스키</div>
+              <span id="passkeyBadge" class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold text-[10px]">활성화됨</span>
+            </div>
+            <p class="text-[11px] text-slate-500">비밀번호 없이 기기 생체인증으로 피싱에 강한 로그인을 유지합니다.</p>
+            <button type="button" id="btnTogglePasskey" class="px-3 py-1.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-100 font-bold text-slate-700 transition">2FA 상태 토글</button>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">생체인증 패스키와 OTP 2단계 인증 상태를 한눈에 관리합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">WebAuthn / Passkey 권장 UI</div>
+      </article>
+
+      <!-- 06. 활성 기기·세션 관리 -->
+      <article id="pattern-aut_06" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">06 활성 기기·세션 관리</span>
+            <span class="text-[11px] text-slate-400 font-mono">Active Sessions</span>
+          </div>
+          <div id="sessionList" class="bg-slate-50 rounded-xl h-44 p-3 border border-slate-200 flex flex-col justify-center gap-2 text-xs">
+            <div class="flex items-center justify-between bg-white px-2.5 py-2 rounded-lg border border-blue-200">
+              <div><div class="font-bold">macOS · Chrome</div><div class="text-[10px] text-emerald-600 font-bold">● 현재 기기 · 서울</div></div>
+              <span class="text-[10px] text-slate-400">방금</span>
+            </div>
+            <div class="session-row flex items-center justify-between bg-white px-2.5 py-2 rounded-lg border border-slate-200">
+              <div><div class="font-bold">Windows · Edge</div><div class="text-[10px] text-slate-400">부산 · 2시간 전</div></div>
+              <button type="button" class="btn-revoke px-2 py-0.5 rounded bg-rose-50 text-rose-600 font-bold text-[10px] hover:bg-rose-100">원격 로그아웃</button>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">로그인된 OS·위치 정보를 확인하고 의심 기기를 원격 로그아웃합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">원격 로그아웃 클릭 테스트</div>
+      </article>
+
+      <!-- 07. 보안 감사 로그 (Audit Log) -->
+      <article id="pattern-aut_07" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">07 보안 감사 로그</span>
+            <span class="text-[11px] text-slate-400 font-mono">Security Audit Trail</span>
+          </div>
+          <div class="bg-slate-50 rounded-xl h-44 p-3 border border-slate-200 space-y-2 text-[11px] overflow-y-auto">
+            <div class="bg-white p-2 rounded-lg border border-slate-200 flex justify-between"><span><strong>권한 변경</strong> Admin→Editor</span><span class="font-mono text-slate-400">10:42</span></div>
+            <div class="bg-white p-2 rounded-lg border border-slate-200 flex justify-between"><span><strong>API 키 발급</strong> prod-key</span><span class="font-mono text-slate-400">09:15</span></div>
+            <div class="bg-white p-2 rounded-lg border border-slate-200 flex justify-between"><span><strong>패스키 등록</strong> MacBook</span><span class="font-mono text-slate-400">어제</span></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">권한 변경·키 발급·삭제 이력을 IP·타임스탬프와 함께 불변 기록으로 조회합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">컴플라이언스·감사 추적용</div>
+      </article>
+
+      <!-- 08. 비밀번호 강도 미터 -->
+      <article id="pattern-aut_08" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">08 비밀번호 강도 미터</span>
+            <span class="text-[11px] text-slate-400 font-mono">Password Strength</span>
+          </div>
+          <div class="bg-slate-50 rounded-xl h-44 p-3.5 border border-slate-200 flex flex-col justify-center gap-2.5 text-xs">
+            <input id="pwInput" type="password" value="UxStudio!2026" placeholder="비밀번호 입력..." class="w-full px-3 py-1.5 rounded-lg border border-slate-300 bg-white text-xs focus:outline-none focus:border-blue-500">
+            <div class="grid grid-cols-4 gap-1 h-1.5">
+              <div id="pwBar1" class="rounded bg-emerald-500"></div>
+              <div id="pwBar2" class="rounded bg-emerald-500"></div>
+              <div id="pwBar3" class="rounded bg-emerald-500"></div>
+              <div id="pwBar4" class="rounded bg-emerald-500"></div>
+            </div>
+            <div id="pwLabel" class="text-[11px] font-bold text-emerald-600">강도: 매우 안전 (8자+ · 숫자 · 특수문자 충족)</div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">4단계 강도 바와 실시간 조건 체크로 안전한 비밀번호 설정을 유도합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">입력값에 따라 4단계 실시간 평가</div>
+      </article>
+
+    </div>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    let extraMembers = 4;
+    document.getElementById('btnInviteMember').addEventListener('click', () => {
+      extraMembers++;
+      document.getElementById('memberCount').textContent = '+' + extraMembers;
+    });
+
+    let revealed = false;
+    document.getElementById('btnRevealKey').addEventListener('click', (e) => {
+      revealed = !revealed;
+      document.getElementById('apiKeyText').textContent = revealed ? 'sk-live-8a91c4e2b0d7f1a3c5e9f2a' : 'sk-live-••••••••••••••••9f2a';
+      e.target.textContent = revealed ? '숨기기' : '보기';
+    });
+    document.getElementById('btnCopyKey').addEventListener('click', () => {
+      document.getElementById('apiKeyStatus').textContent = '✓ 클립보드에 안전하게 복사되었습니다.';
+    });
+
+    document.getElementById('dangerInput').addEventListener('input', (e) => {
+      document.getElementById('btnDangerDelete').disabled = e.target.value.trim() !== 'ux-studio';
+    });
+
+    let pkOn = true;
+    document.getElementById('btnTogglePasskey').addEventListener('click', () => {
+      pkOn = !pkOn;
+      const b = document.getElementById('passkeyBadge');
+      b.textContent = pkOn ? '활성화됨' : '비활성';
+      b.className = pkOn ? 'px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold text-[10px]' : 'px-2 py-0.5 rounded-full bg-slate-200 text-slate-600 font-bold text-[10px]';
+    });
+
+    document.querySelectorAll('.btn-revoke').forEach(btn => {
+      btn.addEventListener('click', () => {
+        btn.closest('.session-row').innerHTML = '<span class="text-slate-400 text-[11px]">✓ 원격 로그아웃 완료</span>';
+      });
+    });
+
+    document.getElementById('pwInput').addEventListener('input', (e) => {
+      const v = e.target.value;
+      let score = 0;
+      if (v.length >= 8) score++;
+      if (/[A-Z]/.test(v)) score++;
+      if (/[0-9]/.test(v)) score++;
+      if (/[^A-Za-z0-9]/.test(v)) score++;
+      const colors = ['bg-slate-200', 'bg-rose-500', 'bg-amber-500', 'bg-blue-500', 'bg-emerald-500'];
+      const labels = ['입력 필요', '약함', '보통', '안전', '매우 안전'];
+      [1, 2, 3, 4].forEach(i => {
+        document.getElementById('pwBar' + i).className = `rounded ${i <= score ? colors[score] : 'bg-slate-200'}`;
+      });
+      document.getElementById('pwLabel').textContent = `강도: ${labels[score]}`;
+    });
+  </script>
+</body>
+</html>
