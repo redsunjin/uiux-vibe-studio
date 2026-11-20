@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "license": "CC-BY-NC-SA-4.0",
   "repository": "https://github.com/redsunjin/uiux-vibe-studio",
-  "description": "20대 도감 카테고리 · 208종 표준 UI/UX 패턴 사전과 쇼케이스 레시피를 기반으로 반응형 화면을 설계·바이브 코딩·검수하는 플러그인 번들입니다.",
+  "description": "20대 도감 카테고리 · 217종 활성 UI/UX 패턴 사전과 쇼케이스 레시피를 기반으로 반응형 화면을 설계·바이브 코딩·검수하는 플러그인 번들입니다.",
   "logo": "assets/logo.svg",
   "suggestedPrompts": [
     "우리 UI/UX 도감 사전 기준으로 커머스 통합 검색 및 필터 화면을 반응형으로 만들어줘",

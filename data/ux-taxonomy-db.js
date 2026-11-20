@@ -41,9 +41,9 @@
         { id: 'lay_07', code: '레이아웃 07 대시보드', eng: 'Dashboard', slot: 'main', span: 'full', meta: '상단 KPI 지표 + 하단 차트 결합', desc: '상단 핵심 성과 지표(KPI) 카드와 하단 시각화 차트를 스크롤 없이 한 화면에 밀집' },
         { id: 'lay_08', code: '레이아웃 08 Z 패턴', eng: 'Z-pattern', slot: 'main', span: 'full', meta: '좌상단→우상단→중앙→우하단CTA', desc: '로고(①)→메뉴(②)→핵심가치(③)→최종 CTA(④)로 이어지는 안구 이동 동선 최적화 배치' },
         { id: 'lay_09', code: '레이아웃 09 풀블리드', eng: 'Full bleed', slot: 'main', span: 'full', meta: '여백 0px · 화면 끝까지 꽉 찬 미디어', desc: '상하좌우 바깥 여백(Padding)을 없애고 배경 이미지·영상이 베젤 끝까지 차오르는 배치' },
-        { id: 'lay_10', code: '레이아웃 10 메이슨리 그리드 [추가]', eng: 'Masonry waterfall grid', slot: 'main', span: 'full', meta: '핀터레스트형 가변 높이 벽돌 배치', desc: '세로 높이가 서로 다른 이미지·카드를 빈틈없이 벽돌처럼 맞물려 쌓는 폭포수형 레이아웃' },
-        { id: 'lay_11', code: '레이아웃 11 스티키 스크롤텔링 [추가]', eng: 'Sticky Scrollytelling', slot: 'main', span: 'full', meta: '좌측 비주얼 고정 + 우측 텍스트 스크롤', desc: '스크롤하는 동안 한쪽 화면(제품 목업/차트)은 고정되고 반대쪽 설명 단계가 넘어가며 전환' },
-        { id: 'lay_12', code: '레이아웃 12 홀리 그레일 3단 [추가]', eng: 'Holy Grail 3-Column', slot: 'main', span: 'full', meta: '좌측 트리메뉴 + 중앙 본문 + 우측 목차', desc: '기술 문서(Docs)나 커뮤니티 표준인 좌측 탐색·중앙 아티클·우측 온페이지 목차(TOC) 3단 구조' }
+        { id: 'lay_10', code: '레이아웃 10 메이슨리 그리드', eng: 'Masonry waterfall grid', slot: 'main', span: 'full', meta: '핀터레스트형 가변 높이 벽돌 배치', desc: '세로 높이가 서로 다른 이미지·카드를 빈틈없이 벽돌처럼 맞물려 쌓는 폭포수형 레이아웃' },
+        { id: 'lay_11', code: '레이아웃 11 스티키 스크롤텔링', eng: 'Sticky Scrollytelling', slot: 'main', span: 'full', meta: '좌측 비주얼 고정 + 우측 텍스트 스크롤', desc: '스크롤하는 동안 한쪽 화면(제품 목업/차트)은 고정되고 반대쪽 설명 단계가 넘어가며 전환' },
+        { id: 'lay_12', code: '레이아웃 12 홀리 그레일 3단', eng: 'Holy Grail 3-Column', slot: 'main', span: 'full', meta: '좌측 트리메뉴 + 중앙 본문 + 우측 목차', desc: '기술 문서(Docs)나 커뮤니티 표준인 좌측 탐색·중앙 아티클·우측 온페이지 목차(TOC) 3단 구조' }
       ],
       content: [
         { id: 'cnt_01', code: '콘텐츠 01 히어로 배너', eng: 'Hero section', slot: 'main', span: 'full', status: 'deprecated', replacedBy: 'lay_01', meta: '시선 집중도: 최상 · 전체폭', desc: '최상단 핵심 헤드라인 메시지 + 대표 행동 유도(CTA) 배너 블록' },
@@ -55,22 +55,22 @@
         { id: 'cnt_07', code: '콘텐츠 07 데이터 테이블', eng: 'Data table', slot: 'main', span: 'full', meta: 'PC 다열 속성 비교·정렬', desc: '행과 열 교차 구조로 대량 데이터를 헤더 클릭 정렬·필터링하는 표' },
         { id: 'cnt_08', code: '콘텐츠 08 KPI 요약 카드', eng: 'Metric / Stat card', slot: 'main', span: 'half', meta: '핵심 수치 1초 브리핑', desc: '핵심 성과 숫자(전환율, 매출)와 전주 대비 증감 배지(▲+12%) 위젯' },
         { id: 'cnt_09', code: '콘텐츠 09 타임라인', eng: 'Timeline feed', slot: 'main', span: 'half', meta: '시간순 히스토리 추적', desc: '수직 연결선과 노드를 따라 시간순 진행 이력 및 배송/심사 단계 시각화' },
-        { id: 'cnt_10', code: '콘텐츠 10 칸반 보드 [추가]', eng: 'Kanban board', slot: 'main', span: 'full', meta: '상태 열(To-do/Doing/Done) 카드 이동', desc: '진행 상태별 세로 기둥(Column)에 카드를 배치하고 드래그하여 워크플로우 상태를 관리' },
-        { id: 'cnt_11', code: '콘텐츠 11 계층 트리 뷰 [추가]', eng: 'Collapsible Tree view', slot: 'main', span: 'half', meta: '폴더/하위 노드 접기·펼치기', desc: '파일 탐색기나 조직도처럼 상위-하위 깊이(Depth)를 들여쓰기와 화살표로 개폐하는 구조' },
-        { id: 'cnt_12', code: '콘텐츠 12 우측 인스펙터 패널 [추가]', eng: 'Inspector side panel', slot: 'main', span: 'half', meta: '화면 이탈 없는 우측 슬라이드 상세창', desc: '목록이나 캔버스 항목 클릭 시 페이지 이동 없이 우측에서 열리는 속성 편집/상세 드로어' }
+        { id: 'cnt_10', code: '콘텐츠 10 칸반 보드', eng: 'Kanban board', slot: 'main', span: 'full', meta: '상태 열(To-do/Doing/Done) 카드 이동', desc: '진행 상태별 세로 기둥(Column)에 카드를 배치하고 드래그하여 워크플로우 상태를 관리' },
+        { id: 'cnt_11', code: '콘텐츠 11 계층 트리 뷰', eng: 'Collapsible Tree view', slot: 'main', span: 'half', meta: '폴더/하위 노드 접기·펼치기', desc: '파일 탐색기나 조직도처럼 상위-하위 깊이(Depth)를 들여쓰기와 화살표로 개폐하는 구조' },
+        { id: 'cnt_12', code: '콘텐츠 12 우측 인스펙터 패널', eng: 'Inspector side panel', slot: 'main', span: 'half', meta: '화면 이탈 없는 우측 슬라이드 상세창', desc: '목록이나 캔버스 항목 클릭 시 페이지 이동 없이 우측에서 열리는 속성 편집/상세 드로어' }
       ],
       onboarding: [
         { id: 'onb_01', code: '첫화면 01 스플래시', eng: 'Splash screen', slot: 'main', span: 'full', meta: '앱 구동 직후 1~2초 브랜드 로고', desc: '앱 실행 직후 1~2초간 브랜드 로고를 노출하며 백그라운드 초기 데이터 로드' },
         { id: 'onb_02', code: '첫화면 02 온보딩 슬라이드', eng: 'Onboarding walkthrough', slot: 'main', span: 'full', meta: '핵심 가치 3장 카드 요약', desc: '신규 사용자에게 앱의 핵심 효능을 3장의 슬라이드와 하단 도트로 브리핑' },
         { id: 'onb_03', code: '첫화면 03 권한 요청', eng: 'Permission request', slot: 'bottom', span: 'full', meta: 'OS 시스템 권한 사전 안내', desc: '위치·카메라·알림 등 OS 권한이 필요한 이유를 사전 설명해 승인율 향상' },
         { id: 'onb_04', code: '첫화면 04 코치마크', eng: 'Coach mark overlay', slot: 'bottom', span: 'full', meta: '첫 진입 핵심 버튼 스포트라이트', desc: '배경을 반투명 Dim 처리하고 주요 기능 버튼 위에 말풍선 가이드를 표시' },
-        { id: 'onb_05', code: '첫화면 05 간편 로그인', eng: 'Social login', slot: 'main', span: 'half', meta: '카카오·Apple 3초 원클릭 인증', desc: '복잡한 이메일·비밀번호 입력 없이 OAuth 소셜 계정으로 원클릭 가입/로그인' },
+        { id: 'onb_05', code: '첫화면 05 간편 로그인', eng: 'Social login', slot: 'main', span: 'half', meta: '간편 OAuth 3초 원클릭 인증', desc: '복잡한 이메일·비밀번호 입력 없이 OAuth 소셜 계정으로 원클릭 가입/로그인' },
         { id: 'onb_06', code: '첫화면 06 약관 동의', eng: 'Terms agreement', slot: 'main', span: 'half', meta: '전체 동의 마스터 체크박스 + 필수/선택', desc: '상단 [전체 동의] 일괄 체크박스와 필수/선택 약관 구분으로 가입 피로도 단축' },
         { id: 'onb_07', code: '첫화면 07 프로필 설정', eng: 'Profile setup', slot: 'main', span: 'half', meta: '아바타 이미지 + 닉네임 초기 세팅', desc: '가입 직후 활동할 프로필 아바타 사진과 닉네임을 입력받아 개인화 준비' },
         { id: 'onb_08', code: '첫화면 08 초기 피드 스켈레톤', eng: 'Initial feed skeleton', slot: 'main', span: 'half', status: 'deprecated', replacedBy: 'ld_02', meta: '스플래시 직후 홈 윤곽선 선노출', desc: '첫 홈 화면 진입 시 맞춤형 피드 로딩 동안 카드 윤곽선 쉬머를 먼저 노출' },
         { id: 'onb_09', code: '첫화면 09 웰컴 화면', eng: 'Welcome screen', slot: 'main', span: 'full', meta: '가입 완료 폭죽(Confetti) & 첫 CTA', desc: '가입 완료 직후 축하 폭죽 애니메이션과 함께 본 화면 진입을 유도하는 피날레 뷰' },
-        { id: 'onb_10', code: '첫화면 10 취향/관심사 칩 선택 [추가]', eng: 'Interest tag picker', slot: 'main', span: 'full', meta: '관심 토픽 3개 이상 선택 · 추천 콜드스타트 해결', desc: '신규 가입 시 관심 분야 태그를 3개 이상 고르게 하여 첫 홈 피드 추천 알고리즘을 초기화' },
-        { id: 'onb_11', code: '첫화면 11 온보딩 미션 체크리스트 [추가]', eng: 'Onboarding checklist widget', slot: 'main', span: 'half', meta: '초기 정착 4단계 퀘스트 + 달성률 바', desc: '가입 후 핵심 기능(프로필 등록→첫 글 작성→알림 켜기)을 하나씩 달성하게 유도하는 가이드 위젯' }
+        { id: 'onb_10', code: '첫화면 10 취향/관심사 칩 선택', eng: 'Interest tag picker', slot: 'main', span: 'full', meta: '관심 토픽 3개 이상 선택 · 추천 콜드스타트 해결', desc: '신규 가입 시 관심 분야 태그를 3개 이상 고르게 하여 첫 홈 피드 추천 알고리즘을 초기화' },
+        { id: 'onb_11', code: '첫화면 11 온보딩 미션 체크리스트', eng: 'Onboarding checklist widget', slot: 'main', span: 'half', meta: '초기 정착 4단계 퀘스트 + 달성률 바', desc: '가입 후 핵심 기능(프로필 등록→첫 글 작성→알림 켜기)을 하나씩 달성하게 유도하는 가이드 위젯' }
       ],
       nav: [
         { id: 'nav_01', code: '탐색 01 하단 탭바', eng: 'Bottom Tab bar', slot: 'bottom', span: 'full', meta: '위계: 최상위(Root) · 엄지 영역', desc: '화면 최하단 3~5개 핵심 메뉴 고정 (모바일 엄지 영역 최적화)' },
@@ -82,9 +82,9 @@
         { id: 'nav_07', code: '탐색 07 페이지네이션', eng: 'Pagination', slot: 'bottom', span: 'full', meta: '정형 번호 이동 · 푸터 접근 보장', desc: '1, 2, 3, 4 페이지 번호를 지정해 이동하는 하단 컨트롤' },
         { id: 'nav_08', code: '탐색 08 무한 스크롤', eng: 'Infinite scroll', slot: 'main', span: 'half', meta: '연속 탐색 · 체류시간 극대화', desc: '스크롤 하단 도달 시 다음 피드 데이터를 비동기로 연속 로드' },
         { id: 'nav_09', code: '탐색 09 뒤로 가기', eng: 'Back navigation', slot: 'header', span: 'full', meta: '직전 계층 안전 복귀', desc: '상단 좌측 < 버튼으로 직전 계층 화면으로 안전하게 복귀' },
-        { id: 'nav_10', code: '탐색 10 커맨드 팔레트 (Cmd+K) [추가]', eng: 'Command palette (Cmd+K)', slot: 'header', span: 'full', meta: '키보드 단축키 기반 만능 점프/실행창', desc: 'Cmd+K(Ctrl+K)를 누르면 화면 중앙에 떠서 페이지 이동과 액션을 즉시 검색·실행하는 파워유저 바' },
-        { id: 'nav_11', code: '탐색 11 메가 메뉴 [추가]', eng: 'Mega menu dropdown', slot: 'header', span: 'full', meta: '대분류·중분류·추천배너 다단 펼침 메뉴', desc: '상단 GNB 호버 시 넓은 다단 패널이 펼쳐지며 하위 카테고리 전체를 한눈에 보여주는 메뉴' },
-        { id: 'nav_12', code: '탐색 12 우측 앵커 목차 (TOC) [추가]', eng: 'Scrollspy Table of Contents', slot: 'main', span: 'half', meta: '현재 읽는 문단 제목 자동 하이라이트', desc: '긴 문서 우측에 고정되어 현재 스크롤된 섹션 제목을 실시간으로 추적·강조하는 목차' }
+        { id: 'nav_10', code: '탐색 10 커맨드 팔레트 (Cmd+K)', eng: 'Command palette (Cmd+K)', slot: 'header', span: 'full', meta: '키보드 단축키 기반 만능 점프/실행창', desc: 'Cmd+K(Ctrl+K)를 누르면 화면 중앙에 떠서 페이지 이동과 액션을 즉시 검색·실행하는 파워유저 바' },
+        { id: 'nav_11', code: '탐색 11 메가 메뉴', eng: 'Mega menu dropdown', slot: 'header', span: 'full', meta: '대분류·중분류·추천배너 다단 펼침 메뉴', desc: '상단 GNB 호버 시 넓은 다단 패널이 펼쳐지며 하위 카테고리 전체를 한눈에 보여주는 메뉴' },
+        { id: 'nav_12', code: '탐색 12 우측 앵커 목차 (TOC)', eng: 'Scrollspy Table of Contents', slot: 'main', span: 'half', meta: '현재 읽는 문단 제목 자동 하이라이트', desc: '긴 문서 우측에 고정되어 현재 스크롤된 섹션 제목을 실시간으로 추적·강조하는 목차' }
       ],
       menu_icon: [
         { id: 'ico_01', code: '메뉴버튼 01 햄버거', eng: 'Hamburger menu (≡)', slot: 'header', span: 'half', meta: '가로 3선(≡) · 전체 드로어 호출', desc: '상단 구석 가로줄 3개 아이콘으로 전체 내비게이션 서랍(Drawer) 호출' },
@@ -96,8 +96,8 @@
         { id: 'ico_07', code: '메뉴버튼 07 베지 버거', eng: 'Veggie burger (=)', slot: 'header', span: 'half', meta: '가로 2선(= ↔ ✕) · 미니멀 메뉴', desc: '패티를 뺀 가로줄 2개 아이콘으로 클릭 시 X로 회전하며 미니멀 전체화면 메뉴 오픈' },
         { id: 'ico_08', code: '메뉴버튼 08 계단', eng: 'Stairs sort icon', slot: 'header', span: 'half', meta: '계단식 3선 · 정렬(Sort)/목차', desc: '계단식으로 어긋난 3선 아이콘으로 리스트 정렬 기준 변경 또는 문서 목차 호출' },
         { id: 'ico_09', code: '메뉴버튼 09 슬라이더 아이콘', eng: 'Sliders preferences', slot: 'header', span: 'half', meta: '노브 막대 · 상세 수치/환경설정', desc: '조절 노브가 달린 가로 막대 아이콘으로 상세 가격/연봉 범위 및 환경설정 모달 호출' },
-        { id: 'ico_10', code: '메뉴버튼 10 스피드 다이얼 FAB [추가]', eng: 'Speed dial FAB', slot: 'bottom', span: 'half', meta: '+ 버튼 탭 시 3~4개 서브 아이콘 전개', desc: '하단 플로팅(+) 버튼을 누르면 위로 사진·음성·문서 등 하위 빠른 실행 버튼들이 펼쳐짐' },
-        { id: 'ico_11', code: '메뉴버튼 11 분할 버튼 [추가]', eng: 'Split button', slot: 'main', span: 'half', meta: '기본 실행 버튼 + 우측(▾) 보조 옵션', desc: '좌측 영역은 주 액션(예: 바로 보내기)을 수행하고 우측 화살표(▾)는 예약 발송 등 부가 메뉴를 오픈' }
+        { id: 'ico_10', code: '메뉴버튼 10 스피드 다이얼 FAB', eng: 'Speed dial FAB', slot: 'bottom', span: 'half', meta: '+ 버튼 탭 시 3~4개 서브 아이콘 전개', desc: '하단 플로팅(+) 버튼을 누르면 위로 사진·음성·문서 등 하위 빠른 실행 버튼들이 펼쳐짐' },
+        { id: 'ico_11', code: '메뉴버튼 11 분할 버튼', eng: 'Split button', slot: 'main', span: 'half', meta: '기본 실행 버튼 + 우측(▾) 보조 옵션', desc: '좌측 영역은 주 액션(예: 바로 보내기)을 수행하고 우측 화살표(▾)는 예약 발송 등 부가 메뉴를 오픈' }
       ],
       search: [
         { id: 'src_01', code: '검색 01 검색창', eng: 'Search bar', slot: 'header', span: 'full', meta: '돋보기 + 플레이스홀더 + 지우기(X)', desc: '포커스 강조 테두리와 1글자 이상 입력 시 즉시 노출되는 지우기(X) 버튼을 갖춘 인풋' },
@@ -109,8 +109,8 @@
         { id: 'src_07', code: '검색 07 검색어 강조', eng: 'Keyword Highlight', slot: 'main', span: 'half', meta: '결과 타이틀 내 매칭 단어 마커 표시', desc: '검색 결과 리스트에서 사용자가 입력한 키워드와 일치하는 텍스트에 배경 하이라이트 표시' },
         { id: 'src_08', code: '검색 08 검색 결과 없음', eng: 'No search results', slot: 'main', span: 'full', meta: '0건 이탈 방지 + 오타 교정/대체어 제안', desc: '결과가 0건일 때 막막함 방지용 안내 문구와 추천 대체 키워드 칩을 함께 제시' },
         { id: 'src_09', code: '검색 09 검색 범위 탭', eng: 'Scope tabs', slot: 'header', span: 'full', meta: '통합 · 상품 · 브랜드 · 후기 도메인 분할', desc: '동일 검색어에 대해 [전체 | 상품 | 브랜드 | 후기] 등 결과 도메인 범위를 즉시 전환' },
-        { id: 'src_10', code: '검색 10 적용된 필터 칩 & 초기화 [추가]', eng: 'Active filter bar & Reset', slot: 'header', span: 'full', meta: '선택된 조건 태그 나열 + [필터 초기화]', desc: '현재 적용 중인 필터 조건들을 상단에 알약 태그로 모아 보여주고 한 번에 해제하는 컨트롤 바' },
-        { id: 'src_11', code: '검색 11 패싯 카운트 필터 [추가]', eng: 'Faceted search sidebar', slot: 'main', span: 'half', meta: '항목별 예상 결과 수(예: 나이키 (42)) 표시', desc: '체크하기 전에 각 필터 조건 옆에 해당하는 결과 건수를 괄호로 미리 표시해 빈 결과(0건)를 방지' }
+        { id: 'src_10', code: '검색 10 적용된 필터 칩 & 초기화', eng: 'Active filter bar & Reset', slot: 'header', span: 'full', meta: '선택된 조건 태그 나열 + [필터 초기화]', desc: '현재 적용 중인 필터 조건들을 상단에 알약 태그로 모아 보여주고 한 번에 해제하는 컨트롤 바' },
+        { id: 'src_11', code: '검색 11 패싯 카운트 필터', eng: 'Faceted search sidebar', slot: 'main', span: 'half', meta: '항목별 예상 결과 수(예: 나이키 (42)) 표시', desc: '체크하기 전에 각 필터 조건 옆에 해당하는 결과 건수를 괄호로 미리 표시해 빈 결과(0건)를 방지' }
       ],
       form: [
         { id: 'form_01', code: '입력폼 01 텍스트 필드 상태', eng: 'Text field states', slot: 'main', span: 'half', meta: '자유 입력 · 5대 상태 피드백', desc: 'Default / Focus / Filled / Error / Disabled 5대 상태를 명확히 구분하는 인풋' },
@@ -122,9 +122,9 @@
         { id: 'form_07', code: '입력폼 07 슬라이더', eng: 'Range Slider', slot: 'main', span: 'half', meta: '연속적 범위/강도 드래그 조절', desc: '연속적인 수치 범위(예산, 볼륨, 거리)를 핸들 드래그로 직관적 조절' },
         { id: 'form_08', code: '입력폼 08 수량 스테퍼', eng: 'Stepper', slot: 'main', span: 'half', meta: '정수 1단위 오타 방지 증감(-/+)', desc: '키보드 타이핑 없이 - / + 버튼만으로 인원수·수량을 1단위씩 정밀 증감' },
         { id: 'form_09', code: '입력폼 09 미니 날짜 선택', eng: 'Inline Date picker', slot: 'main', span: 'half', meta: '폼 내부 미니 달력 그리드', desc: '입력 폼 안에서 팝오버 달력 그리드를 통해 예약일/마감일을 선택' },
-        { id: 'form_10', code: '입력폼 10 파일 드래그 앤 드롭 존 [추가]', eng: 'File upload dropzone', slot: 'main', span: 'full', meta: '점선 박스 드롭 + 확장자/용량 안내', desc: '파일을 마우스로 끌어다 놓거나 클릭해 첨부하며 허용 포맷(PDF/PNG, 최대 10MB)을 명시' },
-        { id: 'form_11', code: '입력폼 11 OTP 6자리 인증번호 칸 [추가]', eng: 'OTP / PIN code input', slot: 'main', span: 'half', meta: '1글자 입력 시 다음 칸 자동 포커스 이동', desc: 'SMS/이메일 6자리 인증번호 입력 시 숫자 하나를 치면 자동으로 옆 칸으로 커서가 넘어가는 인풋' },
-        { id: 'form_12', code: '입력폼 12 해시태그/키워드 칩 입력기 [추가]', eng: 'Tag / Token input', slot: 'main', span: 'half', meta: '엔터·쉼표 입력 시 알약 태그로 즉시 변환', desc: '기술 스택이나 해시태그를 타이핑 후 엔터를 치면 삭제 가능한 알약(Chip) 블록으로 변환' }
+        { id: 'form_10', code: '입력폼 10 파일 드래그 앤 드롭 존', eng: 'File upload dropzone', slot: 'main', span: 'full', meta: '점선 박스 드롭 + 확장자/용량 안내', desc: '파일을 마우스로 끌어다 놓거나 클릭해 첨부하며 허용 포맷(PDF/PNG, 최대 10MB)을 명시' },
+        { id: 'form_11', code: '입력폼 11 OTP 6자리 인증번호 칸', eng: 'OTP / PIN code input', slot: 'main', span: 'half', meta: '1글자 입력 시 다음 칸 자동 포커스 이동', desc: 'SMS/이메일 6자리 인증번호 입력 시 숫자 하나를 치면 자동으로 옆 칸으로 커서가 넘어가는 인풋' },
+        { id: 'form_12', code: '입력폼 12 해시태그/키워드 칩 입력기', eng: 'Tag / Token input', slot: 'main', span: 'half', meta: '엔터·쉼표 입력 시 알약 태그로 즉시 변환', desc: '기술 스택이나 해시태그를 타이핑 후 엔터를 치면 삭제 가능한 알약(Chip) 블록으로 변환' }
       ],
       datetime: [
         { id: 'dt_01', code: '날짜 01 단일 캘린더', eng: 'Calendar grid', slot: 'main', span: 'half', meta: '월간 격자 · 요일/공휴일 시각 확인', desc: '한 달 또는 한 주의 격자 달력을 펼쳐 무슨 요일인지 눈으로 확인하며 단일 날짜 선택' },
@@ -136,8 +136,8 @@
         { id: 'dt_07', code: '날짜 07 날짜 직접 타이핑', eng: 'Masked Date input', slot: 'main', span: 'half', meta: '생년월일(YYYY.MM.DD) 숫자 직타', desc: '달력을 수백 번 넘겨야 하는 먼 과거(생년월일)를 숫자 키패드와 자동 마스킹으로 직타 입력' },
         { id: 'dt_08', code: '날짜 08 체크인·체크아웃 분할', eng: 'Check-in / Check-out split', slot: 'main', span: 'full', meta: '좌우 분할 박스 + 총 박수(N박) 자동 계산', desc: '체크인과 체크아웃을 좌우 박스로 분할하고 하단 CTA에 [3박 4일] 숙박일수를 자동 계산' },
         { id: 'dt_09', code: '날짜 09 반복 주기 설정', eng: 'Recurrence rule', slot: 'main', span: 'half', meta: '[매일/매주/매월] 정기 구독·루틴 주기', desc: '특정 하루가 아닌 매일·매주·매월 25일 등 정기 배송이나 루틴 반복 주기를 설정' },
-        { id: 'dt_10', code: '날짜 10 마감 디데이 카운트다운 [추가]', eng: 'Countdown timer', slot: 'header', span: 'half', meta: '실시간 초 단위 차감 (D-2 04:12:59)', desc: '타임세일이나 서류 접수 마감까지 남은 시간을 시:분:초 단위로 실시간 차감하여 행동 유도' },
-        { id: 'dt_11', code: '날짜 11 글로벌 타임존 선택기 [추가]', eng: 'Timezone selector', slot: 'main', span: 'half', meta: 'UTC/KST 기준 시간대 자동 변환', desc: '글로벌 화상회의나 예약 시 사용자의 로컬 시간대(Asia/Seoul GMT+9)를 감지·전환' }
+        { id: 'dt_10', code: '날짜 10 마감 디데이 카운트다운', eng: 'Countdown timer', slot: 'header', span: 'half', meta: '실시간 초 단위 차감 (D-2 04:12:59)', desc: '타임세일이나 서류 접수 마감까지 남은 시간을 시:분:초 단위로 실시간 차감하여 행동 유도' },
+        { id: 'dt_11', code: '날짜 11 글로벌 타임존 선택기', eng: 'Timezone selector', slot: 'main', span: 'half', meta: 'UTC/KST 기준 시간대 자동 변환', desc: '글로벌 화상회의나 예약 시 사용자의 로컬 시간대(Asia/Seoul GMT+9)를 감지·전환' }
       ],
       feedback: [
         { id: 'fb_01', code: '피드백 01 토스트', eng: 'Toast', slot: 'bottom', span: 'full', meta: '방해도: 낮음 · 2.5초 후 자동 소멸', desc: '화면 하단에 일시 노출된 후 2.5초 뒤 자동으로 사라지는 가벼운 확인 알림' },
@@ -149,8 +149,8 @@
         { id: 'fb_07', code: '피드백 07 툴팁', eng: 'Tooltip', slot: 'main', span: 'half', meta: '방해도: 매우 낮음 · 호버/탭 보조 말풍선', desc: '? 아이콘 호버나 탭 시 나타나는 산정 기준·용어 설명 보조 말풍선' },
         { id: 'fb_08', code: '피드백 08 코치마크 피드백', eng: 'Coach mark spotlight', slot: 'bottom', span: 'full', status: 'deprecated', replacedBy: 'onb_04', meta: '방해도: 높음 · 신규 기능 하이라이트', desc: '타깃 UI 요소를 스포트라이트로 비추어 신규 기능을 학습시키는 가이드 레이어' },
         { id: 'fb_09', code: '피드백 09 알림 뱃지', eng: 'Notification Badge', slot: 'header', span: 'half', meta: '방해도: 매우 낮음 · 읽지 않음 카운트/점', desc: '종 모양 아이콘 모퉁이에 읽지 않은 알림 개수나 빨간 점을 표시하는 인디케이터' },
-        { id: 'fb_10', code: '피드백 10 팝오버 재확인창 (Popconfirm) [추가]', eng: 'Popconfirm balloon', slot: 'main', span: 'half', meta: '무거운 모달 대신 버튼 직상단 초경량 확인', desc: '[삭제] 버튼 클릭 시 화면 전체를 덮지 않고 버튼 바로 위에 작은 말풍선으로 "정말 삭제할까요?" 확인' },
-        { id: 'fb_11', code: '피드백 11 알림 센터 인박스 [추가]', eng: 'Notification inbox drawer', slot: 'header', span: 'half', meta: '전체 알림 내역 보관 + [모두 읽음] 처리', desc: '종 아이콘 클릭 시 열리는 알림 보관함으로, 읽지 않은 알림 필터와 일괄 읽음 처리를 제공' }
+        { id: 'fb_10', code: '피드백 10 팝오버 재확인창 (Popconfirm)', eng: 'Popconfirm balloon', slot: 'main', span: 'half', meta: '무거운 모달 대신 버튼 직상단 초경량 확인', desc: '[삭제] 버튼 클릭 시 화면 전체를 덮지 않고 버튼 바로 위에 작은 말풍선으로 "정말 삭제할까요?" 확인' },
+        { id: 'fb_11', code: '피드백 11 알림 센터 인박스', eng: 'Notification inbox drawer', slot: 'header', span: 'half', meta: '전체 알림 내역 보관 + [모두 읽음] 처리', desc: '종 아이콘 클릭 시 열리는 알림 보관함으로, 읽지 않은 알림 필터와 일괄 읽음 처리를 제공' }
       ],
       loading: [
         { id: 'ld_01', code: '로딩 01 스피너', eng: 'Spinner', slot: 'main', span: 'half', meta: '대기 시간: 불확정 (3초 미만 단기)', desc: '3초 미만의 짧은 비동기 처리 중임을 알리는 원형 회전 로더' },
@@ -162,19 +162,19 @@
         { id: 'ld_07', code: '로딩 07 낙관적 UI', eng: 'Optimistic UI', slot: 'behavior', span: 'half', meta: '체감 대기: 0초 (서버 응답 전 선반영)', desc: '서버 응답을 기다리지 않고 좋아요·북마크 토글 결과를 0초 만에 화면에 선반영' },
         { id: 'ld_08', code: '로딩 08 스트리밍 텍스트', eng: 'Streaming text', slot: 'main', span: 'full', meta: '첫 글자 도달 시간(TTFT) 체감 단축', desc: '긴 응답 전체가 완성되기 전 생성된 문장 조각부터 실시간으로 화면에 출력' },
         { id: 'ld_09', code: '로딩 09 로딩 버튼', eng: 'Loading button', slot: 'bottom', span: 'full', meta: '중복 클릭/결제 원천 차단 (Disable)', desc: '클릭 즉시 버튼 내부에 스피너를 돌리고 버튼을 비활성화해 중복 제출 방지' },
-        { id: 'ld_10', code: '로딩 10 백그라운드 작업 트레이 [추가]', eng: 'Background upload tray', slot: 'bottom', span: 'half', meta: '우측 하단 최소화 창 · 화면 이동 중에도 유지', desc: '대용량 파일 다중 업로드 시 우측 하단 작은 트레이로 최소화하여 다른 작업을 방해하지 않음' }
+        { id: 'ld_10', code: '로딩 10 백그라운드 작업 트레이', eng: 'Background upload tray', slot: 'bottom', span: 'half', meta: '우측 하단 최소화 창 · 화면 이동 중에도 유지', desc: '대용량 파일 다중 업로드 시 우측 하단 작은 트레이로 최소화하여 다른 작업을 방해하지 않음' }
       ],
       indicator: [
         { id: 'ind_01', code: '인디케이터 01 프로그레스 바', eng: 'Linear Progress bar', slot: 'main', span: 'half', meta: '0~100% 직선 막대 게이지', desc: '전체 작업량 대비 완료 비율(0~100%)을 직선 막대로 채워 보여주는 기본 표시기' },
         { id: 'ind_02', code: '인디케이터 02 스텝 인디케이터', eng: 'Step indicator', slot: 'header', span: 'full', meta: '번호 노드(1-2-3-4) 연결선', desc: '다단계 폼에서 전체 몇 단계 중 몇 번째 단계에 와 있는지 번호 노드로 안내' },
         { id: 'ind_03', code: '인디케이터 03 페이지 도트', eng: 'Page indicator (Dots)', slot: 'main', span: 'half', meta: '캐러셀 하단 점(Dot) + 활성 알약(Pill)', desc: '배너 슬라이드 하단에 점들을 나열하고 현재 페이지만 길쭉한 알약 모양으로 강조' },
-        { id: 'ind_04', code: '인디케이터 04 스토리 바', eng: 'Story progress bar', slot: 'header', span: 'full', meta: '인스타 스토리풍 상단 분할 타이머', desc: '상단에 얇은 분할 막대를 배치해 전체 장수와 현재 장의 남은 재생 시간을 동시 전달' },
+        { id: 'ind_04', code: '인디케이터 04 스토리 바', eng: 'Story progress bar', slot: 'header', span: 'full', meta: '스토리형 상단 분할 타이머', desc: '상단에 얇은 분할 막대를 배치해 전체 장수와 현재 장의 남은 재생 시간을 동시 전달' },
         { id: 'ind_05', code: '인디케이터 05 스크롤 진행 바', eng: 'Scroll progress bar', slot: 'header', span: 'full', meta: '상단 최외곽 테두리 아티클 완독률', desc: '긴 아티클이나 약관을 내려 읽을 때 최상단 테두리에 파란 선이 차오르며 완독률 표시' },
         { id: 'ind_06', code: '인디케이터 06 원형 진행률', eng: 'Circular Progress ring', slot: 'main', span: 'half', meta: '도넛 링 + 중앙 퍼센트(%) 숫자', desc: '도넛 모양 링 안에 퍼센트 숫자를 함께 넣어 프로필 완성도나 미션 달성률 표시' },
         { id: 'ind_07', code: '인디케이터 07 비밀번호 강도 표시기', eng: 'Password Strength meter', slot: 'main', span: 'half', meta: '4칸 분할 막대 (위험→보통→안전)', desc: '비밀번호 입력창 아래 4칸 분할 막대의 색상(빨강/노랑/초록)으로 보안 등급 실시간 코칭' },
         { id: 'ind_08', code: '인디케이터 08 탭 밑줄 인디케이터', eng: 'Tab bar active line', slot: 'header', span: 'full', meta: '선택된 상단 탭 아래 슬라이딩 밑줄', desc: '상단 탭 전환 시 활성 탭 글자 아래로 파란 밑줄(Active Line)이 미끄러지듯 이동' },
         { id: 'ind_09', code: '인디케이터 09 홈 인디케이터', eng: 'Home indicator (Safe Area)', slot: 'bottom', span: 'full', meta: '모바일 최하단 시스템 바 (34px 여백)', desc: '스마트폰 최하단 제스처 가로 막대 영역과 하단 버튼이 겹치지 않도록 Safe Area 보장' },
-        { id: 'ind_10', code: '인디케이터 10 실시간 상태 펄스 점 [추가]', eng: 'Live status pulse dot', slot: 'header', span: 'half', meta: '온라인/실시간 스트리밍 중 초록색 파동 점', desc: '서버 정상 작동, 상담원 접속 중, 라이브 방송 중임을 반짝이는 파동(Ping) 도트로 표시' }
+        { id: 'ind_10', code: '인디케이터 10 실시간 상태 펄스 점', eng: 'Live status pulse dot', slot: 'header', span: 'half', meta: '온라인/실시간 스트리밍 중 초록색 파동 점', desc: '서버 정상 작동, 상담원 접속 중, 라이브 방송 중임을 반짝이는 파동(Ping) 도트로 표시' }
       ],
       ai: [
         { id: 'ai_01', code: 'AI 01 생각 중 표시', eng: 'Thinking indicator', slot: 'main', span: 'half', meta: '3구 바운스 도트 · 추론 대기 안내', desc: '모델이 프롬프트를 분석·추론할 때 멈춤 오해를 막는 3개의 바운스 점과 상태 문구' },
@@ -186,9 +186,9 @@
         { id: 'ai_07', code: 'AI 07 고쳐 묻기', eng: 'Edit and resend prompt', slot: 'main', span: 'half', meta: '보낸 질문 인라인 수정 및 대화 재분기', desc: '사용자가 이미 보낸 질문 말풍선 옆 연필 아이콘을 눌러 프롬프트를 수정 후 재전송' },
         { id: 'ai_08', code: 'AI 08 멀티모달 파일 첨부', eng: 'Multimodal File attachment', slot: 'bottom', span: 'full', meta: '채팅 입력창 내 이미지·PDF 썸네일 칩', desc: '프롬프트 입력창 상단에 업로드된 PDF·이미지 썸네일 프리뷰 칩과 개별 제거(X) 제공' },
         { id: 'ai_09', code: 'AI 09 에이전트 실행 단계', eng: 'Agent tool steps', slot: 'main', span: 'full', meta: '다단계 도구 호출 파이프라인 시각화', desc: '에이전트가 수행 중인 하위 작업(읽기→비교→정리) 진행 상태를 체크리스트로 투명 공개' },
-        { id: 'ai_10', code: 'AI 10 아티팩트/캔버스 분할 뷰 [추가]', eng: 'Side-by-side Artifact canvas', slot: 'main', span: 'full', meta: '좌측 대화창 + 우측 실시간 코드/문서 프리뷰', desc: '채팅창 안에서 긴 코드나 문서를 말풍선에 가두지 않고 우측 전용 캔버스 창에 렌더링·편집' },
-        { id: 'ai_11', code: 'AI 11 슬래시(/) & 멘션(@) 프롬프트 메뉴 [추가]', eng: 'Slash & Mention command menu', slot: 'bottom', span: 'half', meta: '입력창에서 /요약, @문서명 즉시 호출', desc: '프롬프트 입력 중 / 또는 @를 치면 사용할 스킬이나 참조할 파일 목록 팝오버가 즉시 노출' },
-        { id: 'ai_12', code: 'AI 12 생성 즉시 중단 버튼 [추가]', eng: 'Stop generating button', slot: 'bottom', span: 'half', meta: '스트리밍 도중 ■ 중지 버튼으로 즉시 제어권 반환', desc: 'AI가 답변을 생성하는 도중 전송 화살표가 정지(■) 버튼으로 바뀌어 원치 않는 출력을 즉시 멈춤' }
+        { id: 'ai_10', code: 'AI 10 아티팩트/캔버스 분할 뷰', eng: 'Side-by-side Artifact canvas', slot: 'main', span: 'full', meta: '좌측 대화창 + 우측 실시간 코드/문서 프리뷰', desc: '채팅창 안에서 긴 코드나 문서를 말풍선에 가두지 않고 우측 전용 캔버스 창에 렌더링·편집' },
+        { id: 'ai_11', code: 'AI 11 슬래시(/) & 멘션(@) 프롬프트 메뉴', eng: 'Slash & Mention command menu', slot: 'bottom', span: 'half', meta: '입력창에서 /요약, @문서명 즉시 호출', desc: '프롬프트 입력 중 / 또는 @를 치면 사용할 스킬이나 참조할 파일 목록 팝오버가 즉시 노출' },
+        { id: 'ai_12', code: 'AI 12 생성 즉시 중단 버튼', eng: 'Stop generating button', slot: 'bottom', span: 'half', meta: '스트리밍 도중 ■ 중지 버튼으로 즉시 제어권 반환', desc: 'AI가 답변을 생성하는 도중 전송 화살표가 정지(■) 버튼으로 바뀌어 원치 않는 출력을 즉시 멈춤' }
       ],
       gesture: [
         { id: 'gs_01', code: '제스처 01 탭', eng: 'Tap', slot: 'behavior', span: 'half', meta: '기본 1회 터치 · 44×44px 안전 타깃', desc: '최소 44×44px 이상의 터치 안전 영역을 확보한 가벼운 1회 탭 인터랙션' },
@@ -200,7 +200,7 @@
         { id: 'gs_07', code: '제스처 07 두 번 탭', eng: 'Double tap', slot: 'behavior', span: 'half', meta: '연속 2회 터치 · 즉시 하트 좋아요', desc: '콘텐츠 영역을 연속 2번 빠르게 탭하여 즉시 하트 좋아요 애니메이션 트리거' },
         { id: 'gs_08', code: '제스처 08 당겨서 새로고침', eng: 'Pull to refresh', slot: 'behavior', span: 'half', meta: '최상단 아래로 당김 · 최신 피드 리로드', desc: '스크롤 최상단에서 화면을 아래로 끌어당겨 최신 피드 데이터를 새로고침' },
         { id: 'gs_09', code: '제스처 09 가장자리 스와이프', eng: 'Edge swipe', slot: 'behavior', span: 'half', meta: '좌측 베젤 끝 스와이프 · 이전 화면 복귀', desc: '화면 왼쪽 끝 테두리에서 안쪽으로 쓸어넘겨 뒤로 가기(Back) 제스처 수행' },
-        { id: 'gs_10', code: '제스처 10 바텀시트 스냅 드래그 [추가]', eng: 'Bottom sheet snap drag', slot: 'behavior', span: 'half', meta: '상단 핸들 바를 끌어 50% ↔ 95% 높이 조절', desc: '바텀시트 상단의 가로 손잡이(Grabber)를 위아래로 끌어 반만 열거나 전체 화면으로 확장' }
+        { id: 'gs_10', code: '제스처 10 바텀시트 스냅 드래그', eng: 'Bottom sheet snap drag', slot: 'behavior', span: 'half', meta: '상단 핸들 바를 끌어 50% ↔ 95% 높이 조절', desc: '바텀시트 상단의 가로 손잡이(Grabber)를 위아래로 끌어 반만 열거나 전체 화면으로 확장' }
       ],
       motion: [
         { id: 'mo_01', code: '움직임 01 이즈 인', eng: 'Ease-in', slot: 'behavior', span: 'half', meta: '천천히 출발 후 가속 (퇴장 모션 표준)', desc: '천천히 움직이기 시작해 점점 빨라지며 화면 밖으로 퇴장할 때 쓰는 가속 곡선' },
@@ -212,7 +212,7 @@
         { id: 'mo_07', code: '움직임 07 슬라이드', eng: 'Slide transition', slot: 'behavior', span: 'half', meta: '수평/수직 축 이동 · 계층 방향성 암시', desc: '다음 단계는 우→좌, 이전 단계는 좌→우로 밀려 들어오며 공간적 방향성 전달' },
         { id: 'mo_08', code: '움직임 08 확대 전환', eng: 'Zoom transition', slot: 'behavior', span: 'half', meta: '스케일(0.9→1.0) 줌인 · 모달/팝업 등장', desc: '작은 크기에서 중심부로부터 확대되며 나타나 시선을 집중시키는 모달/상세 전환' },
         { id: 'mo_09', code: '움직임 09 공유 요소 전환', eng: 'Shared element transition', slot: 'behavior', span: 'half', meta: '리스트 썸네일 → 상세 헤더 심리스 확장', desc: '목록의 작은 카드 이미지가 끊김 없이 다음 화면의 상단 히어로 배너로 커지며 이어짐' },
-        { id: 'mo_10', code: '움직임 10 패럴랙스 깊이 스크롤 [추가]', eng: 'Parallax depth scroll', slot: 'behavior', span: 'half', meta: '배경과 전경 레이어의 스크롤 속도 차 입체감', desc: '스크롤 시 배경 이미지는 천천히 움직이고 전경 카드는 빠르게 올라가며 공간적 깊이감을 연출' }
+        { id: 'mo_10', code: '움직임 10 패럴랙스 깊이 스크롤', eng: 'Parallax depth scroll', slot: 'behavior', span: 'half', meta: '배경과 전경 레이어의 스크롤 속도 차 입체감', desc: '스크롤 시 배경 이미지는 천천히 움직이고 전경 카드는 빠르게 올라가며 공간적 깊이감을 연출' }
       ],
       text_anim: [
         { id: 'txt_01', code: '글자효과 01 타이핑', eng: 'Typewriter', slot: 'behavior', span: 'half', meta: '깜빡이는 커서 + 한 글자씩 타자기 출력', desc: '깜빡이는 커서와 함께 키보드로 한 글자씩 직접 치는 듯한 친근한 인트로 타이포 효과' },
@@ -224,12 +224,12 @@
         { id: 'txt_07', code: '글자효과 07 형광펜 하이라이트', eng: 'Marker Highlight sweep', slot: 'behavior', span: 'half', meta: '텍스트 뒷배경 좌→우 형광펜 마커 드로잉', desc: '핵심 문구 뒷배경에 파란/노란 형광펜을 왼쪽에서 오른쪽으로 쓱 긋는 강조 효과' },
         { id: 'txt_08', code: '글자효과 08 단어 슬롯 교체', eng: 'Word rotate', slot: 'behavior', span: 'half', meta: '앞뒤 문장 고정 + 핵심 키워드만 상하 롤링', desc: '문장 골격은 유지하고 핵심 단어만 [기획→디자인→배포]처럼 슬롯머신처럼 순환 교체' },
         { id: 'txt_09', code: '글자효과 09 블러 인 포커스', eng: 'Blur in focus', slot: 'behavior', span: 'half', meta: '뿌연 흐림(blur 12px) → 선명한 초점 맺힘', desc: '카메라 렌즈 초점이 맞춰지듯 흐릿한 상태에서 선명한 글자로 맺히는 시네마틱 효과' },
-        { id: 'txt_10', code: '글자효과 10 그라데이션 광택 쉬머 [추가]', eng: 'Gradient text shimmer', slot: 'behavior', span: 'half', meta: '글자 결을 따라 은은한 빛이 좌→우로 흐름', desc: 'AI 추론 상태 문구나 프리미엄 헤드라인 글자 내부에 메탈릭/컬러 빛줄기가 스쳐 지나가는 효과' }
+        { id: 'txt_10', code: '글자효과 10 그라데이션 광택 쉬머', eng: 'Gradient text shimmer', slot: 'behavior', span: 'half', meta: '글자 결을 따라 은은한 빛이 좌→우로 흐름', desc: 'AI 추론 상태 문구나 프리미엄 헤드라인 글자 내부에 메탈릭/컬러 빛줄기가 스쳐 지나가는 효과' }
       ],
       visual_style: [
         { id: 'sty_01', code: '비주얼 01 리퀴드 모션', eng: 'Liquid Motion', slot: 'behavior', span: 'half', meta: '유기적 액체 표면장력 합체/분리', desc: '물방울이나 젤리가 자석처럼 달라붙고 늘어나는 쫀득한 SVG Gooey 유기적 모션 스타일' },
         { id: 'sty_02', code: '비주얼 02 홀로그래픽', eng: 'Holographic', slot: 'behavior', span: 'half', meta: '무지갯빛 오팔 프리즘 스펙트럼 광택', desc: '보는 각도에 따라 무지갯빛 스펙트럼이 흐르는 사이버네틱·Web3 프리즘 그라데이션' },
-        { id: 'sty_03', code: '비주얼 03 클레이모피즘', eng: 'Claymorphism', slot: 'behavior', span: 'half', meta: '말랑한 점토 3D 입체 + 이중 내부 그림자', desc: '토스·피그마 스타일처럼 둥근 형태에 내부 하이라이트와 외부 그림자를 준 푹신한 3D 스타일' },
+        { id: 'sty_03', code: '비주얼 03 클레이모피즘', eng: 'Claymorphism', slot: 'behavior', span: 'half', meta: '말랑한 점토 3D 입체 + 이중 내부 그림자', desc: '모던 핀테크·크리에이티브 앱처럼 둥근 형태에 내부 하이라이트와 외부 그림자를 준 푹신한 3D 스타일' },
         { id: 'sty_04', code: '비주얼 04 하프톤 팝아트', eng: 'Halftone Dots', slot: 'behavior', span: 'half', meta: '코믹북 망점(Dot) 격자 인쇄 질감', desc: '빈티지 만화책 인쇄처럼 연속 톤을 망점(Dot) 크기와 밀도로 표현하는 팝아트 무드' },
         { id: 'sty_05', code: '비주얼 05 아이소메트릭', eng: 'Isometric 3D', slot: 'behavior', span: 'half', meta: '30도 등각 투영 · 왜곡 없는 입체 조망', desc: '원근 왜곡 없이 30도 각도로 3차원 블록 구조를 정밀하게 조망하는 B2B 인포그래픽 스타일' },
         { id: 'sty_06', code: '비주얼 06 키네틱 타이포', eng: 'Kinetic Typography', slot: 'behavior', span: 'half', meta: '박진감 넘치는 무한 마키 & 비트 텍스트', desc: '텍스트 자체를 주인공으로 삼아 무한 루프 마키(Marquee)와 강한 대비로 에너지를 전달' },
@@ -246,8 +246,8 @@
         { id: 'sty_17', code: '비주얼 17 로우 폴리', eng: 'Low Poly 3D', slot: 'behavior', span: 'half', meta: '각진 다각형 평면 음영 (디지털 종이접기)', desc: '곡면 스무딩 없이 다각형(Polygon) 면의 명암 대비를 살린 디지털 오리가미 3D' },
         { id: 'sty_18', code: '비주얼 18 스쿼시 앤 스트레치', eng: 'Squash & Stretch', slot: 'behavior', span: 'half', meta: '이동 시 팽창 · 착지 시 압축 탄성 부피보존', desc: '디즈니 애니메이션 제1원칙으로 버튼 클릭이나 카드 이동 시 찌그러졌다 펴지는 탄력 부여' },
         { id: 'sty_19', code: '비주얼 19 그레이니 그라디언트', eng: 'Grainy Gradient', slot: 'behavior', span: 'half', meta: '몽환적 다색 그라데이션 + 필름 노이즈 입자', desc: '부드러운 컬러 그라데이션 위에 미세한 필름 그레인(Noise) 입자를 얹은 감성 벨벳 질감' },
-        { id: 'sty_20', code: '비주얼 20 글리치', eng: 'Digital Glitch', slot: 'behavior', span: 'half', meta: 'RGB 채널 분리 색수차 + 슬라이스 노이즈', desc: '틱톡·사이버펑크풍의 RGB 색상 분리와 디지털 신호 왜곡을 활용한 강렬한 테크 아트워크' },
-        { id: 'sty_21', code: '비주얼 21 글래스모피즘 [추가]', eng: 'Glassmorphism', slot: 'behavior', span: 'half', meta: '반투명 배경 블러(backdrop-blur) + 얇은 유리 테두리', desc: 'Apple VisionOS·macOS처럼 반투명 유리 질감(backdrop-blur-md)과 은은한 흰색 테두리로 깊이감 표현' }
+        { id: 'sty_20', code: '비주얼 20 글리치', eng: 'Digital Glitch', slot: 'behavior', span: 'half', meta: 'RGB 채널 분리 색수차 + 슬라이스 노이즈', desc: '네온·사이버펑크풍의 RGB 색상 분리와 디지털 신호 왜곡을 활용한 강렬한 테크 아트워크' },
+        { id: 'sty_21', code: '비주얼 21 글래스모피즘', eng: 'Glassmorphism', slot: 'behavior', span: 'half', meta: '반투명 배경 블러(backdrop-blur) + 얇은 유리 테두리', desc: '공간 컴퓨팅·모던 데스크톱 OS처럼 반투명 유리 질감(backdrop-blur-md)과 은은한 흰색 테두리로 깊이감 표현' }
       ],
       chart: [
         { id: 'cht_01', code: '차트 01 스파크라인 미니 추이선', eng: 'Sparkline chart', slot: 'main', span: 'half', meta: 'KPI 숫자 카드 내부 초소형 추세선', desc: '축이나 눈금 없이 KPI 숫자 옆에 최근 7일간의 상승/하락 추세만 직관적으로 그리는 미니 선 그래프' },
@@ -256,9 +256,9 @@
         { id: 'cht_04', code: '차트 04 잔디 캘린더 히트맵', eng: 'Contribution Heatmap', slot: 'main', span: 'full', meta: 'GitHub 스타일 일별 활동 밀도 타일', desc: '365일 또는 요일·시간대별 활동 빈도를 타일 색상의 진하기(농도)로 시각화해 꾸준함을 증명' },
         { id: 'cht_05', code: '차트 05 전환 퍼널 차트', eng: 'Conversion Funnel chart', slot: 'main', span: 'full', meta: '방문→가입→장바구니→결제 단계별 이탈률', desc: '사용자 여정 단계별로 몇 %가 남고 어디서 가장 많이 이탈했는지 깔때기 폭으로 시각화' },
         { id: 'cht_06', code: '차트 06 레이더 역량 오각형', eng: 'Radar / Spider chart', slot: 'main', span: 'half', meta: '5~6개 다면 평가 지표 밸런스 비교', desc: '인재 역량 평가나 상품 스펙(성능·가격·디자인·내구성)의 균형도를 다각형 면적으로 한눈에 비교' },
-        { id: 'cht_07', code: '차트 07 목표 달성 반원 게이지 [추가]', eng: 'Radial Gauge meter', slot: 'main', span: 'half', meta: '반원 호(Arc) 진행률 + 임계값 색상', desc: 'CPU 점유율이나 월 매출 목표 달성률(78%)을 반원 게이지와 중앙 큰 수치로 즉각 전달' },
-        { id: 'cht_08', code: '차트 08 트리맵 비율 블록 [추가]', eng: 'Treemap breakdown', slot: 'main', span: 'full', meta: '계층별 면적 비례 사각 분할', desc: '전체 리소스나 포트폴리오 자산 비중을 중첩 사각형의 면적 크기로 한눈에 비교' },
-        { id: 'cht_09', code: '차트 09 누적 영역 추이 차트 [추가]', eng: 'Stacked Area chart', slot: 'main', span: 'full', meta: '채널별 시계열 누적 볼륨 비교', desc: '시간 흐름에 따른 채널별 유입량이나 비용의 총합과 구성 비중 변화를 면적 그래프로 표현' }
+        { id: 'cht_07', code: '차트 07 목표 달성 반원 게이지', eng: 'Radial Gauge meter', slot: 'main', span: 'half', meta: '반원 호(Arc) 진행률 + 임계값 색상', desc: 'CPU 점유율이나 월 매출 목표 달성률(78%)을 반원 게이지와 중앙 큰 수치로 즉각 전달' },
+        { id: 'cht_08', code: '차트 08 트리맵 비율 블록', eng: 'Treemap breakdown', slot: 'main', span: 'full', meta: '계층별 면적 비례 사각 분할', desc: '전체 리소스나 포트폴리오 자산 비중을 중첩 사각형의 면적 크기로 한눈에 비교' },
+        { id: 'cht_09', code: '차트 09 누적 영역 추이 차트', eng: 'Stacked Area chart', slot: 'main', span: 'full', meta: '채널별 시계열 누적 볼륨 비교', desc: '시간 흐름에 따른 채널별 유입량이나 비용의 총합과 구성 비중 변화를 면적 그래프로 표현' }
       ],
       commerce: [
         { id: 'com_01', code: '커머스 01 요금제 가격 비교 카드', eng: 'Pricing tier cards', slot: 'main', span: 'full', meta: 'Free/Pro/Enterprise 3단 비교 + 추천 배지', desc: '[월간/연간 20% 할인] 토글과 함께 요금제별 포함 기능을 비교하고 주력 플랜에 [Most Popular] 강조' },
@@ -267,9 +267,9 @@
         { id: 'com_04', code: '커머스 04 별점 평균 & 리뷰 분포 바', eng: 'Rating summary & breakdown', slot: 'main', span: 'half', meta: '★ 4.8 평균 + 5점~1점 비율 가로 막대', desc: '단순 별점 평균뿐만 아니라 5점·4점·1점 리뷰가 각각 몇 %인지 가로 게이지 바로 신뢰도 있게 제시' },
         { id: 'com_05', code: '커머스 05 쿠폰·프로모션 코드 입력', eng: 'Promo code input box', slot: 'main', span: 'half', meta: '할인 코드 검증 + 즉시 차감 금액 피드백', desc: '결제 직전 프로모션 코드를 입력해 유효성을 검증하고 할인된 최종 결제 금액을 실시간 재계산' },
         { id: 'com_06', code: '커머스 06 주문 금액 영수증 요약', eng: 'Order summary receipt', slot: 'main', span: 'half', meta: '상품가 - 할인 + 배송비 = 최종 결제액 명세', desc: '총 상품 금액, 등급 할인, 쿠폰 차감, 배송비를 투명하게 가감하여 최종 결제 예정 금액을 확정' },
-        { id: 'com_07', code: '커머스 07 원클릭 간편결제 시트 [추가]', eng: 'Express Checkout / One-tap Pay', slot: 'bottom', span: 'full', meta: '기본 배송지·결제수단 1초 확정', desc: '복잡한 주문서 입력 없이 저장된 기본 배송지와 간편결제 수단으로 즉시 주문을 확정하는 시트' },
-        { id: 'com_08', code: '커머스 08 옵션·품절 & 재입고 알림 [추가]', eng: 'Variant Selector & Restock Alert', slot: 'main', span: 'half', meta: '색상/사이즈 스와치 + 품절 비활성 + 알림', desc: '옵션 스와치 선택 시 재고를 즉시 확인하고 품절 옵션은 취소선 처리와 함께 [재입고 알림] 제공' },
-        { id: 'com_09', code: '커머스 09 무료배송 달성 게이지 [추가]', eng: 'Free Shipping Threshold Bar', slot: 'header', span: 'half', meta: '목표 금액까지 남은 차액 실시간 안내', desc: '장바구니 상단에 "12,000원 더 담으면 무료배송!" 진행률 바를 띄워 추가 구매를 자연스럽게 유도' }
+        { id: 'com_07', code: '커머스 07 원클릭 간편결제 시트', eng: 'Express Checkout / One-tap Pay', slot: 'bottom', span: 'full', meta: '기본 배송지·결제수단 1초 확정', desc: '복잡한 주문서 입력 없이 저장된 기본 배송지와 간편결제 수단으로 즉시 주문을 확정하는 시트' },
+        { id: 'com_08', code: '커머스 08 옵션·품절 & 재입고 알림', eng: 'Variant Selector & Restock Alert', slot: 'main', span: 'half', meta: '색상/사이즈 스와치 + 품절 비활성 + 알림', desc: '옵션 스와치 선택 시 재고를 즉시 확인하고 품절 옵션은 취소선 처리와 함께 [재입고 알림] 제공' },
+        { id: 'com_09', code: '커머스 09 무료배송 달성 게이지', eng: 'Free Shipping Threshold Bar', slot: 'header', span: 'half', meta: '목표 금액까지 남은 차액 실시간 안내', desc: '장바구니 상단에 "12,000원 더 담으면 무료배송!" 진행률 바를 띄워 추가 구매를 자연스럽게 유도' }
       ],
       auth: [
         { id: 'aut_01', code: '계정 01 아바타 스택 & 멤버 초대', eng: 'Avatar group stack', slot: 'header', span: 'half', meta: '겹쳐진 원형 프로필 사진 + [+4명] 배지 + 초대', desc: '현재 워크스페이스나 문서에 참여 중인 팀원들의 프로필을 겹쳐 보여주고 [+ 멤버 초대] 모달 연결' },
@@ -277,9 +277,9 @@
         { id: 'aut_03', code: '계정 03 API 키 마스킹 & 복사 박스', eng: 'Secret API key reveal & copy', slot: 'main', span: 'half', meta: 'sk-•••••• 마스킹 + 눈 아이콘 보기 + 원클릭 복사', desc: '보안 토큰이나 API 키를 기본 별표(•)로 가려두고 필요할 때만 노출하거나 클립보드로 안전하게 복사' },
         { id: 'aut_04', code: '계정 04 위험 구역 (Danger Zone)', eng: 'Danger zone confirmation', slot: 'main', span: 'full', meta: '붉은 테두리 경고 + 프로젝트명 타이핑 후 영구 삭제', desc: '계정 탈퇴나 데이터 초기화처럼 되돌릴 수 없는 파괴적 액션을 붉은 박스로 격리해 실수를 방지' },
         { id: 'aut_05', code: '계정 05 패스키 & 2단계 인증(2FA) 설정', eng: 'Passkey & 2FA security card', slot: 'main', span: 'half', meta: '생체인증(FaceID) 패스키 등록 및 활성 배지', desc: '비밀번호 없는 로그인(Passkey)이나 OTP 앱 연동을 설정하고 활성 보안 상태를 표시하는 카드' },
-        { id: 'aut_06', code: '계정 06 활성 기기·세션 관리 [추가]', eng: 'Active Sessions & Device Manager', slot: 'main', span: 'full', meta: '로그인 기기·위치 표시 + 원격 로그아웃', desc: '현재 계정에 접속 중인 OS/브라우저·위치·최근 활동 시각을 보여주고 의심 기기를 원격 로그아웃' },
-        { id: 'aut_07', code: '계정 07 보안 감사 로그 (Audit Log) [추가]', eng: 'Security Audit Trail', slot: 'main', span: 'full', meta: '권한 변경·키 발급·삭제 이력 추적표', desc: '누가 언제 어떤 보안/관리 액션을 수행했는지 IP 및 타임스탬프와 함께 불변 이력으로 조회' },
-        { id: 'aut_08', code: '계정 08 비밀번호 강도 미터 [추가]', eng: 'Password Strength Meter', slot: 'main', span: 'half', meta: '4단계 강도 바 + 길이/특수문자 실시간 체크', desc: '새 비밀번호 입력 시 8자 이상·숫자·특수문자 충족 여부를 실시간 체크리스트와 게이지 바로 안내' }
+        { id: 'aut_06', code: '계정 06 활성 기기·세션 관리', eng: 'Active Sessions & Device Manager', slot: 'main', span: 'full', meta: '로그인 기기·위치 표시 + 원격 로그아웃', desc: '현재 계정에 접속 중인 OS/브라우저·위치·최근 활동 시각을 보여주고 의심 기기를 원격 로그아웃' },
+        { id: 'aut_07', code: '계정 07 보안 감사 로그 (Audit Log)', eng: 'Security Audit Trail', slot: 'main', span: 'full', meta: '권한 변경·키 발급·삭제 이력 추적표', desc: '누가 언제 어떤 보안/관리 액션을 수행했는지 IP 및 타임스탬프와 함께 불변 이력으로 조회' },
+        { id: 'aut_08', code: '계정 08 비밀번호 강도 미터', eng: 'Password Strength Meter', slot: 'main', span: 'half', meta: '4단계 강도 바 + 길이/특수문자 실시간 체크', desc: '새 비밀번호 입력 시 8자 이상·숫자·특수문자 충족 여부를 실시간 체크리스트와 게이지 바로 안내' }
       ],
       media_collab: [
         { id: 'med_01', code: '미디어 01 이미지 라이트박스 뷰어', eng: 'Image Lightbox gallery', slot: 'bottom', span: 'full', meta: '클릭 시 어두운 배경 위 고해상도 원본 확대', desc: '썸네일 클릭 시 주변을 어둡게 덮고 고화질 원본 이미지와 좌우 넘김·줌 컨트롤을 띄우는 뷰어' },
@@ -287,9 +287,9 @@
         { id: 'med_03', code: '미디어 03 오디오 파형(Waveform) 플레이어', eng: 'Audio waveform player', slot: 'main', span: 'half', meta: '음성 높낮이 막대 파형 + 구간 클릭 점프', desc: '회의 녹음이나 보이스 메모의 소리 크기 파형을 시각화하여 원하는 발언 구간으로 즉시 탐색' },
         { id: 'med_04', code: '미디어 04 스레드 댓글 & 이모지 리액션', eng: 'Threaded comments & reactions', slot: 'main', span: 'full', meta: '대댓글 들여쓰기 + 👍🎉❤️ 원클릭 공감 카운트', desc: '특정 문서 블록이나 피드에 대댓글 스레드를 달고 텍스트 없이도 이모지 칩으로 빠른 피드백 표시' },
         { id: 'med_05', code: '미디어 05 플로팅 PIP 미니 플레이어', eng: 'Picture-in-Picture (PIP) mini player', slot: 'bottom', span: 'half', meta: '스크롤/이동 시 우측 하단 작은 영상창 고정', desc: '라이브 방송이나 강의 영상을 보면서 다른 메뉴를 탐색할 수 있도록 구석에 띄워두는 미니 창' },
-        { id: 'med_06', code: '협업 06 실시간 멀티 커서 & 프레즌스 [추가]', eng: 'Live Cursors & Presence', slot: 'main', span: 'half', meta: '동시 편집자 커서 위치·이름표 실시간 표시', desc: '공동 작업 중인 캔버스/문서 위에서 다른 참여자의 커서 움직임과 이름 태그를 실시간으로 노출' },
-        { id: 'med_07', code: '협업 07 버전 비교 (Diff View) [추가]', eng: 'Side-by-Side / Inline Diff', slot: 'main', span: 'full', meta: '수정 전(- 빨강) vs 수정 후(+ 초록) 줄 비교', desc: '문서·코드·설정의 이전 버전과 최신 버전을 나란히 두고 추가·삭제된 변경 라인을 색상으로 강조' },
-        { id: 'med_08', code: '협업 08 공유 권한 & 링크 복사 시트 [추가]', eng: 'Share Modal & Copy Link', slot: 'bottom', span: 'half', meta: '열람 권한 드롭다운 + URL 원클릭 복사', desc: '문서/보드의 접근 권한(비공개·링크 공유·전체 공개)을 설정하고 초대 링크를 즉시 복사' }
+        { id: 'med_06', code: '협업 06 실시간 멀티 커서 & 프레즌스', eng: 'Live Cursors & Presence', slot: 'main', span: 'half', meta: '동시 편집자 커서 위치·이름표 실시간 표시', desc: '공동 작업 중인 캔버스/문서 위에서 다른 참여자의 커서 움직임과 이름 태그를 실시간으로 노출' },
+        { id: 'med_07', code: '협업 07 버전 비교 (Diff View)', eng: 'Side-by-Side / Inline Diff', slot: 'main', span: 'full', meta: '수정 전(- 빨강) vs 수정 후(+ 초록) 줄 비교', desc: '문서·코드·설정의 이전 버전과 최신 버전을 나란히 두고 추가·삭제된 변경 라인을 색상으로 강조' },
+        { id: 'med_08', code: '협업 08 공유 권한 & 링크 복사 시트', eng: 'Share Modal & Copy Link', slot: 'bottom', span: 'half', meta: '열람 권한 드롭다운 + URL 원클릭 복사', desc: '문서/보드의 접근 권한(비공개·링크 공유·전체 공개)을 설정하고 초대 링크를 즉시 복사' }
       ]
     };
 
