@@ -1691,6 +1691,13 @@ ${buildSharedStateSpec()}
               ${getVisualWireframeHTML(item)}
             </div>
             <p class="text-xs text-slate-600 leading-relaxed">${item.desc}</p>
+            ${item.bestFor ? `
+              <div class="text-[11px] bg-slate-50 border border-slate-200/80 rounded-xl p-2 space-y-1">
+                <div class="text-emerald-700 leading-snug"><strong class="font-bold">✅ 적합:</strong> ${item.bestFor}</div>
+                <div class="text-amber-700 leading-snug"><strong class="font-bold">⚠️ 주의:</strong> ${item.avoidWhen}</div>
+                ${item.compareWith ? `<div class="text-slate-500 leading-snug"><strong class="font-bold">🔁 비교:</strong> ${item.compareWith}</div>` : ''}
+              </div>
+            ` : ''}
           </div>
 
           <div class="pt-2.5 border-t border-slate-100 flex items-center justify-between gap-1.5">

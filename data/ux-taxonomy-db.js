@@ -293,14 +293,111 @@
       ]
     };
 
-    // 모든 아이템에 소속 쇼케이스 메타 정보 주입
+    // 의사결정 가이드 (적합한 상황 · 피해야 할 상황 · 비교 패턴)
+    const DECISION_GUIDES = {
+      lay_01: { bestFor: "랜딩·서비스 첫 진입에서 핵심 가치와 단일 CTA를 3초 안에 전달할 때", avoidWhen: "업무용 SaaS 콘솔처럼 즉시 작업 데이터가 보여야 하는 화면", compareWith: "lay_08(Z패턴)" },
+      lay_02: { bestFor: "중요도가 다른 기능·지표 모듈을 한 화면에 리듬감 있게 강조할 때", avoidWhen: "모든 항목의 비중이 동일한 대량 상품 목록(→ lay_04/cnt_02 권장)", compareWith: "cnt_02(카드 그리드), lay_04(균일 그리드)" },
+      lay_03: { bestFor: "로그인·가입·프로모션처럼 브랜드 비주얼과 폼을 5:5로 대조할 때", avoidWhen: "목록을 고르며 상세를 연속 열람하는 화면(→ cnt_04 권장)", compareWith: "cnt_04(마스터-디테일)" },
+      lay_04: { bestFor: "상품·강좌·포트폴리오처럼 동일 규격 카드를 균등하게 비교 탐색할 때", avoidWhen: "항목별 텍스트 길이가 극단적으로 달라 여백 불균형이 생길 때", compareWith: "lay_02(벤토 그리드), lay_10(메이슨리)" },
+      lay_05: { bestFor: "메뉴가 6개 이상이고 깊은 업무 메뉴를 자주 오가는 데스크톱 SaaS", avoidWhen: "단순 마케팅 랜딩이나 메뉴가 4개 이하인 모바일 우선 앱", compareWith: "nav_01(하단 탭바), lay_12(홀리 그레일)" },
+      lay_06: { bestFor: "에디토리얼·뉴스·미디어처럼 대표 특집과 보조 기사 위계가 뚜렷할 때", avoidWhen: "정형 데이터 비교나 필터 중심의 커머스 검색 화면", compareWith: "lay_04(카드 그리드)" },
+      lay_07: { bestFor: "운영자·경영진이 KPI와 추이 차트를 스크롤 없이 1초 스캔해야 할 때", avoidWhen: "단일 지표만 간단히 보여주면 되는 모바일 서브 화면(→ cnt_08 권장)", compareWith: "cnt_08(KPI 요약 카드)" },
+      lay_08: { bestFor: "이미지와 짧은 카피 위주의 랜딩·마케팅 전환 페이지", avoidWhen: "긴 본문을 정독해야 하는 문서·아티클 페이지(→ lay_12 권장)", compareWith: "lay_01(히어로)" },
+      lay_09: { bestFor: "건축·패션·영상 등 비주얼 몰입감이 최우선인 쇼케이스", avoidWhen: "텍스트 가독성이 중요한 폼·데이터 테이블 화면", compareWith: "lay_01(히어로)" },
+      lay_10: { bestFor: "이미지 비율이 제각각인 영감 보드·갤러리·소셜 피드", avoidWhen: "가격·스펙을 좌우로 나란히 비교해야 하는 상품 목록", compareWith: "lay_04(카드 그리드)" },
+      lay_11: { bestFor: "제품 스토리텔링·기능 단계별 시연을 스크롤에 맞춰 설명할 때", avoidWhen: "빠른 정보 검색이 목적인 문서·도움말 페이지", compareWith: "lay_06(매거진)" },
+      lay_12: { bestFor: "기술 문서(Docs)·위키처럼 좌측 트리·중앙 본문·우측 목차가 모두 필요할 때", avoidWhen: "좁은 화면이나 단일 폼 집중 작업(모바일에서는 양쪽 패널 수납 필수)", compareWith: "lay_05(사이드바), cnt_12(인스펙터)" },
+      cnt_02: { bestFor: "썸네일·제목·가격·평점 등 다속성 아이템을 시각적으로 비교할 때", avoidWhen: "텍스트 위주 빠른 스캔이 중요한 로그·알림 목록(→ cnt_03 권장)", compareWith: "cnt_03(리스트 뷰), lay_02(벤토)" },
+      cnt_03: { bestFor: "게시판·알림·이메일처럼 제목과 메타를 위아래로 빠르게 훑을 때", avoidWhen: "이미지 비주얼이 구매 결정의 핵심인 패션·인테리어 탐색", compareWith: "cnt_02(카드 그리드)" },
+      cnt_04: { bestFor: "이메일·메신저·관리자 목록에서 페이지 이동 없이 상세를 연속 확인할 때", avoidWhen: "모바일 소형 화면에서 좌우를 억지로 분할하려는 경우(뷰 전환 필요)", compareWith: "lay_03(스플릿), cnt_12(인스펙터)" },
+      cnt_05: { bestFor: "FAQ·상세 스펙·약관처럼 선택적 정보로 스크롤 길이를 줄일 때", avoidWhen: "모든 항목을 동시에 비교해야 하거나 필수 입력 폼을 숨기는 용도", compareWith: "nav_02(상단 탭)" },
+      cnt_06: { bestFor: "초기 데이터 0건 상태에서 다음 행동(첫 생성)으로 자연스럽게 유도할 때", avoidWhen: "검색어 불일치로 0건이 된 상황(→ src_08 추천 키워드 폴백 권장)", compareWith: "src_08(검색 결과 없음)" },
+      cnt_07: { bestFor: "수십~수백 건의 정형 데이터를 정렬·필터·일괄 작업해야 하는 백오피스", avoidWhen: "모바일 좁은 화면에 6개 이상 열을 가로 스크롤 없이 억지로 넣을 때", compareWith: "cnt_03(리스트), aut_02(RBAC 표)" },
+      cnt_08: { bestFor: "핵심 지표 1~4개의 현재값과 증감률(▲/▼)을 직관적으로 요약할 때", avoidWhen: "세부 구간별 추이나 상관관계 분석이 필요한 경우(→ cht_01~03 결합)", compareWith: "lay_07(대시보드), cht_01(스파크라인)" },
+      cnt_09: { bestFor: "배송 추적·심사 이력·활동 로그 등 시간 순서가 핵심인 이력 표시", avoidWhen: "시간순이 아닌 상태별(할일/진행/완료) 업무 관리(→ cnt_10 권장)", compareWith: "cnt_10(칸반 보드)" },
+      cnt_10: { bestFor: "작업 단계(To Do → Doing → Done) 이동과 병목 파악이 중요한 협업 보드", avoidWhen: "단계가 6개 이상이거나 수백 건 대량 데이터를 정렬·집계할 때", compareWith: "cnt_07(데이터 테이블)" },
+      cnt_11: { bestFor: "폴더·문서·조직도처럼 3단계 이상 중첩된 계층 구조를 탐색할 때", avoidWhen: "1~2단계 평탄한 카테고리 목록(불필요한 클릭 수 증가)", compareWith: "nav_04(브레드크럼)" },
+      cnt_12: { bestFor: "목록/캔버스 작업 흐름을 끊지 않고 선택 항목의 속성을 우측에서 즉시 편집할 때", avoidWhen: "복잡한 다단계 입력이나 전체 화면 집중이 필요한 작성 플로우", compareWith: "cnt_04(마스터-디테일), fb_04(모달)" },
+      nav_01: { bestFor: "모바일 앱에서 최상위 핵심 메뉴 3~5개를 엄지로 즉시 전환할 때", avoidWhen: "메뉴가 6개 이상이거나 PC 데스크톱 화면(→ lay_05/GNB 전환)", compareWith: "nav_02(상단 탭), nav_03(드로어)" },
+      nav_02: { bestFor: "동일 맥락 내 2~5개 하위 뷰(예: 전체/진행/완료)를 즉시 전환할 때", avoidWhen: "서로 무관한 최상위 서비스 이동이나 7개 이상 과다한 탭 배치", compareWith: "nav_01(하단 탭바), cnt_05(아코디언)" },
+      nav_03: { bestFor: "모바일에서 보조 메뉴·설정·계정 등 2순위 탐색 항목을 수납할 때", avoidWhen: "사용자가 매 세션마다 눌러야 하는 1순위 핵심 기능을 숨기는 용도", compareWith: "nav_01(하단 탭바)" },
+      nav_04: { bestFor: "3단계 이상 깊은 카테고리·문서·쇼핑몰에서 현재 위치와 상위 복귀 제공", avoidWhen: "1~2단계 얕은 구조나 선형 결제/예약 단계(→ ind_02 위저드 권장)", compareWith: "ind_02(단계 위저드)" },
+      nav_07: { bestFor: "특정 페이지 복귀·전체 건수 파악·푸터 접근이 중요한 검색/관리자 목록", avoidWhen: "끊김 없는 탐색 몰입이 핵심인 소셜·숏폼 피드(→ nav_08 권장)", compareWith: "nav_08(무한 스크롤)" },
+      nav_08: { bestFor: "소셜 피드·뉴스·이미지 갤러리처럼 연속 소비와 체류시간이 목표일 때", avoidWhen: "푸터 링크 접근이나 특정 행 재방문이 중요한 B2B 테이블·커머스", compareWith: "nav_07(페이지네이션)" },
+      nav_10: { bestFor: "파워유저·B2B SaaS에서 키보드(Cmd+K)로 메뉴·문서·액션을 1초 실행할 때", avoidWhen: "일반 소비자 대상 앱에서 기본 내비게이션을 완전히 대체하려는 경우", compareWith: "src_01(검색창)" },
+      src_01: { bestFor: "항목이 20개 이상이거나 사용자가 찾는 키워드가 명확한 서비스", avoidWhen: "전체 항목이 10개 미만이라 목록만 봐도 충분한 소규모 화면", compareWith: "nav_10(커맨드 팔레트)" },
+      src_02: { bestFor: "오타 방지·인기 상품 추천·긴 전문 용어 입력 부담을 줄일 때", avoidWhen: "검색 후보가 거의 없거나 네트워크 지연으로 타이핑이 끊길 때", compareWith: "src_01(검색창), src_03(최근 검색어)" },
+      src_05: { bestFor: "모바일·상단 영역에서 5~8개 이내 필터 조건을 빠르게 켜고 끌 때", avoidWhen: "가격 범위·다중 카테고리 등 복잡한 복합 조건(→ src_11 패싯 필터 권장)", compareWith: "src_10(적용 필터 칩), src_11(패싯 필터)" },
+      src_08: { bestFor: "검색 결과 0건 시 이탈을 막고 대체 키워드·필터 해제로 즉시 복구할 때", avoidWhen: "초기 데이터 자체가 없는 온보딩 빈 화면(→ cnt_06 권장)", compareWith: "cnt_06(빈 화면)" },
+      form_01: { bestFor: "이름·이메일·주소 등 자유 텍스트 입력과 실시간 유효성 검증", avoidWhen: "정해진 선택지 중 고르는 항목(오타 유발 → form_02/form_06 권장)", compareWith: "form_02(셀렉트)" },
+      form_02: { bestFor: "선택지가 5개 이상인 단일 선택(국가·부서·카테고리 등)을 콤팩트하게 수납", avoidWhen: "선택지가 2~4개뿐일 때(불필요한 클릭 증가 → form_06 라디오 권장)", compareWith: "form_06(라디오 버튼)" },
+      form_04: { bestFor: "저장 버튼 없이 켜고 끄는 즉시 반영 시스템 설정(알림·다크모드)", avoidWhen: "하단 [저장] 버튼을 눌러야 반영되는 폼 항목(→ form_05 체크박스 권장)", compareWith: "form_05(체크박스)" },
+      form_05: { bestFor: "0개~N개 복수 선택이나 [저장] 버튼과 함께 제출되는 약관·옵션", avoidWhen: "단 1개만 골라야 하는 배타적 선택(→ form_06 라디오 권장)", compareWith: "form_04(토글 스위치), form_06(라디오)" },
+      form_06: { bestFor: "2~4개 옵션 중 반드시 1개만 고르게 하고 모든 선택지를 한눈에 보여줄 때", avoidWhen: "옵션이 6개 이상으로 화면을 과도하게 차지할 때(→ form_02 셀렉트 권장)", compareWith: "form_02(셀렉트), form_05(체크박스)" },
+      dt_01: { bestFor: "요일·주말·공휴일 맥락을 보며 단일 날짜를 선택하는 일정·예약 화면", avoidWhen: "생년월일처럼 수십 년 전 날짜를 입력할 때(→ dt_07 직접 타이핑 권장)", compareWith: "dt_03(기간 선택), dt_07(직접 타이핑)" },
+      dt_02: { bestFor: "모바일에서 한 손 엄지로 시·분·알람 시간을 빠르게 맞출 때", avoidWhen: "PC 데스크톱 환경이나 요일 확인이 필수인 날짜 예약", compareWith: "dt_01(단일 캘린더), dt_05(시간 슬롯)" },
+      dt_03: { bestFor: "숙박·항공·조회 기간 등 시작일과 종료일 구간을 시각적으로 고를 때", avoidWhen: "단일 날짜만 필요한 폼(불필요한 2회 클릭 유발)", compareWith: "dt_01(단일 캘린더), dt_08(체크인/아웃 분할)" },
+      dt_05: { bestFor: "병원·미용실·상담 등 정해진 예약 가능 시간과 마감 슬롯을 명확히 구분할 때", avoidWhen: "1분 단위 자유 시간 입력이 필요한 알람·타이머", compareWith: "dt_02(휠 피커)" },
+      fb_01: { bestFor: "복사 완료·저장 성공 등 사용자 흐름을 끊지 않는 가벼운 상태 알림", avoidWhen: "반드시 읽고 확인해야 하는 치명적 오류나 취소 불가 작업(→ fb_04 권장)", compareWith: "fb_02(스낵바), fb_03(상단 배너)" },
+      fb_02: { bestFor: "삭제·아카이브 직후 [실행 취소(Undo)]로 실수를 1클릭 복구하게 할 때", avoidWhen: "별도 액션이 필요 없는 단순 완료 알림(→ fb_01 토스트 권장)", compareWith: "fb_01(토스트)" },
+      fb_04: { bestFor: "영구 삭제·결제 확정 등 사용자의 명시적 판단과 주의 집중이 필수일 때", avoidWhen: "간단한 안내나 모바일 한 손 조작 옵션 선택(→ fb_05 바텀시트 권장)", compareWith: "fb_05(바텀시트), fb_10(팝오버 재확인)" },
+      fb_05: { bestFor: "모바일에서 필터·공유·옵션 선택을 엄지 반경 안에서 자연스럽게 띄울 때", avoidWhen: "PC 와이드 화면이나 긴 다단계 작성 폼(모달/전용 페이지 권장)", compareWith: "fb_04(모달 다이얼로그)" },
+      fb_06: { bestFor: "폼 입력 직후 오류 위치와 수정 방법을 해당 필드 바로 아래에서 즉시 안내", avoidWhen: "폼 전체 제출 후 상단에만 뭉뚱그려 오류를 띄워 위치를 찾게 만드는 방식", compareWith: "fb_01(토스트)" },
+      fb_10: { bestFor: "테이블 행 삭제 등 빈번한 작업에서 무거운 모달 없이 초경량 재확인할 때", avoidWhen: "계정 탈퇴·결제 등 되돌릴 수 없는 고위험 작업(→ fb_04/aut_04 권장)", compareWith: "fb_04(모달), aut_04(위험 구역)" },
+      ld_01: { bestFor: "버튼 클릭·소규모 패널 갱신 등 1~3초 이내 짧은 불확정 대기", avoidWhen: "초기 피드·카드 목록 로딩(화면 점프 유발 → ld_02 스켈레톤 권장)", compareWith: "ld_02(스켈레톤), ld_03(프로그레스 바)" },
+      ld_02: { bestFor: "초기 페이지·피드·카드 목록 진입 시 레이아웃 틀을 먼저 보여 체감 속도 단축", avoidWhen: "0.3초 미만 초고속 응답(오히려 깜빡임 유발)이나 버튼 내부 로딩", compareWith: "ld_01(스피너)" },
+      ld_03: { bestFor: "파일 업로드·내보내기 등 3초 이상 걸리고 진행률(%)을 계산할 수 있을 때", avoidWhen: "진행률을 알 수 없는 일반 API 조회(거짓 퍼센트 표시 금지)", compareWith: "ld_01(스피너), ld_04(진행 링)" },
+      ld_07: { bestFor: "좋아요·북마크·할일 체크 등 실패 확률이 낮고 즉각 반응이 중요한 액션", avoidWhen: "결제·송금·권한 변경처럼 서버 확정 전 성공 표시가 위험한 트랜잭션", compareWith: "ld_09(로딩 버튼)" },
+      ld_09: { bestFor: "결제·예약 확정·폼 제출에서 중복 클릭을 물리적으로 차단해야 할 때", avoidWhen: "페이지 전체를 새로 불러오는 탐색 링크", compareWith: "ld_07(낙관적 UI)" },
+      ai_01: { bestFor: "LLM 첫 토큰(TTFT) 응답 대기 중 시스템이 정상 추론 중임을 안심시킬 때", avoidWhen: "이미 스트리밍 출력이 시작된 상태(→ ai_02/ai_12로 즉시 전환)", compareWith: "ai_02(스트리밍)" },
+      ai_02: { bestFor: "긴 AI 답변을 생성 즉시 실시간으로 읽게 해 체감 대기 시간을 크게 줄일 때", avoidWhen: "정형 JSON·수치 결과처럼 완성 전 중간 노출이 혼란을 주는 응답", compareWith: "ai_01(생각 중), ai_12(생성 중단)" },
+      ai_10: { bestFor: "코드·문서·UI 프리뷰처럼 대화와 결과물 편집을 동시에 봐야 하는 워크스페이스", avoidWhen: "단순 Q&A 챗봇이나 모바일 소형 화면(모바일은 탭 전환 필수)", compareWith: "cnt_04(마스터-디테일)" },
+      cht_02: { bestFor: "3~5개 이내 카테고리의 전체 대비 비중(%)을 한눈에 보여줄 때", avoidWhen: "항목이 6개 이상이거나 미세한 수치 차이 비교(→ cht_03 막대 차트 권장)", compareWith: "cht_03(막대 차트)" },
+      cht_03: { bestFor: "기간별·그룹별 수치 크기와 격차를 정확하게 비교할 때", avoidWhen: "수십 개 연속 시계열 추세(→ 선/영역 차트 cht_01·cht_09 권장)", compareWith: "cht_02(도넛), cht_09(누적 영역)" },
+      aut_04: { bestFor: "프로젝트 영구 삭제·계정 탈퇴 등 되돌릴 수 없는 파괴적 작업을 안전 격리할 때", avoidWhen: "일반 설정 변경이나 실행 취소(Undo)가 가능한 경량 삭제", compareWith: "fb_04(모달), fb_10(팝오버 재확인)" }
+    };
+
+    const CATEGORY_DECISION_DEFAULTS = {
+      layout: { bestFor: "화면 전체의 정보 위계와 반응형 골격(모바일→PC)을 구조화할 때", avoidWhen: "단일 위젯 내부 배치에만 적용하거나 반응형 열 전환 없이 고정폭으로 묶을 때" },
+      content: { bestFor: "본문 영역 내부의 반복 데이터·상세 정보·상태를 스캔하기 쉽게 표현할 때", avoidWhen: "데이터 밀도와 맞지 않는 컨테이너를 골라 불필요한 스크롤이나 정보 누락을 만들 때" },
+      onboarding: { bestFor: "신규 사용자의 첫 진입 이탈을 줄이고 핵심 가치와 초기 설정을 단계적으로 안내할 때", avoidWhen: "건너뛰기(Skip) 없이 강제 노출하거나 매 방문마다 반복 노출해 작업 진입을 방해할 때" },
+      nav: { bestFor: "사용자가 현재 위치를 파악하고 핵심 메뉴·계층 간을 최소 클릭으로 이동할 때", avoidWhen: "화면 목적과 무관한 탐색 요소를 중복 배치해 시선과 공간을 분산시킬 때" },
+      menu_icon: { bestFor: "제한된 헤더·카드 공간에 보조 액션이나 패널 트리거를 간결하게 수납할 때", avoidWhen: "시각적 은유가 낯선 아이콘에 툴팁·aria-label 없이 단독 배치해 의미를 숨길 때" },
+      search: { bestFor: "방대한 목록에서 사용자가 원하는 항목을 키워드·조건으로 빠르게 좁혀 나갈 때", avoidWhen: "결과 0건 폴백이나 조건 초기화 경로 없이 빈 화면에 사용자를 가둘 때" },
+      form: { bestFor: "정확한 사용자 입력을 수집하고 입력 도중 실시간 검증으로 오류를 줄일 때", avoidWhen: "라벨·오류 메시지 없이 placeholder에만 의존하거나 모바일 입력 키보드 타입을 무시할 때" },
+      datetime: { bestFor: "예약·일정·조회 기간 등 날짜/시간 입력의 오타를 막고 선택 속도를 높일 때", avoidWhen: "선택 불가 날짜·마감 시간·시간대(Timezone) 기준을 명확히 표시하지 않을 때" },
+      feedback: { bestFor: "사용자 액션의 성공·경고·오류 결과를 중요도에 맞는 방해도로 즉시 전달할 때", avoidWhen: "사소한 알림에 모달을 남용하거나 중요한 오류를 자동 소멸 토스트로만 흘려보낼 때" },
+      loading: { bestFor: "네트워크·처리 대기 중 시스템 응답성을 시각화해 이탈과 중복 클릭을 방지할 때", avoidWhen: "실제 진행 상태와 무관한 가짜 로딩을 띄우거나 에러·타임아웃 복구 경로를 누락할 때" },
+      indicator: { bestFor: "전체 단계·진행률·실시간 연결 상태를 한눈에 인지시켜 불확실성을 줄일 때", avoidWhen: "색상만으로 상태를 구분해 색각 이상·스크린리더 사용자가 상태를 파악하지 못할 때" },
+      ai: { bestFor: "생성형 AI의 비결정적 대기·스트리밍·출처 검증·제어권 반환 경험을 신뢰감 있게 설계할 때", avoidWhen: "중단·재생성·출처 확인 수단 없이 블랙박스처럼 응답만 일방적으로 출력할 때" },
+      gesture: { bestFor: "모바일 터치 환경에서 직관적인 물리 조작으로 탐색·편집 속도를 높일 때", avoidWhen: "제스처만 제공하고 클릭·키보드 대체 버튼을 누락해 데스크톱·접근성 사용자를 배제할 때" },
+      motion: { bestFor: "상태 전환·계층 이동·피드백의 인과관계를 자연스러운 물리 리듬으로 전달할 때", avoidWhen: "300ms 이상 과도한 지연으로 반복 작업을 방해하거나 prefers-reduced-motion을 무시할 때" },
+      text_anim: { bestFor: "히어로 헤드라인·핵심 KPI·브랜드 카피에 시선을 집중시키는 포인트 연출을 줄 때", avoidWhen: "긴 본문이나 업무용 폼 텍스트에 남용해 가독성과 정보 스캔 속도를 떨어뜨릴 때" },
+      visual_style: { bestFor: "브랜드 개성과 제품 톤앤매너를 일관된 표면·색상·모션 테마로 각인시킬 때", avoidWhen: "장식 효과로 텍스트 명도 대비(4.5:1)가 깨지거나 업무용 화면의 정보 위계를 해칠 때" },
+      chart: { bestFor: "숫자 테이블만으로 파악하기 어려운 추세·비중·병목·패턴을 직관적으로 비교할 때", avoidWhen: "축·단위·범례 설명 없이 그래프만 배치하거나 과도한 장식으로 수치를 왜곡할 때" },
+      commerce: { bestFor: "가격·옵션·할인·배송비 정보를 투명하게 제시해 구매 전환과 신뢰도를 높일 때", avoidWhen: "추가 비용·품절·취소 조건을 결제 직전까지 숨겨 이탈(다크 패턴)을 유발할 때" },
+      auth: { bestFor: "계정 보안·팀 권한·민감 작업 보호를 사용자가 안심하고 관리할 수 있게 설계할 때", avoidWhen: "민감 키를 평문 노출하거나 권한 변경·삭제 시 확인 단계와 감사 추적 없이 즉시 실행할 때" },
+      media_collab: { bestFor: "이미지·영상·오디오 소비와 팀원 간 실시간 피드백·공유 흐름을 매끄럽게 연결할 때", avoidWhen: "키보드 제어·음소거 기본값·권한 범위 확인 없이 미디어나 공유 기능을 강제 실행할 때" }
+    };
+
+    // 모든 아이템에 소속 쇼케이스 메타 정보 및 의사결정 가이드 주입
     SHOWCASE_BOOKS.forEach(book => {
       const list = PATTERN_DB[book.key] || [];
+      const catDef = CATEGORY_DECISION_DEFAULTS[book.key] || {
+        bestFor: "해당 영역의 핵심 UI/UX 흐름을 표준 패턴으로 구성할 때",
+        avoidWhen: "화면 목적과 무관하게 과도한 요소를 한 화면에 중첩할 때"
+      };
       list.forEach(item => {
         item.catKey = book.key;
         item.catTitle = book.title;
         item.catShort = book.short;
         item.file = book.file;
+        const guide = DECISION_GUIDES[item.id];
+        item.bestFor = item.bestFor || (guide && guide.bestFor) || `${item.meta} — ${catDef.bestFor}`;
+        item.avoidWhen = item.avoidWhen || (guide && guide.avoidWhen) || catDef.avoidWhen;
+        if (!item.compareWith && guide && guide.compareWith) {
+          item.compareWith = guide.compareWith;
+        }
       });
     });
 
@@ -325,7 +422,6 @@
               <span class="bg-blue-500 hover:bg-blue-400 text-white text-[10px] font-extrabold px-3 py-1.5 rounded-lg shrink-0 shadow-sm">시작하기 →</span>
             </div>`;
         case 'lay_02':
-        case 'cnt_02':
           return `
             <div class="grid grid-cols-3 gap-1.5 bg-slate-100 p-2 rounded-xl border border-slate-200/80 text-[9px]">
               <div class="col-span-2 bg-gradient-to-br from-blue-600 to-indigo-700 text-white p-2 rounded-lg font-bold flex flex-col justify-between min-h-[48px]">
@@ -340,7 +436,33 @@
                 <span>비대칭 서브 모듈 C (2×1)</span><span class="text-emerald-600">● Active</span>
               </div>
             </div>`;
+        case 'cnt_02':
+          return `
+            <div class="grid grid-cols-2 gap-1.5 text-[9px]">
+              <div class="bg-white p-2 rounded-xl border border-slate-200 space-y-1">
+                <div class="h-8 rounded-lg bg-gradient-to-r from-sky-100 to-blue-100 flex items-center justify-center text-[8px] font-bold text-blue-700">썸네일 16:9</div>
+                <div class="font-bold text-slate-800 truncate">콘텐츠 카드 타이틀 A</div>
+                <div class="flex justify-between text-[8px] text-slate-400"><span>★ 4.9</span><span class="text-blue-600 font-bold">₩29,000</span></div>
+              </div>
+              <div class="bg-white p-2 rounded-xl border border-slate-200 space-y-1">
+                <div class="h-8 rounded-lg bg-gradient-to-r from-emerald-100 to-teal-100 flex items-center justify-center text-[8px] font-bold text-emerald-700">썸네일 16:9</div>
+                <div class="font-bold text-slate-800 truncate">콘텐츠 카드 타이틀 B</div>
+                <div class="flex justify-between text-[8px] text-slate-400"><span>★ 4.8</span><span class="text-blue-600 font-bold">₩35,000</span></div>
+              </div>
+            </div>`;
         case 'lay_03':
+          return `
+            <div class="grid grid-cols-2 gap-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-[9px]">
+              <div class="bg-gradient-to-br from-slate-900 to-blue-900 text-white p-2.5 rounded-lg flex flex-col justify-between min-h-[54px]">
+                <span class="text-[8px] text-blue-300 font-bold">50% BRAND VISUAL</span>
+                <span class="font-extrabold">브랜드 메시지 · 커버</span>
+              </div>
+              <div class="bg-white p-2 rounded-lg border border-slate-200 space-y-1">
+                <div class="text-[8px] font-extrabold text-slate-400">50% ACTION FORM</div>
+                <div class="h-3.5 bg-slate-50 border border-slate-200 rounded px-1.5 text-[8px] text-slate-400 flex items-center">이메일 입력</div>
+                <div class="bg-blue-600 text-white text-center py-0.5 rounded font-bold text-[8px]">시작하기</div>
+              </div>
+            </div>`;
         case 'cnt_04':
           return `
             <div class="grid grid-cols-12 gap-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-[9px]">
@@ -375,19 +497,30 @@
               <div class="col-span-6 space-y-1"><div class="p-1 bg-slate-50 rounded border border-slate-100 font-semibold">• 에디토리얼 칼럼 01</div><div class="p-1 bg-slate-50 rounded border border-slate-100 font-semibold">• 트렌드 리포트 02</div></div>
             </div>`;
         case 'lay_07':
+          return `
+            <div class="bg-slate-100 p-1.5 rounded-xl border border-slate-200 space-y-1.5 text-[9px]">
+              <div class="grid grid-cols-3 gap-1">
+                <div class="bg-white px-2 py-1 rounded border border-slate-200 font-bold text-slate-700">KPI 1 · 68%</div>
+                <div class="bg-white px-2 py-1 rounded border border-slate-200 font-bold text-blue-600">KPI 2 · 1.2K</div>
+                <div class="bg-white px-2 py-1 rounded border border-slate-200 font-bold text-emerald-600">KPI 3 · +14%</div>
+              </div>
+              <div class="grid grid-cols-12 gap-1.5">
+                <div class="col-span-8 bg-white p-1.5 rounded border border-slate-200 flex items-end gap-1 h-9">
+                  <div class="w-full bg-blue-200 h-3 rounded-t"></div><div class="w-full bg-blue-400 h-5 rounded-t"></div><div class="w-full bg-blue-600 h-7 rounded-t"></div><div class="w-full bg-indigo-400 h-5 rounded-t"></div>
+                </div>
+                <div class="col-span-4 bg-white p-1.5 rounded border border-slate-200 text-[8px] text-slate-500 flex items-center justify-center font-semibold">최근 로그</div>
+              </div>
+            </div>`;
         case 'cnt_08':
           return `
-            <div class="grid grid-cols-3 gap-1.5 text-[9px]">
+            <div class="grid grid-cols-2 gap-1.5 text-[9px]">
               <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-sm">
-                <div class="text-slate-400 font-medium">전환율 KPI</div>
-                <div class="text-xs font-extrabold text-slate-900 mt-0.5">68.4% <span class="text-[8px] text-emerald-600 font-bold">▲12%</span></div>
+                <div class="text-[8px] text-slate-400 font-semibold">월간 전환율</div>
+                <div class="text-sm font-extrabold text-slate-900 mt-0.5 tabular-nums">68.4% <span class="text-[8px] px-1 py-0.5 rounded bg-emerald-50 text-emerald-600 font-bold">▲12%</span></div>
               </div>
               <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-sm">
-                <div class="text-slate-400 font-medium">활성 사용자</div>
-                <div class="text-xs font-extrabold text-blue-600 mt-0.5">1,280명</div>
-              </div>
-              <div class="bg-white p-2 rounded-xl border border-slate-200 shadow-sm flex items-end gap-1 h-full">
-                <div class="w-full bg-blue-200 h-3 rounded-t"></div><div class="w-full bg-blue-400 h-5 rounded-t"></div><div class="w-full bg-blue-600 h-8 rounded-t"></div><div class="w-full bg-blue-300 h-6 rounded-t"></div>
+                <div class="text-[8px] text-slate-400 font-semibold">주간 활성 사용자</div>
+                <div class="text-sm font-extrabold text-blue-600 mt-0.5 tabular-nums">48,290 <span class="text-[8px] px-1 py-0.5 rounded bg-blue-50 text-blue-600 font-bold">▲8%</span></div>
               </div>
             </div>`;
         case 'lay_10':
@@ -410,22 +543,38 @@
               <div class="mt-1 pt-1 border-t border-slate-100 text-slate-500">숨겨진 상세 설명이 스크롤 절약을 위해 접혀 있다가 펼쳐집니다.</div>
             </div>`;
         case 'cnt_06':
-        case 'src_08':
           return `
             <div class="bg-slate-50 p-3 rounded-xl border border-dashed border-slate-300 text-center space-y-1">
               <div class="text-[10px] font-extrabold text-slate-700">📂 표시할 데이터가 아직 없어요 (Empty State)</div>
-              <div class="text-[9px] text-slate-400">조건을 변경하거나 첫 항목을 새로 생성해 보세요</div>
+              <div class="text-[9px] text-slate-400">첫 항목을 새로 생성해 워크스페이스를 시작해 보세요</div>
               <span class="inline-block bg-blue-600 text-white text-[9px] font-bold px-2.5 py-0.5 rounded-md mt-1">+ 새로 만들기</span>
             </div>`;
+        case 'src_08':
+          return `
+            <div class="bg-slate-50 p-2.5 rounded-xl border border-dashed border-slate-300 text-center space-y-1.5 text-[9px]">
+              <div class="font-extrabold text-slate-700">🔍 '양자컴퓨팅' 검색 결과 0건</div>
+              <div class="flex flex-wrap justify-center gap-1">
+                <span class="px-2 py-0.5 rounded-full bg-white border border-slate-200 text-blue-600 font-semibold">추천: 대시보드</span>
+                <span class="px-2 py-0.5 rounded-full bg-white border border-slate-200 text-blue-600 font-semibold">추천: 검색 필터</span>
+              </div>
+            </div>`;
         case 'cnt_07':
-        case 'aut_02':
           return `
             <div class="bg-white rounded-xl border border-slate-200 overflow-hidden text-[9px]">
               <div class="grid grid-cols-4 bg-slate-100 px-2.5 py-1 font-extrabold text-slate-600 border-b border-slate-200">
-                <span>이름/항목</span><span>역할/분류</span><span>상태</span><span class="text-blue-600 text-right">점수/권한 ↕</span>
+                <span>이름/항목</span><span>분류</span><span>상태</span><span class="text-blue-600 text-right">점수 ↕</span>
               </div>
               <div class="grid grid-cols-4 px-2.5 py-1.5 text-slate-700 border-b border-slate-100 items-center"><span class="font-bold">김디자이너</span><span>Product</span><span class="text-emerald-600 font-bold">● 승인됨</span><span class="text-right font-mono font-bold">94점</span></div>
               <div class="grid grid-cols-4 px-2.5 py-1.5 text-slate-700 items-center"><span class="font-bold">박프론트</span><span>Engineering</span><span class="text-amber-600 font-bold">● 검토중</span><span class="text-right font-mono font-bold">88점</span></div>
+            </div>`;
+        case 'aut_02':
+          return `
+            <div class="bg-white rounded-xl border border-slate-200 overflow-hidden text-[9px]">
+              <div class="grid grid-cols-4 bg-slate-900 text-white px-2.5 py-1 font-bold">
+                <span>팀원</span><span class="text-center">열람</span><span class="text-center">편집</span><span class="text-center">결제관리</span>
+              </div>
+              <div class="grid grid-cols-4 px-2.5 py-1.5 border-b border-slate-100 items-center"><span class="font-bold text-slate-800">Admin</span><span class="text-center text-emerald-600 font-bold">✓</span><span class="text-center text-emerald-600 font-bold">✓</span><span class="text-center text-emerald-600 font-bold">✓</span></div>
+              <div class="grid grid-cols-4 px-2.5 py-1.5 items-center"><span class="font-bold text-slate-600">Editor</span><span class="text-center text-emerald-600 font-bold">✓</span><span class="text-center text-emerald-600 font-bold">✓</span><span class="text-center text-slate-300">—</span></div>
             </div>`;
         case 'cnt_09':
           return `
@@ -448,11 +597,17 @@
               <div class="pl-6 text-slate-600">📄 color-palette.json</div>
             </div>`;
         case 'cnt_12':
-        case 'lay_12':
           return `
             <div class="flex gap-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-[9px]">
               <div class="flex-1 bg-white p-2 rounded-lg text-slate-500">메인 캔버스 영역</div>
-              <div class="w-28 bg-white p-2 rounded-lg border-l-2 border-blue-500 shadow-sm"><div class="font-extrabold text-blue-600">우측 인스펙터</div><div class="text-[8px] text-slate-400 mt-0.5">속성·목차 상세창</div></div>
+              <div class="w-28 bg-white p-2 rounded-lg border-l-2 border-blue-500 shadow-sm"><div class="font-extrabold text-blue-600">우측 인스펙터</div><div class="text-[8px] text-slate-400 mt-0.5">속성 편집 드로어</div></div>
+            </div>`;
+        case 'lay_12':
+          return `
+            <div class="grid grid-cols-12 gap-1 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-[8px]">
+              <div class="col-span-3 bg-slate-900 text-slate-200 p-1.5 rounded-lg font-bold">좌측 탐색</div>
+              <div class="col-span-6 bg-white p-1.5 rounded-lg border border-slate-200 font-bold text-slate-700 text-center">중앙 아티클 본문</div>
+              <div class="col-span-3 bg-blue-50 text-blue-700 p-1.5 rounded-lg border border-blue-200 font-bold">우측 TOC</div>
             </div>`;
       }
 
@@ -606,21 +761,39 @@
       }
 
       if (item.catKey === 'search') {
-        if (item.id === 'src_01' || item.id === 'src_02') {
+        if (item.id === 'src_01') {
           return `
             <div class="bg-white rounded-xl border-2 border-blue-500 px-3 py-1.5 flex items-center justify-between text-[10px] shadow-sm">
               <div class="flex items-center gap-2"><span class="text-blue-600 font-bold">🔍</span><span class="text-slate-800 font-semibold">프론트엔드 포트폴리오</span></div>
               <span class="w-4 h-4 rounded-full bg-slate-200 text-slate-600 flex items-center justify-center text-[8px] font-bold">✕</span>
             </div>`;
         }
-        if (item.id === 'src_03' || item.id === 'src_10') {
+        if (item.id === 'src_02') {
+          return `
+            <div class="bg-white rounded-xl border border-blue-400 overflow-hidden text-[9px] shadow-sm">
+              <div class="px-2.5 py-1 border-b border-slate-100 font-semibold text-slate-800">🔍 대시<span class="text-blue-600">|</span></div>
+              <div class="px-2.5 py-1 bg-blue-50/70 text-slate-700"><strong class="text-blue-600">대시</strong>보드 KPI 레이아웃</div>
+              <div class="px-2.5 py-1 text-slate-500"><strong class="text-blue-600">대시</strong>보드 필터 테이블</div>
+            </div>`;
+        }
+        if (item.id === 'src_03') {
           return `
             <div class="bg-white p-2 rounded-xl border border-slate-200 flex flex-wrap items-center justify-between gap-1 text-[9px]">
               <div class="flex flex-wrap gap-1">
-                <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-semibold">최근: 디자인 시스템 ✕</span>
-                <span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 font-bold">서울/판교 ✕</span>
+                <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-semibold">🕒 디자인 시스템 ✕</span>
+                <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 font-semibold">🕒 예약 달력 ✕</span>
               </div>
-              <span class="text-slate-400 underline">전체 초기화</span>
+              <span class="text-slate-400 underline">기록 전체 삭제</span>
+            </div>`;
+        }
+        if (item.id === 'src_10') {
+          return `
+            <div class="bg-white p-2 rounded-xl border border-slate-200 flex flex-wrap items-center justify-between gap-1 text-[9px]">
+              <div class="flex flex-wrap gap-1">
+                <span class="px-2 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 font-bold">지역: 서울 ✕</span>
+                <span class="px-2 py-0.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 font-bold">무료배송 ✕</span>
+              </div>
+              <span class="text-blue-600 font-bold">필터 초기화 ↻</span>
             </div>`;
         }
         return `
