@@ -50,8 +50,13 @@ for (const book of SHOWCASE_BOOKS) {
   lines.push('| :--- | :--- | :--- | :---: | :---: | :--- | :--- |');
   for (const item of items) {
     const recipe = getImplementationRecipe(item);
+    const decisionLines = [
+      item.bestFor ? `<br>✅ **적합**: ${escapeCell(item.bestFor)}` : '',
+      item.avoidWhen ? `<br>⚠️ **주의**: ${escapeCell(item.avoidWhen)}` : '',
+      item.compareWith ? `<br>🔁 **비교**: ${escapeCell(item.compareWith)}` : ''
+    ].join('');
     lines.push(
-      `| \`${item.id}\` | **${escapeCell(item.code)}** | ${escapeCell(item.eng)} | \`${item.slot}\` | \`${item.span}\` | ${escapeCell(item.meta)} | ${escapeCell(item.desc)} <br>🛠️ **레시피**: ${escapeCell(recipe)} |`
+      `| \`${item.id}\` | **${escapeCell(item.code)}** | ${escapeCell(item.eng)} | \`${item.slot}\` | \`${item.span}\` | ${escapeCell(item.meta)} | ${escapeCell(item.desc)} <br>🛠️ **레시피**: ${escapeCell(recipe)}${decisionLines} |`
     );
   }
   lines.push('');
