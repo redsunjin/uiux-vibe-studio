@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>17. 데이터 시각화 &amp; 차트 쇼케이스</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@0.460.0"></script>
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+    body {
+      font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen antialiased flex flex-col">
+  <!-- 스튜디오 공통 복귀 내비게이션 -->
+  <nav aria-label="스튜디오 내비게이션" class="bg-slate-900 text-slate-200 border-b border-slate-800 px-4 py-2 text-xs">
+    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-2">
+      <a href="../index.html" class="inline-flex items-center gap-1.5 font-bold text-white hover:text-blue-300 transition">
+        <span>←</span><span>UI/UX Vibe Studio 포털</span>
+      </a>
+      <div class="flex items-center gap-2">
+        <a href="../ai_ui_ux.html?mode=dictionary" class="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold transition">📖 도감 사전</a>
+        <a href="../ai_ui_ux.html?mode=composer" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-bold transition">🧩 화면 조립기</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div>
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 mb-1">
+          <i data-lucide="bar-chart-3" class="w-3.5 h-3.5"></i> Data Visualization &amp; Charts
+        </span>
+        <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900">
+          17. 데이터 시각화 &amp; <span class="text-blue-600">차트 패턴</span> (9종)
+        </h1>
+      </div>
+      <p class="text-sm text-slate-500 max-w-sm sm:text-right">
+        KPI 추이선부터 전환 퍼널, 히트맵, 게이지, 트리맵까지 <span class="text-blue-600 font-semibold">대시보드 시각화 컴포넌트</span>를 직접 조작해 보세요.
+      </p>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- 01. 스파크라인 미니 추이선 -->
+      <article id="pattern-cht_01" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">01 스파크라인 미니 추이선</span>
+            <span class="text-[11px] text-slate-400 font-mono">Sparkline chart</span>
+          </div>
+          <div class="bg-slate-50 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-semibold text-slate-500">주간 활성 사용자(WAU)</span>
+              <span id="sparkDelta" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-600">▲ +12.4%</span>
+            </div>
+            <div id="sparkVal" class="text-2xl font-extrabold text-slate-900 tabular-nums">48,290</div>
+            <svg viewBox="0 0 220 56" class="w-full h-14 overflow-visible">
+              <polyline id="sparkLine" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" points="4,46 38,38 72,42 106,24 140,28 174,14 214,8"></polyline>
+            </svg>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">KPI 숫자 카드 내부에 초소형 추세선을 배치해 최근 흐름을 한눈에 전달합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
+          <button type="button" id="btnSparkRefresh" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition">추이 갱신 ↻</button>
+        </div>
+      </article>
+
+      <!-- 02. 도넛 & 비중 차트 -->
+      <article id="pattern-cht_02" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">02 도넛 &amp; 비중 차트</span>
+            <span class="text-[11px] text-slate-400 font-mono">Donut &amp; Breakdown</span>
+          </div>
+          <div class="bg-slate-50 rounded-xl h-44 p-4 border border-slate-200 flex items-center justify-between gap-3">
+            <div class="relative w-28 h-28 shrink-0 rounded-full flex items-center justify-center" style="background: conic-gradient(#2563eb 0% 52%, #10b981 52% 81%, #f59e0b 81% 100%);">
+              <div class="w-18 h-18 bg-slate-50 rounded-full flex flex-col items-center justify-center px-3 py-2 text-center">
+                <span id="donutCenterLabel" class="text-[10px] text-slate-500 font-bold">전체</span>
+                <span id="donutCenterVal" class="text-sm font-extrabold text-slate-900">100%</span>
+              </div>
+            </div>
+            <div class="space-y-1.5 text-xs flex-1">
+              <button type="button" data-donut="웹 트래픽|52%" class="w-full flex items-center justify-between px-2 py-1 rounded hover:bg-white transition"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>웹</span><strong>52%</strong></button>
+              <button type="button" data-donut="모바일 앱|29%" class="w-full flex items-center justify-between px-2 py-1 rounded hover:bg-white transition"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>모바일</span><strong>29%</strong></button>
+              <button type="button" data-donut="API 연동|19%" class="w-full flex items-center justify-between px-2 py-1 rounded hover:bg-white transition"><span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>API</span><strong>19%</strong></button>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">카테고리별 점유율(%)과 중앙 합계·선택 항목을 직관적으로 비교합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">범례 항목 클릭 시 중앙 수치 전환</div>
+      </article>
+
+      <!-- 03. 막대 & 그룹 비교 차트 -->
+      <article id="pattern-cht_03" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">03 막대 &amp; 그룹 비교 차트</span>
+            <span class="text-[11px] text-slate-400 font-mono">Grouped Bar chart</span>
+          </div>
+          <div class="bg-slate-50 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-between">
+            <div class="flex items-center justify-between text-[11px] font-bold">
+              <span class="text-slate-600">분기별 매출 비교 (억원)</span>
+              <span class="flex items-center gap-2"><span class="text-blue-600">■ 올해</span><span class="text-slate-400">■ 작년</span></span>
+            </div>
+            <div id="groupedBars" class="flex items-end justify-around gap-3 h-28 pt-2">
+              <div class="flex flex-col items-center gap-1 flex-1 h-full justify-end"><div class="flex items-end gap-1 h-full w-full justify-center"><div class="bar-a w-3.5 bg-blue-600 rounded-t transition-all" style="height:55%"></div><div class="bar-b w-3.5 bg-slate-300 rounded-t transition-all" style="height:40%"></div></div><span class="text-[10px] text-slate-500 font-bold">Q1</span></div>
+              <div class="flex flex-col items-center gap-1 flex-1 h-full justify-end"><div class="flex items-end gap-1 h-full w-full justify-center"><div class="bar-a w-3.5 bg-blue-600 rounded-t transition-all" style="height:72%"></div><div class="bar-b w-3.5 bg-slate-300 rounded-t transition-all" style="height:58%"></div></div><span class="text-[10px] text-slate-500 font-bold">Q2</span></div>
+              <div class="flex flex-col items-center gap-1 flex-1 h-full justify-end"><div class="flex items-end gap-1 h-full w-full justify-center"><div class="bar-a w-3.5 bg-blue-600 rounded-t transition-all" style="height:90%"></div><div class="bar-b w-3.5 bg-slate-300 rounded-t transition-all" style="height:64%"></div></div><span class="text-[10px] text-slate-500 font-bold">Q3</span></div>
+              <div class="flex flex-col items-center gap-1 flex-1 h-full justify-end"><div class="flex items-end gap-1 h-full w-full justify-center"><div class="bar-a w-3.5 bg-blue-600 rounded-t transition-all" style="height:82%"></div><div class="bar-b w-3.5 bg-slate-300 rounded-t transition-all" style="height:70%"></div></div><span class="text-[10px] text-slate-500 font-bold">Q4</span></div>
+            </div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">기간·항목별 실적을 나란히 배치해 격차와 성장폭을 즉시 대조합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
+          <button type="button" id="btnBarShuffle" class="px-3 py-1.5 text-xs font-semibold bg-slate-900 text-white rounded-lg hover:bg-blue-600 transition">실적 시뮬레이션 ↻</button>
+        </div>
+      </article>
+
+      <!-- 04. 잔디 캘린더 히트맵 -->
+      <article id="pattern-cht_04" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">04 잔디 캘린더 히트맵</span>
+            <span class="text-[11px] text-slate-400 font-mono">Contribution Heatmap</span>
+          </div>
+          <div class="bg-slate-50 rounded-xl h-44 p-4 border border-slate-200 flex flex-col justify-between">
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="font-bold text-slate-600">최근 28일 배포 활동</span>
+              <span id="heatInfo" class="text-emerald-700 font-bold">셀 클릭 시 상세 확인</span>
+            </div>
+            <div id="heatmapGrid" class="grid grid-cols-7 gap-1.5"></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">GitHub 스타일의 색상 밀도 타일로 일별 활동량 패턴을 직관적으로 표현합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">색상 농도 4단계(0~12건)</div>
+      </article>
+
+      <!-- 05. 전환 퍼널 차트 -->
+      <article id="pattern-cht_05" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">05 전환 퍼널 차트</span>
+            <span class="text-[11px] text-slate-400 font-mono">Conversion Funnel</span>
+          </div>
+          <div class="bg-slate-50 rounded-xl h-44 p-3.5 border border-slate-200 flex flex-col justify-center gap-2 text-[11px]">
+            <div class="space-y-0.5"><div class="flex justify-between font-bold"><span>1. 방문</span><span>10,000 (100%)</span></div><div class="w-full h-3 bg-blue-600 rounded"></div></div>
+            <div class="space-y-0.5"><div class="flex justify-between font-bold"><span>2. 회원가입</span><span>4,200 (42%)</span></div><div class="w-[42%] h-3 bg-blue-500 rounded"></div></div>
+            <div class="space-y-0.5"><div class="flex justify-between font-bold"><span>3. 장바구니</span><span>1,850 (18.5%)</span></div><div class="w-[26%] h-3 bg-indigo-500 rounded"></div></div>
+            <div class="space-y-0.5"><div class="flex justify-between font-bold"><span>4. 결제 완료</span><span class="text-emerald-600">920 (9.2%)</span></div><div class="w-[15%] h-3 bg-emerald-500 rounded"></div></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">방문→가입→장바구니→결제 단계별 이탈 구간을 비율 막대로 진단합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">병목 구간(이탈률) 파악용</div>
+      </article>
+
+      <!-- 06. 레이더 역량 오각형 -->
+      <article id="pattern-cht_06" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">06 레이더 역량 오각형</span>
+            <span class="text-[11px] text-slate-400 font-mono">Radar / Spider chart</span>
+          </div>
+          <div class="bg-slate-50 rounded-xl h-44 p-3 border border-slate-200 flex items-center justify-center">
+            <svg viewBox="0 0 180 150" class="w-44 h-36">
+              <polygon points="90,15 155,62 130,135 50,135 25,62" fill="none" stroke="#cbd5e1" stroke-width="1"></polygon>
+              <polygon points="90,42 128,70 113,112 67,112 52,70" fill="none" stroke="#e2e8f0" stroke-width="1"></polygon>
+              <polygon id="radarPoly" points="90,22 142,66 118,125 60,118 42,68" fill="rgba(37,99,235,0.22)" stroke="#2563eb" stroke-width="2"></polygon>
+              <text x="90" y="11" text-anchor="middle" font-size="9" fill="#475569" font-weight="700">속도</text>
+              <text x="166" y="65" text-anchor="middle" font-size="9" fill="#475569" font-weight="700">안정성</text>
+              <text x="138" y="146" text-anchor="middle" font-size="9" fill="#475569" font-weight="700">확장성</text>
+              <text x="42" y="146" text-anchor="middle" font-size="9" fill="#475569" font-weight="700">보안</text>
+              <text x="14" y="65" text-anchor="middle" font-size="9" fill="#475569" font-weight="700">UX</text>
+            </svg>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">5~6개 다면 평가 지표의 균형과 강·약점을 방사형 다각형으로 비교합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">다면 역량 프로파일 시각화</div>
+      </article>
+
+      <!-- 07. 목표 달성 반원 게이지 -->
+      <article id="pattern-cht_07" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">07 목표 달성 반원 게이지</span>
+            <span class="text-[11px] text-slate-400 font-mono">Radial Gauge meter</span>
+          </div>
+          <div class="bg-slate-50 rounded-xl h-44 p-4 border border-slate-200 flex flex-col items-center justify-between">
+            <svg viewBox="0 0 180 100" class="w-40 h-24">
+              <path d="M 20 90 A 70 70 0 0 1 160 90" fill="none" stroke="#e2e8f0" stroke-width="14" stroke-linecap="round"></path>
+              <path id="gaugeArc" d="M 20 90 A 70 70 0 0 1 160 90" fill="none" stroke="#2563eb" stroke-width="14" stroke-linecap="round" stroke-dasharray="220" stroke-dashoffset="48"></path>
+              <text id="gaugeText" x="90" y="84" text-anchor="middle" font-size="22" font-weight="800" fill="#0f172a">78%</text>
+            </svg>
+            <input id="gaugeRange" type="range" min="0" max="100" value="78" class="w-full accent-blue-600" aria-label="목표 달성률 조절">
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">반원 호(Arc) 진행률과 임계값 색상으로 목표 달성 정도를 직관적으로 보여줍니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">슬라이더 조절 시 호 길이·색상 변화</div>
+      </article>
+
+      <!-- 08. 트리맵 비율 블록 -->
+      <article id="pattern-cht_08" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">08 트리맵 비율 블록</span>
+            <span class="text-[11px] text-slate-400 font-mono">Treemap breakdown</span>
+          </div>
+          <div class="bg-slate-50 rounded-xl h-44 p-3 border border-slate-200 grid grid-cols-12 grid-rows-6 gap-1.5 text-white text-[11px] font-bold">
+            <div class="col-span-7 row-span-6 bg-blue-600 rounded-lg p-2.5 flex flex-col justify-between"><span>클라우드 인프라</span><span class="text-base">54%</span></div>
+            <div class="col-span-5 row-span-3 bg-indigo-500 rounded-lg p-2 flex flex-col justify-between"><span>AI 추론</span><span>26%</span></div>
+            <div class="col-span-3 row-span-3 bg-emerald-500 rounded-lg p-2 flex flex-col justify-between"><span>DB</span><span>12%</span></div>
+            <div class="col-span-2 row-span-3 bg-amber-500 rounded-lg p-1.5 flex flex-col justify-between text-[10px]"><span>기타</span><span>8%</span></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">계층별 비중을 사각형 면적에 비례해 분할 배치하여 자원 점유를 비교합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">비용·스토리지 비중 분석에 적합</div>
+      </article>
+
+      <!-- 09. 누적 영역 추이 차트 -->
+      <article id="pattern-cht_09" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">09 누적 영역 추이 차트</span>
+            <span class="text-[11px] text-slate-400 font-mono">Stacked Area chart</span>
+          </div>
+          <div class="bg-slate-50 rounded-xl h-44 p-3.5 border border-slate-200 flex flex-col justify-between">
+            <div class="flex justify-between text-[11px] font-bold text-slate-600">
+              <span>채널별 누적 유입량</span>
+              <span class="text-indigo-600">Organic + Paid</span>
+            </div>
+            <svg viewBox="0 0 220 90" class="w-full h-28">
+              <path d="M0,85 L44,62 L88,50 L132,36 L176,22 L220,12 L220,90 L0,90 Z" fill="rgba(99,102,241,0.28)" stroke="#4f46e5" stroke-width="2"></path>
+              <path d="M0,88 L44,76 L88,70 L132,60 L176,52 L220,44 L220,90 L0,90 Z" fill="rgba(37,99,235,0.45)" stroke="#2563eb" stroke-width="2"></path>
+            </svg>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">시계열 전체 볼륨과 하위 채널별 기여도를 누적 면적으로 동시에 파악합니다.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-[11px] text-slate-400">총량 + 구성비 동시 추적</div>
+      </article>
+
+    </div>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    document.getElementById('btnSparkRefresh').addEventListener('click', () => {
+      const pts = [4, 38, 72, 106, 140, 174, 214].map(x => `${x},${Math.floor(Math.random() * 40) + 8}`).join(' ');
+      document.getElementById('sparkLine').setAttribute('points', pts);
+      document.getElementById('sparkVal').textContent = (40000 + Math.floor(Math.random() * 18000)).toLocaleString();
+      document.getElementById('sparkDelta').textContent = `▲ +${(Math.random() * 18 + 3).toFixed(1)}%`;
+    });
+
+    document.querySelectorAll('[data-donut]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const [lbl, val] = btn.dataset.donut.split('|');
+        document.getElementById('donutCenterLabel').textContent = lbl;
+        document.getElementById('donutCenterVal').textContent = val;
+      });
+    });
+
+    document.getElementById('btnBarShuffle').addEventListener('click', () => {
+      document.querySelectorAll('#groupedBars .bar-a').forEach(b => { b.style.height = (Math.floor(Math.random() * 55) + 40) + '%'; });
+      document.querySelectorAll('#groupedBars .bar-b').forEach(b => { b.style.height = (Math.floor(Math.random() * 45) + 25) + '%'; });
+    });
+
+    const heatGrid = document.getElementById('heatmapGrid');
+    const levels = ['bg-slate-200', 'bg-emerald-200', 'bg-emerald-400', 'bg-emerald-600'];
+    for (let i = 1; i <= 28; i++) {
+      const cnt = (i * 3 + 2) % 11;
+      const lvl = cnt === 0 ? 0 : cnt < 4 ? 1 : cnt < 8 ? 2 : 3;
+      const cell = document.createElement('button');
+      cell.type = 'button';
+      cell.className = `h-6 rounded ${levels[lvl]} hover:ring-2 hover:ring-blue-500 transition`;
+      cell.title = `${i}일차: ${cnt}건`;
+      cell.addEventListener('click', () => {
+        document.getElementById('heatInfo').textContent = `${i}일차 활동: ${cnt}건`;
+      });
+      heatGrid.appendChild(cell);
+    }
+
+    document.getElementById('gaugeRange').addEventListener('input', (e) => {
+      const v = Number(e.target.value);
+      const offset = 220 - (220 * v / 100);
+      const arc = document.getElementById('gaugeArc');
+      arc.setAttribute('stroke-dashoffset', String(offset));
+      arc.setAttribute('stroke', v >= 75 ? '#10b981' : v >= 40 ? '#2563eb' : '#f59e0b');
+      document.getElementById('gaugeText').textContent = `${v}%`;
+    });
+  </script>
+</body>
+</html>

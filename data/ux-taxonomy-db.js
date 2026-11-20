@@ -24,10 +24,10 @@
       { key: 'motion', title: '14. UI 트랜지션 & 물리 모션', short: 'UI 움직임', file: 'showcases/motion-gestures.html', icon: 'sparkles', badge: '물리 모션' },
       { key: 'text_anim', title: '15. 타이포그래피 텍스트 모션', short: '글자 효과', file: 'showcases/text-motion.html', icon: 'type', badge: '타이포 모션' },
       { key: 'visual_style', title: '16. 모션 그래픽 & 비주얼 테마', short: '비주얼 테마', file: 'showcases/visual-themes.html', icon: 'palette', badge: '아트 테마' },
-      { key: 'chart', title: '17. 데이터 시각화 & 차트', short: '차트/시각화', file: 'showcases/content.html', icon: 'bar-chart-3', badge: '차트/지표' },
-      { key: 'commerce', title: '18. 커머스·결제 & 가격표', short: '커머스/결제', file: 'showcases/search.html', icon: 'shopping-bag', badge: '커머스/결제' },
-      { key: 'auth', title: '19. 계정·보안 & 권한 설정', short: '계정/보안', file: 'showcases/onboarding.html', icon: 'shield-check', badge: '계정/보안' },
-      { key: 'media_collab', title: '20. 미디어·소셜 & 실시간 협업', short: '미디어/협업', file: 'showcases/ai-interface.html', icon: 'users', badge: '소셜/협업' }
+      { key: 'chart', title: '17. 데이터 시각화 & 차트', short: '차트/시각화', file: 'showcases/charts.html', icon: 'bar-chart-3', badge: '차트/지표' },
+      { key: 'commerce', title: '18. 커머스·결제 & 가격표', short: '커머스/결제', file: 'showcases/commerce.html', icon: 'shopping-bag', badge: '커머스/결제' },
+      { key: 'auth', title: '19. 계정·보안 & 권한 설정', short: '계정/보안', file: 'showcases/auth.html', icon: 'shield-check', badge: '계정/보안' },
+      { key: 'media_collab', title: '20. 미디어·소셜 & 실시간 협업', short: '미디어/협업', file: 'showcases/media-collab.html', icon: 'users', badge: '소셜/협업' }
     ];
 
     const PATTERN_DB = {

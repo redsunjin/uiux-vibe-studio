@@ -7,11 +7,11 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons CDN -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/lucide@0.460.0"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
     body {
-      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
       word-break: keep-all;
       overflow-wrap: break-word;
     }
@@ -453,6 +453,237 @@
       </div>
 
     </div>
+  
+    <!-- 확장 패턴 자동 수록 섹션 -->
+    <section class="mt-10 pt-8 border-t border-slate-200">
+      <div class="mb-5">
+        <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Extended Patterns</span>
+        <h2 class="text-lg font-extrabold text-slate-900 mt-0.5">확장 · 추가 수록 패턴 (11종)</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+      <article id="pattern-gs_01" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">01 탭</span>
+            <span class="text-[11px] text-slate-400 font-mono truncate">Tap</span>
+          </div>
+          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+            <div class="w-full">
+        <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+          <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-lg bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center shrink-0">👆</span><div><div class="font-bold text-slate-800">제스처 01 탭</div><div class="text-[8px] text-slate-400">기본 1회 터치 · 44×44px 안전 타깃</div></div></div>
+          <span class="text-[8px] font-mono text-slate-400 shrink-0">Tap</span>
+        </div></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">최소 44×44px 이상의 터치 안전 영역을 확보한 가벼운 1회 탭 인터랙션</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
+          <strong class="text-slate-900">구현 힌트:</strong> Pointer/Touch 이벤트(pointerdown/move/up)와 touch-action 제어를 통해 Tap 제스처 피드백 구현 (모션 최소화 환경 대체 버튼 제공)
+        </div>
+      </article>
+
+      <article id="pattern-gs_02" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">02 길게 누르기</span>
+            <span class="text-[11px] text-slate-400 font-mono truncate">Long press</span>
+          </div>
+          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+            <div class="w-full">
+        <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+          <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-lg bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center shrink-0">👆</span><div><div class="font-bold text-slate-800">제스처 02 길게 누르기</div><div class="text-[8px] text-slate-400">0.8초 꾹 누름 · 컨텍스트 퀵 메뉴</div></div></div>
+          <span class="text-[8px] font-mono text-slate-400 shrink-0">Long press</span>
+        </div></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">항목을 0.8초간 길게 눌러 숨겨진 컨텍스트 메뉴(복사/보관/삭제)나 미리보기 호출</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
+          <strong class="text-slate-900">구현 힌트:</strong> Pointer/Touch 이벤트(pointerdown/move/up)와 touch-action 제어를 통해 Long press 제스처 피드백 구현 (모션 최소화 환경 대체 버튼 제공)
+        </div>
+      </article>
+
+      <article id="pattern-gs_03" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">03 스와이프</span>
+            <span class="text-[11px] text-slate-400 font-mono truncate">Horizontal Swipe</span>
+          </div>
+          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+            <div class="w-full">
+        <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+          <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-lg bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center shrink-0">👆</span><div><div class="font-bold text-slate-800">제스처 03 스와이프</div><div class="text-[8px] text-slate-400">좌우 쓸어넘김 · 캐러셀/탭 전환</div></div></div>
+          <span class="text-[8px] font-mono text-slate-400 shrink-0">Horizontal Swipe</span>
+        </div></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">손가락으로 가로 축을 쓸어넘겨 캐러셀 카드나 탭 화면을 부드럽게 전환</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
+          <strong class="text-slate-900">구현 힌트:</strong> Pointer/Touch 이벤트(pointerdown/move/up)와 touch-action 제어를 통해 Horizontal Swipe 제스처 피드백 구현 (모션 최소화 환경 대체 버튼 제공)
+        </div>
+      </article>
+
+      <article id="pattern-gs_04" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">04 밀어서 삭제</span>
+            <span class="text-[11px] text-slate-400 font-mono truncate">Swipe to delete</span>
+          </div>
+          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+            <div class="w-full">
+        <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+          <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-lg bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center shrink-0">👆</span><div><div class="font-bold text-slate-800">제스처 04 밀어서 삭제</div><div class="text-[8px] text-slate-400">리스트 행 좌측 스와이프 · 삭제 버튼 노출</div></div></div>
+          <span class="text-[8px] font-mono text-slate-400 shrink-0">Swipe to delete</span>
+        </div></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">목록 아이템을 왼쪽으로 밀어 숨겨진 빨간색 [삭제] 액션 버튼을 노출</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
+          <strong class="text-slate-900">구현 힌트:</strong> Pointer/Touch 이벤트(pointerdown/move/up)와 touch-action 제어를 통해 Swipe to delete 제스처 피드백 구현 (모션 최소화 환경 대체 버튼 제공)
+        </div>
+      </article>
+
+      <article id="pattern-gs_05" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">05 드래그 앤 드롭</span>
+            <span class="text-[11px] text-slate-400 font-mono truncate">Drag and drop</span>
+          </div>
+          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+            <div class="w-full">
+        <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+          <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-lg bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center shrink-0">👆</span><div><div class="font-bold text-slate-800">제스처 05 드래그 앤 드롭</div><div class="text-[8px] text-slate-400">그립 핸들 이동 · 우선순위 순서 재정렬</div></div></div>
+          <span class="text-[8px] font-mono text-slate-400 shrink-0">Drag and drop</span>
+        </div></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">그립 핸들(⋮⋮)을 잡고 끌어 리스트나 칸반 카드의 순서를 실시간 재정렬</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
+          <strong class="text-slate-900">구현 힌트:</strong> Pointer/Touch 이벤트(pointerdown/move/up)와 touch-action 제어를 통해 Drag and drop 제스처 피드백 구현 (모션 최소화 환경 대체 버튼 제공)
+        </div>
+      </article>
+
+      <article id="pattern-gs_06" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">06 핀치 줌</span>
+            <span class="text-[11px] text-slate-400 font-mono truncate">Pinch to zoom</span>
+          </div>
+          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+            <div class="w-full">
+        <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+          <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-lg bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center shrink-0">👆</span><div><div class="font-bold text-slate-800">제스처 06 핀치 줌</div><div class="text-[8px] text-slate-400">두 손가락 벌리기 · 이미지/지도 확대</div></div></div>
+          <span class="text-[8px] font-mono text-slate-400 shrink-0">Pinch to zoom</span>
+        </div></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">두 손가락을 벌리고 오므려 상세 이미지나 차트·지도의 배율을 자유롭게 확대/축소</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
+          <strong class="text-slate-900">구현 힌트:</strong> Pointer/Touch 이벤트(pointerdown/move/up)와 touch-action 제어를 통해 Pinch to zoom 제스처 피드백 구현 (모션 최소화 환경 대체 버튼 제공)
+        </div>
+      </article>
+
+      <article id="pattern-gs_07" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">07 두 번 탭</span>
+            <span class="text-[11px] text-slate-400 font-mono truncate">Double tap</span>
+          </div>
+          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+            <div class="w-full">
+        <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+          <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-lg bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center shrink-0">👆</span><div><div class="font-bold text-slate-800">제스처 07 두 번 탭</div><div class="text-[8px] text-slate-400">연속 2회 터치 · 즉시 하트 좋아요</div></div></div>
+          <span class="text-[8px] font-mono text-slate-400 shrink-0">Double tap</span>
+        </div></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">콘텐츠 영역을 연속 2번 빠르게 탭하여 즉시 하트 좋아요 애니메이션 트리거</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
+          <strong class="text-slate-900">구현 힌트:</strong> Pointer/Touch 이벤트(pointerdown/move/up)와 touch-action 제어를 통해 Double tap 제스처 피드백 구현 (모션 최소화 환경 대체 버튼 제공)
+        </div>
+      </article>
+
+      <article id="pattern-gs_08" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">08 당겨서 새로고침</span>
+            <span class="text-[11px] text-slate-400 font-mono truncate">Pull to refresh</span>
+          </div>
+          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+            <div class="w-full">
+        <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+          <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-lg bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center shrink-0">👆</span><div><div class="font-bold text-slate-800">제스처 08 당겨서 새로고침</div><div class="text-[8px] text-slate-400">최상단 아래로 당김 · 최신 피드 리로드</div></div></div>
+          <span class="text-[8px] font-mono text-slate-400 shrink-0">Pull to refresh</span>
+        </div></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">스크롤 최상단에서 화면을 아래로 끌어당겨 최신 피드 데이터를 새로고침</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
+          <strong class="text-slate-900">구현 힌트:</strong> Pointer/Touch 이벤트(pointerdown/move/up)와 touch-action 제어를 통해 Pull to refresh 제스처 피드백 구현 (모션 최소화 환경 대체 버튼 제공)
+        </div>
+      </article>
+
+      <article id="pattern-gs_09" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">09 가장자리 스와이프</span>
+            <span class="text-[11px] text-slate-400 font-mono truncate">Edge swipe</span>
+          </div>
+          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+            <div class="w-full">
+        <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+          <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-lg bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center shrink-0">👆</span><div><div class="font-bold text-slate-800">제스처 09 가장자리 스와이프</div><div class="text-[8px] text-slate-400">좌측 베젤 끝 스와이프 · 이전 화면 복귀</div></div></div>
+          <span class="text-[8px] font-mono text-slate-400 shrink-0">Edge swipe</span>
+        </div></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">화면 왼쪽 끝 테두리에서 안쪽으로 쓸어넘겨 뒤로 가기(Back) 제스처 수행</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
+          <strong class="text-slate-900">구현 힌트:</strong> Pointer/Touch 이벤트(pointerdown/move/up)와 touch-action 제어를 통해 Edge swipe 제스처 피드백 구현 (모션 최소화 환경 대체 버튼 제공)
+        </div>
+      </article>
+
+      <article id="pattern-gs_10" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">10 바텀시트 스냅 드래그</span>
+            <span class="text-[11px] text-slate-400 font-mono truncate">Bottom sheet snap drag</span>
+          </div>
+          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+            <div class="w-full">
+        <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+          <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-lg bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center shrink-0">👆</span><div><div class="font-bold text-slate-800">제스처 10 바텀시트 스냅 드래그 [추가]</div><div class="text-[8px] text-slate-400">상단 핸들 바를 끌어 50% ↔ 95% 높이 조절</div></div></div>
+          <span class="text-[8px] font-mono text-slate-400 shrink-0">Bottom sheet snap drag</span>
+        </div></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">바텀시트 상단의 가로 손잡이(Grabber)를 위아래로 끌어 반만 열거나 전체 화면으로 확장</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
+          <strong class="text-slate-900">구현 힌트:</strong> Pointer/Touch 이벤트(pointerdown/move/up)와 touch-action 제어를 통해 Bottom sheet snap drag 제스처 피드백 구현 (모션 최소화 환경 대체 버튼 제공)
+        </div>
+      </article>
+
+      <article id="pattern-mo_10" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">10 패럴랙스 깊이 스크롤</span>
+            <span class="text-[11px] text-slate-400 font-mono truncate">Parallax depth scroll</span>
+          </div>
+          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+            <div class="w-full">
+        <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+          <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-lg bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center shrink-0">⚡</span><div><div class="font-bold text-slate-800">움직임 10 패럴랙스 깊이 스크롤 [추가]</div><div class="text-[8px] text-slate-400">배경과 전경 레이어의 스크롤 속도 차 입체감</div></div></div>
+          <span class="text-[8px] font-mono text-slate-400 shrink-0">Parallax depth scroll</span>
+        </div></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">스크롤 시 배경 이미지는 천천히 움직이고 전경 카드는 빠르게 올라가며 공간적 깊이감을 연출</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
+          <strong class="text-slate-900">구현 힌트:</strong> 스크롤 시 배경 이미지는 천천히 움직이고 전경 카드는 빠르게 올라가며 공간적 깊이감을 연출 (배경과 전경 레이어의 스크롤 속도 차 입체감 특성 준수)
+        </div>
+      </article>
+      </div>
+    </section>
+  
   </main>
 
   <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">

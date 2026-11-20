@@ -7,11 +7,11 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons CDN -->
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/lucide@0.460.0"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
     body {
-      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
       word-break: keep-all;
       overflow-wrap: break-word;
     }
@@ -450,6 +450,78 @@
       </div>
 
     </div>
+  
+    <!-- 확장 패턴 자동 수록 섹션 -->
+    <section class="mt-10 pt-8 border-t border-slate-200">
+      <div class="mb-5">
+        <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Extended Patterns</span>
+        <h2 class="text-lg font-extrabold text-slate-900 mt-0.5">확장 · 추가 수록 패턴 (3종)</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+      <article id="pattern-lay_10" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">10 메이슨리 그리드</span>
+            <span class="text-[11px] text-slate-400 font-mono truncate">Masonry waterfall grid</span>
+          </div>
+          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+            <div class="w-full">
+            <div class="grid grid-cols-3 gap-1.5 items-start text-[8px] font-bold text-slate-600">
+              <div class="space-y-1.5"><div class="h-10 bg-rose-50 border border-rose-200 rounded-lg p-1.5">핀 카드 A</div><div class="h-6 bg-slate-100 rounded-lg p-1">D</div></div>
+              <div class="space-y-1.5"><div class="h-6 bg-blue-50 border border-blue-200 rounded-lg p-1">카드 B</div><div class="h-10 bg-indigo-50 border border-indigo-200 rounded-lg p-1.5">가변 높이 E</div></div>
+              <div class="space-y-1.5"><div class="h-9 bg-emerald-50 border border-emerald-200 rounded-lg p-1.5">카드 C</div><div class="h-7 bg-amber-50 border border-amber-200 rounded-lg p-1">F</div></div>
+            </div></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">세로 높이가 서로 다른 이미지·카드를 빈틈없이 벽돌처럼 맞물려 쌓는 폭포수형 레이아웃</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
+          <strong class="text-slate-900">구현 힌트:</strong> CSS columns 또는 grid-auto-rows + ResizeObserver로 가변 높이 카드의 간격 없는 벽돌(Masonry) 배치 구현
+        </div>
+      </article>
+
+      <article id="pattern-lay_11" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">11 스티키 스크롤텔링</span>
+            <span class="text-[11px] text-slate-400 font-mono truncate">Sticky Scrollytelling</span>
+          </div>
+          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+            <div class="w-full">
+        <div class="bg-white p-2 rounded-xl border border-slate-200 flex items-center justify-between text-[9px]">
+          <div class="flex items-center gap-2"><span class="w-5 h-5 rounded-lg bg-indigo-50 text-indigo-600 font-bold flex items-center justify-center shrink-0">✦</span><div><div class="font-bold text-slate-800">레이아웃 11 스티키 스크롤텔링 [추가]</div><div class="text-[8px] text-slate-400">좌측 비주얼 고정 + 우측 텍스트 스크롤</div></div></div>
+          <span class="text-[8px] font-mono text-slate-400 shrink-0">Sticky Scrollytelling</span>
+        </div></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">스크롤하는 동안 한쪽 화면(제품 목업/차트)은 고정되고 반대쪽 설명 단계가 넘어가며 전환</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
+          <strong class="text-slate-900">구현 힌트:</strong> 우측 설명 섹션 스크롤 시 IntersectionObserver로 현재 단계를 감지해 좌측 position: sticky 비주얼 상태를 전환
+        </div>
+      </article>
+
+      <article id="pattern-lay_12" class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <span class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">12 홀리 그레일 3단</span>
+            <span class="text-[11px] text-slate-400 font-mono truncate">Holy Grail 3-Column</span>
+          </div>
+          <div class="bg-slate-50 border-slate-200 rounded-xl min-h-[120px] p-3.5 border flex items-center justify-center">
+            <div class="w-full">
+            <div class="flex gap-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200 text-[9px]">
+              <div class="flex-1 bg-white p-2 rounded-lg text-slate-500">메인 캔버스 영역</div>
+              <div class="w-28 bg-white p-2 rounded-lg border-l-2 border-blue-500 shadow-sm"><div class="font-extrabold text-blue-600">우측 인스펙터</div><div class="text-[8px] text-slate-400 mt-0.5">속성·목차 상세창</div></div>
+            </div></div>
+          </div>
+          <p class="mt-3 text-xs text-slate-600 leading-relaxed">기술 문서(Docs)나 커뮤니티 표준인 좌측 탐색·중앙 아티클·우측 온페이지 목차(TOC) 3단 구조</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 text-slate-400 text-[11px] leading-snug">
+          <strong class="text-slate-900">구현 힌트:</strong> lg:grid-cols-[240px_1fr_220px] 3단 홀리 그레일 골격 + 양쪽 사이드바 sticky top-16 독립 스크롤 적용
+        </div>
+      </article>
+      </div>
+    </section>
+  
   </main>
 
   <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">

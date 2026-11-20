@@ -698,10 +698,10 @@
   <title>${escapeHtml(screenTitle)} — Live Compiled Prototype</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>tailwind.config = { darkMode: 'class' };</script>
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://unpkg.com/lucide@0.460.0"></script>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap');
-    body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; word-break: keep-all; overflow-wrap: break-word; }
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+    body { font-family: 'Pretendard Variable', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; word-break: keep-all; overflow-wrap: break-word; }
     @keyframes springIn {
       0% { transform: translateY(10px) scale(0.97); opacity: 0; }
       70% { transform: translateY(-2px) scale(1.01); opacity: 1; }
